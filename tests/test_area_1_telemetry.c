@@ -441,6 +441,128 @@ static void test_05_companion_window_and_predictive_math(const uint8_t *rom, uin
     printf("  -> [PASS] Secondary Companion Window (640x480) Rendered & Verified!\n");
 }
 
+static void test_06_phase_5b_walkthrough_models(const uint8_t *rom, uint32_t rom_size) {
+    printf("[TEST 06 / PHASE 5B] Verifying Walkthrough-Driven Predictive & Mechanics Models...\n");
+    uint8_t *wram = (uint8_t *)calloc(OB_WRAM_SIZE_BYTES, 1);
+    assert(wram != NULL);
+
+    /* Setup Opinion Leader, Lans, Warren */
+    wram[0x07BA + 0] = 1; wram[0x085A + 0] = 75; wram[0xF148 + 0] = 6; wram[0x0C1A + 0] = 72; wram[0xF42C + 0] = 74;
+    wram[0x07BA + 1] = 2; wram[0x085A + 1] = 2;  wram[0xF148 + 1] = 5; wram[0x0C1A + 1] = 74; wram[0xF42C + 1] = 68;
+    wram[0x07BA + 2] = 3; wram[0x085A + 2] = 7;  wram[0xF148 + 2] = 5; wram[0x0C1A + 2] = 62; wram[0xF42C + 2] = 66;
+    write_u16_le(wram, 0x099A + 0, 140); write_u16_le(wram, 0x0ADA + 0, 140);
+    write_u16_le(wram, 0x099A + 2, 130); write_u16_le(wram, 0x0ADA + 2, 130);
+    write_u16_le(wram, 0x099A + 4, 110); write_u16_le(wram, 0x0ADA + 4, 110);
+
+    /* Setup Squad 0 with Opinion Leader and Lans (no flyers -> Normal ground) */
+    wram[0x0E81 + 0] = 0; wram[0x0E81 + 1] = 1; wram[0x0E81 + 2] = 2;
+
+    /* Setup City 0 (liberated temple) and City 1 (enemy city) */
+    write_u16_le(wram, 0x1A95 + 0, 400); write_u16_le(wram, 0x1B0D + 0, 300);
+    write_u16_le(wram, 0x1B5D + 0, 1500); wram[0x1C4D + 0] = 0x05; /* Liberated (1) + Temple (4) */
+    write_u16_le(wram, 0x1A95 + 2, 800); write_u16_le(wram, 0x1B0D + 2, 600);
+    write_u16_le(wram, 0x1B5D + 2, 1200); wram[0x1C4D + 2] = 0x02; /* Hidden (2) + Unliberated */
+
+    /* Setup Enemy Squad 10 marching toward City 0 */
+    write_u16_le(wram, 0x18AF + 20, 450); write_u16_le(wram, 0x18D9 + 20, 300);
+    write_u16_le(wram, 0x1905 + 20, 400); write_u16_le(wram, 0x192D + 20, 300);
+    write_u16_le(wram, 0x1955 + 20, (uint16_t)(int16_t)-3);
+    write_u16_le(wram, 0x1A11 + 20, 3);
+    write_u16_le(wram, 0x19A5 + 20, 0x0100);
+
+    /* Inventory: Quicksilver ($45), Tablet of Yaru ($49), Stone 1 ($50), Stone 2 ($51) */
+    wram[0x157E + 0] = 0x45;
+    wram[0x157E + 1] = 0x49;
+    wram[0x157E + 2] = 0x50;
+    wram[0x157E + 3] = 0x51;
+
+    /* Tarot Hand: Magician (0), Lovers (5), Chariot (6) */
+    memset(&wram[0x0DBE], 0xFF, OB_MAX_TAROT_HAND);
+    wram[0x0DBE + 0] = 0; /* Magician: Offensive */
+    wram[0x0DBE + 1] = 5; /* Lovers: CF +2 */
+    wram[0x0DBE + 2] = 6; /* Chariot: Offensive */
+
+    wram[0x157C] = 72; /* CF = 72 */
+
+    ObTelemetryFrame frame;
+    ob_telemetry_poll_vblank(wram, rom, rom_size, 200, &frame);
+
+    /* 1. Verify Recapture Threat detection */
+    ObRecaptureThreat threats[4];
+    size_t n_threats = ob_telemetry_detect_recapture_threats(&frame, threats, 4);
+    assert(n_threats > 0);
+    assert(threats[0].enemy_slot == 10);
+    assert(threats[0].target_city_index == 0);
+    assert(threats[0].is_temple == true);
+    assert(threats[0].penalty_cf == -5);
+
+    /* 2. Verify Tarot Audit & Leader Overlevel Guard */
+    ObTarotAudit tarot[8];
+    size_t n_tarot = ob_telemetry_audit_tarot_hand(&frame, tarot, 8);
+    assert(n_tarot == 3);
+    assert(tarot[0].is_offensive == true);
+    assert(tarot[0].leader_overlevel_risk == true); /* Lord Lv6 -> offensive card kill risk */
+    assert(tarot[1].is_offensive == false);
+
+    /* 3. Verify 18-Hero Recruitment Audit */
+    ObHeroRecruitmentAudit heroes[18];
+    size_t n_heroes = ob_telemetry_audit_special_recruits(&frame, heroes, 18);
+    assert(n_heroes == 18);
+    assert(heroes[0].is_recruited == true); /* Lans is in roster */
+    /* Slust requires CF >= 67 & Leader ALI >= 70 (both met: CF=72, ALI=72) */
+    assert(heroes[10].prereq_cf_met == true);
+    assert(heroes[10].prereq_ali_met == true);
+    /* Deneb tradeoff warning */
+    assert(strstr(heroes[16].tradeoff_warning, "Halloween") != NULL);
+    /* Galf tradeoff warning */
+    assert(strstr(heroes[17].tradeoff_warning, "Top 3 Endings") != NULL);
+
+    /* 4. Verify Zodiac Stones & Quest Status */
+    ObZodiacQuestStatus z;
+    ob_telemetry_track_zodiac_stones(&frame, &z);
+    assert(z.quicksilver_in_hand == true);
+    assert(z.tablet_of_yaru_in_hand == true);
+    assert(z.stones_collected_count == 2);
+    assert((z.stones_mask & 0x03) == 0x03);
+
+    /* 5. Verify Squad Mobility */
+    ObSquadMobilityAnalysis mob;
+    ob_telemetry_analyze_squad_mobility(&frame, 0, &mob);
+    assert(mob.flyers_needed_for_sky > 0);
+
+    /* 6. Verify Hidden PoI Audit */
+    ObHiddenPoISummary poi;
+    ob_telemetry_audit_hidden_poi(&frame, &poi);
+    assert(poi.hidden_cities_count >= 1);
+    assert(poi.unliberated_cities_count >= 1);
+
+    /* 7. Verify Multi-Page Rendering across Pages 1, 2, and 3 */
+    ObCompanionWindowState state;
+    ob_companion_window_init(&state);
+    uint32_t *fb = (uint32_t *)malloc(OB_COMPANION_WIDTH * OB_COMPANION_HEIGHT * sizeof(uint32_t));
+    assert(fb != NULL);
+
+    /* Page 1: Tactical */
+    state.active_page = OB_COMPANION_PAGE_TACTICAL;
+    ob_companion_window_toggle_poi(&state);
+    assert(state.show_hidden_poi_radar == true);
+    ob_telemetry_render_companion_window(&state, NULL, &frame, wram, rom, rom_size, fb, OB_COMPANION_WIDTH, OB_COMPANION_HEIGHT);
+
+    /* Page 2: Combat & Tarot */
+    ob_companion_window_cycle_page(&state);
+    assert(state.active_page == OB_COMPANION_PAGE_COMBAT_TAROT);
+    ob_telemetry_render_companion_window(&state, NULL, &frame, wram, rom, rom_size, fb, OB_COMPANION_WIDTH, OB_COMPANION_HEIGHT);
+
+    /* Page 3: Campaign Guide */
+    ob_companion_window_cycle_page(&state);
+    assert(state.active_page == OB_COMPANION_PAGE_CAMPAIGN_GUIDE);
+    ob_telemetry_render_companion_window(&state, NULL, &frame, wram, rom, rom_size, fb, OB_COMPANION_WIDTH, OB_COMPANION_HEIGHT);
+
+    free(fb);
+    free(wram);
+    printf("  -> [PASS] Phase 5B Walkthrough Models & 3-Page Companion Window Certified!\n");
+}
+
 int main(void) {
     printf("================================================================================\n");
     printf("  OGRE BATTLE PC PORT: AREA 1 TELEMETRY & LOCKSTEP CERTIFICATION SUITE\n");
@@ -455,10 +577,11 @@ int main(void) {
     test_03_gate_1b_tier2_deep_domains(rom, rom_size);
     test_04_gate_1c_mod_aware_promotions(rom, rom_size);
     test_05_companion_window_and_predictive_math(rom, rom_size);
+    test_06_phase_5b_walkthrough_models(rom, rom_size);
 
     free(rom);
     printf("================================================================================\n");
-    printf("  ALL 5 AREA 1 TELEMETRY & LOCKSTEP QUALITY GATES PASSED (100%% CERTIFIED)\n");
+    printf("  ALL 6 AREA 1 TELEMETRY & LOCKSTEP QUALITY GATES PASSED (100%% CERTIFIED)\n");
     printf("================================================================================\n");
     return 0;
 }

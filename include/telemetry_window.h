@@ -19,16 +19,27 @@ extern "C" {
 #define OB_COMPANION_HEIGHT  480
 #define OB_DIFF_LOG_CAPACITY  16
 
+/* Switchable Multi-Page Companion Views */
+typedef enum {
+    OB_COMPANION_PAGE_TACTICAL = 0,    /* Page 1: 4-Quadrant Radar, Recapture Alert, Kinematics, PoI & Day/Night */
+    OB_COMPANION_PAGE_COMBAT_TAROT,    /* Page 2: Live Combat Arena, 14 Tarot Hand & Leader ALI Guard, Promo Tree */
+    OB_COMPANION_PAGE_CAMPAIGN_GUIDE   /* Page 3: 18 Hero Recruitment Tracker, 12 Zodiac Stones & Reputation Ledger */
+} ObCompanionPage;
+
 typedef struct {
     ObTelemetryHudMode   mode;
+    ObCompanionPage      active_page;        /* 0: Tactical, 1: Combat/Tarot, 2: Campaign Guide */
     uint8_t              selected_unit_slot; /* 0..99 inspected unit */
     uint8_t              selected_squad_id;  /* 0..24 inspected squad */
+    bool                 show_hidden_poi_radar; /* Toggle 'H': false = count only, true = radar coordinates */
     ObTelemetryDiffEvent recent_diffs[OB_DIFF_LOG_CAPACITY];
     size_t               recent_diff_count;
     uint32_t             total_diffs_observed;
 } ObCompanionWindowState;
 
 void ob_companion_window_init(ObCompanionWindowState *state);
+void ob_companion_window_cycle_page(ObCompanionWindowState *state);
+void ob_companion_window_toggle_poi(ObCompanionWindowState *state);
 
 /* Updates recent bitflag diff ring buffer and renders the 4-panel 640x480 RGBA dashboard */
 void ob_telemetry_render_companion_window(

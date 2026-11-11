@@ -319,3 +319,460 @@ void ob_telemetry_audit_ending(
                  "CF=%u, Lord ALI=%u -> Low Reputation Military Rule Track", cf, leader_ali);
     }
 }
+
+/* ==========================================================================
+ * Phase 5B Implementations
+ * ========================================================================== */
+
+size_t ob_telemetry_detect_recapture_threats(
+    const ObTelemetryFrame *frame,
+    ObRecaptureThreat *out_threats,
+    size_t max_threats
+) {
+    if (!frame || !out_threats || max_threats == 0) {
+        return 0;
+    }
+    size_t count = 0;
+
+    for (uint8_t s = 10; s < OB_MAX_DEPLOYED_SLOTS && count < max_threats; ++s) {
+        const ObMapEntityTelemetry *enemy = &frame->map_entities[s];
+        if (!enemy->is_active) continue;
+
+        for (uint8_t c = 0; c < OB_MAX_STAGE_CITIES && count < max_threats; ++c) {
+            const ObCityTelemetry *city = &frame->cities[c];
+            if (!city->exists) continue;
+            /* Only check player-liberated cities and temples */
+            if (!(city->ownership_mask & 0x01)) continue;
+
+            int32_t dx = (int32_t)city->world_x - (int32_t)enemy->world_x;
+            int32_t dy = (int32_t)city->world_y - (int32_t)enemy->world_y;
+            int32_t dist = abs(dx) + abs(dy);
+
+            /* Check if enemy target matches this city or enemy is within 180px and closing */
+            bool targeted = (abs((int32_t)enemy->target_x - (int32_t)city->world_x) <= 16 &&
+                             abs((int32_t)enemy->target_y - (int32_t)city->world_y) <= 16);
+            bool approaching = (dist <= 180 &&
+                                ((dx > 0 && enemy->vel_dx > 0) || (dx < 0 && enemy->vel_dx < 0) ||
+                                 (dy > 0 && enemy->vel_dy > 0) || (dy < 0 && enemy->vel_dy < 0)));
+
+            if (targeted || approaching) {
+                ObRecaptureThreat *th = &out_threats[count++];
+                th->enemy_slot        = s;
+                th->target_city_index = c;
+                th->distance_px       = dist;
+                int32_t speed         = enemy->mobility_speed > 0 ? (int32_t)enemy->mobility_speed : 3;
+                th->eta_ticks         = dist / speed;
+                th->is_temple         = ((city->ownership_mask & 0x04) != 0);
+                th->penalty_cf        = -5;
+                snprintf(th->threat_summary, sizeof(th->threat_summary),
+                         "ENEMY #%02u -> %s #%02u (DIST:%dpx, ETA:%dt)",
+                         s, th->is_temple ? "TEMPLE" : "CITY", c, dist, th->eta_ticks);
+            }
+        }
+    }
+    return count;
+}
+
+void ob_telemetry_forecast_neutral_encounters(
+    const ObTelemetryFrame *frame,
+    uint8_t squad_index,
+    ObNeutralSpawnForecast *out_forecast
+) {
+    if (!frame || !out_forecast) return;
+    memset(out_forecast, 0, sizeof(*out_forecast));
+    out_forecast->squad_index = squad_index;
+
+    uint8_t terrain = 1; /* Default Plains */
+    if (squad_index < OB_MAX_DEPLOYED_SLOTS && frame->map_entities[squad_index].is_active) {
+        terrain = frame->map_entities[squad_index].terrain_under;
+    }
+    out_forecast->terrain_id = terrain;
+
+    /* Check squad composition for recruiter classes */
+    bool has_beast_master = false;
+    bool has_witch = false;
+    bool has_cleric = false;
+    bool has_princess = false;
+    bool has_wizard = false;
+
+    if (squad_index < OB_MAX_SQUADS) {
+        const ObSquadTelemetry *sq = &frame->squads[squad_index];
+        for (uint8_t m = 0; m < OB_MAX_SQUAD_MEMBERS; ++m) {
+            uint8_t r_id = sq->member_ids[m];
+            if (r_id < OB_MAX_ROSTER_UNITS && frame->units[r_id].is_populated) {
+                uint8_t cls = frame->units[r_id].class_id;
+                if (cls == 13 || cls == 14) has_beast_master = true; /* Beast Tamer / Master */
+                else if (cls == 18) has_witch = true;               /* Witch */
+                else if (cls == 25 || cls == 26) has_cleric = true;  /* Cleric / Shaman */
+                else if (cls == 28) has_princess = true;            /* Princess */
+                else if (cls == 7 || cls == 8) has_wizard = true;   /* Wizard / Mage */
+            }
+        }
+    }
+
+    /* Has Glass Pumpkin in inventory? */
+    bool has_glass_pumpkin = false;
+    for (size_t i = 0; i < OB_MAX_CAMP_INVENTORY; ++i) {
+        if (frame->camp_inventory[i] == 0x4D) { has_glass_pumpkin = true; break; }
+    }
+
+    switch (terrain) {
+        case 2: /* Forest */
+            snprintf(out_forecast->terrain_name, sizeof(out_forecast->terrain_name), "FOREST");
+            snprintf(out_forecast->spawn_class_name, sizeof(out_forecast->spawn_class_name), "GHOST/SKELETON");
+            out_forecast->spawn_level = 9;
+            snprintf(out_forecast->recruiter_class_name, sizeof(out_forecast->recruiter_class_name), "CLERIC/HOLY");
+            out_forecast->persuade_ready = has_cleric || has_princess;
+            out_forecast->is_undead_ali_farm = true;
+            break;
+        case 3: /* Mountain */
+            snprintf(out_forecast->terrain_name, sizeof(out_forecast->terrain_name), "MOUNTAIN");
+            snprintf(out_forecast->spawn_class_name, sizeof(out_forecast->spawn_class_name), "GRIFFON/COCKATR");
+            out_forecast->spawn_level = 8;
+            snprintf(out_forecast->recruiter_class_name, sizeof(out_forecast->recruiter_class_name), "BEAST MASTER");
+            out_forecast->persuade_ready = has_beast_master;
+            break;
+        case 5: /* Swamp */
+            snprintf(out_forecast->terrain_name, sizeof(out_forecast->terrain_name), "SWAMP");
+            snprintf(out_forecast->spawn_class_name, sizeof(out_forecast->spawn_class_name), "WRAITH/PHANTOM");
+            out_forecast->spawn_level = 21;
+            snprintf(out_forecast->recruiter_class_name, sizeof(out_forecast->recruiter_class_name), "CLERIC/HOLY");
+            out_forecast->persuade_ready = has_cleric;
+            out_forecast->is_undead_ali_farm = true;
+            break;
+        case 6: /* Desert */
+            snprintf(out_forecast->terrain_name, sizeof(out_forecast->terrain_name), "DESERT");
+            snprintf(out_forecast->spawn_class_name, sizeof(out_forecast->spawn_class_name), "SALAMANDER/WYRM");
+            out_forecast->spawn_level = 17;
+            snprintf(out_forecast->recruiter_class_name, sizeof(out_forecast->recruiter_class_name), "BEAST MASTER");
+            out_forecast->persuade_ready = has_beast_master;
+            break;
+        case 7: /* Shallows */
+        case 8: /* Deep Sea */
+            snprintf(out_forecast->terrain_name, sizeof(out_forecast->terrain_name), "WATER/DEEP SEA");
+            snprintf(out_forecast->spawn_class_name, sizeof(out_forecast->spawn_class_name), "OCTOPUS/KRAKEN");
+            out_forecast->spawn_level = 10;
+            snprintf(out_forecast->recruiter_class_name, sizeof(out_forecast->recruiter_class_name), "BEAST MASTER");
+            out_forecast->persuade_ready = has_beast_master;
+            break;
+        default: /* Plains / Road */
+            snprintf(out_forecast->terrain_name, sizeof(out_forecast->terrain_name), "PLAINS");
+            snprintf(out_forecast->spawn_class_name, sizeof(out_forecast->spawn_class_name), "DRAGON/HAWKMAN");
+            out_forecast->spawn_level = 7;
+            snprintf(out_forecast->recruiter_class_name, sizeof(out_forecast->recruiter_class_name), "BEAST MASTER");
+            out_forecast->persuade_ready = has_beast_master;
+            break;
+    }
+
+    if (has_witch && has_glass_pumpkin && terrain == 3) {
+        out_forecast->is_pumpkin_ali_tank = true;
+    }
+    if (has_wizard && (terrain == 1 || terrain == 4)) {
+        out_forecast->persuade_ready = true;
+    }
+}
+
+size_t ob_telemetry_audit_tarot_hand(
+    const ObTelemetryFrame *frame,
+    ObTarotAudit *out_audits,
+    size_t max_cards
+) {
+    if (!frame || !out_audits || max_cards == 0) return 0;
+
+    static const struct {
+        const char *name;
+        const char *draw;
+        const char *battle;
+        bool offensive;
+    } kTarotTable[22] = {
+        {"MAGICIAN",   "INT +1",         "Fire Magic AOE",      true},
+        {"PRIESTESS",  "ALI +1",         "Heal 50 HP All",      false},
+        {"EMPRESS",    "CHA +2",         "Full Heal All",       false},
+        {"EMPEROR",    "CHA +2",         "+1 Action All",       false},
+        {"HIEROPHANT", "ALI +2",         "Sleep Enemies",       false},
+        {"LOVERS",     "CF +2",          "Charm Enemies",       false},
+        {"CHARIOT",    "STR +2",         "Loki Physical AOE",   true},
+        {"STRENGTH",   "STR +1",         "+Defense Rating",     false},
+        {"HERMIT",     "INT +2",         "Merlin Lightning",    true},
+        {"FORTUNE",    "CF Random",      "Flee Enemies",        false},
+        {"JUSTICE",    "HP +1",          "Ice Storm AOE",       true},
+        {"HANGED MAN", "STR -1",         "-Enemy Defense",      false},
+        {"DEATH",      "CF -2",          "Wipe <50% HP Foes",   true},
+        {"TEMPERANCE", "CF +2",          "Cure Status All",     false},
+        {"DEVIL",      "CF -2",          "Asmodeus Black Magic",true},
+        {"TOWER",      "ALI -2",         "Earthquake (Ground)", true},
+        {"STAR",       "AGI +1",         "+Agility/Evade",      false},
+        {"MOON",       "Nighttime",      "Invert Ranks",        false},
+        {"SUN",        "Daytime",        "Holy AOE vs Evil",    true},
+        {"JUDGEMENT",  "HP +2",          "White Magic AOE",     true},
+        {"WORLD",      "All Units Buff", "Magic Shield",        false},
+        {"FOOL",       "LUK +1",         "Flee Grunts",         false}
+    };
+
+    uint8_t leader_lvl = frame->units[0].is_populated ? frame->units[0].level : 5;
+    size_t count = 0;
+
+    for (uint8_t i = 0; i < frame->tarot_hand_count && count < max_cards; ++i) {
+        uint8_t id = frame->tarot_hand[i];
+        if (id >= 22) continue;
+
+        ObTarotAudit *a = &out_audits[count++];
+        a->card_id      = id;
+        snprintf(a->card_name, sizeof(a->card_name), "%s", kTarotTable[id].name);
+        snprintf(a->draw_effect, sizeof(a->draw_effect), "%s", kTarotTable[id].draw);
+        snprintf(a->battle_effect, sizeof(a->battle_effect), "%s", kTarotTable[id].battle);
+        a->is_offensive = kTarotTable[id].offensive;
+
+        /* Opinion Leader Overlevel & ALI Trap: Offensive cards award kill XP & ALI deltas to Lord */
+        a->leader_overlevel_risk = (a->is_offensive && leader_lvl >= 4);
+    }
+    return count;
+}
+
+size_t ob_telemetry_audit_special_recruits(
+    const ObTelemetryFrame *frame,
+    ObHeroRecruitmentAudit *out_heroes,
+    size_t max_heroes
+) {
+    if (!frame || !out_heroes || max_heroes == 0) return 0;
+
+    static const struct {
+        const char *name;
+        const char *stage;
+        uint8_t min_cf;
+        uint8_t max_cf;
+        uint8_t min_ali;
+        uint8_t max_ali;
+        const char *item;
+        const char *warn;
+    } kHeroDefs[18] = {
+        {"LANS",     "Castle of Warren", 0,   100, 0,   100, "None",           ""},
+        {"WARREN",   "Castle of Warren", 0,   100, 0,   100, "None",           ""},
+        {"CANOPUS",  "Sharom District",  0,   100, 0,   100, "Wing of Victory",""},
+        {"GILBERT",  "Sharom District",  0,   100, 0,   100, "Fight w/ Canopus",""},
+        {"ASHE",     "Slums of Zenobia", 0,   100, 0,   100, "By'Roit Yes",    ""},
+        {"LYON",     "Slums of Zenobia", 0,   100, 0,   100, "20,000 Goth",    ""},
+        {"AISHA",    "Island Avalon",    51,  100, 0,   100, "Hidden Temple",  ""},
+        {"NORN",     "Diaspola",         0,   100, 0,   100, "Refuse to Kill", ""},
+        {"RAUNY",    "Valley of Kastro", 51,  100, 0,   100, "Hidden Temple",  ""},
+        {"SARADIN",  "Balmorian Ruins",  51,  100, 0,   100, "Bell of Light",  ""},
+        {"SLUST",    "Muspelm",          67,  100, 70,  100, "Star of Heroes", ""},
+        {"FENRIL",   "Organa",           67,  100, 70,  100, "Star of Heroes", ""},
+        {"TRISTAN",  "City of Malano",   0,   100, 0,   100, "Key of Destiny", ""},
+        {"YUSHIS",   "Antalia",          67,  100, 0,   100, "Hidden Temple",  ""},
+        {"DEBONAIR", "Shangrila",        0,   100, 0,   100, "Recruited Norn", ""},
+        {"FOGEL",    "Shiguld",          67,  100, 70,  100, "Star of Heroes", ""},
+        {"DENEB",    "Deneb's Garden",   0,   33,  0,   100, "Golden Bough",   "Blocks Halloween Upgrade!"},
+        {"GALF",     "Antanjyl",         0,   15,  0,   30,  "Brunhild Sword", "Locks Out Top 3 Endings!"}
+    };
+
+    uint8_t cf = frame->chaos_frame;
+    uint8_t leader_ali = frame->units[0].is_populated ? frame->units[0].ali : 50;
+
+    size_t count = 0;
+    for (size_t i = 0; i < 18 && count < max_heroes; ++i) {
+        ObHeroRecruitmentAudit *h = &out_heroes[count++];
+        h->hero_id = (uint8_t)i;
+        snprintf(h->hero_name, sizeof(h->hero_name), "%s", kHeroDefs[i].name);
+        snprintf(h->stage_found, sizeof(h->stage_found), "%s", kHeroDefs[i].stage);
+        snprintf(h->required_item_name, sizeof(h->required_item_name), "%s", kHeroDefs[i].item);
+        snprintf(h->tradeoff_warning, sizeof(h->tradeoff_warning), "%s", kHeroDefs[i].warn);
+
+        h->prereq_cf_met  = (cf >= kHeroDefs[i].min_cf && cf <= kHeroDefs[i].max_cf);
+        h->prereq_ali_met = (leader_ali >= kHeroDefs[i].min_ali && leader_ali <= kHeroDefs[i].max_ali);
+        h->prereq_item_met = true; /* Simplified item presence flag */
+
+        /* Check if recruited by bitflag or name in roster */
+        h->is_recruited = false;
+        for (uint8_t u = 0; u < OB_MAX_ROSTER_UNITS; ++u) {
+            if (frame->units[u].is_populated && frame->units[u].template_id == (i + 1)) {
+                h->is_recruited = true;
+                break;
+            }
+        }
+
+        if (h->is_recruited) {
+            snprintf(h->status_summary, sizeof(h->status_summary), "RECRUITED (IN ROSTER)");
+        } else if (h->prereq_cf_met && h->prereq_ali_met) {
+            snprintf(h->status_summary, sizeof(h->status_summary), "READY (CF/ALI QUALIFIED)");
+        } else {
+            snprintf(h->status_summary, sizeof(h->status_summary), "LOCKED (CF:%u..%u ALI:%u..%u)",
+                     kHeroDefs[i].min_cf, kHeroDefs[i].max_cf, kHeroDefs[i].min_ali, kHeroDefs[i].max_ali);
+        }
+    }
+    return count;
+}
+
+void ob_telemetry_track_zodiac_stones(
+    const ObTelemetryFrame *frame,
+    ObZodiacQuestStatus *out_status
+) {
+    if (!frame || !out_status) return;
+    memset(out_status, 0, sizeof(*out_status));
+
+    uint8_t stone_cnt = 0;
+    uint16_t mask = 0;
+
+    for (size_t i = 0; i < OB_MAX_CAMP_INVENTORY; ++i) {
+        uint8_t itm = frame->camp_inventory[i];
+        if (itm == 0x45) out_status->quicksilver_in_hand = true;
+        else if (itm == 0x46) out_status->gem_of_doun_in_hand = true;
+        else if (itm == 0x47) out_status->olden_orb_in_hand = true;
+        else if (itm == 0x48) out_status->gem_of_truth_in_hand = true;
+        else if (itm == 0x49) out_status->tablet_of_yaru_in_hand = true;
+        else if (itm >= 0x50 && itm <= 0x5B) {
+            uint8_t s_idx = itm - 0x50;
+            if (!(mask & (1U << s_idx))) {
+                mask |= (1U << s_idx);
+                stone_cnt++;
+            }
+        }
+        else if (itm == 0x5C) out_status->beehive_in_hand = true;
+        else if (itm == 0x5D) out_status->sentoul_demon_in_hand = true;
+        else if (itm == 0x5E) out_status->ginger_cake_in_hand = true;
+        else if (itm == 0x21) out_status->wind_weapons_mask |= 1; /* Notos */
+        else if (itm == 0x22) out_status->wind_weapons_mask |= 2; /* Zephyrus */
+        else if (itm == 0x23) out_status->wind_weapons_mask |= 4; /* Boreas */
+        else if (itm == 0x24) out_status->wind_weapons_mask |= 8; /* Euros */
+    }
+
+    out_status->stones_collected_count = stone_cnt;
+    out_status->stones_mask            = mask;
+    out_status->pearl_stone_ready      = out_status->ginger_cake_in_hand && out_status->tablet_of_yaru_in_hand;
+    out_status->fireseal_ready         = ((out_status->wind_weapons_mask & 0x0F) == 0x0F);
+}
+
+void ob_telemetry_analyze_squad_mobility(
+    const ObTelemetryFrame *frame,
+    uint8_t squad_index,
+    ObSquadMobilityAnalysis *out_analysis
+) {
+    if (!frame || !out_analysis) return;
+    memset(out_analysis, 0, sizeof(*out_analysis));
+    out_analysis->squad_index = squad_index;
+
+    static const char *const kMoveNames[10] = {
+        "HIGH SKY", "LOW SKY", "FAST", "SNOW", "NORMAL", "FOREST", "MOUNTAIN", "SLOW", "SHALLOWS", "DEEP SEA"
+    };
+
+    uint8_t m_type = 4; /* Normal */
+    if (squad_index < OB_MAX_DEPLOYED_SLOTS && frame->map_entities[squad_index].is_active) {
+        m_type = frame->map_entities[squad_index].move_type % 10;
+    }
+    out_analysis->move_type_id = m_type;
+    snprintf(out_analysis->move_type_name, sizeof(out_analysis->move_type_name), "%s", kMoveNames[m_type]);
+
+    /* Count flying units */
+    uint8_t flyers = 0;
+    uint32_t total_ali = 0;
+    uint8_t m_count = 0;
+
+    if (squad_index < OB_MAX_SQUADS) {
+        const ObSquadTelemetry *sq = &frame->squads[squad_index];
+        for (uint8_t m = 0; m < OB_MAX_SQUAD_MEMBERS; ++m) {
+            uint8_t r_id = sq->member_ids[m];
+            if (r_id < OB_MAX_ROSTER_UNITS && frame->units[r_id].is_populated) {
+                uint8_t cls = frame->units[r_id].class_id;
+                /* Flyers: Hawkman(11/12), Angel/Cherub/Seraph(20/21/22), Griffon/Cockatris(44/45), Wyrm/Wyvern(46/47) */
+                if (cls == 11 || cls == 12 || cls == 20 || cls == 21 || cls == 22 ||
+                    cls == 44 || cls == 45 || cls == 46 || cls == 47) {
+                    flyers++;
+                }
+                total_ali += frame->units[r_id].ali;
+                m_count++;
+            }
+        }
+    }
+
+    out_analysis->flyers_count = flyers;
+    out_analysis->flyers_needed_for_sky = (flyers >= 2) ? 0 : (2 - flyers);
+
+    uint8_t avg_ali = (m_count > 0) ? (uint8_t)(total_ali / m_count) : 50;
+    out_analysis->is_day_favored   = (avg_ali >= 55);
+    out_analysis->is_night_favored = (avg_ali <= 45);
+
+    snprintf(out_analysis->synergy_summary, sizeof(out_analysis->synergy_summary),
+             "%s (%s) | %s",
+             out_analysis->move_type_name,
+             (flyers >= 2) ? "SKY READY" : "NEEDS FLYER",
+             out_analysis->is_day_favored ? "SOLAR/DAY SYNERGY" : (out_analysis->is_night_favored ? "NIGHT SYNERGY" : "BALANCED"));
+}
+
+void ob_telemetry_preview_lord_archetype(
+    const uint8_t *wram,
+    ObLordArchetypePreview *out_preview
+) {
+    if (!wram || !out_preview) return;
+    memset(out_preview, 0, sizeof(*out_preview));
+
+    uint8_t raw_ali = wram[0x0C1A]; /* Unit 0 ALI */
+    if (raw_ali >= 65) {
+        out_preview->projected_archetype   = 0;
+        out_preview->projected_starting_ali = raw_ali;
+        snprintf(out_preview->archetype_name, sizeof(out_preview->archetype_name), "HOLY KNIGHT (ICECLOUD)");
+        snprintf(out_preview->front_skill, sizeof(out_preview->front_skill), "2x BANISH");
+        snprintf(out_preview->back_skill, sizeof(out_preview->back_skill), "1x ICECLOUD (ALL)");
+        snprintf(out_preview->starting_troops, sizeof(out_preview->starting_troops), "3 FIGHTERS + 1 CLERIC");
+    } else if (raw_ali >= 50) {
+        out_preview->projected_archetype   = 1;
+        out_preview->projected_starting_ali = raw_ali;
+        snprintf(out_preview->archetype_name, sizeof(out_preview->archetype_name), "WARRIOR (IAINUKI)");
+        snprintf(out_preview->front_skill, sizeof(out_preview->front_skill), "3x SLASH");
+        snprintf(out_preview->back_skill, sizeof(out_preview->back_skill), "1x IAINUKI");
+        snprintf(out_preview->starting_troops, sizeof(out_preview->starting_troops), "3 FIGHTERS + 1 VALKYRIE");
+    } else if (raw_ali >= 40) {
+        out_preview->projected_archetype   = 2;
+        out_preview->projected_starting_ali = raw_ali;
+        snprintf(out_preview->archetype_name, sizeof(out_preview->archetype_name), "BEAST TACTICIAN (THUNDER)");
+        snprintf(out_preview->front_skill, sizeof(out_preview->front_skill), "2x SLASH");
+        snprintf(out_preview->back_skill, sizeof(out_preview->back_skill), "1x THUNDER (ALL)");
+        snprintf(out_preview->starting_troops, sizeof(out_preview->starting_troops), "3 FIGHTERS + 1 BEASTMAN");
+    } else {
+        out_preview->projected_archetype   = 3;
+        out_preview->projected_starting_ali = raw_ali;
+        snprintf(out_preview->archetype_name, sizeof(out_preview->archetype_name), "SORCERER (PHANTOM)");
+        snprintf(out_preview->front_skill, sizeof(out_preview->front_skill), "2x POISON");
+        snprintf(out_preview->back_skill, sizeof(out_preview->back_skill), "1x PHANTOM (ALL)");
+        snprintf(out_preview->starting_troops, sizeof(out_preview->starting_troops), "3 FIGHTERS + 1 WIZARD");
+    }
+}
+
+void ob_telemetry_audit_hidden_poi(
+    const ObTelemetryFrame *frame,
+    ObHiddenPoISummary *out_summary
+) {
+    if (!frame || !out_summary) return;
+    memset(out_summary, 0, sizeof(*out_summary));
+
+    for (uint8_t c = 0; c < OB_MAX_STAGE_CITIES; ++c) {
+        const ObCityTelemetry *city = &frame->cities[c];
+        if (!city->exists) continue;
+        out_summary->total_cities++;
+
+        bool is_temple = ((city->ownership_mask & 0x04) != 0);
+        bool is_hidden = ((city->ownership_mask & 0x02) != 0);
+        bool is_liberated = ((city->ownership_mask & 0x01) != 0);
+
+        if (!is_liberated) {
+            out_summary->unliberated_cities_count++;
+        }
+
+        if (is_hidden) {
+            if (is_temple) {
+                out_summary->hidden_temples_count++;
+                if (!is_liberated) out_summary->unrevealed_temples_count++;
+            } else {
+                out_summary->hidden_cities_count++;
+                if (!is_liberated) out_summary->unrevealed_cities_count++;
+            }
+        }
+    }
+
+    /* Buried treasures across story_bitmap[150..224] (TREASURE_BIT_B) */
+    out_summary->buried_treasures_total = 4; /* Canonical 3-4 treasures per map */
+    uint8_t found = 0;
+    for (uint16_t b = 150; b < 225; ++b) {
+        if (frame->story_bitmap[b] != 0) found++;
+    }
+    out_summary->buried_treasures_found = (found > 4) ? 4 : found;
+}
