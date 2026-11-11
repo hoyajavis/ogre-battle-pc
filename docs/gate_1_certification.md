@@ -32,7 +32,7 @@ Every frame evaluated demonstrated **0-byte memory drift** across all SNES hardw
 In Trace 02 (`trace_02_tarot_creation.obrec`), the character creation Tarot card settlement at Frame 8,547 previously diverged at `WRAM 0x7E:0007` (`Ref: 0x02, Cand: 0xFF`).
 
 1. **Hardware Interception**: Subroutine `$05:8299` computes character creation initial direct-page variables by indexing personality tables in Bank `$7F`. It performs 8-bit unsigned multiplication via hardware MMIO (`$4202 * $4203 -> $4216`), updates pointers `[$16]`, and writes the low byte to direct page address `$07` (`0x7E:0007`).
-2. **Resolution**: The static translation unit [`src/gen/ob_bank_05.c`](file:///home/antigravity/src/gen/ob_bank_05.c) implements `gen_058299()` with bit-exact bus semantics and hardware register interaction. 
+2. **Resolution**: The static translation unit [`src/gen/ob_bank_05.c`](../src/gen/ob_bank_05.c) implements `gen_058299()` with bit-exact bus semantics and hardware register interaction. 
 3. **Transient Stack Boundary Normalization**: When entering subroutines in native execution, host C call stack frames are used rather than pushing synthetic return frames to SNES low-RAM stack memory. Active memory comparisons correctly match the snesrecomp standard (`recomp_interp.c:538`), verifying active state while confirming full byte-for-byte 128KB parity upon subroutine returns and trace boundaries.
 
 ---

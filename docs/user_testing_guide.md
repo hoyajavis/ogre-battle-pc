@@ -1,6 +1,6 @@
 # Ogre Battle PC Port: Windows Preview Executable & Testing Guide
 
-**Executable Target**: [ogre_battle.exe](file:///home/antigravity/.gemini/jetski/brain/v1/default/jetski_remote_agents_3p/e8cfcb9f-9625-4be2-8a8e-163373936753/ogre_battle.exe) (also in [`bin/ogre_battle.exe`](file:///home/antigravity/bin/ogre_battle.exe))  
+**Executable Target**: `ogre_battle.exe` (or `bin/ogre_battle.exe`)  
 **Version**: Milestone 4 Build — Rev 5 (Gate 2: Direct-State Mouse Control & Hybrid Input Integration)  
 **Binary Architecture**: x86-64 PE32+ Windows GUI Subsystem (`-Wl,--subsystem,windows`)  
 **Dependencies**: **0 external DLLs** (pure Win32 GDI, `waveOut` 32,040 Hz stereo audio, multimedia timer)  
@@ -24,7 +24,7 @@
 
 ## 1. Quick Start
 
-1. Download [`ogre_battle.exe`](file:///home/antigravity/.gemini/jetski/brain/v1/default/jetski_remote_agents_3p/e8cfcb9f-9625-4be2-8a8e-163373936753/ogre_battle.exe) directly to your Windows PC.
+1. Download `ogre_battle.exe` directly to your Windows PC.
 2. Double-click **`ogre_battle.exe`** to launch.
 3. The game starts in a clean 4:3 native 1024x896 window (resizable).
 4. Progress automatically persists to `ogre_battle.srm` in the same directory every 5 seconds and on exit.

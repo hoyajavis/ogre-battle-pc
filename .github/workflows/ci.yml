@@ -1,0 +1,40 @@
+name: CI & Quality Gates
+
+on:
+  push:
+    branches: [ main, gate/* ]
+  pull_request:
+    branches: [ main, gate/* ]
+
+jobs:
+  lint-and-validate:
+    name: Repository Cleanliness & Config Syntax
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Verify Clean Repository (Rule 4)
+        run: |
+          echo "Checking for illegal ROM binaries..."
+          if find . -type f \( -name "*.sfc" -o -name "*.smc" -o -name "*.rom" \); then
+            echo "ERROR: Copyrighted ROM file detected in repository!"
+            exit 1
+          fi
+
+      - name: Validate INI and JSON Configuration Syntax
+        run: |
+          python3 -c "
+          import os, json, configparser
+          for root, _, files in os.walk('.'):
+              if '.git' in root: continue
+              for f in files:
+                  p = os.path.join(root, f)
+                  if f.endswith('.json') and not f.endswith('.metadata.json'):
+                      try: json.load(open(p))
+                      except Exception as e: raise Exception(f'Invalid JSON {p}: {e}')
+                  elif f.endswith('.ini'):
+                      try: configparser.ConfigParser().read(p)
+                      except Exception as e: raise Exception(f'Invalid INI {p}: {e}')
+          print('All configuration files validated successfully.')
+          "
