@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Ogre Battle PC Port - Pre-Commit Quality Gate
+# Enforces Rule 4 (Legal & Repository Cleanliness) and configuration syntax.
+# ==============================================================================
+set -e
+
+# 1. Reject proprietary ROM binaries
+if git diff --cached --name-only | grep -E '\.(sfc|smc|rom|bin)$'; then
+    echo "ERROR: Attempted to commit a copyrighted ROM binary. Commit aborted by Rule 4." >&2
+    exit 1
+fi
+
+# 2. Reject raw RAM snapshots and temporary test logs
+if git diff --cached --name-only | grep -E '(\.obsav|\.log|\.diff)$'; then
+    echo "ERROR: Attempted to commit temporary snapshot/log data. Use .gitignore." >&2
+    exit 1
+fi
+
+# 3. Validate INI & JSON configuration syntax if staged
+for file in $(git diff --cached --name-only | grep -E '\.(ini|json)$'); do
+    if [ -f "$file" ]; then
+        python3 -c "import json, configparser; json.load(open('$file')) if '$file'.endswith('.json') else configparser.ConfigParser().read('$file')" 2>/dev/null || {
+            echo "ERROR: Syntax validation failed for staged file: $file" >&2
+            exit 1
+        }
+    fi
+done
+
+exit 0

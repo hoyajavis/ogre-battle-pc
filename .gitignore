@@ -1,0 +1,50 @@
+# ==============================================================================
+# Ogre Battle PC Port (.gitignore)
+# ==============================================================================
+
+# Environment & User Home files (Workspace root is $HOME)
+.gemini/
+.bashrc
+.bash_logout
+.profile
+.gitconfig
+upload/
+
+# 1. Proprietary ROM Files (Strict Legal Cleanliness - Rule 4)
+# Never commit original copyrighted ROM binaries.
+*.sfc
+*.smc
+*.rom
+*.bin
+!clean_rom_manifest.json
+
+# 2. Build Directories & Compiled Binaries
+build/
+bin/
+cmake-build-*/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# 3. Test Logs, Memory Dumps & Transient Artifacts
+*.log
+*.diff
+*.obsav
+*.srm
+traces/*.obsav
+traces/*.diff
+traces/*_screen.png
+traces/snapshots/
+
+# 4. OS & Editor Metadata
+.DS_Store
+.cache/
+.vscode/
+.idea/
+*~
+
+.gemini
+.local/

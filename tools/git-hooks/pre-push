@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Ogre Battle PC Port - Pre-Push Quality Gate
+# Enforces the Golden Oracle Regression rule before pushing to remote.
+# ==============================================================================
+set -e
+
+echo "=== Running Pre-Push Oracle Verification Gate ==="
+
+# Check if build runner exists; if so, run the smoke test
+if [ -x "./build/test_trace" ]; then
+    ./build/test_trace --trace traces/trace_01_boot_to_title.obrec --mode RM_BOTH --exit-on-drift
+    if [ $? -ne 0 ]; then
+        echo "FATAL: Pre-push smoke test failed! Memory drift detected. Push blocked." >&2
+        exit 1
+    fi
+    echo "Pre-push oracle smoke test passed."
+fi
+
+exit 0
