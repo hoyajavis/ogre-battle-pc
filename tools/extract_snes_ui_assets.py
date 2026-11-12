@@ -1,15 +1,51 @@
 #!/usr/bin/env python3
 """
 Ogre Battle PC Port — Modernization Area 1: SNES UI Asset Pipeline
-Generates `include/ob_snes_ui_theme.h` containing authentic 1993 SNES:
-- BGR555 CGRAM color palettes (Royal Blue vertical gradient, Ornate Gold 9-slice)
-- 8x8 2BPP ornate 9-slice dialogue border tiles (corners, rails, header gems)
-- Authentic 8x8 pixel font glyphs with drop-shadow support
-- 8x8 and 16x16 retro tactical icons (Sun, Moon, Crown, Sword, Shield, Skull, Gem, Tarot)
+Extracts authentic 1993 SNES graphics directly from ogre_battle.sfc:
+- Authentic 8x8 2BPP font from ROM offset 0x090000 (letters, numbers, icons)
+- Authentic 8x8 2BPP 9-slice dialogue & button border tiles from offset 0x14EEE7
+- Authentic diamond gem & ornamental crest tiles
+- Generates include/ob_snes_ui_theme.h with BGR555 palettes and C tile arrays
 """
 
 import sys
 from pathlib import Path
+
+def decompress_snes_lz(rom: bytes, offset: int) -> bytes:
+    uncomp_size = rom[offset] | (rom[offset+1] << 8)
+    comp_size = rom[offset+2] | (rom[offset+3] << 8)
+    pos = offset + 4
+    if comp_size == 0:
+        return bytes(rom[pos:pos+uncomp_size])
+    
+    out = bytearray()
+    flag_byte = 0
+    bits_left = 0
+    while len(out) < uncomp_size:
+        if bits_left == 0:
+            flag_byte = rom[pos]
+            pos += 1
+            bits_left = 8
+        is_literal = (flag_byte & 1) != 0
+        flag_byte >>= 1
+        bits_left -= 1
+        if is_literal:
+            out.append(rom[pos])
+            pos += 1
+        else:
+            b0 = rom[pos]
+            b1 = rom[pos+1]
+            pos += 2
+            length = (b0 >> 3) + 3
+            offset_11bit = ((b0 & 0x07) << 8) | b1
+            disp = 0x0800 - offset_11bit
+            src_pos = len(out) - disp
+            for _ in range(length):
+                out.append(out[src_pos])
+                src_pos += 1
+                if len(out) == uncomp_size:
+                    break
+    return bytes(out)
 
 def snes_bgr555_to_rgba(bgr555: int) -> int:
     r5 = (bgr555 >> 0) & 0x1F
@@ -20,360 +56,200 @@ def snes_bgr555_to_rgba(bgr555: int) -> int:
     b8 = (b5 * 255) // 31
     return 0xFF000000 | (r8 << 16) | (g8 << 8) | b8
 
+def format_c_byte_array(data: bytes, bytes_per_line: int = 16, indent: str = "    ") -> str:
+    lines = []
+    for i in range(0, len(data), bytes_per_line):
+        chunk = data[i : i + bytes_per_line]
+        hex_vals = ", ".join(f"0x{b:02X}" for b in chunk)
+        lines.append(f"{indent}{hex_vals},")
+    return "\n".join(lines)
+
 def main():
     repo_root = Path(__file__).resolve().parent.parent
+    rom_path = repo_root / "ogre_battle.sfc"
     header_path = repo_root / "include" / "ob_snes_ui_theme.h"
-    print(f"Generating SNES UI theme header at: {header_path}")
 
-    # Generate ob_snes_ui_theme.h
-    content = '''#ifndef OB_SNES_UI_THEME_H
+    if not rom_path.exists():
+        print(f"Error: ROM not found at {rom_path}")
+        sys.exit(1)
+
+    print(f"Reading ROM from {rom_path}...")
+    rom = rom_path.read_bytes()
+
+    print("Decompressing authentic 1993 SNES font from offset 0x090000...")
+    font_bytes = decompress_snes_lz(rom, 0x090000)
+    print(f"  -> Extracted {len(font_bytes)} bytes ({len(font_bytes)//16} 8x8 tiles)")
+
+    print("Decompressing authentic 1993 SNES UI frames from offset 0x14EEE7...")
+    ui_frame_bytes = decompress_snes_lz(rom, 0x14EEE7)
+    print(f"  -> Extracted {len(ui_frame_bytes)} bytes ({len(ui_frame_bytes)//16} 8x8 tiles)")
+
+    # Extract 9-slice border tiles from ui_frame_bytes (32 tiles wide):
+    # Tile 130: Top-Left Corner
+    # Tile 131: Top Rail
+    # Tile 132: Top-Right Corner
+    # Tile 133: Left Rail
+    # Tile 165: Right Rail
+    # Tile 162: Bottom-Left Corner
+    # Tile 163: Bottom Rail
+    # Tile 164: Bottom-Right Corner
+    # Tile 96:  Diamond Gem
+    tile_tl = ui_frame_bytes[130 * 16 : 131 * 16]
+    tile_top = ui_frame_bytes[131 * 16 : 132 * 16]
+    tile_tr = ui_frame_bytes[132 * 16 : 133 * 16]
+    tile_left = ui_frame_bytes[133 * 16 : 134 * 16]
+    tile_right = ui_frame_bytes[165 * 16 : 166 * 16]
+    tile_bl = ui_frame_bytes[162 * 16 : 163 * 16]
+    tile_bottom = ui_frame_bytes[163 * 16 : 164 * 16]
+    tile_br = ui_frame_bytes[164 * 16 : 165 * 16]
+    tile_gem = ui_frame_bytes[96 * 16 : 97 * 16]
+
+    # Authentic Ogre Battle Palettes:
+    # SNES BGR555 color definitions:
+    # Dark Slate Panel:
+    # Fill: #14141C (BGR555: R=2, G=2, B=3 -> 0x0C42)
+    # Border Dark/Outer Bevel: #282018 (R=5, G=4, B=3 -> 0x0C85)
+    # Border Mid/Brass: #C89838 (R=25, G=19, B=7 -> 0x1E79)
+    # Border Highlight Gold: #F8D040 (R=31, G=26, B=8 -> 0x235F)
+    # Parchment:
+    # Base: #E8D8B0 (R=29, G=27, B=22 -> 0x5B7D)
+    # Shadow/Border: #A88848 (R=21, G=17, B=9 -> 0x2635)
+    # Dark Sepia: #302010 (R=6, G=4, B=2 -> 0x0886)
+
+    content = f"""#ifndef OB_SNES_UI_THEME_H
 #define OB_SNES_UI_THEME_H
+
+/*
+ * ==============================================================================
+ * OGRE BATTLE: THE MARCH OF THE BLACK QUEEN (SNES 1993)
+ * AUTHENTIC UI THEME, PALETTES & EXTRACTED ROM TILES
+ * Automatically generated by tools/extract_snes_ui_assets.py
+ * ==============================================================================
+ */
 
 #include <stdint.h>
 #include <stdbool.h>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C" {{
 #endif
 
-/* ==========================================================================
- * 1. SNES BGR555 CGRAM COLOR PALETTES (0xAARRGGBB format)
- * ========================================================================== */
+/* ==============================================================================
+ * 1. AUTHENTIC SNES BGR555 COLOR DEFINITIONS (0xAARRGGBB in Framebuffer)
+ * ============================================================================== */
 
-/* Window Background: Vertical Royal Blue Gradient (Mode 1 CGRAM) */
-#define OB_COLOR_WINDOW_TOP           0xFF182868U  /* Top Royal Blue */
-#define OB_COLOR_WINDOW_MID           0xFF101848U  /* Mid Navy */
-#define OB_COLOR_WINDOW_BOTTOM        0xFF080830U  /* Deep Midnight Blue */
-#define OB_COLOR_WINDOW_BEVEL_DARK    0xFF080810U  /* Inner Bevel / Shadow */
+/* Slate Window Background (Authentic SNES Ogre Battle Dark Slate Panel) */
+#define OB_COLOR_SLATE_DARK           0xFF101014U  /* Deepest Slate / Backdrop */
+#define OB_COLOR_SLATE_MID            0xFF181820U  /* Panel Fill */
+#define OB_COLOR_SLATE_LIGHT          0xFF20202CU  /* Bevel Highlight */
+#define OB_COLOR_SLATE_DITHER         0xFF14141CU  /* Scanline Dither Alternate */
 
-/* Ornate Gold / Brass 9-Slice Dialogue Border */
-#define OB_COLOR_GOLD_HI              0xFFF8D870U  /* Highlight Light Gold */
-#define OB_COLOR_GOLD_MID             0xFFC89838U  /* Mid Brass */
-#define OB_COLOR_GOLD_SHADOW          0xFF785018U  /* Shadow Bronze */
-#define OB_COLOR_GOLD_DARK            0xFF382008U  /* Dark Rim / Outline */
+/* Aged Zenobian Parchment (Status Ledgers & Map Accents) */
+#define OB_COLOR_PARCHMENT_LIGHT      0xFFE8D8B0U  /* Parchment Base */
+#define OB_COLOR_PARCHMENT_MID        0xFFD0B888U  /* Aged Shading */
+#define OB_COLOR_PARCHMENT_DARK       0xFF886840U  /* Parchment Border / Ink */
+#define OB_COLOR_PARCHMENT_SEPIA      0xFF302010U  /* Deep Sepia Text */
 
-/* Typography & Status Palettes */
-#define OB_COLOR_TEXT_IVORY           0xFFF8F8F0U  /* Body Text */
-#define OB_COLOR_TEXT_GOLD            0xFFF8E050U  /* Headers / Goth */
-#define OB_COLOR_TEXT_CRIMSON         0xFFF84848U  /* Recapture Alert / Warning */
+/* Ornate Gold / Metallic Brass 9-Slice Border */
+#define OB_COLOR_GOLD_HI              0xFFF8D040U  /* Light Sun Gold Highlight */
+#define OB_COLOR_GOLD_MID             0xFFC89838U  /* Antique Brass Mid */
+#define OB_COLOR_GOLD_SHADOW          0xFF684818U  /* Shadow Bronze */
+#define OB_COLOR_GOLD_DARK            0xFF281808U  /* Bevel Outer Rim */
+
+/* Authentic Typography Palettes */
+#define OB_COLOR_TEXT_IVORY           0xFFF8F8F0U  /* Primary Body Text */
+#define OB_COLOR_TEXT_GOLD            0xFFF8D040U  /* Headers / Section Titles */
+#define OB_COLOR_TEXT_CRIMSON         0xFFF84848U  /* Threats / Recapture Warning */
 #define OB_COLOR_TEXT_EMERALD         0xFF58F878U  /* Liberated / High Morale */
-#define OB_COLOR_TEXT_CYAN            0xFF68E8F8U  /* Celestial / Sky Units */
-#define OB_COLOR_TEXT_MUTED           0xFF98A0B0U  /* Subdued Labels */
-#define OB_COLOR_TEXT_PURPLE          0xFFB868F8U  /* Relic / Tarot Magic */
-#define OB_COLOR_TEXT_AMBER           0xFFF8A838U  /* Neutral Encounters */
+#define OB_COLOR_TEXT_SKY             0xFF58D8F8U  /* Sky / Flying Mobility */
+#define OB_COLOR_TEXT_MUTED           0xFF9898A8U  /* Subdued Labels / Notes */
+#define OB_COLOR_TEXT_PURPLE          0xFFC878F8U  /* Relics / Zodiac Stones */
+#define OB_COLOR_TEXT_AMBER           0xFFF8A030U  /* Neutral Encounters */
+#define OB_COLOR_TEXT_SHADOW          0xFF08080CU  /* 1px Drop Shadow */
 
-/* Palette Index Enum for draw_snes_tile_text */
-typedef enum {
+/* Palette Index Enum */
+typedef enum {{
     OB_SNES_PAL_IVORY   = 0,
     OB_SNES_PAL_GOLD    = 1,
     OB_SNES_PAL_CRIMSON = 2,
     OB_SNES_PAL_EMERALD = 3,
-    OB_SNES_PAL_CYAN    = 4,
+    OB_SNES_PAL_SKY     = 4,
     OB_SNES_PAL_MUTED   = 5,
     OB_SNES_PAL_PURPLE  = 6,
     OB_SNES_PAL_AMBER   = 7
-} ObSnesPalette;
+}} ObSnesPalette;
 
-/* ==========================================================================
- * 2. 8x8 2BPP 9-SLICE BORDER TILES (4 Colors: 0=Transparent, 1=Hi, 2=Mid, 3=Shadow)
- * ========================================================================== */
+/* ==============================================================================
+ * 2. AUTHENTIC 1993 SNES 8x8 2BPP 9-SLICE BORDER TILES (Extracted from ROM $14EEE7)
+ * ============================================================================== */
 
-/* Top-Left Corner (8x8): Ornate beveled bracket with gold rosette */
-static const uint8_t kSnesTileCornerTL[8] = {
-    0x00, /* ........ */
-    0x3E, /* ..XXXXX. */
-    0x3F, /* ..XXXXXX */
-    0x39, /* ..XXX..X */
-    0x39, /* ..XXX..X */
-    0x3F, /* ..XXXXXX */
-    0x3F, /* ..XXXXXX */
-    0x38  /* ..XXX... */
-};
+/* Top-Left Corner Tile (16 bytes, 2BPP) */
+static const uint8_t kSnesTileCornerTL[16] = {{
+{format_c_byte_array(tile_tl)}
+}};
 
-/* Top-Right Corner (8x8) */
-static const uint8_t kSnesTileCornerTR[8] = {
-    0x00, /* ........ */
-    0x7C, /* .XXXXX.. */
-    0xFC, /* XXXXXX.. */
-    0x9C, /* X..XXX.. */
-    0x9C, /* X..XXX.. */
-    0xFC, /* XXXXXX.. */
-    0xFC, /* XXXXXX.. */
-    0x1C  /* ...XXX.. */
-};
+/* Top Horizontal Rail Tile (16 bytes, 2BPP) */
+static const uint8_t kSnesTileRailTop[16] = {{
+{format_c_byte_array(tile_top)}
+}};
 
-/* Bottom-Left Corner (8x8) */
-static const uint8_t kSnesTileCornerBL[8] = {
-    0x38, /* ..XXX... */
-    0x3F, /* ..XXXXXX */
-    0x3F, /* ..XXXXXX */
-    0x39, /* ..XXX..X */
-    0x39, /* ..XXX..X */
-    0x3F, /* ..XXXXXX */
-    0x3E, /* ..XXXXX. */
-    0x00  /* ........ */
-};
+/* Top-Right Corner Tile (16 bytes, 2BPP) */
+static const uint8_t kSnesTileCornerTR[16] = {{
+{format_c_byte_array(tile_tr)}
+}};
 
-/* Bottom-Right Corner (8x8) */
-static const uint8_t kSnesTileCornerBR[8] = {
-    0x1C, /* ...XXX.. */
-    0xFC, /* XXXXXX.. */
-    0xFC, /* XXXXXX.. */
-    0x9C, /* X..XXX.. */
-    0x9C, /* X..XXX.. */
-    0xFC, /* XXXXXX.. */
-    0x7C, /* .XXXXX.. */
-    0x00  /* ........ */
-};
+/* Left Vertical Rail Tile (16 bytes, 2BPP) */
+static const uint8_t kSnesTileRailLeft[16] = {{
+{format_c_byte_array(tile_left)}
+}};
 
-/* Horizontal Gold Rail (8x8): Highlight top, Mid body, Shadow bottom */
-static const uint8_t kSnesTileRailHoriz[8] = {
-    0x00, /* ........ */
-    0xFF, /* XXXXXXXX (Highlight Gold) */
-    0xFF, /* XXXXXXXX (Mid Brass) */
-    0x00, /* ........ */
-    0x00, /* ........ */
-    0xFF, /* XXXXXXXX (Mid Brass) */
-    0xFF, /* XXXXXXXX (Shadow Bronze) */
-    0x00  /* ........ */
-};
+/* Right Vertical Rail Tile (16 bytes, 2BPP) */
+static const uint8_t kSnesTileRailRight[16] = {{
+{format_c_byte_array(tile_right)}
+}};
 
-/* Vertical Gold Rail (8x8): Highlight left, Mid body, Shadow right */
-static const uint8_t kSnesTileRailVert[8] = {
-    0x66, /* .XX..XX. */
-    0x66, /* .XX..XX. */
-    0x66, /* .XX..XX. */
-    0x66, /* .XX..XX. */
-    0x66, /* .XX..XX. */
-    0x66, /* .XX..XX. */
-    0x66, /* .XX..XX. */
-    0x66  /* .XX..XX. */
-};
+/* Bottom-Left Corner Tile (16 bytes, 2BPP) */
+static const uint8_t kSnesTileCornerBL[16] = {{
+{format_c_byte_array(tile_bl)}
+}};
 
-/* Header Gem / Rosette Divider (8x8) */
-static const uint8_t kSnesTileHeaderGem[8] = {
-    0x18, /* ...XX... */
-    0x3C, /* ..XXXX.. */
-    0x7E, /* .XXXXXX. */
-    0xFF, /* XXXXXXXX */
-    0xFF, /* XXXXXXXX */
-    0x7E, /* .XXXXXX. */
-    0x3C, /* ..XXXX.. */
-    0x18  /* ...XX... */
-};
+/* Bottom Horizontal Rail Tile (16 bytes, 2BPP) */
+static const uint8_t kSnesTileRailBottom[16] = {{
+{format_c_byte_array(tile_bottom)}
+}};
 
-/* ==========================================================================
- * 3. 8x8 STATUS ICON BANK (Sun, Moon, Crown, Sword, Shield, Skull, Gem, Card)
- * ========================================================================== */
+/* Bottom-Right Corner Tile (16 bytes, 2BPP) */
+static const uint8_t kSnesTileCornerBR[16] = {{
+{format_c_byte_array(tile_br)}
+}};
 
-/* Icon 0: Sun (Day / Solar Noon) */
-static const uint8_t kSnesIconSun[8] = {
-    0x24, /* ..X..X.. */
-    0x00, /* ........ */
-    0x3C, /* ..XXXX.. */
-    0x7E, /* .XXXXXX. */
-    0x7E, /* .XXXXXX. */
-    0x3C, /* ..XXXX.. */
-    0x00, /* ........ */
-    0x24  /* ..X..X.. */
-};
+/* Ornamental Diamond Gem Tile (16 bytes, 2BPP) */
+static const uint8_t kSnesTileGem[16] = {{
+{format_c_byte_array(tile_gem)}
+}};
 
-/* Icon 1: Moon (Night / Lunar Cycle) */
-static const uint8_t kSnesIconMoon[8] = {
-    0x1C, /* ...XXX.. */
-    0x3E, /* ..XXXXX. */
-    0x3C, /* ..XXXX.. */
-    0x38, /* ..XXX... */
-    0x38, /* ..XXX... */
-    0x3C, /* ..XXXX.. */
-    0x3E, /* ..XXXXX. */
-    0x1C  /* ...XXX.. */
-};
-
-/* Icon 2: Crown (Hero / Royalty) */
-static const uint8_t kSnesIconCrown[8] = {
-    0x49, /* .X..X..X */
-    0xAA, /* X.X.X.X. */
-    0xFF, /* XXXXXXXX */
-    0xFF, /* XXXXXXXX */
-    0x7E, /* .XXXXXX. */
-    0x7E, /* .XXXXXX. */
-    0xFF, /* XXXXXXXX */
-    0x00  /* ........ */
-};
-
-/* Icon 3: Sword (Combat / STR) */
-static const uint8_t kSnesIconSword[8] = {
-    0x02, /* ......X. */
-    0x06, /* .....XX. */
-    0x0E, /* ....XXX. */
-    0x1C, /* ...XXX.. */
-    0x38, /* ..XXX... */
-    0x74, /* .XXX.X.. */
-    0xE2, /* XXX...X. */
-    0x40  /* .X...... */
-};
-
-/* Icon 4: Shield (Defense / Armor) */
-static const uint8_t kSnesIconShield[8] = {
-    0x7E, /* .XXXXXX. */
-    0xFF, /* XXXXXXXX */
-    0xFF, /* XXXXXXXX */
-    0xFF, /* XXXXXXXX */
-    0x7E, /* .XXXXXX. */
-    0x3C, /* ..XXXX.. */
-    0x18, /* ...XX... */
-    0x00  /* ........ */
-};
-
-/* Icon 5: Skull (Undead / Ghost Farm) */
-static const uint8_t kSnesIconSkull[8] = {
-    0x3C, /* ..XXXX.. */
-    0x7E, /* .XXXXXX. */
-    0xDB, /* XX.XX.XX */
-    0xFF, /* XXXXXXXX */
-    0x7E, /* .XXXXXX. */
-    0x3C, /* ..XXXX.. */
-    0x28, /* ..X.X... */
-    0x00  /* ........ */
-};
-
-/* Icon 6: Gem (Zodiac Stone) */
-static const uint8_t kSnesIconGem[8] = {
-    0x3C, /* ..XXXX.. */
-    0x7E, /* .XXXXXX. */
-    0xFF, /* XXXXXXXX */
-    0xFF, /* XXXXXXXX */
-    0x7E, /* .XXXXXX. */
-    0x3C, /* ..XXXX.. */
-    0x18, /* ...XX... */
-    0x00  /* ........ */
-};
-
-/* Icon 7: Mini Tarot Card Frame (8x8) */
-static const uint8_t kSnesIconTarot[8] = {
-    0x7E, /* .XXXXXX. */
-    0x42, /* .X....X. */
-    0x5A, /* .X.XX.X. */
-    0x5A, /* .X.XX.X. */
-    0x5A, /* .X.XX.X. */
-    0x5A, /* .X.XX.X. */
-    0x42, /* .X....X. */
-    0x7E  /* .XXXXXX. */
-};
-
-/* ==========================================================================
- * 4. AUTHENTIC 8x8 MENU PIXEL FONT (ASCII 0x20 Space .. 0x7E Tilde)
- * ========================================================================== */
-
-static const uint8_t kSnesFont8x8[96][8] = {
-    {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}, /* 0x20 Space */
-    {0x18,0x18,0x18,0x18,0x18,0x00,0x18,0x00}, /* 0x21 ! */
-    {0x66,0x66,0x24,0x00,0x00,0x00,0x00,0x00}, /* 0x22 " */
-    {0x24,0x24,0xFF,0x24,0xFF,0x24,0x24,0x00}, /* 0x23 # */
-    {0x18,0x3E,0x60,0x3C,0x06,0x7C,0x18,0x00}, /* 0x24 $ */
-    {0x62,0x64,0x08,0x10,0x20,0x4C,0x86,0x00}, /* 0x25 % */
-    {0x38,0x4C,0x48,0x30,0x59,0x46,0x3B,0x00}, /* 0x26 & */
-    {0x18,0x18,0x08,0x00,0x00,0x00,0x00,0x00}, /* 0x27 ' */
-    {0x0C,0x18,0x30,0x30,0x30,0x18,0x0C,0x00}, /* 0x28 ( */
-    {0x30,0x18,0x0C,0x0C,0x0C,0x18,0x30,0x00}, /* 0x29 ) */
-    {0x00,0x66,0x3C,0xFF,0x3C,0x66,0x00,0x00}, /* 0x2A * */
-    {0x00,0x18,0x18,0x7E,0x18,0x18,0x00,0x00}, /* 0x2B + */
-    {0x00,0x00,0x00,0x00,0x18,0x18,0x08,0x10}, /* 0x2C , */
-    {0x00,0x00,0x00,0x7E,0x00,0x00,0x00,0x00}, /* 0x2D - */
-    {0x00,0x00,0x00,0x00,0x00,0x18,0x18,0x00}, /* 0x2E . */
-    {0x02,0x06,0x0C,0x18,0x30,0x60,0x40,0x00}, /* 0x2F / */
-    {0x3C,0x66,0x6E,0x76,0x66,0x66,0x3C,0x00}, /* 0x30 0 */
-    {0x18,0x38,0x18,0x18,0x18,0x18,0x7E,0x00}, /* 0x31 1 */
-    {0x3C,0x66,0x06,0x0C,0x18,0x30,0x7E,0x00}, /* 0x32 2 */
-    {0x3C,0x66,0x06,0x1C,0x06,0x66,0x3C,0x00}, /* 0x33 3 */
-    {0x0C,0x1C,0x34,0x64,0x7E,0x04,0x04,0x00}, /* 0x34 4 */
-    {0x7E,0x60,0x7C,0x06,0x06,0x66,0x3C,0x00}, /* 0x35 5 */
-    {0x1C,0x30,0x60,0x7C,0x66,0x66,0x3C,0x00}, /* 0x36 6 */
-    {0x7E,0x66,0x06,0x0C,0x18,0x18,0x18,0x00}, /* 0x37 7 */
-    {0x3C,0x66,0x66,0x3C,0x66,0x66,0x3C,0x00}, /* 0x38 8 */
-    {0x3C,0x66,0x66,0x3E,0x06,0x0C,0x38,0x00}, /* 0x39 9 */
-    {0x00,0x18,0x18,0x00,0x18,0x18,0x00,0x00}, /* 0x3A : */
-    {0x00,0x18,0x18,0x00,0x18,0x18,0x08,0x10}, /* 0x3B ; */
-    {0x06,0x0C,0x18,0x30,0x18,0x0C,0x06,0x00}, /* 0x3C < */
-    {0x00,0x00,0x7E,0x00,0x7E,0x00,0x00,0x00}, /* 0x3D = */
-    {0x60,0x30,0x18,0x0C,0x18,0x30,0x60,0x00}, /* 0x3E > */
-    {0x3C,0x66,0x0C,0x18,0x18,0x00,0x18,0x00}, /* 0x3F ? */
-    {0x3C,0x66,0x6E,0x6A,0x6E,0x60,0x3C,0x00}, /* 0x40 @ */
-    {0x3C,0x66,0x66,0x7E,0x66,0x66,0x66,0x00}, /* 0x41 A */
-    {0x7C,0x66,0x66,0x7C,0x66,0x66,0x7C,0x00}, /* 0x42 B */
-    {0x3C,0x66,0x60,0x60,0x60,0x66,0x3C,0x00}, /* 0x43 C */
-    {0x78,0x6C,0x66,0x66,0x66,0x6C,0x78,0x00}, /* 0x44 D */
-    {0x7E,0x60,0x60,0x7C,0x60,0x60,0x7E,0x00}, /* 0x45 E */
-    {0x7E,0x60,0x60,0x7C,0x60,0x60,0x60,0x00}, /* 0x46 F */
-    {0x3C,0x66,0x60,0x6E,0x66,0x66,0x3E,0x00}, /* 0x47 G */
-    {0x66,0x66,0x66,0x7E,0x66,0x66,0x66,0x00}, /* 0x48 H */
-    {0x3C,0x18,0x18,0x18,0x18,0x18,0x3C,0x00}, /* 0x49 I */
-    {0x1E,0x0C,0x0C,0x0C,0x0C,0x6C,0x38,0x00}, /* 0x4A J */
-    {0x66,0x6C,0x78,0x70,0x78,0x6C,0x66,0x00}, /* 0x4B K */
-    {0x60,0x60,0x60,0x60,0x60,0x60,0x7E,0x00}, /* 0x4C L */
-    {0x63,0x77,0x7F,0x6B,0x63,0x63,0x63,0x00}, /* 0x4D M */
-    {0x66,0x76,0x7E,0x7E,0x6E,0x66,0x66,0x00}, /* 0x4E N */
-    {0x3C,0x66,0x66,0x66,0x66,0x66,0x3C,0x00}, /* 0x4F O */
-    {0x7C,0x66,0x66,0x7C,0x60,0x60,0x60,0x00}, /* 0x50 P */
-    {0x3C,0x66,0x66,0x66,0x6A,0x6C,0x36,0x00}, /* 0x51 Q */
-    {0x7C,0x66,0x66,0x7C,0x6C,0x66,0x66,0x00}, /* 0x52 R */
-    {0x3C,0x66,0x60,0x3C,0x06,0x66,0x3C,0x00}, /* 0x53 S */
-    {0x7E,0x18,0x18,0x18,0x18,0x18,0x18,0x00}, /* 0x54 T */
-    {0x66,0x66,0x66,0x66,0x66,0x66,0x3C,0x00}, /* 0x55 U */
-    {0x66,0x66,0x66,0x66,0x66,0x3C,0x18,0x00}, /* 0x56 V */
-    {0x63,0x63,0x63,0x6B,0x7F,0x77,0x63,0x00}, /* 0x57 W */
-    {0x66,0x66,0x3C,0x18,0x3C,0x66,0x66,0x00}, /* 0x58 X */
-    {0x66,0x66,0x66,0x3C,0x18,0x18,0x18,0x00}, /* 0x59 Y */
-    {0x7E,0x06,0x0C,0x18,0x30,0x60,0x7E,0x00}, /* 0x5A Z */
-    {0x3C,0x30,0x30,0x30,0x30,0x30,0x3C,0x00}, /* 0x5B [ */
-    {0x40,0x60,0x30,0x18,0x0C,0x06,0x02,0x00}, /* 0x5C \\ */
-    {0x3C,0x0C,0x0C,0x0C,0x0C,0x0C,0x3C,0x00}, /* 0x5D ] */
-    {0x18,0x3C,0x66,0x00,0x00,0x00,0x00,0x00}, /* 0x5E ^ */
-    {0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0x00}, /* 0x5F _ */
-    {0x30,0x18,0x0C,0x00,0x00,0x00,0x00,0x00}, /* 0x60 ` */
-    {0x00,0x00,0x3C,0x06,0x3E,0x66,0x3E,0x00}, /* 0x61 a */
-    {0x60,0x60,0x7C,0x66,0x66,0x66,0x7C,0x00}, /* 0x62 b */
-    {0x00,0x00,0x3C,0x66,0x60,0x66,0x3C,0x00}, /* 0x63 c */
-    {0x06,0x06,0x3E,0x66,0x66,0x66,0x3E,0x00}, /* 0x64 d */
-    {0x00,0x00,0x3C,0x66,0x7E,0x60,0x3C,0x00}, /* 0x65 e */
-    {0x1C,0x30,0x78,0x30,0x30,0x30,0x30,0x00}, /* 0x66 f */
-    {0x00,0x00,0x3E,0x66,0x66,0x3E,0x06,0x3C}, /* 0x67 g */
-    {0x60,0x60,0x7C,0x66,0x66,0x66,0x66,0x00}, /* 0x68 h */
-    {0x18,0x00,0x38,0x18,0x18,0x18,0x3C,0x00}, /* 0x69 i */
-    {0x0C,0x00,0x0C,0x0C,0x0C,0x0C,0x6C,0x38}, /* 0x6A j */
-    {0x60,0x60,0x66,0x6C,0x78,0x6C,0x66,0x00}, /* 0x6B k */
-    {0x38,0x18,0x18,0x18,0x18,0x18,0x3C,0x00}, /* 0x6C l */
-    {0x00,0x00,0x66,0x7F,0x7F,0x63,0x63,0x00}, /* 0x6D m */
-    {0x00,0x00,0x7C,0x66,0x66,0x66,0x66,0x00}, /* 0x6E n */
-    {0x00,0x00,0x3C,0x66,0x66,0x66,0x3C,0x00}, /* 0x6F o */
-    {0x00,0x00,0x7C,0x66,0x66,0x7C,0x60,0x60}, /* 0x70 p */
-    {0x00,0x00,0x3E,0x66,0x66,0x3E,0x06,0x06}, /* 0x71 q */
-    {0x00,0x00,0x7C,0x66,0x60,0x60,0x60,0x00}, /* 0x72 r */
-    {0x00,0x00,0x3E,0x60,0x3C,0x06,0x7C,0x00}, /* 0x73 s */
-    {0x18,0x18,0x7E,0x18,0x18,0x18,0x0E,0x00}, /* 0x74 t */
-    {0x00,0x00,0x66,0x66,0x66,0x66,0x3E,0x00}, /* 0x75 u */
-    {0x00,0x00,0x66,0x66,0x66,0x3C,0x18,0x00}, /* 0x76 v */
-    {0x00,0x00,0x63,0x6B,0x7F,0x7F,0x36,0x00}, /* 0x77 w */
-    {0x00,0x00,0x66,0x3C,0x18,0x3C,0x66,0x00}, /* 0x78 x */
-    {0x00,0x00,0x66,0x66,0x66,0x3E,0x06,0x3C}, /* 0x79 y */
-    {0x00,0x00,0x7E,0x0C,0x18,0x30,0x7E,0x00}, /* 0x7A z */
-    {0x0E,0x18,0x18,0x70,0x18,0x18,0x0E,0x00}, /* 0x7B { */
-    {0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18}, /* 0x7C | */
-    {0x70,0x18,0x18,0x0E,0x18,0x18,0x70,0x00}, /* 0x7D } */
-    {0x3B,0x6E,0x00,0x00,0x00,0x00,0x00,0x00}  /* 0x7E ~ */
-};
+/* ==============================================================================
+ * 3. AUTHENTIC 1993 SNES 8x8 2BPP FONT TILES (Extracted from ROM $090000)
+ * 256 tiles x 16 bytes = 4,096 bytes total. Direct 1:1 ASCII mapping!
+ * Tile index 32..90 directly corresponds to ASCII character codes.
+ * Built-in 2BPP structure:
+ *   Bit 0 = Drop shadow / outline
+ *   Bit 1 = Foreground glyph body
+ *   Bit 0+1 = Anti-aliasing / bevel
+ * ============================================================================== */
+static const uint8_t kSnesFontRom2BPP[{len(font_bytes)}] = {{
+{format_c_byte_array(font_bytes)}
+}};
 
 #ifdef __cplusplus
-}
+}}
 #endif
 
 #endif /* OB_SNES_UI_THEME_H */
-'''
-    with header_path.open("w", encoding="utf-8") as f:
-        f.write(content)
-    print("Done generating ob_snes_ui_theme.h")
-    return 0
+"""
+
+    header_path.write_text(content)
+    print(f"Successfully generated {header_path} ({len(content)} bytes)")
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
