@@ -20,7 +20,7 @@ Attempting a manual, line-by-line decompilation of ~2,000 undocumented subroutin
 | :--- | :--- | :--- |
 | **Graphics Pipeline** | **Approach 3: Hybrid Extended PPU** | Headless LakeSnes virtual PPU static library for 100% hardware-accurate rendering (color math, HDMA, window masks), paired with C-level function interception (`RECOMP_PATCH`) for tactical map buffer widening. |
 | **Widescreen Strategy** | **Expanded Active Map Streaming Buffer (16:9)** | Dynamic scene gating: When `GameMode == MAP_VIEW`, metatile buffer generation expands from $16 \times 14$ to $24 \times 14$ metatiles ($384 \times 224$ or $400 \times 224$). Battle scenes, menus, and tarot cutscenes remain cleanly centered/pillarboxed at 4:3. |
-| **Input Pipeline** | **Hybrid Direct-State Mouse & Gamepad** | Window cursor coordinates map directly to WRAM `Cursor_MapX` / `Cursor_MapY` and menu index slots. Left/Right clicks inject `Joypad A` (Confirm/Select) and `Joypad B` (Cancel/Menu). Standard gamepad/keyboard inputs remain active concurrently. |
+| **Input Pipeline** | **Three-Pillar Direct-State & Hit-Box Mouse + Gamepad** | Replaces deprecated `Rev 1`–`Rev 8` synthetic D-Pad steering with: (1) **Pillar 1 (Tactical Map):** 1:1 viewport writes to `WRAM $14DE / $14E0`, world raycast sync (`$14E2 / $14E4`), $\pm 8\text{px}$ squad/city snap, and decoupled Mode-7 camera panning (`$00BD / $00BF`); (2) **Pillar 2 (Menus & Grids):** Deterministic slot hit-box indexing (`$0474` 7-icon bar & 3×2 formation grid); (3) **Pillar 3 (World Map):** Stage node hit-testing & drag/edge panning. |
 | **Audio Subsystem** | **Original S-DSP & SPC700 Emulation** | Embedded cycle-accurate SPC700 CPU + DSP core executing original audio driver code asynchronously via the 4 hardware I/O ports (`$2140`–`$2143`), streaming 32 kHz 16-bit stereo PCM to SDL. |
 | **Verification & QA** | **Lockstep Dual-Execution Harness (`RM_BOTH`)** | Golden reference emulator runs original ROM alongside the native port frame-by-frame, asserting byte-exact equality across 128 KB WRAM, 64 KB VRAM, OAM, and CGRAM at every VBlank. |
 | **Regression Suite** | **8 Canonical Controller Replay Traces (`.obrec`)** | Automated headless test suite evaluating: (1) Boot to Title, (2) Warren's Tarot, (3) Felnamia Deployment, (4) Tactical March & Clock, (5) Battle Encounter, (6) Daskania Liberation, (7) Warren Boss Clear, (8) World Map Battery Save. Certified across 83,450 frames. |
@@ -36,8 +36,8 @@ A critical architectural distinction governs this project to prevent both premat
 flowchart TD
     subgraph OuterGates["Outer Progression Gates (Strictly Sequential via Git)"]
         direction LR
-        G1["Gate 1: Bit-Exact 4:3 Baseline\n(Tag: v0.1.0-gate1-certified)"] -->|Certified 0 Drift| G2["Gate 2: Direct Mouse Input\n(Branch: gate/2-mouse-input)"]
-        G2 -->|Certified 0 Drift| G3["Gate 3: True 16:9 Viewport\n(Branch: gate/3-widescreen)"]
+        G1["Gate 1: Bit-Exact 4:3 Baseline\n(Tag: v0.1.0-gate1-certified)"] -->|Certified 0 Drift| G2["Gate 2: Three-Pillar Mouse Architecture\n(Branch: gate/2-mouse-input)"]
+        G2 -->|Certified 0 Drift + 3-Pillar QA| G3["Gate 3: True 16:9 Viewport\n(Branch: gate/3-widescreen)"]
     end
 
     subgraph InnerLoop["Inner Engineering Pipeline (Bidirectional Iterative Feedback Loop)"]
@@ -52,7 +52,7 @@ flowchart TD
 ### 1. Outer Progression Gates (Uni-directional via Git)
 * **Rule of the Gates:** Under no circumstances will any subagent or developer write 16:9 widescreen or mouse input code on `main` or merge a gate branch until the predecessor gate is 100% certified with 0 bytes of memory drift in dual-execution lockstep.
 * **Gate 1 (Certified):** Tagged at `v0.1.0-gate1-certified` (83,450 / 83,450 frames passing with 0 drift).
-* **Gate 2 (Active):** Developed on `gate/2-mouse-input` (direct-state cursor steering, click injection, hybrid input priorities).
+* **Gate 2 (Active — Rev 9 Three-Pillar Redesign):** Developed on `gate/2-mouse-input`. Deprecates `Rev 1`–`Rev 8` synthetic D-Pad steering in favor of the **Three-Pillar Direct-State & Hit-Box Architecture** (see [`docs/mouse_architecture_deprecation_and_redesign.md`](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/mouse_architecture_deprecation_and_redesign.md)).
 * **Gate 3 (Next):** Scheduled on `gate/3-widescreen` (Mode 7 affine scanline expansion, OAM sprite clipping expansion, extended terrain streaming).
 
 ### 2. Inner Engineering Pipeline (Iterative & Bidirectional)
@@ -91,10 +91,13 @@ sequenceDiagram
 
 ```mermaid
 graph TB
-    subgraph Input["Input Abstraction Layer (Gate 2: gate/2-mouse-input)"]
-        Mouse["SDL Mouse Events (Pos & Buttons)"]
+    subgraph Input["Input Abstraction Layer (Gate 2: Three-Pillar Architecture)"]
+        Mouse["Win32 / SDL Mouse Events (Pos, Left/Right/Drag)"]
         Pad["SDL Gamepad / Keyboard"]
-        MouseMapper["Direct-State Mouse Mapper (Screen to WRAM $14E7/$00BD)"]
+        Router["State Detection Router (ob_input_detect_mode)"]
+        Pillar1["Pillar 1: Tactical Direct-State ($14DE/$14E0) + Decoupled Camera ($00BD/$00BF)"]
+        Pillar2["Pillar 2: Menu Hit-Box Indexer ($0474 7-Icon Bar & 3x2 Grid)"]
+        Pillar3["Pillar 3: World Map Node Hit-Tester & Drag Pan"]
         PadMapper["Standard Controller Mapper (Joypad to SNES Shift Register)"]
     end
 
@@ -119,9 +122,10 @@ graph TB
         SyncSnap["Snapshot Engine (.obsav)"]
     end
 
-    Mouse --> MouseMapper
+    Mouse --> Router
+    Router --> Pillar1 & Pillar2 & Pillar3
     Pad --> PadMapper
-    MouseMapper --> PatchedLogic
+    Pillar1 & Pillar2 & Pillar3 --> PatchedLogic
     PadMapper --> GameLogic
     GameLogic --> WRAM & SRAM
     PatchedLogic --> WRAM

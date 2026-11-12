@@ -219,24 +219,31 @@ Every stage in *Ogre Battle* hides buried treasures, neutral monster dens, roami
 
 ---
 
-## Area 2: Input Injection & Ergonomic Navigation
+## Area 2: Input Injection & Ergonomic Navigation (Three-Pillar Direct-State & Hit-Box Architecture)
 
 ### Concept & Architectural Mechanism
-Beyond basic cursor translation (mapping PC mouse coordinates across the expanded `400 × 224` widescreen buffer to the SNES cursor registers) and waypoint queuing, **Input Injection & State-Driven Navigation Shims** work by monitoring the current **Game Screen Mode Byte** in WRAM and translating high-level PC interactions (scroll wheels, right-clicks, hotkeys, drag gestures) into either synthetic joypad sequences or direct register updates.
+Empirical disassembly of Bank `$00` (`$00:B1E0`–`$00:B6A6`) established that *Ogre Battle* cannot be steered via closed-loop synthetic D-Pad button injection (`BTN_UP/DOWN/LEFT/RIGHT`), because the Tactical Map couples its inner cursor clamping box (`$14DE \in [8,231], $14E0 \in [8,199]`) to the Mode-7 camera scroll trigger (`$14E7` $\rightarrow$ `$00BD/$00BF`), while menus (`OAM 0xCE / 0xCC`) wrap around in 1D/2D rings when directional buttons are held.
+
+Therefore, Area 2 is built upon the **Three-Pillar Direct-State & Hit-Box Architecture** (detailed in [`docs/mouse_architecture_deprecation_and_redesign.md`](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/mouse_architecture_deprecation_and_redesign.md)):
+1. **Pillar 1 (Tactical Battlefield Map):** Direct 1:1 viewport writes to `WRAM $14DE / $14E0` (bypassing the inner-box camera trigger `$14E7`), synchronized same-frame world coordinates (`WRAM $14E2 / $14E4`), $\pm 8\text{px}$ magnetic snapping to Deployed Squads (`$7E:18AF / $7E:18D9`) and Cities (`$7E:1A95 / $7E:1B0D`), and **Decoupled Mode-7 Camera Panning** (`WRAM $00BD / $00BF`) activated only on Right/Middle-click drag or narrow `10px` viewport edge margins.
+2. **Pillar 2 (Popup Menus, Icon Bars & Formation Grids):** Deterministic slot hit-box indexing (`WRAM $0474 / $0476` for the 7-icon bar at `X = 71..183, Y = 107..131`; 2×3 cell hit-boxes for the formation grid at `X = 4..72, Y = 40..88`) with zero synthetic D-Pad oscillation when hovering outside menu bounds.
+3. **Pillar 3 (Continental World Map):** Continent-space stage banner hit-testing and Right-drag / edge camera scrolling.
+
+Beyond foundational cursor positioning, **State-Driven Ergonomic Shims** monitor the active screen context and translate high-level PC interactions (widescreen wing clicks, scroll wheels, right-clicks, hotkeys, drag gestures) into direct register updates:
 
 ```mermaid
 flowchart TD
-    UserInput["PC Input Across 16:9 Canvas\n(Click Wing Docks, Wheel, Hotkey, Drag)"] --> ModeCheck{"Check WRAM Screen Mode"}
+    UserInput["PC Input Across 4:3 / 16:9 Canvas\n(Mouse Move, Click, Drag, Wing Docks, Wheel, Hotkey)"] --> ModeCheck{"State Detection Router\nob_input_detect_mode()"}
     
-    ModeCheck -->|"Mode: World Map / Quiz"| HubShim["World Map & Quiz Shim\n• Direct Stage Node Click\n• 1-Click Tarot Spread Redraw\n• Instant Camp/Save Hotkeys"]
-    ModeCheck -->|"Mode: Strategic Map"| MapShim["Map Ergonomics Shim\n• Left-Wing Squad Dock Jump\n• Patrol & Pincer Sync\n• Radial Tarot/Item Cast"]
+    ModeCheck -->|"Pillar 3: World Map / Quiz"| HubShim["World Map & Quiz Shim\n• Continent Stage Banner Hit-Box\n• Right-Drag / Edge Panning\n• 1-Click Tarot Spread Redraw"]
+    ModeCheck -->|"Pillar 1: Strategic Map"| MapShim["Tactical Direct-State & Ergonomics Shim\n• 1:1 Screen ($14DE/$14E0) & World ($14E2/$14E4)\n• +-8px Squad/City Magnetic Snap\n• Decoupled Camera ($00BD/$00BF) & Wing Dock Jump"]
+    ModeCheck -->|"Pillar 2: Menus & Grids"| MenuShim["Deterministic Hit-Box Indexer\n• 7-Icon Command Strip ($0474 = 0..6)\n• 3x2 Formation Grid (Cols {6,38} x Rows {48,64,72})\n• Left-Wing Bulk Shop Restock"]
     ModeCheck -->|"Mode: Battle Stage"| BattleShim["Combat Ergonomics Shim\n• Right-Wing Tarot Dock Cast\n• 1-Click Tactic Stance Pill\n• Hold-to-Scrub Speed"]
-    ModeCheck -->|"Mode: Town / Shop / Warren"| MenuShim["Menu Bypass Shim\n• Left-Wing Bulk Restock\n• Scroll-Wheel List Navigation\n• Dialog Fast-Advance"]
     
-    HubShim --> Inject["Inject Joypad Bitmask or Target Coordinates"]
+    HubShim --> Inject["Direct WRAM State Write / Discrete Action Trigger"]
     MapShim --> Inject
-    BattleShim --> Inject
     MenuShim --> Inject
+    BattleShim --> Inject
 ```
 
 ### Screen-by-Screen Ergonomic Enhancements

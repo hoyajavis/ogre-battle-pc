@@ -21,8 +21,8 @@ gantt
     M3: Automated Lifting & Gate 1 (4:3) [v0.1.0-gate1-certified]:done, 4, 7
 
     section Modernization Gates
-    M4: Mouse Control & Gate 2 (4:3) [gate/2-mouse-input]        :done, 7, 9
-    M5: 16:9 Expanded Map & Gate 3 (Wide) [gate/3-widescreen]    :active, 9, 12
+    M4: Three-Pillar Mouse & Gate 2 (4:3) [gate/2-mouse-input]   :active, 7, 10
+    M5: 16:9 Expanded Map & Gate 3 (Wide) [gate/3-widescreen]    :10, 12
 
     section Refactoring & Packaging
     M6: Selective Refactor & Packaging [release/v1.0.0]           :12, 14
@@ -34,8 +34,8 @@ gantt
 flowchart TD
     subgraph OuterGates["Outer Progression Gates (Strictly Sequential via Git)"]
         direction LR
-        G1["Gate 1: Bit-Exact 4:3 Baseline\n(Tag: v0.1.0-gate1-certified)"] -->|Certified 0 Drift| G2["Gate 2: Direct-State Mouse Input\n(Branch: gate/2-mouse-input\nTag: v0.2.0-gate2-mouse)"]
-        G2 -->|Certified 0 Drift| G3["Gate 3: True 16:9 Viewport\n(Branch: gate/3-widescreen\nTag: v0.3.0-gate3-wide)"]
+        G1["Gate 1: Bit-Exact 4:3 Baseline\n(Tag: v0.1.0-gate1-certified)"] -->|Certified 0 Drift| G2["Gate 2: Three-Pillar Mouse Input\n(Branch: gate/2-mouse-input\nTag: v0.2.0-gate2-mouse)"]
+        G2 -->|Certified 0 Drift + 3-Pillar QA| G3["Gate 3: True 16:9 Viewport\n(Branch: gate/3-widescreen\nTag: v0.3.0-gate3-wide)"]
     end
 
     subgraph InnerLoop["Inner Engineering Cycle (Bidirectional Iterative Feedback Loop)"]
@@ -119,22 +119,30 @@ flowchart TD
 
 ---
 
-### Milestone 4: Direct-State Mouse Control & Gate 2 Certification [COMPLETE - REV 5]
-* **Git Branch**: `gate/2-mouse-input` (Tag: `v0.2.0-gate2-mouse`)
-* **Objective**: Implement modern mouse interaction within the certified 4:3 baseline.
+### Milestone 4: Three-Pillar Direct-State & Hit-Box Mouse Control & Gate 2 Certification [ACTIVE — REV 9 REDESIGN]
+* **Git Branch**: `gate/2-mouse-input` (Target Tag: `v0.2.0-gate2-mouse`)
+* **Architectural Specification**: [`docs/mouse_architecture_deprecation_and_redesign.md`](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/mouse_architecture_deprecation_and_redesign.md)
+* **Objective**: Replace the deprecated `Rev 1`–`Rev 8` closed-loop synthetic D-Pad steering with the **Three-Pillar Direct-State & Hit-Box Architecture (`Rev 9+`)** within the certified 4:3 baseline (with forward-compatible 400×224 bounds for Gate 3).
 * **Deliverables**:
-  * [x] Screen-to-SNES coordinate mapping converting window coordinates $(x,y)$ to viewport coordinates $[0..255, 0..223]$ across all window scalings and aspect letterboxing.
-  * [x] Direct-State Tactical Cursor Steering: Moving mouse automatically steers in-engine cursor state `$14E7` and coordinates `0x7E:00BD` / `0x7E:00BF` toward host pointer.
-  * [x] Click Injection: Left Click dispatches Joypad A (confirm/deploy/inspect); Right Click dispatches Joypad B (cancel/menu).
-  * [x] Seamless Hybrid Input Priority: Gamepad/keyboard immediately take exclusive control on press; moving mouse resumes pointer control with zero collisions.
-  * [x] Standalone zero-dependency Windows GUI build (`ogre_battle.exe`, 0 external DLLs, native Win32 GDI + `waveOut` audio).
-* **Exit Criteria (Gate 2 Passed)**:
-  * [x] Tactical map navigation, squad movement, menu dispatch, and combat confirmed 100% playable via mouse.
-  * [x] Lockstep regression testing passes with 0 memory desync when mouse input injection is idle.
+  * [x] **Formal Deprecation of Rev 1–Rev 8 Synthetic D-Pad Steering**: Strip closed-loop `BTN_UP/DOWN/LEFT/RIGHT` position injection and OAM `0xCC/0xCE` heuristic tracking that caused the center-box camera feedback loop and 7-icon menu wrap-around spinning.
+  * [x] **Screen-to-SNES Coordinate Mapper (`ob_input_map_window_to_snes`)**: Aspect-correct mapping of window coordinates $(x,y)$ to viewport coordinates $[0..255, 0..223]$ (and $[0..399, 0..223]$ in Gate 3).
+  * [x] **State Detection Router (`ob_input_detect_mode`)**: Deterministic classification of `OB_MOUSE_MODE_TACTICAL_MAP`, `OB_MOUSE_MODE_ICON_BAR`, `OB_MOUSE_MODE_FORMATION_GRID`, `OB_MOUSE_MODE_WORLD_MAP`, and `OB_MOUSE_MODE_PASSIVE`.
+  * [x] **Pillar 1 — Tactical Map Direct-State & Decoupled Camera (`ob_input_apply_tactical_map`)**:
+    * 1:1 screen-space cursor writes to `WRAM $14DE` (X) and `$14E0` (Y) across the full viewport with `$14E7` cleared to `0` during hover.
+    * World coordinate synchronization (`WRAM $14E2` / `$14E4`) and $\pm 8\text{px}$ magnetic entity snapping to Deployed Squads (`$7E:18AF` / `$7E:18D9`) and Cities (`$7E:1A95` / `$7E:1B0D`).
+    * Decoupled Mode-7 camera panning (`WRAM $00BD` / `$00BF` clamped by `[$14CB..$14CF, $14CD..$14D1]`) triggered exclusively on Right/Middle-click drag or narrow `10px` viewport edge margins.
+  * [x] **Pillar 2 — Menu & Grid Hit-Box Indexing (`ob_input_apply_icon_bar`, `ob_input_apply_formation_grid`)**:
+    * Direct slot indexing for the 7-icon horizontal command strip (`X = 71..183, Y = 107..131` $\rightarrow$ `WRAM $0474` = `0..6`, `$0476` = `71 + 16*slot`, OAM `$0104` = `75 + 16*slot`) and the 3×2 unit formation grid (`Cols {6, 38} × Rows {48, 64, 72}`) with zero wrap-around oscillation outside the boxes.
+  * [x] **Pillar 3 — Continental World Map Node Hit-Testing (`ob_input_apply_world_map`)**:
+    * Continent-space stage node hit-testing and Right-drag / edge camera scrolling.
+  * [x] **Click Injection & Hybrid Priority**: Left Click dispatches Joypad A (`0x0080`); Right Click dispatches Joypad B (`0x8000`) when not dragging; immediate keyboard/gamepad priority on key press with 0-byte WRAM drift when mouse is idle.
+* **Exit Criteria (Gate 2 Certification)**:
+  * [x] Automated Three-Pillar verification suite (`tests/test_mouse_three_pillar.c`) passes 100% across Gate 2A (0-byte idle lockstep), Gate 2B (Pillar 1 tactical cursor, snap & decoupled camera), Gate 2C (Pillar 2 menu hit-boxes with 0 wrap-around), and Gate 2D (Pillar 3 world map node selection).
+  * [ ] User acceptance verification on Windows preview binary (`Rev 9`).
 
 ---
 
-### Milestone 5: True 16:9 Expanded Map Viewport & Gate 3 Certification [ACTIVE]
+### Milestone 5: True 16:9 Expanded Map Viewport & Gate 3 Certification [PLANNED — POST-GATE 2]
 * **Git Branch**: `gate/3-widescreen`
 * **Objective**: Widen the tactical map streaming engine to native 16:9 (`400 × 224` / `50 × 28` tiles) while cleanly framing non-map scenes.
 * **Deliverables**:

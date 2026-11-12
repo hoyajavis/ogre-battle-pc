@@ -9,8 +9,8 @@ An authentic, 1:1 native desktop PC port (Windows / Linux / macOS) of Quest's 19
 | Gate / Milestone | Scope | Parity / Validation Standard | Status | Git Branch / Tag |
 | :--- | :--- | :--- | :---: | :--- |
 | **Gate 1: Bit-Exact Baseline** | Pure 4:3 SNES simulation core | **0-byte drift** across 128KB WRAM, VRAM, OAM, CGRAM, SRAM over 83,450 frames | **100% CERTIFIED** | Tag: `v0.1.0-gate1-certified` |
-| **Gate 2: Direct-State Mouse** | Screen-to-WRAM cursor steering & click injection | 100% playable via mouse; zero input desync when idle | **COMPLETE (Rev 5)** | Branch: `gate/2-mouse-input` (Tag: `v0.2.0-gate2-mouse`) |
-| **Gate 3: True 16:9 Viewport** | 400×224 widescreen Mode-7 map streaming | Metatile buffer expansion ($25 \times 14$ metatiles) with clean 4:3 combat framing | **ACTIVE** | Branch: `gate/3-widescreen` |
+| **Gate 2: Three-Pillar Mouse** | 1:1 Direct-State Tactical Cursor (`$14DE/$14E0`), Decoupled Camera (`$00BD/$00BF`), Menu Hit-Box Indexing (`$0474`), & World Map Node Hit-Testing | 100% playable via mouse across Tactical Map, Menus & World Map; 0-byte drift when idle (Rev 1–8 synthetic D-Pad deprecated) | **ACTIVE (Rev 9 Three-Pillar)** | Branch: `gate/2-mouse-input` |
+| **Gate 3: True 16:9 Viewport** | 400×224 widescreen Mode-7 map streaming | Metatile buffer expansion ($25 \times 14$ metatiles) with clean 4:3 combat framing | **PLANNED (Post-Gate 2)** | Branch: `gate/3-widescreen` |
 | **Milestone 6: Release Polish** | Cross-platform binaries & JSON mod decoupling | Full campaign playable to all 13 endings with 0 crashes | Planned | Branch: `release/v1.0.0` |
 
 ---
@@ -33,14 +33,14 @@ flowchart TD
     Lifter --> CAND
     ROM --> REF
     CMP -->|0 Drift across 83,450 frames| G1["Gate 1 Certified (4:3)"]
-    G1 --> G2["Gate 2: Direct Mouse Input (WRAM $14E7/$00BD)"]
+    G1 --> G2["Gate 2: Three-Pillar Mouse Architecture\n(Pillar 1: $14DE/$14E0 + Decoupled $00BD/$00BF\nPillar 2: $0474 Menu Hit-Boxes | Pillar 3: World Nodes)"]
     G2 --> G3["Gate 3: 16:9 Viewport Extension (400×224 px)"]
 ```
 
 1. **Automated Static Lifting:** 100% of the ROM's 65816 assembly is mechanically lifted into C translation units (`src/gen/ob_bank_*.c`), eliminating months of risky manual decompilation.
 2. **LakeSnes Silicon Runtime:** Cycle-accurate PPU (Modes 0–7, HDMA, window masks), APU/SPC700 (32 kHz 16-bit stereo PCM audio), and DMA executed in user space.
 3. **Deterministic Test Oracle:** Verified against **8 Canonical Walkthrough Regression Traces** (`.obrec`) covering Cold Boot, Warren's Tarot Quiz, Felnamia Deployment, Overland March, Combat Encounters, Town Liberation, Boss Encounters, and Battery Save commits.
-4. **Zero-Invasion Modernization:** High-level modernizations (mouse cursor steering, 16:9 widescreen streaming, live reputation telemetry, tactile roster workbench) hook into runtime state via non-destructive shims (`RECOMP_PATCH`) without disturbing core simulation determinism.
+4. **Zero-Invasion Modernization:** High-level modernizations (Three-Pillar direct-state mouse & hit-box indexing, 16:9 widescreen streaming, live reputation telemetry, tactile roster workbench) hook into runtime state via non-destructive shims (`RECOMP_PATCH`) without disturbing core simulation determinism.
 
 ---
 
@@ -53,14 +53,14 @@ main (Certified Golden Releases Only)
   │
   ├── tag: v0.1.0-gate1-certified (83,450 frames 0-drift baseline)
   │     │
-  │     └── gate/2-mouse-input (Gate 2: Direct mouse navigation & hybrid input)
+  │     └── gate/2-mouse-input (Gate 2: Three-Pillar Direct-State & Hit-Box Mouse Architecture)
   │           │
-  │           └── [100% test_oracle PASS] ──> merged to main (v0.2.0-gate2-mouse)
-  │                                                   │
-  │                                                   └── gate/3-widescreen (Gate 3: 16:9 Viewport)
-  │                                                         │
-  │                                                         ├── spike/mode7-400x224 (exploratory)
-  │                                                         └── spike/roster-workbench
+  │           └── [100% test_oracle + Three-Pillar Suite PASS] ──> merged to main (v0.2.0-gate2-mouse)
+  │                                                                       │
+  │                                                                       └── gate/3-widescreen (Gate 3: 16:9 Viewport)
+  │                                                                             │
+  │                                                                             ├── spike/mode7-400x224 (exploratory)
+  │                                                                             └── spike/roster-workbench
 ```
 
 ### Key Git Protocols (see `docs/agents.md`):
@@ -88,6 +88,7 @@ main (Certified Golden Releases Only)
 │   ├── plan.md                     # Master project plan & architectural decisions
 │   ├── roadmap.md                  # Milestone dependency graph & gate criteria
 │   ├── gate_1_certification.md     # Formal 83,450-frame bit-exact parity certification report
+│   ├── mouse_architecture_deprecation_and_redesign.md # Gate 2 Rev 1-8 deprecation & Three-Pillar spec
 │   ├── user_testing_guide.md       # Windows preview executable testing guide
 │   ├── ogre_battle_modernization_areas.md # 16:9 viewport & 4-area modernization spec
 │   ├── gap_analysis.md             # Operational comparison against zelda3 & snesrecomp
