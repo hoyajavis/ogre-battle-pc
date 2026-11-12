@@ -547,16 +547,19 @@ static void test_06_phase_5b_walkthrough_models(const uint8_t *rom, uint32_t rom
     ob_companion_window_toggle_poi(&state);
     assert(state.show_hidden_poi_radar == true);
     ob_telemetry_render_companion_window(&state, NULL, &frame, wram, rom, rom_size, fb, OB_COMPANION_WIDTH, OB_COMPANION_HEIGHT);
+    ob_companion_window_save_ppm(fb, OB_COMPANION_WIDTH, OB_COMPANION_HEIGHT, "/tmp/companion_page1.ppm");
 
     /* Page 2: Combat & Tarot */
     ob_companion_window_cycle_page(&state);
     assert(state.active_page == OB_COMPANION_PAGE_COMBAT_TAROT);
     ob_telemetry_render_companion_window(&state, NULL, &frame, wram, rom, rom_size, fb, OB_COMPANION_WIDTH, OB_COMPANION_HEIGHT);
+    ob_companion_window_save_ppm(fb, OB_COMPANION_WIDTH, OB_COMPANION_HEIGHT, "/tmp/companion_page2.ppm");
 
     /* Page 3: Campaign Guide */
     ob_companion_window_cycle_page(&state);
     assert(state.active_page == OB_COMPANION_PAGE_CAMPAIGN_GUIDE);
     ob_telemetry_render_companion_window(&state, NULL, &frame, wram, rom, rom_size, fb, OB_COMPANION_WIDTH, OB_COMPANION_HEIGHT);
+    ob_companion_window_save_ppm(fb, OB_COMPANION_WIDTH, OB_COMPANION_HEIGHT, "/tmp/companion_page3.ppm");
 
     free(fb);
     free(wram);

@@ -594,7 +594,7 @@ size_t ob_telemetry_audit_special_recruits(
         if (h->is_recruited) {
             snprintf(h->status_summary, sizeof(h->status_summary), "RECRUITED (IN ROSTER)");
         } else if (h->prereq_cf_met && h->prereq_ali_met) {
-            snprintf(h->status_summary, sizeof(h->status_summary), "READY (CF/ALI QUALIFIED)");
+            snprintf(h->status_summary, sizeof(h->status_summary), "READY (CF/ALI OK)");
         } else {
             snprintf(h->status_summary, sizeof(h->status_summary), "LOCKED (CF:%u..%u ALI:%u..%u)",
                      kHeroDefs[i].min_cf, kHeroDefs[i].max_cf, kHeroDefs[i].min_ali, kHeroDefs[i].max_ali);
