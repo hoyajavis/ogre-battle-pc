@@ -5,6 +5,8 @@
 **Binary Architecture**: x86-64 PE32+ Windows GUI Subsystem (`-Wl,--subsystem,windows`)  
 **Dependencies**: **0 external DLLs** (pure Win32 GDI, `waveOut` 32,040 Hz stereo audio, multimedia timer)  
 **ROM Payload**: Embedded clean certified ROM (auto-fallback to external `ogre_battle.sfc` if placed alongside)  
+**Binary MD5**: `26d083b07ab6d7e33268b856bcefd9da`  
+**Binary SHA1**: `6e62fb02cadee188fecd2df95e00ee31ca8c8c94`  
 **Deprecated Legacy Builds**: `Rev 5` (`c944bd95fa981705b5c51d92833a2ff9`) and `Rev 8` (`73658652c2429cf553cfbd40de2aedc5`) — retired due to synthetic D-Pad feedback loops (see [`docs/mouse_architecture_deprecation_and_redesign.md`](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/mouse_architecture_deprecation_and_redesign.md)).
 
 > [!IMPORTANT]
