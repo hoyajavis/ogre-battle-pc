@@ -17,24 +17,33 @@ jobs:
       - name: Verify Clean Repository (Rule 4)
         run: |
           echo "Checking for illegal ROM binaries..."
-          if find . -type f \( -name "*.sfc" -o -name "*.smc" -o -name "*.rom" \); then
+          if find . -type f \( -name "*.sfc" -o -name "*.smc" -o -name "*.rom" \) | grep -q .; then
             echo "ERROR: Copyrighted ROM file detected in repository!"
             exit 1
           fi
 
       - name: Validate INI and JSON Configuration Syntax
         run: |
-          python3 -c "
+          python3 - <<'PY'
           import os, json, configparser
           for root, _, files in os.walk('.'):
-              if '.git' in root: continue
+              if '.git' in root:
+                  continue
               for f in files:
                   p = os.path.join(root, f)
                   if f.endswith('.json') and not f.endswith('.metadata.json'):
-                      try: json.load(open(p))
-                      except Exception as e: raise Exception(f'Invalid JSON {p}: {e}')
+                      with open(p) as fp:
+                          json.load(fp)
                   elif f.endswith('.ini'):
-                      try: configparser.ConfigParser().read(p)
-                      except Exception as e: raise Exception(f'Invalid INI {p}: {e}')
+                      cp = configparser.ConfigParser()
+                      cp.read(p)
           print('All configuration files validated successfully.')
-          "
+          PY
+
+      - name: Run Gate 2 & Gate 3 Automated Verification Suites
+        run: |
+          gcc -O2 -Wall -Wextra -Werror src/engine/input.c tests/test_mouse_three_pillar.c -o /tmp/test_mouse_three_pillar
+          /tmp/test_mouse_three_pillar
+          gcc -O2 -Wall -Wextra -Werror src/engine/input.c src/engine/snes_ui_rasterizer.c src/engine/widescreen.c tests/test_widescreen_16_9.c -o /tmp/test_widescreen_16_9
+          /tmp/test_widescreen_16_9
+
