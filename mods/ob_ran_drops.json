@@ -1,0 +1,33 @@
+{
+  "mod_title": "OB Random Crown Drops Fix",
+  "format_version": "1.0",
+  "description": "Decompiled from legacy binary patch",
+  "rom_size_bytes": 2097152,
+  "modified_domains": [],
+  "micro_patches": [
+    {
+      "rom_offset": "0x02C0CE",
+      "length": 1,
+      "vanilla_bytes": "1F",
+      "patched_bytes": "24"
+    },
+    {
+      "rom_offset": "0x02C0D5",
+      "length": 4,
+      "vanilla_bytes": "18699748",
+      "patched_bytes": "5C1B8130"
+    },
+    {
+      "rom_offset": "0x180100",
+      "length": 2,
+      "vanilla_bytes": "0000",
+      "patched_bytes": "C06A"
+    },
+    {
+      "rom_offset": "0x180103",
+      "length": 50,
+      "vanilla_bytes": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "patched_bytes": "9028C8C8B9C8118CC6118D0242A9248D0342EBEBEAAD1742C905F0E1C906F0DDC91EF0D9C908D002A969186993485CD9C005"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OgreBattleBootConfig",
+  "description": "Configuration schema for Ogre Battle Area 4 Boot-Time Decoupling Pipeline",
+  "type": "object",
+  "properties": {
+    "profile_name": {
+      "type": "string",
+      "description": "Human-readable profile name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the boot configuration and mod selections"
+    },
+    "base_preset": {
+      "type": "string",
+      "enum": ["vanilla", "fin_071", "class_expansion", "dragoner"],
+      "default": "vanilla",
+      "description": "Base game profile to compile"
+    },
+    "memory_size": {
+      "type": "string",
+      "enum": ["auto", "1.5MB", "2.0MB"],
+      "default": "auto",
+      "description": "Target ROM buffer size. 'auto' selects 2.0MB if any active feature/preset requires it."
+    },
+    "overlays": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Ordered list of file paths to JSON mod manifests to apply sequentially"
+    },
+    "engine_features": {
+      "type": "object",
+      "properties": {
+        "magic_ai_elemental_fix": {
+          "type": "boolean",
+          "default": false,
+          "description": "Fix enemy magic user AI to test target's equipped item elemental resistance"
+        },
+        "prevent_random_crown_drops": {
+          "type": "boolean",
+          "default": false,
+          "description": "Remove Crowns from random map drops and reroll rare undead relics"
+        },
+        "extensible_size_tables": {
+          "type": "boolean",
+          "default": false,
+          "description": "Decouple hardcoded bitwise size math to read extensible size table in Bank 30"
+        }
+      },
+      "additionalProperties": false
+    },
+    "randomizer": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "seed": {
+          "type": "string",
+          "description": "Deterministic PRNG seed string"
+        },
+        "randomize_classes": {
+          "type": "boolean",
+          "default": true
+        },
+        "randomize_shops": {
+          "type": "boolean",
+          "default": true
+        },
+        "randomize_stages": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "recalculate_checksum": {
+      "type": "boolean",
+      "default": true,
+      "description": "Recalculate and update SNES internal checksum and complement"
+    }
+  },
+  "required": ["base_preset"],
+  "additionalProperties": false
+}

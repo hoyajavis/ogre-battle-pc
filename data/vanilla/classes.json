@@ -1,0 +1,6377 @@
+[
+  {
+    "id": 1,
+    "hex_id": "0x01",
+    "name": "FIGHTER",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 100,
+      "daily_upkeep_per_level": 20,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 77,
+      "hp_growth": 5,
+      "base_str": 45,
+      "str_growth": 2,
+      "base_agi": 47,
+      "agi_growth": 2,
+      "base_int": 40,
+      "int_growth": 1,
+      "base_cha": 46,
+      "base_ali": 50,
+      "base_luk": 45
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 44,
+      "fire": 36,
+      "cold": 40,
+      "lightning": 34,
+      "black": 40,
+      "white": 40
+    }
+  },
+  {
+    "id": 2,
+    "hex_id": "0x02",
+    "name": "KNIGHT",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 600,
+      "daily_upkeep_per_level": 90,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 76,
+      "hp_growth": 5,
+      "base_str": 49,
+      "str_growth": 3,
+      "base_agi": 52,
+      "agi_growth": 2,
+      "base_int": 44,
+      "int_growth": 1,
+      "base_cha": 55,
+      "base_ali": 62,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 47,
+      "fire": 39,
+      "cold": 43,
+      "lightning": 37,
+      "black": 34,
+      "white": 46
+    }
+  },
+  {
+    "id": 3,
+    "hex_id": "0x03",
+    "name": "PALADIN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 1100,
+      "daily_upkeep_per_level": 170,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 67,
+      "hp_growth": 6,
+      "base_str": 56,
+      "str_growth": 3,
+      "base_agi": 56,
+      "agi_growth": 2,
+      "base_int": 45,
+      "int_growth": 2,
+      "base_cha": 62,
+      "base_ali": 78,
+      "base_luk": 60
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 160,
+        "hex_id": "0xA0",
+        "name": "Attack 0xA0"
+      }
+    },
+    "resistances": {
+      "physical": 53,
+      "fire": 41,
+      "cold": 46,
+      "lightning": 40,
+      "black": 26,
+      "white": 54
+    }
+  },
+  {
+    "id": 4,
+    "hex_id": "0x04",
+    "name": "WILD MAN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 400,
+      "daily_upkeep_per_level": 50,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 71,
+      "hp_growth": 6,
+      "base_str": 52,
+      "str_growth": 3,
+      "base_agi": 53,
+      "agi_growth": 2,
+      "base_int": 41,
+      "int_growth": 1,
+      "base_cha": 54,
+      "base_ali": 41,
+      "base_luk": 54
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 48,
+      "fire": 43,
+      "cold": 38,
+      "lightning": 36,
+      "black": 46,
+      "white": 34
+    }
+  },
+  {
+    "id": 5,
+    "hex_id": "0x05",
+    "name": "EVIL ONE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 900,
+      "daily_upkeep_per_level": 130,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 74,
+      "hp_growth": 6,
+      "base_str": 58,
+      "str_growth": 3,
+      "base_agi": 57,
+      "agi_growth": 2,
+      "base_int": 42,
+      "int_growth": 2,
+      "base_cha": 58,
+      "base_ali": 23,
+      "base_luk": 63
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 32,
+        "hex_id": "0x20",
+        "name": "STARLITE"
+      }
+    },
+    "resistances": {
+      "physical": 54,
+      "fire": 46,
+      "cold": 40,
+      "lightning": 39,
+      "black": 55,
+      "white": 25
+    }
+  },
+  {
+    "id": 6,
+    "hex_id": "0x06",
+    "name": "SAMURAI",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 700,
+      "daily_upkeep_per_level": 100,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 86,
+      "hp_growth": 5,
+      "base_str": 50,
+      "str_growth": 3,
+      "base_agi": 54,
+      "agi_growth": 2,
+      "base_int": 51,
+      "int_growth": 2,
+      "base_cha": 56,
+      "base_ali": 61,
+      "base_luk": 47
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 173,
+        "hex_id": "0xAD",
+        "name": "Attack 0xAD"
+      }
+    },
+    "resistances": {
+      "physical": 46,
+      "fire": 32,
+      "cold": 37,
+      "lightning": 34,
+      "black": 39,
+      "white": 51
+    }
+  },
+  {
+    "id": 7,
+    "hex_id": "0x07",
+    "name": "MASTER",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 1200,
+      "daily_upkeep_per_level": 180,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 96,
+      "hp_growth": 5,
+      "base_str": 55,
+      "str_growth": 3,
+      "base_agi": 59,
+      "agi_growth": 2,
+      "base_int": 54,
+      "int_growth": 2,
+      "base_cha": 64,
+      "base_ali": 79,
+      "base_luk": 54
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 173,
+        "hex_id": "0xAD",
+        "name": "Attack 0xAD"
+      }
+    },
+    "resistances": {
+      "physical": 52,
+      "fire": 34,
+      "cold": 35,
+      "lightning": 37,
+      "black": 21,
+      "white": 69
+    }
+  },
+  {
+    "id": 8,
+    "hex_id": "0x08",
+    "name": "NINJA",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 3,
+      "type_name": "Forest",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 500,
+      "daily_upkeep_per_level": 110,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 76,
+      "hp_growth": 4,
+      "base_str": 46,
+      "str_growth": 3,
+      "base_agi": 50,
+      "agi_growth": 3,
+      "base_int": 50,
+      "int_growth": 2,
+      "base_cha": 47,
+      "base_ali": 38,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 192,
+        "hex_id": "0xC0",
+        "name": "Attack 0xC0"
+      }
+    },
+    "resistances": {
+      "physical": 45,
+      "fire": 50,
+      "cold": 44,
+      "lightning": 43,
+      "black": 43,
+      "white": 37
+    }
+  },
+  {
+    "id": 9,
+    "hex_id": "0x09",
+    "name": "MASTER",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 3,
+      "type_name": "Forest",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 1300,
+      "daily_upkeep_per_level": 190,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 77,
+      "hp_growth": 5,
+      "base_str": 51,
+      "str_growth": 3,
+      "base_agi": 52,
+      "agi_growth": 4,
+      "base_int": 55,
+      "int_growth": 3,
+      "base_cha": 56,
+      "base_ali": 22,
+      "base_luk": 56
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 193,
+        "hex_id": "0xC1",
+        "name": "Attack 0xC1"
+      }
+    },
+    "resistances": {
+      "physical": 47,
+      "fire": 52,
+      "cold": 46,
+      "lightning": 45,
+      "black": 68,
+      "white": 2
+    }
+  },
+  {
+    "id": 10,
+    "hex_id": "0x0A",
+    "name": "AMAZON",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 3,
+      "type_name": "Forest",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 100,
+      "daily_upkeep_per_level": 30,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 83,
+      "hp_growth": 4,
+      "base_str": 42,
+      "str_growth": 2,
+      "base_agi": 50,
+      "agi_growth": 3,
+      "base_int": 52,
+      "int_growth": 2,
+      "base_cha": 46,
+      "base_ali": 50,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 1,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 38,
+      "fire": 32,
+      "cold": 36,
+      "lightning": 43,
+      "black": 38,
+      "white": 42
+    }
+  },
+  {
+    "id": 11,
+    "hex_id": "0x0B",
+    "name": "VALKYRIE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 3,
+      "type_name": "Forest",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 620,
+      "daily_upkeep_per_level": 80,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 81,
+      "hp_growth": 4,
+      "base_str": 45,
+      "str_growth": 2,
+      "base_agi": 52,
+      "agi_growth": 3,
+      "base_int": 54,
+      "int_growth": 3,
+      "base_cha": 53,
+      "base_ali": 54,
+      "base_luk": 52
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 40,
+        "hex_id": "0x28",
+        "name": "ASMODEUS"
+      }
+    },
+    "resistances": {
+      "physical": 42,
+      "fire": 34,
+      "cold": 44,
+      "lightning": 52,
+      "black": 32,
+      "white": 48
+    }
+  },
+  {
+    "id": 12,
+    "hex_id": "0x0C",
+    "name": "MUSE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 5,
+      "type_name": "Snow",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 1350,
+      "daily_upkeep_per_level": 210,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 76,
+      "hp_growth": 4,
+      "base_str": 48,
+      "str_growth": 3,
+      "base_agi": 55,
+      "agi_growth": 3,
+      "base_int": 56,
+      "int_growth": 3,
+      "base_cha": 62,
+      "base_ali": 75,
+      "base_luk": 64
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 104,
+        "hex_id": "0x68",
+        "name": "Attack 0x68"
+      }
+    },
+    "resistances": {
+      "physical": 46,
+      "fire": 38,
+      "cold": 52,
+      "lightning": 60,
+      "black": 15,
+      "white": 65
+    }
+  },
+  {
+    "id": 13,
+    "hex_id": "0x0D",
+    "name": "BEASTMAN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 350,
+      "daily_upkeep_per_level": 50,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 85,
+      "hp_growth": 5,
+      "base_str": 51,
+      "str_growth": 3,
+      "base_agi": 47,
+      "agi_growth": 2,
+      "base_int": 38,
+      "int_growth": 1,
+      "base_cha": 50,
+      "base_ali": 45,
+      "base_luk": 43
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 44,
+      "fire": 28,
+      "cold": 31,
+      "lightning": 35,
+      "black": 46,
+      "white": 34
+    }
+  },
+  {
+    "id": 14,
+    "hex_id": "0x0E",
+    "name": "MASTER",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 850,
+      "daily_upkeep_per_level": 130,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 79,
+      "hp_growth": 5,
+      "base_str": 53,
+      "str_growth": 4,
+      "base_agi": 49,
+      "agi_growth": 2,
+      "base_int": 36,
+      "int_growth": 1,
+      "base_cha": 56,
+      "base_ali": 33,
+      "base_luk": 46
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 48,
+      "fire": 27,
+      "cold": 35,
+      "lightning": 39,
+      "black": 55,
+      "white": 25
+    }
+  },
+  {
+    "id": 15,
+    "hex_id": "0x0F",
+    "name": "DRAGONER",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 1370,
+      "daily_upkeep_per_level": 200,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 83,
+      "hp_growth": 4,
+      "base_str": 48,
+      "str_growth": 3,
+      "base_agi": 51,
+      "agi_growth": 2,
+      "base_int": 49,
+      "int_growth": 2,
+      "base_cha": 55,
+      "base_ali": 50,
+      "base_luk": 58
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 43,
+      "fire": 26,
+      "cold": 54,
+      "lightning": 40,
+      "black": 40,
+      "white": 40
+    }
+  },
+  {
+    "id": 16,
+    "hex_id": "0x10",
+    "name": "\u008fMASTER",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 2000,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 85,
+      "hp_growth": 3,
+      "base_str": 52,
+      "str_growth": 3,
+      "base_agi": 53,
+      "agi_growth": 3,
+      "base_int": 51,
+      "int_growth": 2,
+      "base_cha": 63,
+      "base_ali": 50,
+      "base_luk": 65
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 36,
+        "hex_id": "0x24",
+        "name": "KISS"
+      }
+    },
+    "resistances": {
+      "physical": 45,
+      "fire": 22,
+      "cold": 58,
+      "lightning": 47,
+      "black": 40,
+      "white": 40
+    }
+  },
+  {
+    "id": 17,
+    "hex_id": "0x11",
+    "name": "DOLLMAGE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 850,
+      "daily_upkeep_per_level": 160,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 78,
+      "hp_growth": 3,
+      "base_str": 40,
+      "str_growth": 1,
+      "base_agi": 54,
+      "agi_growth": 2,
+      "base_int": 53,
+      "int_growth": 3,
+      "base_cha": 52,
+      "base_ali": 53,
+      "base_luk": 47
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 112,
+        "hex_id": "0x70",
+        "name": "Attack 0x70"
+      }
+    },
+    "resistances": {
+      "physical": 28,
+      "fire": 44,
+      "cold": 39,
+      "lightning": 27,
+      "black": 37,
+      "white": 43
+    }
+  },
+  {
+    "id": 18,
+    "hex_id": "0x12",
+    "name": "MASTER",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 1280,
+      "daily_upkeep_per_level": 190,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 78,
+      "hp_growth": 3,
+      "base_str": 38,
+      "str_growth": 1,
+      "base_agi": 57,
+      "agi_growth": 3,
+      "base_int": 57,
+      "int_growth": 3,
+      "base_cha": 58,
+      "base_ali": 69,
+      "base_luk": 42
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 112,
+        "hex_id": "0x70",
+        "name": "Attack 0x70"
+      }
+    },
+    "resistances": {
+      "physical": 26,
+      "fire": 47,
+      "cold": 41,
+      "lightning": 29,
+      "black": 21,
+      "white": 59
+    }
+  },
+  {
+    "id": 19,
+    "hex_id": "0x13",
+    "name": "WIZARD",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 400,
+      "daily_upkeep_per_level": 70,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 86,
+      "hp_growth": 2,
+      "base_str": 37,
+      "str_growth": 1,
+      "base_agi": 51,
+      "agi_growth": 1,
+      "base_int": 45,
+      "int_growth": 4,
+      "base_cha": 50,
+      "base_ali": 45,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 194,
+        "hex_id": "0xC2",
+        "name": "Attack 0xC2"
+      }
+    },
+    "resistances": {
+      "physical": 20,
+      "fire": 32,
+      "cold": 32,
+      "lightning": 37,
+      "black": 45,
+      "white": 35
+    }
+  },
+  {
+    "id": 20,
+    "hex_id": "0x14",
+    "name": "MAGE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 800,
+      "daily_upkeep_per_level": 150,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 81,
+      "hp_growth": 2,
+      "base_str": 38,
+      "str_growth": 1,
+      "base_agi": 49,
+      "agi_growth": 1,
+      "base_int": 45,
+      "int_growth": 4,
+      "base_cha": 55,
+      "base_ali": 35,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 195,
+        "hex_id": "0xC3",
+        "name": "Attack 0xC3"
+      }
+    },
+    "resistances": {
+      "physical": 24,
+      "fire": 34,
+      "cold": 35,
+      "lightning": 38,
+      "black": 51,
+      "white": 29
+    }
+  },
+  {
+    "id": 21,
+    "hex_id": "0x15",
+    "name": "SORCERER",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 1200,
+      "daily_upkeep_per_level": 180,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 73,
+      "hp_growth": 3,
+      "base_str": 39,
+      "str_growth": 1,
+      "base_agi": 47,
+      "agi_growth": 1,
+      "base_int": 55,
+      "int_growth": 4,
+      "base_cha": 60,
+      "base_ali": 21,
+      "base_luk": 45
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 194,
+        "hex_id": "0xC2",
+        "name": "Attack 0xC2"
+      },
+      "back_attack": {
+        "id": 195,
+        "hex_id": "0xC3",
+        "name": "Attack 0xC3"
+      }
+    },
+    "resistances": {
+      "physical": 28,
+      "fire": 36,
+      "cold": 38,
+      "lightning": 39,
+      "black": 59,
+      "white": 21
+    }
+  },
+  {
+    "id": 22,
+    "hex_id": "0x16",
+    "name": "LICH",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 1900,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 88,
+      "hp_growth": 2,
+      "base_str": 35,
+      "str_growth": 1,
+      "base_agi": 46,
+      "agi_growth": 2,
+      "base_int": 59,
+      "int_growth": 4,
+      "base_cha": 62,
+      "base_ali": 9,
+      "base_luk": 42
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 20,
+        "hex_id": "0x14",
+        "name": "ICESTORM"
+      },
+      "back_attack": {
+        "id": 195,
+        "hex_id": "0xC3",
+        "name": "Attack 0xC3"
+      }
+    },
+    "resistances": {
+      "physical": 100,
+      "fire": 100,
+      "cold": 100,
+      "lightning": 68,
+      "black": 100,
+      "white": 10
+    }
+  },
+  {
+    "id": 23,
+    "hex_id": "0x17",
+    "name": "WITCH",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 510,
+      "daily_upkeep_per_level": 70,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 80,
+      "hp_growth": 3,
+      "base_str": 38,
+      "str_growth": 1,
+      "base_agi": 49,
+      "agi_growth": 2,
+      "base_int": 58,
+      "int_growth": 4,
+      "base_cha": 53,
+      "base_ali": 47,
+      "base_luk": 67
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 166,
+        "hex_id": "0xA6",
+        "name": "Attack 0xA6"
+      }
+    },
+    "resistances": {
+      "physical": 25,
+      "fire": 30,
+      "cold": 28,
+      "lightning": 31,
+      "black": 48,
+      "white": 50
+    }
+  },
+  {
+    "id": 24,
+    "hex_id": "0x18",
+    "name": "CLERIC",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 200,
+      "daily_upkeep_per_level": 60,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 87,
+      "hp_growth": 4,
+      "base_str": 41,
+      "str_growth": 2,
+      "base_agi": 54,
+      "agi_growth": 1,
+      "base_int": 52,
+      "int_growth": 3,
+      "base_cha": 57,
+      "base_ali": 65,
+      "base_luk": 49
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 20,
+        "hex_id": "0x14",
+        "name": "ICESTORM"
+      },
+      "back_attack": {
+        "id": 160,
+        "hex_id": "0xA0",
+        "name": "Attack 0xA0"
+      }
+    },
+    "resistances": {
+      "physical": 24,
+      "fire": 23,
+      "cold": 21,
+      "lightning": 25,
+      "black": 25,
+      "white": 55
+    }
+  },
+  {
+    "id": 25,
+    "hex_id": "0x19",
+    "name": "SHAMAN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 450,
+      "daily_upkeep_per_level": 100,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 83,
+      "hp_growth": 4,
+      "base_str": 43,
+      "str_growth": 2,
+      "base_agi": 57,
+      "agi_growth": 2,
+      "base_int": 58,
+      "int_growth": 4,
+      "base_cha": 64,
+      "base_ali": 76,
+      "base_luk": 53
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 20,
+        "hex_id": "0x14",
+        "name": "ICESTORM"
+      },
+      "back_attack": {
+        "id": 160,
+        "hex_id": "0xA0",
+        "name": "Attack 0xA0"
+      }
+    },
+    "resistances": {
+      "physical": 28,
+      "fire": 27,
+      "cold": 25,
+      "lightning": 27,
+      "black": 18,
+      "white": 62
+    }
+  },
+  {
+    "id": 26,
+    "hex_id": "0x1A",
+    "name": "MONK",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 700,
+      "daily_upkeep_per_level": 110,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 74,
+      "hp_growth": 4,
+      "base_str": 45,
+      "str_growth": 2,
+      "base_agi": 61,
+      "agi_growth": 2,
+      "base_int": 61,
+      "int_growth": 4,
+      "base_cha": 68,
+      "base_ali": 87,
+      "base_luk": 56
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 20,
+        "hex_id": "0x14",
+        "name": "ICESTORM"
+      },
+      "back_attack": {
+        "id": 162,
+        "hex_id": "0xA2",
+        "name": "Attack 0xA2"
+      }
+    },
+    "resistances": {
+      "physical": 32,
+      "fire": 31,
+      "cold": 29,
+      "lightning": 29,
+      "black": 10,
+      "white": 70
+    }
+  },
+  {
+    "id": 27,
+    "hex_id": "0x1B",
+    "name": "MERMAID",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 7,
+      "type_name": "Shallows",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 900,
+      "daily_upkeep_per_level": 130,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 93,
+      "hp_growth": 5,
+      "base_str": 49,
+      "str_growth": 2,
+      "base_agi": 52,
+      "agi_growth": 2,
+      "base_int": 51,
+      "int_growth": 3,
+      "base_cha": 53,
+      "base_ali": 57,
+      "base_luk": 44
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 38,
+        "hex_id": "0x26",
+        "name": "QUAKE"
+      }
+    },
+    "resistances": {
+      "physical": 29,
+      "fire": 26,
+      "cold": 52,
+      "lightning": 21,
+      "black": 43,
+      "white": 48
+    }
+  },
+  {
+    "id": 28,
+    "hex_id": "0x1C",
+    "name": "NIXIE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 7,
+      "type_name": "Shallows",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 1150,
+      "daily_upkeep_per_level": 210,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 85,
+      "hp_growth": 5,
+      "base_str": 51,
+      "str_growth": 3,
+      "base_agi": 55,
+      "agi_growth": 3,
+      "base_int": 57,
+      "int_growth": 4,
+      "base_cha": 57,
+      "base_ali": 74,
+      "base_luk": 41
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 100,
+        "hex_id": "0x64",
+        "name": "Attack 0x64"
+      }
+    },
+    "resistances": {
+      "physical": 34,
+      "fire": 31,
+      "cold": 60,
+      "lightning": 23,
+      "black": 47,
+      "white": 62
+    }
+  },
+  {
+    "id": 29,
+    "hex_id": "0x1D",
+    "name": "WEREWOLF",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 4,
+      "type_name": "Mountain",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 380,
+      "daily_upkeep_per_level": 80,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 79,
+      "hp_growth": 6,
+      "base_str": 53,
+      "str_growth": 3,
+      "base_agi": 54,
+      "agi_growth": 3,
+      "base_int": 44,
+      "int_growth": 1,
+      "base_cha": 31,
+      "base_ali": 38,
+      "base_luk": 49
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 13,
+        "hex_id": "0x0D",
+        "name": "COLD"
+      },
+      "back_attack": {
+        "id": 13,
+        "hex_id": "0x0D",
+        "name": "COLD"
+      }
+    },
+    "resistances": {
+      "physical": 71,
+      "fire": 72,
+      "cold": 77,
+      "lightning": 78,
+      "black": 92,
+      "white": 11
+    }
+  },
+  {
+    "id": 30,
+    "hex_id": "0x1E",
+    "name": "TIGERMAN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 3,
+      "type_name": "Forest",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 720,
+      "daily_upkeep_per_level": 120,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 77,
+      "hp_growth": 6,
+      "base_str": 59,
+      "str_growth": 4,
+      "base_agi": 58,
+      "agi_growth": 3,
+      "base_int": 45,
+      "int_growth": 1,
+      "base_cha": 28,
+      "base_ali": 36,
+      "base_luk": 52
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 13,
+        "hex_id": "0x0D",
+        "name": "COLD"
+      },
+      "back_attack": {
+        "id": 13,
+        "hex_id": "0x0D",
+        "name": "COLD"
+      }
+    },
+    "resistances": {
+      "physical": 74,
+      "fire": 76,
+      "cold": 71,
+      "lightning": 75,
+      "black": 94,
+      "white": 14
+    }
+  },
+  {
+    "id": 31,
+    "hex_id": "0x1F",
+    "name": "BEASTMAN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 77,
+      "hp_growth": 5,
+      "base_str": 45,
+      "str_growth": 2,
+      "base_agi": 47,
+      "agi_growth": 2,
+      "base_int": 40,
+      "int_growth": 1,
+      "base_cha": 42,
+      "base_ali": 50,
+      "base_luk": 45
+    },
+    "combat": {
+      "front_row_actions": 1,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 44,
+      "fire": 36,
+      "cold": 40,
+      "lightning": 34,
+      "black": 40,
+      "white": 40
+    }
+  },
+  {
+    "id": 32,
+    "hex_id": "0x20",
+    "name": "VAMPYRE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 3,
+      "type_name": "Forest",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 1600,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 45,
+      "hp_growth": 4,
+      "base_str": 42,
+      "str_growth": 3,
+      "base_agi": 45,
+      "agi_growth": 2,
+      "base_int": 61,
+      "int_growth": 4,
+      "base_cha": 50,
+      "base_ali": 19,
+      "base_luk": 62
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 174,
+        "hex_id": "0xAE",
+        "name": "Attack 0xAE"
+      },
+      "back_attack": {
+        "id": 167,
+        "hex_id": "0xA7",
+        "name": "Attack 0xA7"
+      }
+    },
+    "resistances": {
+      "physical": 82,
+      "fire": 78,
+      "cold": 85,
+      "lightning": 48,
+      "black": 80,
+      "white": 10
+    }
+  },
+  {
+    "id": 33,
+    "hex_id": "0x21",
+    "name": "VAMPYRE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 9,
+      "type_name": "Slow",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 45,
+      "hp_growth": 4,
+      "base_str": 42,
+      "str_growth": 3,
+      "base_agi": 45,
+      "agi_growth": 2,
+      "base_int": 61,
+      "int_growth": 4,
+      "base_cha": 50,
+      "base_ali": 19,
+      "base_luk": 62
+    },
+    "combat": {
+      "front_row_actions": 1,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 19,
+        "hex_id": "0x13",
+        "name": "NOVA"
+      },
+      "back_attack": {
+        "id": 19,
+        "hex_id": "0x13",
+        "name": "NOVA"
+      }
+    },
+    "resistances": {
+      "physical": 100,
+      "fire": 100,
+      "cold": 100,
+      "lightning": 100,
+      "black": 100,
+      "white": 100
+    }
+  },
+  {
+    "id": 34,
+    "hex_id": "0x22",
+    "name": "PRINCESS",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 2000,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 70,
+      "hp_growth": 2,
+      "base_str": 37,
+      "str_growth": 1,
+      "base_agi": 48,
+      "agi_growth": 2,
+      "base_int": 57,
+      "int_growth": 4,
+      "base_cha": 72,
+      "base_ali": 81,
+      "base_luk": 63
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 118,
+        "hex_id": "0x76",
+        "name": "Attack 0x76"
+      }
+    },
+    "resistances": {
+      "physical": 27,
+      "fire": 21,
+      "cold": 22,
+      "lightning": 25,
+      "black": 20,
+      "white": 65
+    }
+  },
+  {
+    "id": 35,
+    "hex_id": "0x23",
+    "name": "PUMPKIN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 3,
+      "type_name": "Forest",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 100,
+      "daily_upkeep_per_level": 20,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 98,
+      "hp_growth": 3,
+      "base_str": 45,
+      "str_growth": 2,
+      "base_agi": 45,
+      "agi_growth": 2,
+      "base_int": 31,
+      "int_growth": 1,
+      "base_cha": 0,
+      "base_ali": 45,
+      "base_luk": 72
+    },
+    "combat": {
+      "front_row_actions": 1,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 169,
+        "hex_id": "0xA9",
+        "name": "Attack 0xA9"
+      },
+      "back_attack": {
+        "id": 169,
+        "hex_id": "0xA9",
+        "name": "Attack 0xA9"
+      }
+    },
+    "resistances": {
+      "physical": 33,
+      "fire": 11,
+      "cold": 37,
+      "lightning": 34,
+      "black": 45,
+      "white": 38
+    }
+  },
+  {
+    "id": 36,
+    "hex_id": "0x24",
+    "name": "HALLOWEEN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 3,
+      "type_name": "Forest",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 100,
+      "daily_upkeep_per_level": 50,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 88,
+      "hp_growth": 4,
+      "base_str": 50,
+      "str_growth": 3,
+      "base_agi": 48,
+      "agi_growth": 3,
+      "base_int": 37,
+      "int_growth": 2,
+      "base_cha": 0,
+      "base_ali": 18,
+      "base_luk": 82
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 169,
+        "hex_id": "0xA9",
+        "name": "Attack 0xA9"
+      },
+      "back_attack": {
+        "id": 169,
+        "hex_id": "0xA9",
+        "name": "Attack 0xA9"
+      }
+    },
+    "resistances": {
+      "physical": 60,
+      "fire": 37,
+      "cold": 56,
+      "lightning": 64,
+      "black": 69,
+      "white": 22
+    }
+  },
+  {
+    "id": 37,
+    "hex_id": "0x25",
+    "name": "GOLEM",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 100,
+      "daily_upkeep_per_level": 20,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 45,
+      "hp_growth": 2,
+      "base_str": 56,
+      "str_growth": 4,
+      "base_agi": 31,
+      "agi_growth": 1,
+      "base_int": 30,
+      "int_growth": 2,
+      "base_cha": 20,
+      "base_ali": 50,
+      "base_luk": 39
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 69,
+      "fire": 38,
+      "cold": 63,
+      "lightning": 61,
+      "black": 55,
+      "white": 43
+    }
+  },
+  {
+    "id": 38,
+    "hex_id": "0x26",
+    "name": "ROCKGOLEM",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 4,
+      "type_name": "Mountain",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 600,
+      "daily_upkeep_per_level": 70,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 53,
+      "hp_growth": 2,
+      "base_str": 60,
+      "str_growth": 4,
+      "base_agi": 32,
+      "agi_growth": 1,
+      "base_int": 30,
+      "int_growth": 2,
+      "base_cha": 30,
+      "base_ali": 55,
+      "base_luk": 40
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 73,
+      "fire": 74,
+      "cold": 67,
+      "lightning": 63,
+      "black": 53,
+      "white": 47
+    }
+  },
+  {
+    "id": 39,
+    "hex_id": "0x27",
+    "name": "IRONGOLEM",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 1700,
+      "daily_upkeep_per_level": 180,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 67,
+      "hp_growth": 2,
+      "base_str": 63,
+      "str_growth": 4,
+      "base_agi": 33,
+      "agi_growth": 2,
+      "base_int": 30,
+      "int_growth": 2,
+      "base_cha": 48,
+      "base_ali": 73,
+      "base_luk": 45
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 82,
+      "fire": 41,
+      "cold": 81,
+      "lightning": 72,
+      "black": 63,
+      "white": 90
+    }
+  },
+  {
+    "id": 40,
+    "hex_id": "0x28",
+    "name": "GIANT",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 200,
+      "daily_upkeep_per_level": 60,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 89,
+      "hp_growth": 7,
+      "base_str": 54,
+      "str_growth": 3,
+      "base_agi": 40,
+      "agi_growth": 2,
+      "base_int": 30,
+      "int_growth": 2,
+      "base_cha": 33,
+      "base_ali": 50,
+      "base_luk": 44
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 48,
+      "fire": 42,
+      "cold": 37,
+      "lightning": 41,
+      "black": 40,
+      "white": 40
+    }
+  },
+  {
+    "id": 41,
+    "hex_id": "0x29",
+    "name": "ICEGIANT",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 5,
+      "type_name": "Snow",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 750,
+      "daily_upkeep_per_level": 130,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 84,
+      "hp_growth": 8,
+      "base_str": 57,
+      "str_growth": 4,
+      "base_agi": 38,
+      "agi_growth": 3,
+      "base_int": 37,
+      "int_growth": 2,
+      "base_cha": 38,
+      "base_ali": 70,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 4,
+        "hex_id": "0x04",
+        "name": "BLIZZARD"
+      }
+    },
+    "resistances": {
+      "physical": 52,
+      "fire": 15,
+      "cold": 80,
+      "lightning": 54,
+      "black": 35,
+      "white": 60
+    }
+  },
+  {
+    "id": 42,
+    "hex_id": "0x2A",
+    "name": "TITAN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 920,
+      "daily_upkeep_per_level": 190,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 85,
+      "hp_growth": 8,
+      "base_str": 62,
+      "str_growth": 4,
+      "base_agi": 45,
+      "agi_growth": 3,
+      "base_int": 40,
+      "int_growth": 3,
+      "base_cha": 47,
+      "base_ali": 75,
+      "base_luk": 41
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 113,
+        "hex_id": "0x71",
+        "name": "Attack 0x71"
+      }
+    },
+    "resistances": {
+      "physical": 54,
+      "fire": 47,
+      "cold": 39,
+      "lightning": 52,
+      "black": 15,
+      "white": 80
+    }
+  },
+  {
+    "id": 43,
+    "hex_id": "0x2B",
+    "name": "FIREGIANT",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 4,
+      "type_name": "Mountain",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 630,
+      "daily_upkeep_per_level": 110,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 75,
+      "hp_growth": 8,
+      "base_str": 59,
+      "str_growth": 4,
+      "base_agi": 49,
+      "agi_growth": 3,
+      "base_int": 36,
+      "int_growth": 2,
+      "base_cha": 36,
+      "base_ali": 27,
+      "base_luk": 47
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "FIREBALL"
+      }
+    },
+    "resistances": {
+      "physical": 57,
+      "fire": 80,
+      "cold": 15,
+      "lightning": 37,
+      "black": 54,
+      "white": 32
+    }
+  },
+  {
+    "id": 44,
+    "hex_id": "0x2C",
+    "name": "HELLHOUND",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 4,
+      "type_name": "Mountain",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 100,
+      "daily_upkeep_per_level": 30,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 87,
+      "hp_growth": 6,
+      "base_str": 51,
+      "str_growth": 3,
+      "base_agi": 59,
+      "agi_growth": 3,
+      "base_int": 32,
+      "int_growth": 3,
+      "base_cha": 17,
+      "base_ali": 44,
+      "base_luk": 51
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 66,
+        "hex_id": "0x42",
+        "name": "Attack 0x42"
+      }
+    },
+    "resistances": {
+      "physical": 46,
+      "fire": 49,
+      "cold": 40,
+      "lightning": 37,
+      "black": 58,
+      "white": 22
+    }
+  },
+  {
+    "id": 45,
+    "hex_id": "0x2D",
+    "name": "CERBERUS",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 4,
+      "type_name": "Mountain",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 570,
+      "daily_upkeep_per_level": 100,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 83,
+      "hp_growth": 7,
+      "base_str": 56,
+      "str_growth": 4,
+      "base_agi": 62,
+      "agi_growth": 4,
+      "base_int": 48,
+      "int_growth": 4,
+      "base_cha": 23,
+      "base_ali": 30,
+      "base_luk": 53
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 196,
+        "hex_id": "0xC4",
+        "name": "Attack 0xC4"
+      }
+    },
+    "resistances": {
+      "physical": 51,
+      "fire": 52,
+      "cold": 40,
+      "lightning": 36,
+      "black": 65,
+      "white": 15
+    }
+  },
+  {
+    "id": 46,
+    "hex_id": "0x2E",
+    "name": "OCTOPUS",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 8,
+      "type_name": "Water",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 300,
+      "daily_upkeep_per_level": 50,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 78,
+      "hp_growth": 9,
+      "base_str": 51,
+      "str_growth": 3,
+      "base_agi": 38,
+      "agi_growth": 2,
+      "base_int": 47,
+      "int_growth": 1,
+      "base_cha": 20,
+      "base_ali": 50,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 4,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 64,
+      "fire": 54,
+      "cold": 53,
+      "lightning": 20,
+      "black": 50,
+      "white": 50
+    }
+  },
+  {
+    "id": 47,
+    "hex_id": "0x2F",
+    "name": "KRAKEN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 8,
+      "type_name": "Water",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 700,
+      "daily_upkeep_per_level": 110,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 86,
+      "hp_growth": 10,
+      "base_str": 57,
+      "str_growth": 4,
+      "base_agi": 47,
+      "agi_growth": 2,
+      "base_int": 50,
+      "int_growth": 1,
+      "base_cha": 20,
+      "base_ali": 57,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 4,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 145,
+        "hex_id": "0x91",
+        "name": "Attack 0x91"
+      }
+    },
+    "resistances": {
+      "physical": 67,
+      "fire": 59,
+      "cold": 58,
+      "lightning": 17,
+      "black": 43,
+      "white": 57
+    }
+  },
+  {
+    "id": 48,
+    "hex_id": "0x30",
+    "name": "DRAGON",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 6
+    },
+    "costs": {
+      "base_deploy_goth": 850,
+      "daily_upkeep_per_level": 100,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 93,
+      "hp_growth": 8,
+      "base_str": 60,
+      "str_growth": 4,
+      "base_agi": 37,
+      "agi_growth": 1,
+      "base_int": 42,
+      "int_growth": 1,
+      "base_cha": 40,
+      "base_ali": 50,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 66,
+        "hex_id": "0x42",
+        "name": "Attack 0x42"
+      }
+    },
+    "resistances": {
+      "physical": 52,
+      "fire": 50,
+      "cold": 46,
+      "lightning": 47,
+      "black": 44,
+      "white": 44
+    }
+  },
+  {
+    "id": 49,
+    "hex_id": "0x31",
+    "name": "RED\u008f",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 4,
+      "type_name": "Mountain",
+      "weight": 7
+    },
+    "costs": {
+      "base_deploy_goth": 1100,
+      "daily_upkeep_per_level": 150,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 91,
+      "hp_growth": 9,
+      "base_str": 62,
+      "str_growth": 4,
+      "base_agi": 40,
+      "agi_growth": 2,
+      "base_int": 44,
+      "int_growth": 2,
+      "base_cha": 50,
+      "base_ali": 50,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 66,
+        "hex_id": "0x42",
+        "name": "Attack 0x42"
+      }
+    },
+    "resistances": {
+      "physical": 54,
+      "fire": 58,
+      "cold": 44,
+      "lightning": 60,
+      "black": 44,
+      "white": 44
+    }
+  },
+  {
+    "id": 50,
+    "hex_id": "0x32",
+    "name": "SILVER\u008f",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 5,
+      "type_name": "Snow",
+      "weight": 7
+    },
+    "costs": {
+      "base_deploy_goth": 1400,
+      "daily_upkeep_per_level": 160,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 95,
+      "hp_growth": 9,
+      "base_str": 64,
+      "str_growth": 4,
+      "base_agi": 38,
+      "agi_growth": 2,
+      "base_int": 46,
+      "int_growth": 2,
+      "base_cha": 52,
+      "base_ali": 71,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 69,
+        "hex_id": "0x45",
+        "name": "Attack 0x45"
+      }
+    },
+    "resistances": {
+      "physical": 53,
+      "fire": 34,
+      "cold": 60,
+      "lightning": 64,
+      "black": 37,
+      "white": 66
+    }
+  },
+  {
+    "id": 51,
+    "hex_id": "0x33",
+    "name": "BLACK\u008f",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 7
+    },
+    "costs": {
+      "base_deploy_goth": 1300,
+      "daily_upkeep_per_level": 150,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 97,
+      "hp_growth": 9,
+      "base_str": 65,
+      "str_growth": 4,
+      "base_agi": 36,
+      "agi_growth": 2,
+      "base_int": 43,
+      "int_growth": 2,
+      "base_cha": 48,
+      "base_ali": 29,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 81,
+        "hex_id": "0x51",
+        "name": "Attack 0x51"
+      }
+    },
+    "resistances": {
+      "physical": 55,
+      "fire": 49,
+      "cold": 51,
+      "lightning": 69,
+      "black": 64,
+      "white": 35
+    }
+  },
+  {
+    "id": 52,
+    "hex_id": "0x34",
+    "name": "RED\u008f",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 4,
+      "type_name": "Mountain",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 1350,
+      "daily_upkeep_per_level": 200,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 87,
+      "hp_growth": 10,
+      "base_str": 67,
+      "str_growth": 4,
+      "base_agi": 43,
+      "agi_growth": 3,
+      "base_int": 48,
+      "int_growth": 3,
+      "base_cha": 53,
+      "base_ali": 50,
+      "base_luk": 53
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 66,
+        "hex_id": "0x42",
+        "name": "Attack 0x42"
+      }
+    },
+    "resistances": {
+      "physical": 59,
+      "fire": 67,
+      "cold": 25,
+      "lightning": 63,
+      "black": 48,
+      "white": 48
+    }
+  },
+  {
+    "id": 53,
+    "hex_id": "0x35",
+    "name": "SALAMAND",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 4,
+      "type_name": "Mountain",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 1700,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 80,
+      "hp_growth": 11,
+      "base_str": 61,
+      "str_growth": 5,
+      "base_agi": 47,
+      "agi_growth": 3,
+      "base_int": 44,
+      "int_growth": 4,
+      "base_cha": 57,
+      "base_ali": 50,
+      "base_luk": 56
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 66,
+        "hex_id": "0x42",
+        "name": "Attack 0x42"
+      },
+      "back_attack": {
+        "id": 98,
+        "hex_id": "0x62",
+        "name": "Attack 0x62"
+      }
+    },
+    "resistances": {
+      "physical": 62,
+      "fire": 86,
+      "cold": 11,
+      "lightning": 67,
+      "black": 51,
+      "white": 51
+    }
+  },
+  {
+    "id": 54,
+    "hex_id": "0x36",
+    "name": "GOLD\u008f",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 5,
+      "type_name": "Snow",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 1650,
+      "daily_upkeep_per_level": 230,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 90,
+      "hp_growth": 10,
+      "base_str": 69,
+      "str_growth": 4,
+      "base_agi": 41,
+      "agi_growth": 3,
+      "base_int": 50,
+      "int_growth": 3,
+      "base_cha": 62,
+      "base_ali": 77,
+      "base_luk": 51
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 69,
+        "hex_id": "0x45",
+        "name": "Attack 0x45"
+      }
+    },
+    "resistances": {
+      "physical": 57,
+      "fire": 23,
+      "cold": 69,
+      "lightning": 66,
+      "black": 27,
+      "white": 71
+    }
+  },
+  {
+    "id": 55,
+    "hex_id": "0x37",
+    "name": "PLATINUM\u008f",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 5,
+      "type_name": "Snow",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 2000,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 83,
+      "hp_growth": 11,
+      "base_str": 63,
+      "str_growth": 5,
+      "base_agi": 45,
+      "agi_growth": 3,
+      "base_int": 46,
+      "int_growth": 4,
+      "base_cha": 67,
+      "base_ali": 82,
+      "base_luk": 53
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 69,
+        "hex_id": "0x45",
+        "name": "Attack 0x45"
+      },
+      "back_attack": {
+        "id": 102,
+        "hex_id": "0x66",
+        "name": "Attack 0x66"
+      }
+    },
+    "resistances": {
+      "physical": 61,
+      "fire": 11,
+      "cold": 88,
+      "lightning": 69,
+      "black": 17,
+      "white": 76
+    }
+  },
+  {
+    "id": 56,
+    "hex_id": "0x38",
+    "name": "TIAMAT",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 1550,
+      "daily_upkeep_per_level": 210,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 86,
+      "hp_growth": 10,
+      "base_str": 70,
+      "str_growth": 4,
+      "base_agi": 39,
+      "agi_growth": 3,
+      "base_int": 47,
+      "int_growth": 3,
+      "base_cha": 51,
+      "base_ali": 23,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 81,
+        "hex_id": "0x51",
+        "name": "Attack 0x51"
+      },
+      "back_attack": {
+        "id": 110,
+        "hex_id": "0x6E",
+        "name": "Attack 0x6E"
+      }
+    },
+    "resistances": {
+      "physical": 59,
+      "fire": 53,
+      "cold": 54,
+      "lightning": 76,
+      "black": 69,
+      "white": 30
+    }
+  },
+  {
+    "id": 57,
+    "hex_id": "0x39",
+    "name": "ZOMBIE\u008f",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 6,
+      "type_name": "Marsh",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 1900,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 78,
+      "hp_growth": 11,
+      "base_str": 64,
+      "str_growth": 5,
+      "base_agi": 43,
+      "agi_growth": 4,
+      "base_int": 53,
+      "int_growth": 3,
+      "base_cha": 47,
+      "base_ali": 0,
+      "base_luk": 63
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 81,
+        "hex_id": "0x51",
+        "name": "Attack 0x51"
+      },
+      "back_attack": {
+        "id": 77,
+        "hex_id": "0x4D",
+        "name": "Attack 0x4D"
+      }
+    },
+    "resistances": {
+      "physical": 73,
+      "fire": 79,
+      "cold": 78,
+      "lightning": 86,
+      "black": 83,
+      "white": 15
+    }
+  },
+  {
+    "id": 58,
+    "hex_id": "0x3A",
+    "name": "SKELETON",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 100,
+      "daily_upkeep_per_level": 20,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 0,
+      "hp_growth": 0,
+      "base_str": 43,
+      "str_growth": 3,
+      "base_agi": 42,
+      "agi_growth": 2,
+      "base_int": 32,
+      "int_growth": 1,
+      "base_cha": 0,
+      "base_ali": 0,
+      "base_luk": 55
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 12,
+        "hex_id": "0x0C",
+        "name": "FIRE"
+      },
+      "back_attack": {
+        "id": 12,
+        "hex_id": "0x0C",
+        "name": "FIRE"
+      }
+    },
+    "resistances": {
+      "physical": 100,
+      "fire": 100,
+      "cold": 100,
+      "lightning": 100,
+      "black": 100,
+      "white": 100
+    }
+  },
+  {
+    "id": 59,
+    "hex_id": "0x3B",
+    "name": "WRAITH",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 350,
+      "daily_upkeep_per_level": 50,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 0,
+      "hp_growth": 0,
+      "base_str": 51,
+      "str_growth": 4,
+      "base_agi": 49,
+      "agi_growth": 2,
+      "base_int": 44,
+      "int_growth": 1,
+      "base_cha": 0,
+      "base_ali": 0,
+      "base_luk": 55
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 12,
+        "hex_id": "0x0C",
+        "name": "FIRE"
+      },
+      "back_attack": {
+        "id": 12,
+        "hex_id": "0x0C",
+        "name": "FIRE"
+      }
+    },
+    "resistances": {
+      "physical": 100,
+      "fire": 100,
+      "cold": 100,
+      "lightning": 100,
+      "black": 100,
+      "white": 100
+    }
+  },
+  {
+    "id": 60,
+    "hex_id": "0x3C",
+    "name": "GHOST",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 100,
+      "daily_upkeep_per_level": 20,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 0,
+      "hp_growth": 0,
+      "base_str": 35,
+      "str_growth": 2,
+      "base_agi": 57,
+      "agi_growth": 3,
+      "base_int": 50,
+      "int_growth": 4,
+      "base_cha": 0,
+      "base_ali": 0,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 1,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 12,
+        "hex_id": "0x0C",
+        "name": "FIRE"
+      },
+      "back_attack": {
+        "id": 44,
+        "hex_id": "0x2C",
+        "name": "PUMPKIN"
+      }
+    },
+    "resistances": {
+      "physical": 100,
+      "fire": 100,
+      "cold": 100,
+      "lightning": 100,
+      "black": 100,
+      "white": 100
+    }
+  },
+  {
+    "id": 61,
+    "hex_id": "0x3D",
+    "name": "PHANTOM",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 200,
+      "daily_upkeep_per_level": 40,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 0,
+      "hp_growth": 0,
+      "base_str": 45,
+      "str_growth": 2,
+      "base_agi": 62,
+      "agi_growth": 3,
+      "base_int": 53,
+      "int_growth": 4,
+      "base_cha": 0,
+      "base_ali": 0,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 12,
+        "hex_id": "0x0C",
+        "name": "FIRE"
+      },
+      "back_attack": {
+        "id": 44,
+        "hex_id": "0x2C",
+        "name": "PUMPKIN"
+      }
+    },
+    "resistances": {
+      "physical": 100,
+      "fire": 100,
+      "cold": 100,
+      "lightning": 100,
+      "black": 100,
+      "white": 100
+    }
+  },
+  {
+    "id": 62,
+    "hex_id": "0x3E",
+    "name": "HAWK MAN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 400,
+      "daily_upkeep_per_level": 90,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 87,
+      "hp_growth": 5,
+      "base_str": 45,
+      "str_growth": 2,
+      "base_agi": 55,
+      "agi_growth": 3,
+      "base_int": 52,
+      "int_growth": 1,
+      "base_cha": 40,
+      "base_ali": 50,
+      "base_luk": 42
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 39,
+      "fire": 36,
+      "cold": 40,
+      "lightning": 44,
+      "black": 40,
+      "white": 40
+    }
+  },
+  {
+    "id": 63,
+    "hex_id": "0x3F",
+    "name": "EAGLEMAN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 700,
+      "daily_upkeep_per_level": 140,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 86,
+      "hp_growth": 6,
+      "base_str": 49,
+      "str_growth": 2,
+      "base_agi": 60,
+      "agi_growth": 4,
+      "base_int": 58,
+      "int_growth": 2,
+      "base_cha": 60,
+      "base_ali": 66,
+      "base_luk": 56
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 73,
+        "hex_id": "0x49",
+        "name": "Attack 0x49"
+      }
+    },
+    "resistances": {
+      "physical": 42,
+      "fire": 39,
+      "cold": 43,
+      "lightning": 80,
+      "black": 34,
+      "white": 56
+    }
+  },
+  {
+    "id": 64,
+    "hex_id": "0x40",
+    "name": "RAVENMAN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 800,
+      "daily_upkeep_per_level": 120,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 95,
+      "hp_growth": 6,
+      "base_str": 52,
+      "str_growth": 2,
+      "base_agi": 62,
+      "agi_growth": 4,
+      "base_int": 55,
+      "int_growth": 2,
+      "base_cha": 55,
+      "base_ali": 31,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 65,
+        "hex_id": "0x41",
+        "name": "Attack 0x41"
+      }
+    },
+    "resistances": {
+      "physical": 40,
+      "fire": 70,
+      "cold": 46,
+      "lightning": 47,
+      "black": 69,
+      "white": 21
+    }
+  },
+  {
+    "id": 65,
+    "hex_id": "0x41",
+    "name": "ANGEL",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 300,
+      "daily_upkeep_per_level": 50,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 70,
+      "hp_growth": 4,
+      "base_str": 40,
+      "str_growth": 2,
+      "base_agi": 43,
+      "agi_growth": 2,
+      "base_int": 50,
+      "int_growth": 3,
+      "base_cha": 50,
+      "base_ali": 65,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 1,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 20,
+        "hex_id": "0x14",
+        "name": "ICESTORM"
+      },
+      "back_attack": {
+        "id": 52,
+        "hex_id": "0x34",
+        "name": "HEALING"
+      }
+    },
+    "resistances": {
+      "physical": 27,
+      "fire": 39,
+      "cold": 40,
+      "lightning": 37,
+      "black": 35,
+      "white": 55
+    }
+  },
+  {
+    "id": 66,
+    "hex_id": "0x42",
+    "name": "CHERUBIM",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 800,
+      "daily_upkeep_per_level": 130,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 71,
+      "hp_growth": 4,
+      "base_str": 45,
+      "str_growth": 2,
+      "base_agi": 46,
+      "agi_growth": 2,
+      "base_int": 55,
+      "int_growth": 4,
+      "base_cha": 60,
+      "base_ali": 76,
+      "base_luk": 54
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 20,
+        "hex_id": "0x14",
+        "name": "ICESTORM"
+      },
+      "back_attack": {
+        "id": 52,
+        "hex_id": "0x34",
+        "name": "HEALING"
+      }
+    },
+    "resistances": {
+      "physical": 31,
+      "fire": 42,
+      "cold": 44,
+      "lightning": 41,
+      "black": 24,
+      "white": 66
+    }
+  },
+  {
+    "id": 67,
+    "hex_id": "0x43",
+    "name": "SERAPHIM",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 2
+    },
+    "costs": {
+      "base_deploy_goth": 1300,
+      "daily_upkeep_per_level": 210,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 76,
+      "hp_growth": 4,
+      "base_str": 49,
+      "str_growth": 2,
+      "base_agi": 49,
+      "agi_growth": 3,
+      "base_int": 60,
+      "int_growth": 4,
+      "base_cha": 70,
+      "base_ali": 87,
+      "base_luk": 57
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 20,
+        "hex_id": "0x14",
+        "name": "ICESTORM"
+      },
+      "back_attack": {
+        "id": 117,
+        "hex_id": "0x75",
+        "name": "Attack 0x75"
+      }
+    },
+    "resistances": {
+      "physical": 35,
+      "fire": 45,
+      "cold": 48,
+      "lightning": 45,
+      "black": 17,
+      "white": 77
+    }
+  },
+  {
+    "id": 68,
+    "hex_id": "0x44",
+    "name": "IMP",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 300,
+      "daily_upkeep_per_level": 60,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 68,
+      "hp_growth": 5,
+      "base_str": 45,
+      "str_growth": 2,
+      "base_agi": 45,
+      "agi_growth": 2,
+      "base_int": 48,
+      "int_growth": 3,
+      "base_cha": 50,
+      "base_ali": 25,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 12,
+        "hex_id": "0x0C",
+        "name": "FIRE"
+      },
+      "back_attack": {
+        "id": 44,
+        "hex_id": "0x2C",
+        "name": "PUMPKIN"
+      }
+    },
+    "resistances": {
+      "physical": 44,
+      "fire": 37,
+      "cold": 44,
+      "lightning": 38,
+      "black": 55,
+      "white": 35
+    }
+  },
+  {
+    "id": 69,
+    "hex_id": "0x45",
+    "name": "DEMON",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 800,
+      "daily_upkeep_per_level": 140,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 69,
+      "hp_growth": 6,
+      "base_str": 49,
+      "str_growth": 3,
+      "base_agi": 48,
+      "agi_growth": 3,
+      "base_int": 53,
+      "int_growth": 3,
+      "base_cha": 60,
+      "base_ali": 15,
+      "base_luk": 52
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 12,
+        "hex_id": "0x0C",
+        "name": "FIRE"
+      },
+      "back_attack": {
+        "id": 44,
+        "hex_id": "0x2C",
+        "name": "PUMPKIN"
+      }
+    },
+    "resistances": {
+      "physical": 47,
+      "fire": 40,
+      "cold": 49,
+      "lightning": 44,
+      "black": 65,
+      "white": 25
+    }
+  },
+  {
+    "id": 70,
+    "hex_id": "0x46",
+    "name": "DEVIL",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 1300,
+      "daily_upkeep_per_level": 220,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 70,
+      "hp_growth": 6,
+      "base_str": 56,
+      "str_growth": 3,
+      "base_agi": 51,
+      "agi_growth": 3,
+      "base_int": 58,
+      "int_growth": 4,
+      "base_cha": 70,
+      "base_ali": 5,
+      "base_luk": 55
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 12,
+        "hex_id": "0x0C",
+        "name": "FIRE"
+      },
+      "back_attack": {
+        "id": 109,
+        "hex_id": "0x6D",
+        "name": "Attack 0x6D"
+      }
+    },
+    "resistances": {
+      "physical": 53,
+      "fire": 42,
+      "cold": 52,
+      "lightning": 48,
+      "black": 86,
+      "white": 4
+    }
+  },
+  {
+    "id": 71,
+    "hex_id": "0x47",
+    "name": "FAERIE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 1
+    },
+    "costs": {
+      "base_deploy_goth": 100,
+      "daily_upkeep_per_level": 70,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 48,
+      "hp_growth": 3,
+      "base_str": 38,
+      "str_growth": 2,
+      "base_agi": 52,
+      "agi_growth": 4,
+      "base_int": 49,
+      "int_growth": 4,
+      "base_cha": 25,
+      "base_ali": 50,
+      "base_luk": 62
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 161,
+        "hex_id": "0xA1",
+        "name": "Attack 0xA1"
+      }
+    },
+    "resistances": {
+      "physical": 30,
+      "fire": 20,
+      "cold": 23,
+      "lightning": 28,
+      "black": 40,
+      "white": 50
+    }
+  },
+  {
+    "id": 72,
+    "hex_id": "0x48",
+    "name": "PIXIE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 1
+    },
+    "costs": {
+      "base_deploy_goth": 400,
+      "daily_upkeep_per_level": 170,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 56,
+      "hp_growth": 3,
+      "base_str": 43,
+      "str_growth": 2,
+      "base_agi": 57,
+      "agi_growth": 5,
+      "base_int": 53,
+      "int_growth": 4,
+      "base_cha": 37,
+      "base_ali": 55,
+      "base_luk": 65
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 161,
+        "hex_id": "0xA1",
+        "name": "Attack 0xA1"
+      }
+    },
+    "resistances": {
+      "physical": 32,
+      "fire": 28,
+      "cold": 25,
+      "lightning": 26,
+      "black": 40,
+      "white": 55
+    }
+  },
+  {
+    "id": 73,
+    "hex_id": "0x49",
+    "name": "SYLYPH",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 1,
+      "type_name": "Low Sky",
+      "weight": 1
+    },
+    "costs": {
+      "base_deploy_goth": 700,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 64,
+      "hp_growth": 4,
+      "base_str": 40,
+      "str_growth": 3,
+      "base_agi": 63,
+      "agi_growth": 5,
+      "base_int": 47,
+      "int_growth": 4,
+      "base_cha": 49,
+      "base_ali": 60,
+      "base_luk": 68
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 116,
+        "hex_id": "0x74",
+        "name": "Attack 0x74"
+      }
+    },
+    "resistances": {
+      "physical": 35,
+      "fire": 36,
+      "cold": 27,
+      "lightning": 22,
+      "black": 30,
+      "white": 60
+    }
+  },
+  {
+    "id": 74,
+    "hex_id": "0x4A",
+    "name": "GRYPHON",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 0,
+      "type_name": "High Sky",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 200,
+      "daily_upkeep_per_level": 50,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 80,
+      "hp_growth": 7,
+      "base_str": 50,
+      "str_growth": 2,
+      "base_agi": 58,
+      "agi_growth": 4,
+      "base_int": 37,
+      "int_growth": 1,
+      "base_cha": 30,
+      "base_ali": 45,
+      "base_luk": 53
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 144,
+        "hex_id": "0x90",
+        "name": "Attack 0x90"
+      }
+    },
+    "resistances": {
+      "physical": 43,
+      "fire": 33,
+      "cold": 48,
+      "lightning": 53,
+      "black": 55,
+      "white": 35
+    }
+  },
+  {
+    "id": 75,
+    "hex_id": "0x4B",
+    "name": "COCKATRIS",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 0,
+      "type_name": "High Sky",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 890,
+      "daily_upkeep_per_level": 80,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 74,
+      "hp_growth": 6,
+      "base_str": 54,
+      "str_growth": 3,
+      "base_agi": 63,
+      "agi_growth": 4,
+      "base_int": 42,
+      "int_growth": 1,
+      "base_cha": 40,
+      "base_ali": 36,
+      "base_luk": 55
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 170,
+        "hex_id": "0xAA",
+        "name": "Attack 0xAA"
+      }
+    },
+    "resistances": {
+      "physical": 46,
+      "fire": 37,
+      "cold": 53,
+      "lightning": 57,
+      "black": 64,
+      "white": 26
+    }
+  },
+  {
+    "id": 76,
+    "hex_id": "0x4C",
+    "name": "WYRM",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 0,
+      "type_name": "High Sky",
+      "weight": 6
+    },
+    "costs": {
+      "base_deploy_goth": 850,
+      "daily_upkeep_per_level": 170,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 92,
+      "hp_growth": 8,
+      "base_str": 58,
+      "str_growth": 4,
+      "base_agi": 47,
+      "agi_growth": 3,
+      "base_int": 31,
+      "int_growth": 1,
+      "base_cha": 30,
+      "base_ali": 42,
+      "base_luk": 47
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      }
+    },
+    "resistances": {
+      "physical": 45,
+      "fire": 47,
+      "cold": 39,
+      "lightning": 38,
+      "black": 48,
+      "white": 32
+    }
+  },
+  {
+    "id": 77,
+    "hex_id": "0x4D",
+    "name": "WYVERN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 0,
+      "type_name": "High Sky",
+      "weight": 7
+    },
+    "costs": {
+      "base_deploy_goth": 1700,
+      "daily_upkeep_per_level": 210,
+      "can_lead_squad": false
+    },
+    "stats": {
+      "base_hp": 89,
+      "hp_growth": 9,
+      "base_str": 63,
+      "str_growth": 4,
+      "base_agi": 51,
+      "agi_growth": 3,
+      "base_int": 36,
+      "int_growth": 1,
+      "base_cha": 37,
+      "base_ali": 30,
+      "base_luk": 49
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 66,
+        "hex_id": "0x42",
+        "name": "Attack 0x42"
+      }
+    },
+    "resistances": {
+      "physical": 49,
+      "fire": 53,
+      "cold": 35,
+      "lightning": 42,
+      "black": 50,
+      "white": 20
+    }
+  },
+  {
+    "id": 78,
+    "hex_id": "0x4E",
+    "name": "LORD",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 77,
+      "hp_growth": 7,
+      "base_str": 49,
+      "str_growth": 4,
+      "base_agi": 50,
+      "agi_growth": 2,
+      "base_int": 43,
+      "int_growth": 2,
+      "base_cha": 50,
+      "base_ali": 50,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 173,
+        "hex_id": "0xAD",
+        "name": "Attack 0xAD"
+      }
+    },
+    "resistances": {
+      "physical": 47,
+      "fire": 40,
+      "cold": 44,
+      "lightning": 35,
+      "black": 40,
+      "white": 40
+    }
+  },
+  {
+    "id": 79,
+    "hex_id": "0x4F",
+    "name": "LORD",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 95,
+      "hp_growth": 6,
+      "base_str": 39,
+      "str_growth": 2,
+      "base_agi": 57,
+      "agi_growth": 2,
+      "base_int": 58,
+      "int_growth": 4,
+      "base_cha": 50,
+      "base_ali": 45,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 45,
+        "hex_id": "0x2D",
+        "name": "PETRIFY"
+      },
+      "back_attack": {
+        "id": 108,
+        "hex_id": "0x6C",
+        "name": "Attack 0x6C"
+      }
+    },
+    "resistances": {
+      "physical": 28,
+      "fire": 40,
+      "cold": 46,
+      "lightning": 39,
+      "black": 45,
+      "white": 35
+    }
+  },
+  {
+    "id": 80,
+    "hex_id": "0x50",
+    "name": "LORD",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 78,
+      "hp_growth": 6,
+      "base_str": 43,
+      "str_growth": 3,
+      "base_agi": 56,
+      "agi_growth": 2,
+      "base_int": 54,
+      "int_growth": 3,
+      "base_cha": 50,
+      "base_ali": 65,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 52,
+        "hex_id": "0x34",
+        "name": "HEALING"
+      },
+      "back_attack": {
+        "id": 102,
+        "hex_id": "0x66",
+        "name": "Attack 0x66"
+      }
+    },
+    "resistances": {
+      "physical": 35,
+      "fire": 32,
+      "cold": 30,
+      "lightning": 47,
+      "black": 25,
+      "white": 55
+    }
+  },
+  {
+    "id": 81,
+    "hex_id": "0x51",
+    "name": "LORD",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 5
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 76,
+      "hp_growth": 8,
+      "base_str": 50,
+      "str_growth": 3,
+      "base_agi": 55,
+      "agi_growth": 3,
+      "base_int": 52,
+      "int_growth": 2,
+      "base_cha": 50,
+      "base_ali": 45,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 104,
+        "hex_id": "0x68",
+        "name": "Attack 0x68"
+      }
+    },
+    "resistances": {
+      "physical": 45,
+      "fire": 28,
+      "cold": 56,
+      "lightning": 52,
+      "black": 40,
+      "white": 40
+    }
+  },
+  {
+    "id": 82,
+    "hex_id": "0x52",
+    "name": "WISE MAN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 328,
+      "hp_growth": 0,
+      "base_str": 168,
+      "str_growth": 0,
+      "base_agi": 203,
+      "agi_growth": 0,
+      "base_int": 255,
+      "int_growth": 0,
+      "base_cha": 70,
+      "base_ali": 37,
+      "base_luk": 65
+    },
+    "combat": {
+      "front_row_actions": 6,
+      "back_row_actions": 6,
+      "front_attack": {
+        "id": 197,
+        "hex_id": "0xC5",
+        "name": "Attack 0xC5"
+      },
+      "back_attack": {
+        "id": 197,
+        "hex_id": "0xC5",
+        "name": "Attack 0xC5"
+      }
+    },
+    "resistances": {
+      "physical": 30,
+      "fire": 44,
+      "cold": 47,
+      "lightning": 39,
+      "black": 70,
+      "white": 27
+    }
+  },
+  {
+    "id": 83,
+    "hex_id": "0x53",
+    "name": "DIABLO",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 412,
+      "hp_growth": 0,
+      "base_str": 253,
+      "str_growth": 0,
+      "base_agi": 169,
+      "agi_growth": 0,
+      "base_int": 176,
+      "int_growth": 0,
+      "base_cha": 80,
+      "base_ali": 0,
+      "base_luk": 56
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 198,
+        "hex_id": "0xC6",
+        "name": "Attack 0xC6"
+      },
+      "back_attack": {
+        "id": 198,
+        "hex_id": "0xC6",
+        "name": "Attack 0xC6"
+      }
+    },
+    "resistances": {
+      "physical": 61,
+      "fire": 85,
+      "cold": 15,
+      "lightning": 56,
+      "black": 52,
+      "white": 52
+    }
+  },
+  {
+    "id": 84,
+    "hex_id": "0x54",
+    "name": "DIABLO",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 415,
+      "hp_growth": 0,
+      "base_str": 250,
+      "str_growth": 0,
+      "base_agi": 167,
+      "agi_growth": 0,
+      "base_int": 178,
+      "int_growth": 0,
+      "base_cha": 80,
+      "base_ali": 0,
+      "base_luk": 53
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 199,
+        "hex_id": "0xC7",
+        "name": "Attack 0xC7"
+      },
+      "back_attack": {
+        "id": 199,
+        "hex_id": "0xC7",
+        "name": "Attack 0xC7"
+      }
+    },
+    "resistances": {
+      "physical": 60,
+      "fire": 5,
+      "cold": 85,
+      "lightning": 58,
+      "black": 18,
+      "white": 77
+    }
+  },
+  {
+    "id": 85,
+    "hex_id": "0x55",
+    "name": "DIABLO",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 8
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 410,
+      "hp_growth": 0,
+      "base_str": 255,
+      "str_growth": 0,
+      "base_agi": 195,
+      "agi_growth": 0,
+      "base_int": 145,
+      "int_growth": 2,
+      "base_cha": 80,
+      "base_ali": 0,
+      "base_luk": 63
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 2,
+      "front_attack": {
+        "id": 200,
+        "hex_id": "0xC8",
+        "name": "Attack 0xC8"
+      },
+      "back_attack": {
+        "id": 200,
+        "hex_id": "0xC8",
+        "name": "Attack 0xC8"
+      }
+    },
+    "resistances": {
+      "physical": 52,
+      "fire": 58,
+      "cold": 57,
+      "lightning": 75,
+      "black": 84,
+      "white": 23
+    }
+  },
+  {
+    "id": 86,
+    "hex_id": "0x56",
+    "name": "QUEEN",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 287,
+      "hp_growth": 0,
+      "base_str": 146,
+      "str_growth": 0,
+      "base_agi": 184,
+      "agi_growth": 0,
+      "base_int": 247,
+      "int_growth": 0,
+      "base_cha": 69,
+      "base_ali": 45,
+      "base_luk": 63
+    },
+    "combat": {
+      "front_row_actions": 5,
+      "back_row_actions": 5,
+      "front_attack": {
+        "id": 199,
+        "hex_id": "0xC7",
+        "name": "Attack 0xC7"
+      },
+      "back_attack": {
+        "id": 201,
+        "hex_id": "0xC9",
+        "name": "Attack 0xC9"
+      }
+    },
+    "resistances": {
+      "physical": 35,
+      "fire": 40,
+      "cold": 38,
+      "lightning": 41,
+      "black": 58,
+      "white": 40
+    }
+  },
+  {
+    "id": 87,
+    "hex_id": "0x57",
+    "name": "HILANDER",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 275,
+      "hp_growth": 0,
+      "base_str": 212,
+      "str_growth": 0,
+      "base_agi": 185,
+      "agi_growth": 0,
+      "base_int": 181,
+      "int_growth": 0,
+      "base_cha": 64,
+      "base_ali": 72,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 5,
+      "back_row_actions": 5,
+      "front_attack": {
+        "id": 201,
+        "hex_id": "0xC9",
+        "name": "Attack 0xC9"
+      },
+      "back_attack": {
+        "id": 203,
+        "hex_id": "0xCB",
+        "name": "Attack 0xCB"
+      }
+    },
+    "resistances": {
+      "physical": 53,
+      "fire": 41,
+      "cold": 46,
+      "lightning": 40,
+      "black": 26,
+      "white": 54
+    }
+  },
+  {
+    "id": 88,
+    "hex_id": "0x58",
+    "name": "PRINCE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 162,
+      "hp_growth": 0,
+      "base_str": 124,
+      "str_growth": 0,
+      "base_agi": 111,
+      "agi_growth": 0,
+      "base_int": 104,
+      "int_growth": 0,
+      "base_cha": 59,
+      "base_ali": 46,
+      "base_luk": 57
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 202,
+        "hex_id": "0xCA",
+        "name": "Attack 0xCA"
+      },
+      "back_attack": {
+        "id": 204,
+        "hex_id": "0xCC",
+        "name": "Attack 0xCC"
+      }
+    },
+    "resistances": {
+      "physical": 54,
+      "fire": 46,
+      "cold": 40,
+      "lightning": 39,
+      "black": 55,
+      "white": 36
+    }
+  },
+  {
+    "id": 89,
+    "hex_id": "0x59",
+    "name": "PRINCE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 211,
+      "hp_growth": 0,
+      "base_str": 178,
+      "str_growth": 0,
+      "base_agi": 156,
+      "agi_growth": 0,
+      "base_int": 149,
+      "int_growth": 0,
+      "base_cha": 63,
+      "base_ali": 36,
+      "base_luk": 57
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 202,
+        "hex_id": "0xCA",
+        "name": "Attack 0xCA"
+      },
+      "back_attack": {
+        "id": 204,
+        "hex_id": "0xCC",
+        "name": "Attack 0xCC"
+      }
+    },
+    "resistances": {
+      "physical": 56,
+      "fire": 48,
+      "cold": 42,
+      "lightning": 41,
+      "black": 65,
+      "white": 26
+    }
+  },
+  {
+    "id": 90,
+    "hex_id": "0x5A",
+    "name": "PRINCE",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 242,
+      "hp_growth": 0,
+      "base_str": 208,
+      "str_growth": 0,
+      "base_agi": 181,
+      "agi_growth": 0,
+      "base_int": 174,
+      "int_growth": 0,
+      "base_cha": 67,
+      "base_ali": 26,
+      "base_luk": 57
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 202,
+        "hex_id": "0xCA",
+        "name": "Attack 0xCA"
+      },
+      "back_attack": {
+        "id": 204,
+        "hex_id": "0xCC",
+        "name": "Attack 0xCC"
+      }
+    },
+    "resistances": {
+      "physical": 58,
+      "fire": 50,
+      "cold": 44,
+      "lightning": 43,
+      "black": 75,
+      "white": 16
+    }
+  },
+  {
+    "id": 91,
+    "hex_id": "0x5B",
+    "name": "GEMINI",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 6
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 275,
+      "hp_growth": 0,
+      "base_str": 200,
+      "str_growth": 0,
+      "base_agi": 154,
+      "agi_growth": 0,
+      "base_int": 120,
+      "int_growth": 0,
+      "base_cha": 54,
+      "base_ali": 40,
+      "base_luk": 45
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 209,
+        "hex_id": "0xD1",
+        "name": "Attack 0xD1"
+      },
+      "back_attack": {
+        "id": 211,
+        "hex_id": "0xD3",
+        "name": "Attack 0xD3"
+      }
+    },
+    "resistances": {
+      "physical": 48,
+      "fire": 27,
+      "cold": 35,
+      "lightning": 39,
+      "black": 50,
+      "white": 30
+    }
+  },
+  {
+    "id": 92,
+    "hex_id": "0x5C",
+    "name": "GEMINI",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 6
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 275,
+      "hp_growth": 0,
+      "base_str": 210,
+      "str_growth": 0,
+      "base_agi": 147,
+      "agi_growth": 0,
+      "base_int": 132,
+      "int_growth": 0,
+      "base_cha": 58,
+      "base_ali": 60,
+      "base_luk": 55
+    },
+    "combat": {
+      "front_row_actions": 2,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 210,
+        "hex_id": "0xD2",
+        "name": "Attack 0xD2"
+      },
+      "back_attack": {
+        "id": 212,
+        "hex_id": "0xD4",
+        "name": "Attack 0xD4"
+      }
+    },
+    "resistances": {
+      "physical": 32,
+      "fire": 53,
+      "cold": 45,
+      "lightning": 41,
+      "black": 30,
+      "white": 50
+    }
+  },
+  {
+    "id": 93,
+    "hex_id": "0x5D",
+    "name": "DANDY",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 282,
+      "hp_growth": 0,
+      "base_str": 153,
+      "str_growth": 0,
+      "base_agi": 195,
+      "agi_growth": 0,
+      "base_int": 195,
+      "int_growth": 0,
+      "base_cha": 59,
+      "base_ali": 39,
+      "base_luk": 45
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 202,
+        "hex_id": "0xCA",
+        "name": "Attack 0xCA"
+      },
+      "back_attack": {
+        "id": 202,
+        "hex_id": "0xCA",
+        "name": "Attack 0xCA"
+      }
+    },
+    "resistances": {
+      "physical": 28,
+      "fire": 47,
+      "cold": 41,
+      "lightning": 30,
+      "black": 51,
+      "white": 29
+    }
+  },
+  {
+    "id": 94,
+    "hex_id": "0x5E",
+    "name": "DANDY",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 221,
+      "hp_growth": 0,
+      "base_str": 123,
+      "str_growth": 0,
+      "base_agi": 159,
+      "agi_growth": 0,
+      "base_int": 159,
+      "int_growth": 0,
+      "base_cha": 51,
+      "base_ali": 31,
+      "base_luk": 49
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 202,
+        "hex_id": "0xCA",
+        "name": "Attack 0xCA"
+      },
+      "back_attack": {
+        "id": 202,
+        "hex_id": "0xCA",
+        "name": "Attack 0xCA"
+      }
+    },
+    "resistances": {
+      "physical": 29,
+      "fire": 46,
+      "cold": 42,
+      "lightning": 29,
+      "black": 69,
+      "white": 21
+    }
+  },
+  {
+    "id": 95,
+    "hex_id": "0x5F",
+    "name": "GENERAL",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 148,
+      "hp_growth": 0,
+      "base_str": 116,
+      "str_growth": 0,
+      "base_agi": 122,
+      "agi_growth": 0,
+      "base_int": 104,
+      "int_growth": 0,
+      "base_cha": 62,
+      "base_ali": 82,
+      "base_luk": 56
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 205,
+        "hex_id": "0xCD",
+        "name": "Attack 0xCD"
+      },
+      "back_attack": {
+        "id": 205,
+        "hex_id": "0xCD",
+        "name": "Attack 0xCD"
+      }
+    },
+    "resistances": {
+      "physical": 53,
+      "fire": 37,
+      "cold": 43,
+      "lightning": 39,
+      "black": 29,
+      "white": 72
+    }
+  },
+  {
+    "id": 96,
+    "hex_id": "0x60",
+    "name": "GENERAL",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 167,
+      "hp_growth": 0,
+      "base_str": 140,
+      "str_growth": 0,
+      "base_agi": 146,
+      "agi_growth": 0,
+      "base_int": 124,
+      "int_growth": 0,
+      "base_cha": 61,
+      "base_ali": 53,
+      "base_luk": 59
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 206,
+        "hex_id": "0xCE",
+        "name": "Attack 0xCE"
+      },
+      "back_attack": {
+        "id": 206,
+        "hex_id": "0xCE",
+        "name": "Attack 0xCE"
+      }
+    },
+    "resistances": {
+      "physical": 58,
+      "fire": 45,
+      "cold": 41,
+      "lightning": 49,
+      "black": 55,
+      "white": 37
+    }
+  },
+  {
+    "id": 97,
+    "hex_id": "0x61",
+    "name": "GENERAL",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 276,
+      "hp_growth": 0,
+      "base_str": 206,
+      "str_growth": 0,
+      "base_agi": 212,
+      "agi_growth": 0,
+      "base_int": 179,
+      "int_growth": 0,
+      "base_cha": 65,
+      "base_ali": 62,
+      "base_luk": 51
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 207,
+        "hex_id": "0xCF",
+        "name": "Attack 0xCF"
+      },
+      "back_attack": {
+        "id": 207,
+        "hex_id": "0xCF",
+        "name": "Attack 0xCF"
+      }
+    },
+    "resistances": {
+      "physical": 68,
+      "fire": 24,
+      "cold": 67,
+      "lightning": 73,
+      "black": 63,
+      "white": 61
+    }
+  },
+  {
+    "id": 98,
+    "hex_id": "0x62",
+    "name": "GENERAL",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 258,
+      "hp_growth": 0,
+      "base_str": 200,
+      "str_growth": 0,
+      "base_agi": 206,
+      "agi_growth": 0,
+      "base_int": 174,
+      "int_growth": 0,
+      "base_cha": 60,
+      "base_ali": 34,
+      "base_luk": 54
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 3,
+      "front_attack": {
+        "id": 208,
+        "hex_id": "0xD0",
+        "name": "Attack 0xD0"
+      },
+      "back_attack": {
+        "id": 208,
+        "hex_id": "0xD0",
+        "name": "Attack 0xD0"
+      }
+    },
+    "resistances": {
+      "physical": 51,
+      "fire": 54,
+      "cold": 43,
+      "lightning": 27,
+      "black": 72,
+      "white": 52
+    }
+  },
+  {
+    "id": 99,
+    "hex_id": "0x63",
+    "name": "GENERAL",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 2000,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 200,
+      "hp_growth": 6,
+      "base_str": 145,
+      "str_growth": 3,
+      "base_agi": 151,
+      "agi_growth": 3,
+      "base_int": 128,
+      "int_growth": 2,
+      "base_cha": 63,
+      "base_ali": 65,
+      "base_luk": 61
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 173,
+        "hex_id": "0xAD",
+        "name": "Attack 0xAD"
+      }
+    },
+    "resistances": {
+      "physical": 58,
+      "fire": 41,
+      "cold": 37,
+      "lightning": 43,
+      "black": 25,
+      "white": 55
+    }
+  },
+  {
+    "id": 100,
+    "hex_id": "0x64",
+    "name": "GENERAL",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 4
+    },
+    "costs": {
+      "base_deploy_goth": 2000,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 216,
+      "hp_growth": 6,
+      "base_str": 158,
+      "str_growth": 3,
+      "base_agi": 164,
+      "agi_growth": 3,
+      "base_int": 139,
+      "int_growth": 2,
+      "base_cha": 62,
+      "base_ali": 82,
+      "base_luk": 56
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 172,
+        "hex_id": "0xAC",
+        "name": "Attack 0xAC"
+      }
+    },
+    "resistances": {
+      "physical": 55,
+      "fire": 39,
+      "cold": 45,
+      "lightning": 41,
+      "black": 31,
+      "white": 74
+    }
+  },
+  {
+    "id": 101,
+    "hex_id": "0x65",
+    "name": "DRAGOON",
+    "is_standard_class": true,
+    "movement": {
+      "type_code": 2,
+      "type_name": "Plains",
+      "weight": 3
+    },
+    "costs": {
+      "base_deploy_goth": 2000,
+      "daily_upkeep_per_level": 250,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 230,
+      "hp_growth": 6,
+      "base_str": 177,
+      "str_growth": 3,
+      "base_agi": 155,
+      "agi_growth": 2,
+      "base_int": 148,
+      "int_growth": 2,
+      "base_cha": 58,
+      "base_ali": 50,
+      "base_luk": 63
+    },
+    "combat": {
+      "front_row_actions": 3,
+      "back_row_actions": 1,
+      "front_attack": {
+        "id": 16,
+        "hex_id": "0x10",
+        "name": "ACID"
+      },
+      "back_attack": {
+        "id": 173,
+        "hex_id": "0xAD",
+        "name": "Attack 0xAD"
+      }
+    },
+    "resistances": {
+      "physical": 70,
+      "fire": 56,
+      "cold": 58,
+      "lightning": 62,
+      "black": 50,
+      "white": 50
+    }
+  },
+  {
+    "id": 102,
+    "hex_id": "0x66",
+    "name": "KNIGHT",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 132,
+      "hp_growth": 0,
+      "base_str": 96,
+      "str_growth": 0,
+      "base_agi": 89,
+      "agi_growth": 0,
+      "base_int": 76,
+      "int_growth": 0,
+      "base_cha": 55,
+      "base_ali": 65,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 103,
+    "hex_id": "0x67",
+    "name": "VALKYRIE",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 159,
+      "hp_growth": 0,
+      "base_str": 110,
+      "str_growth": 0,
+      "base_agi": 129,
+      "agi_growth": 0,
+      "base_int": 132,
+      "int_growth": 0,
+      "base_cha": 58,
+      "base_ali": 60,
+      "base_luk": 59
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 104,
+    "hex_id": "0x68",
+    "name": "PRIEST",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 137,
+      "hp_growth": 0,
+      "base_str": 87,
+      "str_growth": 0,
+      "base_agi": 110,
+      "agi_growth": 0,
+      "base_int": 120,
+      "int_growth": 0,
+      "base_cha": 59,
+      "base_ali": 72,
+      "base_luk": 61
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 105,
+    "hex_id": "0x69",
+    "name": "MAGE",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 157,
+      "hp_growth": 0,
+      "base_str": 98,
+      "str_growth": 0,
+      "base_agi": 124,
+      "agi_growth": 0,
+      "base_int": 158,
+      "int_growth": 0,
+      "base_cha": 50,
+      "base_ali": 50,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 106,
+    "hex_id": "0x6A",
+    "name": "KNIGHT",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 98,
+      "hp_growth": 0,
+      "base_str": 67,
+      "str_growth": 0,
+      "base_agi": 66,
+      "agi_growth": 0,
+      "base_int": 57,
+      "int_growth": 0,
+      "base_cha": 60,
+      "base_ali": 65,
+      "base_luk": 53
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 107,
+    "hex_id": "0x6B",
+    "name": "BEASTMAN",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 141,
+      "hp_growth": 0,
+      "base_str": 98,
+      "str_growth": 0,
+      "base_agi": 86,
+      "agi_growth": 0,
+      "base_int": 69,
+      "int_growth": 0,
+      "base_cha": 53,
+      "base_ali": 43,
+      "base_luk": 41
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 108,
+    "hex_id": "0x6C",
+    "name": "WIZARD",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 102,
+      "hp_growth": 0,
+      "base_str": 49,
+      "str_growth": 0,
+      "base_agi": 65,
+      "agi_growth": 0,
+      "base_int": 75,
+      "int_growth": 0,
+      "base_cha": 51,
+      "base_ali": 42,
+      "base_luk": 54
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 109,
+    "hex_id": "0x6D",
+    "name": "EAGLEMAN",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 105,
+      "hp_growth": 0,
+      "base_str": 72,
+      "str_growth": 0,
+      "base_agi": 87,
+      "agi_growth": 0,
+      "base_int": 81,
+      "int_growth": 0,
+      "base_cha": 71,
+      "base_ali": 62,
+      "base_luk": 68
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 110,
+    "hex_id": "0x6E",
+    "name": "CHERUBIM",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 173,
+      "hp_growth": 0,
+      "base_str": 129,
+      "str_growth": 0,
+      "base_agi": 130,
+      "agi_growth": 0,
+      "base_int": 173,
+      "int_growth": 0,
+      "base_cha": 65,
+      "base_ali": 75,
+      "base_luk": 56
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 111,
+    "hex_id": "0x6F",
+    "name": "WILD MAN",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 120,
+      "hp_growth": 0,
+      "base_str": 76,
+      "str_growth": 0,
+      "base_agi": 72,
+      "agi_growth": 0,
+      "base_int": 57,
+      "int_growth": 0,
+      "base_cha": 57,
+      "base_ali": 43,
+      "base_luk": 59
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 112,
+    "hex_id": "0x70",
+    "name": "BEASTMAN",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 120,
+      "hp_growth": 0,
+      "base_str": 79,
+      "str_growth": 0,
+      "base_agi": 70,
+      "agi_growth": 0,
+      "base_int": 56,
+      "int_growth": 0,
+      "base_cha": 53,
+      "base_ali": 54,
+      "base_luk": 46
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 113,
+    "hex_id": "0x71",
+    "name": "MAGE",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 116,
+      "hp_growth": 0,
+      "base_str": 63,
+      "str_growth": 0,
+      "base_agi": 81,
+      "agi_growth": 0,
+      "base_int": 103,
+      "int_growth": 0,
+      "base_cha": 57,
+      "base_ali": 32,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 114,
+    "hex_id": "0x72",
+    "name": "WEREWOLF",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 112,
+      "hp_growth": 0,
+      "base_str": 91,
+      "str_growth": 0,
+      "base_agi": 92,
+      "agi_growth": 0,
+      "base_int": 70,
+      "int_growth": 0,
+      "base_cha": 70,
+      "base_ali": 48,
+      "base_luk": 49
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 115,
+    "hex_id": "0x73",
+    "name": "WITCH",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 125,
+      "hp_growth": 0,
+      "base_str": 74,
+      "str_growth": 0,
+      "base_agi": 94,
+      "agi_growth": 0,
+      "base_int": 121,
+      "int_growth": 0,
+      "base_cha": 59,
+      "base_ali": 47,
+      "base_luk": 68
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 116,
+    "hex_id": "0x74",
+    "name": "NIXIE",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 169,
+      "hp_growth": 0,
+      "base_str": 123,
+      "str_growth": 0,
+      "base_agi": 127,
+      "agi_growth": 0,
+      "base_int": 141,
+      "int_growth": 0,
+      "base_cha": 59,
+      "base_ali": 63,
+      "base_luk": 51
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 117,
+    "hex_id": "0x75",
+    "name": "SHAMAN",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 149,
+      "hp_growth": 0,
+      "base_str": 97,
+      "str_growth": 0,
+      "base_agi": 123,
+      "agi_growth": 0,
+      "base_int": 134,
+      "int_growth": 0,
+      "base_cha": 63,
+      "base_ali": 53,
+      "base_luk": 53
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 118,
+    "hex_id": "0x76",
+    "name": "RAVENMAN",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 215,
+      "hp_growth": 0,
+      "base_str": 142,
+      "str_growth": 0,
+      "base_agi": 167,
+      "agi_growth": 0,
+      "base_int": 145,
+      "int_growth": 0,
+      "base_cha": 56,
+      "base_ali": 38,
+      "base_luk": 62
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 119,
+    "hex_id": "0x77",
+    "name": "MASTER",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 158,
+      "hp_growth": 0,
+      "base_str": 102,
+      "str_growth": 0,
+      "base_agi": 153,
+      "agi_growth": 0,
+      "base_int": 153,
+      "int_growth": 0,
+      "base_cha": 62,
+      "base_ali": 70,
+      "base_luk": 48
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 120,
+    "hex_id": "0x78",
+    "name": "SERAPHIM",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 184,
+      "hp_growth": 0,
+      "base_str": 139,
+      "str_growth": 0,
+      "base_agi": 157,
+      "agi_growth": 0,
+      "base_int": 186,
+      "int_growth": 0,
+      "base_cha": 70,
+      "base_ali": 67,
+      "base_luk": 50
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 121,
+    "hex_id": "0x79",
+    "name": "SORCERER",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 168,
+      "hp_growth": 0,
+      "base_str": 115,
+      "str_growth": 0,
+      "base_agi": 142,
+      "agi_growth": 0,
+      "base_int": 189,
+      "int_growth": 0,
+      "base_cha": 60,
+      "base_ali": 21,
+      "base_luk": 45
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 122,
+    "hex_id": "0x7A",
+    "name": "MASTER",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 231,
+      "hp_growth": 0,
+      "base_str": 183,
+      "str_growth": 0,
+      "base_agi": 216,
+      "agi_growth": 0,
+      "base_int": 187,
+      "int_growth": 0,
+      "base_cha": 56,
+      "base_ali": 22,
+      "base_luk": 56
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 123,
+    "hex_id": "0x7B",
+    "name": "PALADIN",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 198,
+      "hp_growth": 0,
+      "base_str": 149,
+      "str_growth": 0,
+      "base_agi": 131,
+      "agi_growth": 0,
+      "base_int": 128,
+      "int_growth": 0,
+      "base_cha": 62,
+      "base_ali": 78,
+      "base_luk": 60
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 124,
+    "hex_id": "0x7C",
+    "name": "MUSE",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 176,
+      "hp_growth": 0,
+      "base_str": 137,
+      "str_growth": 0,
+      "base_agi": 139,
+      "agi_growth": 0,
+      "base_int": 140,
+      "int_growth": 0,
+      "base_cha": 62,
+      "base_ali": 75,
+      "base_luk": 64
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  },
+  {
+    "id": 125,
+    "hex_id": "0x7D",
+    "name": "DEVIL",
+    "is_standard_class": false,
+    "movement": {
+      "type_code": 0,
+      "type_name": "Special",
+      "weight": 0
+    },
+    "costs": {
+      "base_deploy_goth": 0,
+      "daily_upkeep_per_level": 0,
+      "can_lead_squad": true
+    },
+    "stats": {
+      "base_hp": 206,
+      "hp_growth": 0,
+      "base_str": 164,
+      "str_growth": 0,
+      "base_agi": 153,
+      "agi_growth": 0,
+      "base_int": 177,
+      "int_growth": 0,
+      "base_cha": 72,
+      "base_ali": 0,
+      "base_luk": 53
+    },
+    "combat": {
+      "front_row_actions": 0,
+      "back_row_actions": 0,
+      "front_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      },
+      "back_attack": {
+        "id": 0,
+        "hex_id": "0x00",
+        "name": "N/A"
+      }
+    },
+    "resistances": {
+      "physical": 0,
+      "fire": 0,
+      "cold": 0,
+      "lightning": 0,
+      "black": 0,
+      "white": 0
+    }
+  }
+]

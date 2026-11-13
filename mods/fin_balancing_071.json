@@ -1,0 +1,2656 @@
+{
+  "mod_title": "Fin Balancing Mod v0.71",
+  "format_version": "1.0",
+  "description": "Decompiled from legacy binary patch",
+  "rom_size_bytes": 1572864,
+  "modified_domains": [
+    {
+      "table": "movement_type",
+      "domain": "class_move_type",
+      "range": "0x17D35..0x17D9A",
+      "modified_byte_count": 2
+    },
+    {
+      "table": "weight",
+      "domain": "class_weight",
+      "range": "0x17D9A..0x17DFF",
+      "modified_byte_count": 9
+    },
+    {
+      "table": "base_cost",
+      "domain": "class_base_cost",
+      "range": "0x17DFF..0x17EC9",
+      "modified_byte_count": 2
+    },
+    {
+      "table": "leadership",
+      "domain": "class_leadership",
+      "range": "0x17F93..0x17FF8",
+      "modified_byte_count": 1
+    },
+    {
+      "table": "base_hp",
+      "domain": "class_base_hp",
+      "range": "0x1EF91..0x1F08B",
+      "modified_byte_count": 16
+    },
+    {
+      "table": "hp_growth",
+      "domain": "class_hp_growth",
+      "range": "0x1F08B..0x1F0F0",
+      "modified_byte_count": 25
+    },
+    {
+      "table": "base_str",
+      "domain": "class_base_str",
+      "range": "0x1F0F0..0x1F16D",
+      "modified_byte_count": 12
+    },
+    {
+      "table": "str_growth",
+      "domain": "class_str_growth",
+      "range": "0x1F16D..0x1F1D2",
+      "modified_byte_count": 6
+    },
+    {
+      "table": "base_agi",
+      "domain": "class_base_agi",
+      "range": "0x1F1D2..0x1F24F",
+      "modified_byte_count": 11
+    },
+    {
+      "table": "agi_growth",
+      "domain": "class_agi_growth",
+      "range": "0x1F24F..0x1F2B4",
+      "modified_byte_count": 11
+    },
+    {
+      "table": "base_int",
+      "domain": "class_base_int",
+      "range": "0x1F2B4..0x1F331",
+      "modified_byte_count": 18
+    },
+    {
+      "table": "int_growth",
+      "domain": "class_int_growth",
+      "range": "0x1F331..0x1F396",
+      "modified_byte_count": 18
+    },
+    {
+      "table": "base_cha",
+      "domain": "class_base_cha",
+      "range": "0x1F396..0x1F413",
+      "modified_byte_count": 11
+    },
+    {
+      "table": "base_ali",
+      "domain": "class_base_ali",
+      "range": "0x1F413..0x1F490",
+      "modified_byte_count": 1
+    },
+    {
+      "table": "base_luk",
+      "domain": "class_base_luk",
+      "range": "0x1F490..0x1F50D",
+      "modified_byte_count": 1
+    },
+    {
+      "table": "attacks",
+      "domain": "class_attacks",
+      "range": "0x1F50D..0x1F572",
+      "modified_byte_count": 47
+    },
+    {
+      "table": "front_atk_id",
+      "domain": "class_front_atk",
+      "range": "0x1F572..0x1F5D7",
+      "modified_byte_count": 9
+    },
+    {
+      "table": "back_atk_id",
+      "domain": "class_back_atk",
+      "range": "0x1F5D7..0x1F63C",
+      "modified_byte_count": 19
+    },
+    {
+      "table": "phys_res",
+      "domain": "class_phys_res",
+      "range": "0x1F6A1..0x1F706",
+      "modified_byte_count": 6
+    },
+    {
+      "table": "fire_res",
+      "domain": "class_fire_res",
+      "range": "0x1F706..0x1F76B",
+      "modified_byte_count": 7
+    },
+    {
+      "table": "cold_res",
+      "domain": "class_cold_res",
+      "range": "0x1F76B..0x1F7D0",
+      "modified_byte_count": 3
+    },
+    {
+      "table": "elec_res",
+      "domain": "class_elec_res",
+      "range": "0x1F7D0..0x1F835",
+      "modified_byte_count": 4
+    },
+    {
+      "table": "black_res",
+      "domain": "class_black_res",
+      "range": "0x1F835..0x1F89A",
+      "modified_byte_count": 9
+    },
+    {
+      "table": "white_res",
+      "domain": "class_white_res",
+      "range": "0x1F89A..0x1F8FF",
+      "modified_byte_count": 5
+    },
+    {
+      "table": "neutral_encounters",
+      "domain": "neutral_encounters",
+      "range": "0x2E69F..0x2E7AD",
+      "modified_byte_count": 4
+    },
+    {
+      "table": "promo_ptrs",
+      "domain": "promotions",
+      "range": "0x4AD4C..0x4AE46",
+      "modified_byte_count": 27
+    },
+    {
+      "table": "promo_targets",
+      "domain": "promotions",
+      "range": "0x4AE46..0x4AED4",
+      "modified_byte_count": 36
+    },
+    {
+      "table": "promo_min_lvl",
+      "domain": "promotions",
+      "range": "0x4AED4..0x4AF21",
+      "modified_byte_count": 3
+    },
+    {
+      "table": "promo_min_ali",
+      "domain": "promotions",
+      "range": "0x4AF21..0x4AF6E",
+      "modified_byte_count": 4
+    },
+    {
+      "table": "promo_max_ali",
+      "domain": "promotions",
+      "range": "0x4AF6E..0x4AFBB",
+      "modified_byte_count": 8
+    },
+    {
+      "table": "promo_min_cha",
+      "domain": "promotions",
+      "range": "0x4AFBB..0x4B008",
+      "modified_byte_count": 17
+    },
+    {
+      "table": "relic_promos",
+      "domain": "promotions",
+      "range": "0x317A0..0x31820",
+      "modified_byte_count": 4
+    },
+    {
+      "table": "spell_params",
+      "domain": "spells",
+      "range": "0x52800..0x53300",
+      "modified_byte_count": 232
+    },
+    {
+      "table": "item_names",
+      "domain": "items",
+      "range": "0x3DC80..0x3DEB0",
+      "modified_byte_count": 379
+    },
+    {
+      "table": "class_names",
+      "domain": "classes",
+      "range": "0x8BA00..0x8BD00",
+      "modified_byte_count": 392
+    },
+    {
+      "table": "attack_names",
+      "domain": "attacks",
+      "range": "0x8BF40..0x8C100",
+      "modified_byte_count": 130
+    },
+    {
+      "table": "snes_header",
+      "domain": "snes_header",
+      "range": "0x07FC0..0x08000",
+      "modified_byte_count": 4
+    }
+  ],
+  "micro_patches": [
+    {
+      "rom_offset": "0x007FDC",
+      "length": 4,
+      "vanilla_bytes": "E92C16D3",
+      "patched_bytes": "7E2281DD"
+    },
+    {
+      "rom_offset": "0x00E07C",
+      "length": 1,
+      "vanilla_bytes": "0C",
+      "patched_bytes": "0E"
+    },
+    {
+      "rom_offset": "0x00E092",
+      "length": 1,
+      "vanilla_bytes": "17",
+      "patched_bytes": "0E"
+    },
+    {
+      "rom_offset": "0x00E1BF",
+      "length": 1,
+      "vanilla_bytes": "05",
+      "patched_bytes": "06"
+    },
+    {
+      "rom_offset": "0x00E2EE",
+      "length": 1,
+      "vanilla_bytes": "0C",
+      "patched_bytes": "0E"
+    },
+    {
+      "rom_offset": "0x00E304",
+      "length": 1,
+      "vanilla_bytes": "17",
+      "patched_bytes": "0E"
+    },
+    {
+      "rom_offset": "0x00E36C",
+      "length": 1,
+      "vanilla_bytes": "0B",
+      "patched_bytes": "0D"
+    },
+    {
+      "rom_offset": "0x00E382",
+      "length": 1,
+      "vanilla_bytes": "16",
+      "patched_bytes": "0D"
+    },
+    {
+      "rom_offset": "0x00E43E",
+      "length": 1,
+      "vanilla_bytes": "24",
+      "patched_bytes": "10"
+    },
+    {
+      "rom_offset": "0x00E46F",
+      "length": 1,
+      "vanilla_bytes": "12",
+      "patched_bytes": "00"
+    },
+    {
+      "rom_offset": "0x00E483",
+      "length": 1,
+      "vanilla_bytes": "10",
+      "patched_bytes": "00"
+    },
+    {
+      "rom_offset": "0x00E4A1",
+      "length": 1,
+      "vanilla_bytes": "12",
+      "patched_bytes": "00"
+    },
+    {
+      "rom_offset": "0x00E4CC",
+      "length": 1,
+      "vanilla_bytes": "20",
+      "patched_bytes": "00"
+    },
+    {
+      "rom_offset": "0x00E4E3",
+      "length": 2,
+      "vanilla_bytes": "1212",
+      "patched_bytes": "0000"
+    },
+    {
+      "rom_offset": "0x00E4E8",
+      "length": 1,
+      "vanilla_bytes": "12",
+      "patched_bytes": "00"
+    },
+    {
+      "rom_offset": "0x00E54B",
+      "length": 2,
+      "vanilla_bytes": "0235",
+      "patched_bytes": "3C16"
+    },
+    {
+      "rom_offset": "0x00E577",
+      "length": 2,
+      "vanilla_bytes": "B462",
+      "patched_bytes": "0848"
+    },
+    {
+      "rom_offset": "0x017D5E",
+      "length": 2,
+      "vanilla_bytes": "0204",
+      "patched_bytes": "0403"
+    },
+    {
+      "rom_offset": "0x017DBF",
+      "length": 2,
+      "vanilla_bytes": "0505",
+      "patched_bytes": "0606"
+    },
+    {
+      "rom_offset": "0x017DC2",
+      "length": 3,
+      "vanilla_bytes": "050505",
+      "patched_bytes": "060602"
+    },
+    {
+      "rom_offset": "0x017DC6",
+      "length": 3,
+      "vanilla_bytes": "050808",
+      "patched_bytes": "060506"
+    },
+    {
+      "rom_offset": "0x017DE4",
+      "length": 1,
+      "vanilla_bytes": "05",
+      "patched_bytes": "06"
+    },
+    {
+      "rom_offset": "0x017E34",
+      "length": 1,
+      "vanilla_bytes": "03",
+      "patched_bytes": "02"
+    },
+    {
+      "rom_offset": "0x017E36",
+      "length": 1,
+      "vanilla_bytes": "04",
+      "patched_bytes": "03"
+    },
+    {
+      "rom_offset": "0x017FBD",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "01"
+    },
+    {
+      "rom_offset": "0x019031",
+      "length": 2,
+      "vanilla_bytes": "42A8",
+      "patched_bytes": "6266"
+    },
+    {
+      "rom_offset": "0x01EAE7",
+      "length": 1,
+      "vanilla_bytes": "15",
+      "patched_bytes": "16"
+    },
+    {
+      "rom_offset": "0x01EB19",
+      "length": 1,
+      "vanilla_bytes": "0C",
+      "patched_bytes": "00"
+    },
+    {
+      "rom_offset": "0x01EFA9",
+      "length": 1,
+      "vanilla_bytes": "55",
+      "patched_bytes": "4A"
+    },
+    {
+      "rom_offset": "0x01EFAF",
+      "length": 1,
+      "vanilla_bytes": "55",
+      "patched_bytes": "60"
+    },
+    {
+      "rom_offset": "0x01EFB7",
+      "length": 1,
+      "vanilla_bytes": "51",
+      "patched_bytes": "56"
+    },
+    {
+      "rom_offset": "0x01EFB9",
+      "length": 1,
+      "vanilla_bytes": "49",
+      "patched_bytes": "55"
+    },
+    {
+      "rom_offset": "0x01EFBD",
+      "length": 1,
+      "vanilla_bytes": "50",
+      "patched_bytes": "5A"
+    },
+    {
+      "rom_offset": "0x01EFC3",
+      "length": 1,
+      "vanilla_bytes": "4A",
+      "patched_bytes": "5A"
+    },
+    {
+      "rom_offset": "0x01EFD9",
+      "length": 1,
+      "vanilla_bytes": "2D",
+      "patched_bytes": "3B"
+    },
+    {
+      "rom_offset": "0x01EFDB",
+      "length": 1,
+      "vanilla_bytes": "35",
+      "patched_bytes": "3A"
+    },
+    {
+      "rom_offset": "0x01EFDD",
+      "length": 1,
+      "vanilla_bytes": "43",
+      "patched_bytes": "28"
+    },
+    {
+      "rom_offset": "0x01EFE5",
+      "length": 1,
+      "vanilla_bytes": "4B",
+      "patched_bytes": "57"
+    },
+    {
+      "rom_offset": "0x01EFED",
+      "length": 1,
+      "vanilla_bytes": "56",
+      "patched_bytes": "49"
+    },
+    {
+      "rom_offset": "0x01EFEF",
+      "length": 1,
+      "vanilla_bytes": "5D",
+      "patched_bytes": "63"
+    },
+    {
+      "rom_offset": "0x01EFF9",
+      "length": 1,
+      "vanilla_bytes": "50",
+      "patched_bytes": "42"
+    },
+    {
+      "rom_offset": "0x01EFFD",
+      "length": 1,
+      "vanilla_bytes": "53",
+      "patched_bytes": "40"
+    },
+    {
+      "rom_offset": "0x01F001",
+      "length": 1,
+      "vanilla_bytes": "4E",
+      "patched_bytes": "4A"
+    },
+    {
+      "rom_offset": "0x01F02D",
+      "length": 1,
+      "vanilla_bytes": "5F",
+      "patched_bytes": "52"
+    },
+    {
+      "rom_offset": "0x01F09F",
+      "length": 1,
+      "vanilla_bytes": "03",
+      "patched_bytes": "02"
+    },
+    {
+      "rom_offset": "0x01F0A1",
+      "length": 1,
+      "vanilla_bytes": "03",
+      "patched_bytes": "02"
+    },
+    {
+      "rom_offset": "0x01F0A8",
+      "length": 1,
+      "vanilla_bytes": "06",
+      "patched_bytes": "07"
+    },
+    {
+      "rom_offset": "0x01F0AF",
+      "length": 9,
+      "vanilla_bytes": "020202070808080607",
+      "patched_bytes": "030304090A0B02080A"
+    },
+    {
+      "rom_offset": "0x01F0B9",
+      "length": 11,
+      "vanilla_bytes": "0A080909090A0B0A0B0A0B",
+      "patched_bytes": "0B090A0A0A0B0C0B0C0B0C"
+    },
+    {
+      "rom_offset": "0x01F0D4",
+      "length": 2,
+      "vanilla_bytes": "0706",
+      "patched_bytes": "0809"
+    },
+    {
+      "rom_offset": "0x01F114",
+      "length": 5,
+      "vanilla_bytes": "383C3F3639",
+      "patched_bytes": "473D3C463F"
+    },
+    {
+      "rom_offset": "0x01F11A",
+      "length": 1,
+      "vanilla_bytes": "3B",
+      "patched_bytes": "30"
+    },
+    {
+      "rom_offset": "0x01F11F",
+      "length": 1,
+      "vanilla_bytes": "3C",
+      "patched_bytes": "43"
+    },
+    {
+      "rom_offset": "0x01F123",
+      "length": 2,
+      "vanilla_bytes": "433D",
+      "patched_bytes": "3728"
+    },
+    {
+      "rom_offset": "0x01F126",
+      "length": 3,
+      "vanilla_bytes": "3F4640",
+      "patched_bytes": "383235"
+    },
+    {
+      "rom_offset": "0x01F192",
+      "length": 2,
+      "vanilla_bytes": "0404",
+      "patched_bytes": "0505"
+    },
+    {
+      "rom_offset": "0x01F197",
+      "length": 1,
+      "vanilla_bytes": "04",
+      "patched_bytes": "01"
+    },
+    {
+      "rom_offset": "0x01F1A0",
+      "length": 2,
+      "vanilla_bytes": "0405",
+      "patched_bytes": "0506"
+    },
+    {
+      "rom_offset": "0x01F1A4",
+      "length": 1,
+      "vanilla_bytes": "04",
+      "patched_bytes": "05"
+    },
+    {
+      "rom_offset": "0x01F1E1",
+      "length": 1,
+      "vanilla_bytes": "35",
+      "patched_bytes": "25"
+    },
+    {
+      "rom_offset": "0x01F1EA",
+      "length": 2,
+      "vanilla_bytes": "393D",
+      "patched_bytes": "3030"
+    },
+    {
+      "rom_offset": "0x01F1FB",
+      "length": 1,
+      "vanilla_bytes": "2D",
+      "patched_bytes": "26"
+    },
+    {
+      "rom_offset": "0x01F202",
+      "length": 1,
+      "vanilla_bytes": "28",
+      "patched_bytes": "24"
+    },
+    {
+      "rom_offset": "0x01F205",
+      "length": 6,
+      "vanilla_bytes": "2B2F292D272B",
+      "patched_bytes": "1F1E20201A1C"
+    },
+    {
+      "rom_offset": "0x01F265",
+      "length": 1,
+      "vanilla_bytes": "02",
+      "patched_bytes": "03"
+    },
+    {
+      "rom_offset": "0x01F279",
+      "length": 1,
+      "vanilla_bytes": "03",
+      "patched_bytes": "04"
+    },
+    {
+      "rom_offset": "0x01F27E",
+      "length": 9,
+      "vanilla_bytes": "010202020303030303",
+      "patched_bytes": "030303030404040404"
+    },
+    {
+      "rom_offset": "0x01F2C2",
+      "length": 3,
+      "vanilla_bytes": "313335",
+      "patched_bytes": "20153A"
+    },
+    {
+      "rom_offset": "0x01F2C8",
+      "length": 2,
+      "vanilla_bytes": "373B",
+      "patched_bytes": "322A"
+    },
+    {
+      "rom_offset": "0x01F2CB",
+      "length": 1,
+      "vanilla_bytes": "34",
+      "patched_bytes": "3B"
+    },
+    {
+      "rom_offset": "0x01F2DB",
+      "length": 1,
+      "vanilla_bytes": "1E",
+      "patched_bytes": "30"
+    },
+    {
+      "rom_offset": "0x01F2DE",
+      "length": 1,
+      "vanilla_bytes": "24",
+      "patched_bytes": "40"
+    },
+    {
+      "rom_offset": "0x01F2E3",
+      "length": 6,
+      "vanilla_bytes": "2A2C2E2B302C",
+      "patched_bytes": "3A3634343220"
+    },
+    {
+      "rom_offset": "0x01F2EA",
+      "length": 3,
+      "vanilla_bytes": "2E2F35",
+      "patched_bytes": "262B30"
+    },
+    {
+      "rom_offset": "0x01F2F2",
+      "length": 1,
+      "vanilla_bytes": "3A",
+      "patched_bytes": "38"
+    },
+    {
+      "rom_offset": "0x01F33F",
+      "length": 2,
+      "vanilla_bytes": "0202",
+      "patched_bytes": "0405"
+    },
+    {
+      "rom_offset": "0x01F342",
+      "length": 1,
+      "vanilla_bytes": "03",
+      "patched_bytes": "04"
+    },
+    {
+      "rom_offset": "0x01F346",
+      "length": 1,
+      "vanilla_bytes": "04",
+      "patched_bytes": "05"
+    },
+    {
+      "rom_offset": "0x01F348",
+      "length": 1,
+      "vanilla_bytes": "03",
+      "patched_bytes": "04"
+    },
+    {
+      "rom_offset": "0x01F35B",
+      "length": 1,
+      "vanilla_bytes": "02",
+      "patched_bytes": "04"
+    },
+    {
+      "rom_offset": "0x01F360",
+      "length": 10,
+      "vanilla_bytes": "01020202030403040303",
+      "patched_bytes": "03040404040505060405"
+    },
+    {
+      "rom_offset": "0x01F380",
+      "length": 2,
+      "vanilla_bytes": "0302",
+      "patched_bytes": "0403"
+    },
+    {
+      "rom_offset": "0x01F3BA",
+      "length": 2,
+      "vanilla_bytes": "141E",
+      "patched_bytes": "242E"
+    },
+    {
+      "rom_offset": "0x01F3BD",
+      "length": 2,
+      "vanilla_bytes": "2126",
+      "patched_bytes": "2529"
+    },
+    {
+      "rom_offset": "0x01F3C0",
+      "length": 5,
+      "vanilla_bytes": "2411171414",
+      "patched_bytes": "4021272424"
+    },
+    {
+      "rom_offset": "0x01F3DF",
+      "length": 1,
+      "vanilla_bytes": "1E",
+      "patched_bytes": "2E"
+    },
+    {
+      "rom_offset": "0x01F3E1",
+      "length": 1,
+      "vanilla_bytes": "1E",
+      "patched_bytes": "2E"
+    },
+    {
+      "rom_offset": "0x01F429",
+      "length": 1,
+      "vanilla_bytes": "2F",
+      "patched_bytes": "20"
+    },
+    {
+      "rom_offset": "0x01F4BA",
+      "length": 1,
+      "vanilla_bytes": "2F",
+      "patched_bytes": "4A"
+    },
+    {
+      "rom_offset": "0x01F50F",
+      "length": 1,
+      "vanilla_bytes": "31",
+      "patched_bytes": "32"
+    },
+    {
+      "rom_offset": "0x01F511",
+      "length": 1,
+      "vanilla_bytes": "22",
+      "patched_bytes": "32"
+    },
+    {
+      "rom_offset": "0x01F513",
+      "length": 1,
+      "vanilla_bytes": "31",
+      "patched_bytes": "32"
+    },
+    {
+      "rom_offset": "0x01F518",
+      "length": 1,
+      "vanilla_bytes": "22",
+      "patched_bytes": "32"
+    },
+    {
+      "rom_offset": "0x01F51A",
+      "length": 3,
+      "vanilla_bytes": "222222",
+      "patched_bytes": "323332"
+    },
+    {
+      "rom_offset": "0x01F51E",
+      "length": 1,
+      "vanilla_bytes": "22",
+      "patched_bytes": "32"
+    },
+    {
+      "rom_offset": "0x01F521",
+      "length": 2,
+      "vanilla_bytes": "2233",
+      "patched_bytes": "3232"
+    },
+    {
+      "rom_offset": "0x01F527",
+      "length": 2,
+      "vanilla_bytes": "2121",
+      "patched_bytes": "2231"
+    },
+    {
+      "rom_offset": "0x01F52A",
+      "length": 4,
+      "vanilla_bytes": "22112211",
+      "patched_bytes": "32212100"
+    },
+    {
+      "rom_offset": "0x01F532",
+      "length": 2,
+      "vanilla_bytes": "3232",
+      "patched_bytes": "4142"
+    },
+    {
+      "rom_offset": "0x01F535",
+      "length": 3,
+      "vanilla_bytes": "323232",
+      "patched_bytes": "434231"
+    },
+    {
+      "rom_offset": "0x01F539",
+      "length": 3,
+      "vanilla_bytes": "324242",
+      "patched_bytes": "434353"
+    },
+    {
+      "rom_offset": "0x01F53D",
+      "length": 9,
+      "vanilla_bytes": "222222222222222222",
+      "patched_bytes": "333333324332433243"
+    },
+    {
+      "rom_offset": "0x01F547",
+      "length": 1,
+      "vanilla_bytes": "31",
+      "patched_bytes": "32"
+    },
+    {
+      "rom_offset": "0x01F54B",
+      "length": 2,
+      "vanilla_bytes": "2121",
+      "patched_bytes": "2222"
+    },
+    {
+      "rom_offset": "0x01F54F",
+      "length": 1,
+      "vanilla_bytes": "21",
+      "patched_bytes": "31"
+    },
+    {
+      "rom_offset": "0x01F553",
+      "length": 1,
+      "vanilla_bytes": "21",
+      "patched_bytes": "22"
+    },
+    {
+      "rom_offset": "0x01F555",
+      "length": 1,
+      "vanilla_bytes": "21",
+      "patched_bytes": "31"
+    },
+    {
+      "rom_offset": "0x01F557",
+      "length": 1,
+      "vanilla_bytes": "22",
+      "patched_bytes": "21"
+    },
+    {
+      "rom_offset": "0x01F559",
+      "length": 2,
+      "vanilla_bytes": "2231",
+      "patched_bytes": "3332"
+    },
+    {
+      "rom_offset": "0x01F55C",
+      "length": 2,
+      "vanilla_bytes": "2121",
+      "patched_bytes": "3131"
+    },
+    {
+      "rom_offset": "0x01F56F",
+      "length": 3,
+      "vanilla_bytes": "313131",
+      "patched_bytes": "333333"
+    },
+    {
+      "rom_offset": "0x01F586",
+      "length": 1,
+      "vanilla_bytes": "C2",
+      "patched_bytes": "A7"
+    },
+    {
+      "rom_offset": "0x01F588",
+      "length": 1,
+      "vanilla_bytes": "10",
+      "patched_bytes": "2D"
+    },
+    {
+      "rom_offset": "0x01F59C",
+      "length": 1,
+      "vanilla_bytes": "10",
+      "patched_bytes": "2D"
+    },
+    {
+      "rom_offset": "0x01F5A5",
+      "length": 1,
+      "vanilla_bytes": "10",
+      "patched_bytes": "42"
+    },
+    {
+      "rom_offset": "0x01F5A7",
+      "length": 1,
+      "vanilla_bytes": "10",
+      "patched_bytes": "45"
+    },
+    {
+      "rom_offset": "0x01F5AA",
+      "length": 1,
+      "vanilla_bytes": "51",
+      "patched_bytes": "4D"
+    },
+    {
+      "rom_offset": "0x01F5BA",
+      "length": 1,
+      "vanilla_bytes": "10",
+      "patched_bytes": "A7"
+    },
+    {
+      "rom_offset": "0x01F5BC",
+      "length": 1,
+      "vanilla_bytes": "10",
+      "patched_bytes": "AA"
+    },
+    {
+      "rom_offset": "0x01F5C0",
+      "length": 1,
+      "vanilla_bytes": "2D",
+      "patched_bytes": "AA"
+    },
+    {
+      "rom_offset": "0x01F5DB",
+      "length": 1,
+      "vanilla_bytes": "20",
+      "patched_bytes": "41"
+    },
+    {
+      "rom_offset": "0x01F5E5",
+      "length": 2,
+      "vanilla_bytes": "1024",
+      "patched_bytes": "24C4"
+    },
+    {
+      "rom_offset": "0x01F5EB",
+      "length": 1,
+      "vanilla_bytes": "C3",
+      "patched_bytes": "C9"
+    },
+    {
+      "rom_offset": "0x01F5F6",
+      "length": 1,
+      "vanilla_bytes": "A7",
+      "patched_bytes": "6E"
+    },
+    {
+      "rom_offset": "0x01F5FC",
+      "length": 2,
+      "vanilla_bytes": "1010",
+      "patched_bytes": "A3A3"
+    },
+    {
+      "rom_offset": "0x01F600",
+      "length": 2,
+      "vanilla_bytes": "7100",
+      "patched_bytes": "9071"
+    },
+    {
+      "rom_offset": "0x01F603",
+      "length": 1,
+      "vanilla_bytes": "C4",
+      "patched_bytes": "42"
+    },
+    {
+      "rom_offset": "0x01F60A",
+      "length": 1,
+      "vanilla_bytes": "42",
+      "patched_bytes": "62"
+    },
+    {
+      "rom_offset": "0x01F60C",
+      "length": 1,
+      "vanilla_bytes": "45",
+      "patched_bytes": "66"
+    },
+    {
+      "rom_offset": "0x01F60F",
+      "length": 1,
+      "vanilla_bytes": "4D",
+      "patched_bytes": "70"
+    },
+    {
+      "rom_offset": "0x01F61E",
+      "length": 1,
+      "vanilla_bytes": "A1",
+      "patched_bytes": "A7"
+    },
+    {
+      "rom_offset": "0x01F621",
+      "length": 1,
+      "vanilla_bytes": "AA",
+      "patched_bytes": "90"
+    },
+    {
+      "rom_offset": "0x01F624",
+      "length": 4,
+      "vanilla_bytes": "AD6C6668",
+      "patched_bytes": "ACC37469"
+    },
+    {
+      "rom_offset": "0x01F6B5",
+      "length": 1,
+      "vanilla_bytes": "1C",
+      "patched_bytes": "3D"
+    },
+    {
+      "rom_offset": "0x01F6CB",
+      "length": 1,
+      "vanilla_bytes": "39",
+      "patched_bytes": "21"
+    },
+    {
+      "rom_offset": "0x01F6D5",
+      "length": 1,
+      "vanilla_bytes": "3E",
+      "patched_bytes": "45"
+    },
+    {
+      "rom_offset": "0x01F6D7",
+      "length": 1,
+      "vanilla_bytes": "3D",
+      "patched_bytes": "43"
+    },
+    {
+      "rom_offset": "0x01F6EB",
+      "length": 1,
+      "vanilla_bytes": "2E",
+      "patched_bytes": "35"
+    },
+    {
+      "rom_offset": "0x01F6ED",
+      "length": 1,
+      "vanilla_bytes": "31",
+      "patched_bytes": "3A"
+    },
+    {
+      "rom_offset": "0x01F714",
+      "length": 2,
+      "vanilla_bytes": "1A16",
+      "patched_bytes": "232A"
+    },
+    {
+      "rom_offset": "0x01F71A",
+      "length": 1,
+      "vanilla_bytes": "24",
+      "patched_bytes": "4B"
+    },
+    {
+      "rom_offset": "0x01F730",
+      "length": 1,
+      "vanilla_bytes": "50",
+      "patched_bytes": "23"
+    },
+    {
+      "rom_offset": "0x01F750",
+      "length": 3,
+      "vanilla_bytes": "252F35",
+      "patched_bytes": "2B3F45"
+    },
+    {
+      "rom_offset": "0x01F77F",
+      "length": 1,
+      "vanilla_bytes": "26",
+      "patched_bytes": "5B"
+    },
+    {
+      "rom_offset": "0x01F794",
+      "length": 2,
+      "vanilla_bytes": "270F",
+      "patched_bytes": "4F26"
+    },
+    {
+      "rom_offset": "0x01F7E4",
+      "length": 1,
+      "vanilla_bytes": "27",
+      "patched_bytes": "50"
+    },
+    {
+      "rom_offset": "0x01F7F9",
+      "length": 3,
+      "vanilla_bytes": "342525",
+      "patched_bytes": "4A2137"
+    },
+    {
+      "rom_offset": "0x01F849",
+      "length": 1,
+      "vanilla_bytes": "3B",
+      "patched_bytes": "64"
+    },
+    {
+      "rom_offset": "0x01F85D",
+      "length": 3,
+      "vanilla_bytes": "230F36",
+      "patched_bytes": "273445"
+    },
+    {
+      "rom_offset": "0x01F868",
+      "length": 4,
+      "vanilla_bytes": "30331B11",
+      "patched_bytes": "33412F3C"
+    },
+    {
+      "rom_offset": "0x01F881",
+      "length": 1,
+      "vanilla_bytes": "32",
+      "patched_bytes": "3A"
+    },
+    {
+      "rom_offset": "0x01F8AE",
+      "length": 1,
+      "vanilla_bytes": "15",
+      "patched_bytes": "0C"
+    },
+    {
+      "rom_offset": "0x01F8C3",
+      "length": 2,
+      "vanilla_bytes": "5020",
+      "patched_bytes": "491A"
+    },
+    {
+      "rom_offset": "0x01F8CD",
+      "length": 2,
+      "vanilla_bytes": "3033",
+      "patched_bytes": "323B"
+    },
+    {
+      "rom_offset": "0x01F90A",
+      "length": 4,
+      "vanilla_bytes": "23111112",
+      "patched_bytes": "34222214"
+    },
+    {
+      "rom_offset": "0x01F914",
+      "length": 4,
+      "vanilla_bytes": "34111112",
+      "patched_bytes": "35222215"
+    },
+    {
+      "rom_offset": "0x01F927",
+      "length": 1,
+      "vanilla_bytes": "11",
+      "patched_bytes": "12"
+    },
+    {
+      "rom_offset": "0x01F931",
+      "length": 2,
+      "vanilla_bytes": "1131",
+      "patched_bytes": "1241"
+    },
+    {
+      "rom_offset": "0x01F935",
+      "length": 2,
+      "vanilla_bytes": "4133",
+      "patched_bytes": "5144"
+    },
+    {
+      "rom_offset": "0x01F93B",
+      "length": 1,
+      "vanilla_bytes": "11",
+      "patched_bytes": "12"
+    },
+    {
+      "rom_offset": "0x01F945",
+      "length": 1,
+      "vanilla_bytes": "11",
+      "patched_bytes": "12"
+    },
+    {
+      "rom_offset": "0x01F949",
+      "length": 1,
+      "vanilla_bytes": "21",
+      "patched_bytes": "22"
+    },
+    {
+      "rom_offset": "0x01F94B",
+      "length": 1,
+      "vanilla_bytes": "11",
+      "patched_bytes": "12"
+    },
+    {
+      "rom_offset": "0x01F9B5",
+      "length": 1,
+      "vanilla_bytes": "80",
+      "patched_bytes": "40"
+    },
+    {
+      "rom_offset": "0x01FA7D",
+      "length": 2,
+      "vanilla_bytes": "F7FB",
+      "patched_bytes": "15FC"
+    },
+    {
+      "rom_offset": "0x01FB47",
+      "length": 1,
+      "vanilla_bytes": "F7",
+      "patched_bytes": "E9"
+    },
+    {
+      "rom_offset": "0x02E6EF",
+      "length": 1,
+      "vanilla_bytes": "2B",
+      "patched_bytes": "2D"
+    },
+    {
+      "rom_offset": "0x02E71C",
+      "length": 1,
+      "vanilla_bytes": "2B",
+      "patched_bytes": "4B"
+    },
+    {
+      "rom_offset": "0x02E746",
+      "length": 1,
+      "vanilla_bytes": "2B",
+      "patched_bytes": "3B"
+    },
+    {
+      "rom_offset": "0x02E785",
+      "length": 1,
+      "vanilla_bytes": "2B",
+      "patched_bytes": "2A"
+    },
+    {
+      "rom_offset": "0x0317C0",
+      "length": 1,
+      "vanilla_bytes": "15",
+      "patched_bytes": "16"
+    },
+    {
+      "rom_offset": "0x0317CC",
+      "length": 1,
+      "vanilla_bytes": "15",
+      "patched_bytes": "2B"
+    },
+    {
+      "rom_offset": "0x0317D7",
+      "length": 1,
+      "vanilla_bytes": "16",
+      "patched_bytes": "15"
+    },
+    {
+      "rom_offset": "0x0317F0",
+      "length": 1,
+      "vanilla_bytes": "05",
+      "patched_bytes": "04"
+    },
+    {
+      "rom_offset": "0x034162",
+      "length": 8,
+      "vanilla_bytes": "57494C44204D414E",
+      "patched_bytes": "2020425255544500"
+    },
+    {
+      "rom_offset": "0x0341A8",
+      "length": 5,
+      "vanilla_bytes": "4245415354",
+      "patched_bytes": "2057494C44"
+    },
+    {
+      "rom_offset": "0x0341CC",
+      "length": 6,
+      "vanilla_bytes": "205749544348",
+      "patched_bytes": "574954434820"
+    },
+    {
+      "rom_offset": "0x03DB55",
+      "length": 2,
+      "vanilla_bytes": "2828",
+      "patched_bytes": "3C3C"
+    },
+    {
+      "rom_offset": "0x03DB63",
+      "length": 1,
+      "vanilla_bytes": "29",
+      "patched_bytes": "14"
+    },
+    {
+      "rom_offset": "0x03DB65",
+      "length": 1,
+      "vanilla_bytes": "29",
+      "patched_bytes": "14"
+    },
+    {
+      "rom_offset": "0x03DB6C",
+      "length": 1,
+      "vanilla_bytes": "27",
+      "patched_bytes": "06"
+    },
+    {
+      "rom_offset": "0x03DB6E",
+      "length": 1,
+      "vanilla_bytes": "06",
+      "patched_bytes": "18"
+    },
+    {
+      "rom_offset": "0x03DB77",
+      "length": 1,
+      "vanilla_bytes": "30",
+      "patched_bytes": "0E"
+    },
+    {
+      "rom_offset": "0x03DB7B",
+      "length": 1,
+      "vanilla_bytes": "33",
+      "patched_bytes": "08"
+    },
+    {
+      "rom_offset": "0x03DB8E",
+      "length": 1,
+      "vanilla_bytes": "0E",
+      "patched_bytes": "19"
+    },
+    {
+      "rom_offset": "0x03DBA2",
+      "length": 3,
+      "vanilla_bytes": "11393B",
+      "patched_bytes": "230811"
+    },
+    {
+      "rom_offset": "0x03DBA8",
+      "length": 1,
+      "vanilla_bytes": "13",
+      "patched_bytes": "12"
+    },
+    {
+      "rom_offset": "0x03DBB5",
+      "length": 2,
+      "vanilla_bytes": "3F12",
+      "patched_bytes": "1217"
+    },
+    {
+      "rom_offset": "0x03DBB9",
+      "length": 2,
+      "vanilla_bytes": "3F15",
+      "patched_bytes": "1518"
+    },
+    {
+      "rom_offset": "0x03DBBF",
+      "length": 2,
+      "vanilla_bytes": "161A",
+      "patched_bytes": "1A07"
+    },
+    {
+      "rom_offset": "0x03DBDE",
+      "length": 2,
+      "vanilla_bytes": "2143",
+      "patched_bytes": "0E0E"
+    },
+    {
+      "rom_offset": "0x03DBE1",
+      "length": 1,
+      "vanilla_bytes": "44",
+      "patched_bytes": "46"
+    },
+    {
+      "rom_offset": "0x03DBE3",
+      "length": 2,
+      "vanilla_bytes": "4424",
+      "patched_bytes": "2423"
+    },
+    {
+      "rom_offset": "0x03DBEA",
+      "length": 3,
+      "vanilla_bytes": "030825",
+      "patched_bytes": "262430"
+    },
+    {
+      "rom_offset": "0x03DBEE",
+      "length": 1,
+      "vanilla_bytes": "18",
+      "patched_bytes": "22"
+    },
+    {
+      "rom_offset": "0x03DC6D",
+      "length": 1,
+      "vanilla_bytes": "59",
+      "patched_bytes": "5A"
+    },
+    {
+      "rom_offset": "0x03DC6F",
+      "length": 1,
+      "vanilla_bytes": "5E",
+      "patched_bytes": "5F"
+    },
+    {
+      "rom_offset": "0x03DC71",
+      "length": 1,
+      "vanilla_bytes": "64",
+      "patched_bytes": "65"
+    },
+    {
+      "rom_offset": "0x03DC73",
+      "length": 1,
+      "vanilla_bytes": "69",
+      "patched_bytes": "6A"
+    },
+    {
+      "rom_offset": "0x03DC75",
+      "length": 1,
+      "vanilla_bytes": "6E",
+      "patched_bytes": "6F"
+    },
+    {
+      "rom_offset": "0x03DC77",
+      "length": 1,
+      "vanilla_bytes": "73",
+      "patched_bytes": "74"
+    },
+    {
+      "rom_offset": "0x03DC79",
+      "length": 1,
+      "vanilla_bytes": "78",
+      "patched_bytes": "79"
+    },
+    {
+      "rom_offset": "0x03DC7B",
+      "length": 1,
+      "vanilla_bytes": "81",
+      "patched_bytes": "82"
+    },
+    {
+      "rom_offset": "0x03DC7D",
+      "length": 1,
+      "vanilla_bytes": "8A",
+      "patched_bytes": "8B"
+    },
+    {
+      "rom_offset": "0x03DC7F",
+      "length": 1,
+      "vanilla_bytes": "8E",
+      "patched_bytes": "8F"
+    },
+    {
+      "rom_offset": "0x03DC81",
+      "length": 1,
+      "vanilla_bytes": "97",
+      "patched_bytes": "98"
+    },
+    {
+      "rom_offset": "0x03DC83",
+      "length": 1,
+      "vanilla_bytes": "9F",
+      "patched_bytes": "A0"
+    },
+    {
+      "rom_offset": "0x03DC85",
+      "length": 1,
+      "vanilla_bytes": "A7",
+      "patched_bytes": "A8"
+    },
+    {
+      "rom_offset": "0x03DC87",
+      "length": 1,
+      "vanilla_bytes": "AE",
+      "patched_bytes": "AF"
+    },
+    {
+      "rom_offset": "0x03DC89",
+      "length": 1,
+      "vanilla_bytes": "B4",
+      "patched_bytes": "B5"
+    },
+    {
+      "rom_offset": "0x03DC8B",
+      "length": 1,
+      "vanilla_bytes": "BB",
+      "patched_bytes": "BC"
+    },
+    {
+      "rom_offset": "0x03DC8D",
+      "length": 1,
+      "vanilla_bytes": "C0",
+      "patched_bytes": "C1"
+    },
+    {
+      "rom_offset": "0x03DC8F",
+      "length": 1,
+      "vanilla_bytes": "C7",
+      "patched_bytes": "C8"
+    },
+    {
+      "rom_offset": "0x03DC91",
+      "length": 1,
+      "vanilla_bytes": "CC",
+      "patched_bytes": "CD"
+    },
+    {
+      "rom_offset": "0x03DC93",
+      "length": 1,
+      "vanilla_bytes": "D4",
+      "patched_bytes": "D5"
+    },
+    {
+      "rom_offset": "0x03DC95",
+      "length": 1,
+      "vanilla_bytes": "DC",
+      "patched_bytes": "DD"
+    },
+    {
+      "rom_offset": "0x03DC97",
+      "length": 1,
+      "vanilla_bytes": "E2",
+      "patched_bytes": "E3"
+    },
+    {
+      "rom_offset": "0x03DC99",
+      "length": 1,
+      "vanilla_bytes": "E8",
+      "patched_bytes": "E9"
+    },
+    {
+      "rom_offset": "0x03DC9B",
+      "length": 1,
+      "vanilla_bytes": "EE",
+      "patched_bytes": "EF"
+    },
+    {
+      "rom_offset": "0x03DC9D",
+      "length": 1,
+      "vanilla_bytes": "F3",
+      "patched_bytes": "F4"
+    },
+    {
+      "rom_offset": "0x03DC9F",
+      "length": 1,
+      "vanilla_bytes": "F9",
+      "patched_bytes": "FA"
+    },
+    {
+      "rom_offset": "0x03DCA1",
+      "length": 1,
+      "vanilla_bytes": "02",
+      "patched_bytes": "03"
+    },
+    {
+      "rom_offset": "0x03DCA3",
+      "length": 1,
+      "vanilla_bytes": "0B",
+      "patched_bytes": "0C"
+    },
+    {
+      "rom_offset": "0x03DCA5",
+      "length": 1,
+      "vanilla_bytes": "11",
+      "patched_bytes": "12"
+    },
+    {
+      "rom_offset": "0x03DCA7",
+      "length": 1,
+      "vanilla_bytes": "16",
+      "patched_bytes": "17"
+    },
+    {
+      "rom_offset": "0x03DCA9",
+      "length": 1,
+      "vanilla_bytes": "1D",
+      "patched_bytes": "1E"
+    },
+    {
+      "rom_offset": "0x03DCAB",
+      "length": 1,
+      "vanilla_bytes": "23",
+      "patched_bytes": "24"
+    },
+    {
+      "rom_offset": "0x03DCAD",
+      "length": 1,
+      "vanilla_bytes": "27",
+      "patched_bytes": "28"
+    },
+    {
+      "rom_offset": "0x03DCAF",
+      "length": 1,
+      "vanilla_bytes": "30",
+      "patched_bytes": "31"
+    },
+    {
+      "rom_offset": "0x03DCB1",
+      "length": 1,
+      "vanilla_bytes": "35",
+      "patched_bytes": "36"
+    },
+    {
+      "rom_offset": "0x03DCB3",
+      "length": 1,
+      "vanilla_bytes": "3A",
+      "patched_bytes": "3B"
+    },
+    {
+      "rom_offset": "0x03DCB5",
+      "length": 1,
+      "vanilla_bytes": "3F",
+      "patched_bytes": "40"
+    },
+    {
+      "rom_offset": "0x03DCB7",
+      "length": 1,
+      "vanilla_bytes": "48",
+      "patched_bytes": "49"
+    },
+    {
+      "rom_offset": "0x03DCB9",
+      "length": 1,
+      "vanilla_bytes": "4E",
+      "patched_bytes": "4F"
+    },
+    {
+      "rom_offset": "0x03DCBB",
+      "length": 1,
+      "vanilla_bytes": "57",
+      "patched_bytes": "58"
+    },
+    {
+      "rom_offset": "0x03DCBD",
+      "length": 1,
+      "vanilla_bytes": "5C",
+      "patched_bytes": "5D"
+    },
+    {
+      "rom_offset": "0x03DCBF",
+      "length": 1,
+      "vanilla_bytes": "65",
+      "patched_bytes": "66"
+    },
+    {
+      "rom_offset": "0x03DCC1",
+      "length": 1,
+      "vanilla_bytes": "6E",
+      "patched_bytes": "6F"
+    },
+    {
+      "rom_offset": "0x03DCC3",
+      "length": 1,
+      "vanilla_bytes": "74",
+      "patched_bytes": "75"
+    },
+    {
+      "rom_offset": "0x03DCC5",
+      "length": 1,
+      "vanilla_bytes": "7D",
+      "patched_bytes": "7E"
+    },
+    {
+      "rom_offset": "0x03DCC7",
+      "length": 1,
+      "vanilla_bytes": "83",
+      "patched_bytes": "84"
+    },
+    {
+      "rom_offset": "0x03DCC9",
+      "length": 1,
+      "vanilla_bytes": "88",
+      "patched_bytes": "89"
+    },
+    {
+      "rom_offset": "0x03DCCB",
+      "length": 1,
+      "vanilla_bytes": "91",
+      "patched_bytes": "92"
+    },
+    {
+      "rom_offset": "0x03DCCD",
+      "length": 1,
+      "vanilla_bytes": "97",
+      "patched_bytes": "98"
+    },
+    {
+      "rom_offset": "0x03DCCF",
+      "length": 1,
+      "vanilla_bytes": "9C",
+      "patched_bytes": "9D"
+    },
+    {
+      "rom_offset": "0x03DCD1",
+      "length": 1,
+      "vanilla_bytes": "A1",
+      "patched_bytes": "A2"
+    },
+    {
+      "rom_offset": "0x03DD0D",
+      "length": 6,
+      "vanilla_bytes": "504F49534F4E",
+      "patched_bytes": "4D414C494345"
+    },
+    {
+      "rom_offset": "0x03DD54",
+      "length": 1,
+      "vanilla_bytes": "47",
+      "patched_bytes": "57"
+    },
+    {
+      "rom_offset": "0x03DD56",
+      "length": 2,
+      "vanilla_bytes": "4C45",
+      "patched_bytes": "494C"
+    },
+    {
+      "rom_offset": "0x03DD59",
+      "length": 101,
+      "vanilla_bytes": "4649524500434841524D0043484F5000434F4C440041434944004E4F564100494345434C4F5544004556494C52494E4700524F54004E4954454D415245005448554E44455200494E4645524E4F0042414E495348004A49484144004D4554454F52004B4953",
+      "patched_bytes": "004649524500434841524D0052454E4400434F4C440041434944004E4F564100494345434C4F5544004556494C52494E4700524F54004E4954454D415245005448554E44455200494E4645524E4F0042414E495348004A49484144004D4554454F52004B49"
+    },
+    {
+      "rom_offset": "0x03DDBF",
+      "length": 4,
+      "vanilla_bytes": "004D4953",
+      "patched_bytes": "53004D49"
+    },
+    {
+      "rom_offset": "0x03DDC4",
+      "length": 73,
+      "vanilla_bytes": "4C450047414C450050455452494659005048414E544F4D00424C41444500534C49434500534D4153480043484F5000534C4153480053485552494B454E004E494E4A55545355004152",
+      "patched_bytes": "534C450047414C450050455452494659005048414E544F4D00424C41444500534C494345005350414E4B0043484F5000534C4153480053485552494B454E004E494E4A555453550041"
+    },
+    {
+      "rom_offset": "0x03DE0E",
+      "length": 11,
+      "vanilla_bytes": "4F57005748495000505550",
+      "patched_bytes": "524F570057484950005055"
+    },
+    {
+      "rom_offset": "0x03DE1A",
+      "length": 140,
+      "vanilla_bytes": "4554004D414749430048495400434F4C442045594500534C415000414E4B4800535441420053544152445553540050554E43480049524F4E4649535400434C55420049434520424F4C540046495245424F4C5400534D4153480054454E5441434C45004352555348004249544500534F554C464C41590043555253450048414C4F00534C4150004348415247",
+      "patched_bytes": "504554004D414749430048495400434F4C442045594500534C415000414E4B4800535441420053544152445553540050554E43480049524F4E4649535400434C55420049434520424F4C540046495245424F4C5400534D4153480054454E5441434C45004352555348004249544500534F554C464C41590043555253450048414C4F00534C415000534D4954"
+    },
+    {
+      "rom_offset": "0x04AC18",
+      "length": 1,
+      "vanilla_bytes": "ED",
+      "patched_bytes": "EF"
+    },
+    {
+      "rom_offset": "0x04AC1A",
+      "length": 1,
+      "vanilla_bytes": "EE",
+      "patched_bytes": "EF"
+    },
+    {
+      "rom_offset": "0x04ACC0",
+      "length": 1,
+      "vanilla_bytes": "2D",
+      "patched_bytes": "3A"
+    },
+    {
+      "rom_offset": "0x04ACC3",
+      "length": 2,
+      "vanilla_bytes": "3A3C",
+      "patched_bytes": "3B3D"
+    },
+    {
+      "rom_offset": "0x04ACEC",
+      "length": 3,
+      "vanilla_bytes": "000000",
+      "patched_bytes": "172D3C"
+    },
+    {
+      "rom_offset": "0x04AD43",
+      "length": 1,
+      "vanilla_bytes": "2B",
+      "patched_bytes": "2D"
+    },
+    {
+      "rom_offset": "0x04AD7A",
+      "length": 1,
+      "vanilla_bytes": "64",
+      "patched_bytes": "65"
+    },
+    {
+      "rom_offset": "0x04AD7C",
+      "length": 1,
+      "vanilla_bytes": "67",
+      "patched_bytes": "68"
+    },
+    {
+      "rom_offset": "0x04AD7E",
+      "length": 1,
+      "vanilla_bytes": "6B",
+      "patched_bytes": "6C"
+    },
+    {
+      "rom_offset": "0x04AD80",
+      "length": 1,
+      "vanilla_bytes": "6F",
+      "patched_bytes": "70"
+    },
+    {
+      "rom_offset": "0x04AD82",
+      "length": 1,
+      "vanilla_bytes": "71",
+      "patched_bytes": "72"
+    },
+    {
+      "rom_offset": "0x04AD84",
+      "length": 1,
+      "vanilla_bytes": "73",
+      "patched_bytes": "74"
+    },
+    {
+      "rom_offset": "0x04AD86",
+      "length": 1,
+      "vanilla_bytes": "74",
+      "patched_bytes": "75"
+    },
+    {
+      "rom_offset": "0x04AD88",
+      "length": 1,
+      "vanilla_bytes": "75",
+      "patched_bytes": "76"
+    },
+    {
+      "rom_offset": "0x04AD8A",
+      "length": 1,
+      "vanilla_bytes": "76",
+      "patched_bytes": "77"
+    },
+    {
+      "rom_offset": "0x04AD8C",
+      "length": 1,
+      "vanilla_bytes": "77",
+      "patched_bytes": "78"
+    },
+    {
+      "rom_offset": "0x04AD8E",
+      "length": 1,
+      "vanilla_bytes": "78",
+      "patched_bytes": "79"
+    },
+    {
+      "rom_offset": "0x04AD90",
+      "length": 1,
+      "vanilla_bytes": "7A",
+      "patched_bytes": "7B"
+    },
+    {
+      "rom_offset": "0x04AD92",
+      "length": 1,
+      "vanilla_bytes": "7B",
+      "patched_bytes": "7C"
+    },
+    {
+      "rom_offset": "0x04AD94",
+      "length": 1,
+      "vanilla_bytes": "7C",
+      "patched_bytes": "7D"
+    },
+    {
+      "rom_offset": "0x04AD96",
+      "length": 1,
+      "vanilla_bytes": "7D",
+      "patched_bytes": "7E"
+    },
+    {
+      "rom_offset": "0x04AD98",
+      "length": 1,
+      "vanilla_bytes": "7E",
+      "patched_bytes": "7F"
+    },
+    {
+      "rom_offset": "0x04AD9A",
+      "length": 1,
+      "vanilla_bytes": "7F",
+      "patched_bytes": "80"
+    },
+    {
+      "rom_offset": "0x04AD9C",
+      "length": 1,
+      "vanilla_bytes": "83",
+      "patched_bytes": "81"
+    },
+    {
+      "rom_offset": "0x04AD9E",
+      "length": 1,
+      "vanilla_bytes": "84",
+      "patched_bytes": "82"
+    },
+    {
+      "rom_offset": "0x04ADA0",
+      "length": 1,
+      "vanilla_bytes": "85",
+      "patched_bytes": "83"
+    },
+    {
+      "rom_offset": "0x04ADAE",
+      "length": 1,
+      "vanilla_bytes": "92",
+      "patched_bytes": "94"
+    },
+    {
+      "rom_offset": "0x04ADB0",
+      "length": 1,
+      "vanilla_bytes": "94",
+      "patched_bytes": "98"
+    },
+    {
+      "rom_offset": "0x04ADB2",
+      "length": 1,
+      "vanilla_bytes": "96",
+      "patched_bytes": "92"
+    },
+    {
+      "rom_offset": "0x04ADB4",
+      "length": 1,
+      "vanilla_bytes": "98",
+      "patched_bytes": "93"
+    },
+    {
+      "rom_offset": "0x04ADB6",
+      "length": 1,
+      "vanilla_bytes": "99",
+      "patched_bytes": "96"
+    },
+    {
+      "rom_offset": "0x04ADB8",
+      "length": 1,
+      "vanilla_bytes": "9B",
+      "patched_bytes": "97"
+    },
+    {
+      "rom_offset": "0x04ADBA",
+      "length": 1,
+      "vanilla_bytes": "9C",
+      "patched_bytes": "9A"
+    },
+    {
+      "rom_offset": "0x04AE5C",
+      "length": 3,
+      "vanilla_bytes": "011314",
+      "patched_bytes": "3C0000"
+    },
+    {
+      "rom_offset": "0x04AE63",
+      "length": 16,
+      "vanilla_bytes": "000A19000A181A000A1819001C001B00",
+      "patched_bytes": "2B000A19000A181A000A1819001C001B"
+    },
+    {
+      "rom_offset": "0x04AE78",
+      "length": 2,
+      "vanilla_bytes": "0A00",
+      "patched_bytes": "000A"
+    },
+    {
+      "rom_offset": "0x04AE7D",
+      "length": 5,
+      "vanilla_bytes": "0000292A2B",
+      "patched_bytes": "262700292A"
+    },
+    {
+      "rom_offset": "0x04AE83",
+      "length": 2,
+      "vanilla_bytes": "0000",
+      "patched_bytes": "0A17"
+    },
+    {
+      "rom_offset": "0x04AE90",
+      "length": 3,
+      "vanilla_bytes": "340036",
+      "patched_bytes": "303435"
+    },
+    {
+      "rom_offset": "0x04AE94",
+      "length": 3,
+      "vanilla_bytes": "380035",
+      "patched_bytes": "303637"
+    },
+    {
+      "rom_offset": "0x04AE98",
+      "length": 2,
+      "vanilla_bytes": "0037",
+      "patched_bytes": "3038"
+    },
+    {
+      "rom_offset": "0x04AEF9",
+      "length": 2,
+      "vanilla_bytes": "0101",
+      "patched_bytes": "0911"
+    },
+    {
+      "rom_offset": "0x04AEFE",
+      "length": 1,
+      "vanilla_bytes": "08",
+      "patched_bytes": "0B"
+    },
+    {
+      "rom_offset": "0x04AF2D",
+      "length": 1,
+      "vanilla_bytes": "19",
+      "patched_bytes": "00"
+    },
+    {
+      "rom_offset": "0x04AF49",
+      "length": 2,
+      "vanilla_bytes": "3246",
+      "patched_bytes": "0000"
+    },
+    {
+      "rom_offset": "0x04AF4F",
+      "length": 1,
+      "vanilla_bytes": "37",
+      "patched_bytes": "00"
+    },
+    {
+      "rom_offset": "0x04AF7B",
+      "length": 1,
+      "vanilla_bytes": "32",
+      "patched_bytes": "46"
+    },
+    {
+      "rom_offset": "0x04AF7F",
+      "length": 1,
+      "vanilla_bytes": "50",
+      "patched_bytes": "54"
+    },
+    {
+      "rom_offset": "0x04AF84",
+      "length": 1,
+      "vanilla_bytes": "41",
+      "patched_bytes": "32"
+    },
+    {
+      "rom_offset": "0x04AF96",
+      "length": 1,
+      "vanilla_bytes": "50",
+      "patched_bytes": "64"
+    },
+    {
+      "rom_offset": "0x04AF98",
+      "length": 1,
+      "vanilla_bytes": "28",
+      "patched_bytes": "23"
+    },
+    {
+      "rom_offset": "0x04AF9A",
+      "length": 1,
+      "vanilla_bytes": "3C",
+      "patched_bytes": "64"
+    },
+    {
+      "rom_offset": "0x04AFB8",
+      "length": 1,
+      "vanilla_bytes": "3C",
+      "patched_bytes": "64"
+    },
+    {
+      "rom_offset": "0x04AFBA",
+      "length": 1,
+      "vanilla_bytes": "37",
+      "patched_bytes": "64"
+    },
+    {
+      "rom_offset": "0x04AFBE",
+      "length": 2,
+      "vanilla_bytes": "323C",
+      "patched_bytes": "281E"
+    },
+    {
+      "rom_offset": "0x04AFC3",
+      "length": 1,
+      "vanilla_bytes": "3C",
+      "patched_bytes": "28"
+    },
+    {
+      "rom_offset": "0x04AFC7",
+      "length": 2,
+      "vanilla_bytes": "323C",
+      "patched_bytes": "2832"
+    },
+    {
+      "rom_offset": "0x04AFCA",
+      "length": 1,
+      "vanilla_bytes": "41",
+      "patched_bytes": "3C"
+    },
+    {
+      "rom_offset": "0x04AFE0",
+      "length": 2,
+      "vanilla_bytes": "0000",
+      "patched_bytes": "323C"
+    },
+    {
+      "rom_offset": "0x04AFE3",
+      "length": 3,
+      "vanilla_bytes": "000000",
+      "patched_bytes": "323C28"
+    },
+    {
+      "rom_offset": "0x04AFE7",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "3C"
+    },
+    {
+      "rom_offset": "0x04AFE9",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "3C"
+    },
+    {
+      "rom_offset": "0x04AFFA",
+      "length": 1,
+      "vanilla_bytes": "32",
+      "patched_bytes": "28"
+    },
+    {
+      "rom_offset": "0x04B000",
+      "length": 1,
+      "vanilla_bytes": "32",
+      "patched_bytes": "28"
+    },
+    {
+      "rom_offset": "0x04B005",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "3C"
+    },
+    {
+      "rom_offset": "0x04B007",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "3C"
+    },
+    {
+      "rom_offset": "0x052801",
+      "length": 16,
+      "vanilla_bytes": "00000101060305016320F141B3127D00",
+      "patched_bytes": "03020405090E170F14051F0E1F021E03"
+    },
+    {
+      "rom_offset": "0x052812",
+      "length": 14,
+      "vanilla_bytes": "0100060104036300914093606D12",
+      "patched_bytes": "04010902140B140B1007100C100C"
+    },
+    {
+      "rom_offset": "0x052821",
+      "length": 16,
+      "vanilla_bytes": "4040E0E0B0E0D07028105828EC48FC40",
+      "patched_bytes": "F0F0DEBAD58CC5BEF12EDC4EDA86FDF0"
+    },
+    {
+      "rom_offset": "0x052832",
+      "length": 14,
+      "vanilla_bytes": "A0403040102008F008F0E4182C90",
+      "patched_bytes": "9E60855A01F6019C0028001611A6"
+    },
+    {
+      "rom_offset": "0x052A00",
+      "length": 11,
+      "vanilla_bytes": "0916011E0017007F00FF00",
+      "patched_bytes": "0E1F032F0629305F304F60"
+    },
+    {
+      "rom_offset": "0x052A0C",
+      "length": 5,
+      "vanilla_bytes": "017F001F16",
+      "patched_bytes": "00F3C06000"
+    },
+    {
+      "rom_offset": "0x052A12",
+      "length": 9,
+      "vanilla_bytes": "120D17087F00FE01FF",
+      "patched_bytes": "201A28174F304F309F"
+    },
+    {
+      "rom_offset": "0x052A1C",
+      "length": 18,
+      "vanilla_bytes": "7C031F00E0F8E050C03808EE08F738E700FE",
+      "patched_bytes": "13E020C02EDF45BA0DF703FC04FF0CFB14FF"
+    },
+    {
+      "rom_offset": "0x052A2F",
+      "length": 16,
+      "vanilla_bytes": "F818C010E038C0EE10F70867987E80F8",
+      "patched_bytes": "1C106C906DF20CF00FF304F304EB041C"
+    },
+    {
+      "rom_offset": "0x053000",
+      "length": 64,
+      "vanilla_bytes": "0000000F0E1706CD47EA43E724BB007E00000F00110ACD02A847A5429B64562900A0E0F060F8F85CBCBE8C36661BF62FA00050A0D82014E822D432C819E40DF0",
+      "patched_bytes": "081B153D2B753DFE4FF74FFF27FE5DF313082817542A82659468B8408E71817E20B03078E8DC74EE2C96449ECCF6D47E902048B044B88A5412EC02FC621812A8"
+    },
+    {
+      "rom_offset": "0x053200",
+      "length": 5,
+      "vanilla_bytes": "005D083F1A",
+      "patched_bytes": "077B3E7E17"
+    },
+    {
+      "rom_offset": "0x053206",
+      "length": 1,
+      "vanilla_bytes": "09",
+      "patched_bytes": "05"
+    },
+    {
+      "rom_offset": "0x053208",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "05"
+    },
+    {
+      "rom_offset": "0x05320A",
+      "length": 4,
+      "vanilla_bytes": "00FE027D",
+      "patched_bytes": "05FF0E7F"
+    },
+    {
+      "rom_offset": "0x053210",
+      "length": 14,
+      "vanilla_bytes": "4C332D1236097708FF00FE017C03",
+      "patched_bytes": "403E442B2518750AFD02FD027906"
+    },
+    {
+      "rom_offset": "0x053220",
+      "length": 11,
+      "vanilla_bytes": "22BF32BD40BEA0FE803F80",
+      "patched_bytes": "ACB628BCC8DC50DE40FF40"
+    },
+    {
+      "rom_offset": "0x05322C",
+      "length": 1,
+      "vanilla_bytes": "80",
+      "patched_bytes": "E0"
+    },
+    {
+      "rom_offset": "0x053230",
+      "length": 10,
+      "vanilla_bytes": "8D529D429E60BE403FC0",
+      "patched_bytes": "02D804F844384EB07F80"
+    },
+    {
+      "rom_offset": "0x05323C",
+      "length": 2,
+      "vanilla_bytes": "FE00",
+      "patched_bytes": "3EC0"
+    },
+    {
+      "rom_offset": "0x08BA37",
+      "length": 1,
+      "vanilla_bytes": "49",
+      "patched_bytes": "46"
+    },
+    {
+      "rom_offset": "0x08BA39",
+      "length": 1,
+      "vanilla_bytes": "52",
+      "patched_bytes": "4F"
+    },
+    {
+      "rom_offset": "0x08BA3B",
+      "length": 1,
+      "vanilla_bytes": "5A",
+      "patched_bytes": "57"
+    },
+    {
+      "rom_offset": "0x08BA3D",
+      "length": 1,
+      "vanilla_bytes": "61",
+      "patched_bytes": "5E"
+    },
+    {
+      "rom_offset": "0x08BA3F",
+      "length": 1,
+      "vanilla_bytes": "67",
+      "patched_bytes": "64"
+    },
+    {
+      "rom_offset": "0x08BA41",
+      "length": 1,
+      "vanilla_bytes": "6E",
+      "patched_bytes": "6C"
+    },
+    {
+      "rom_offset": "0x08BA43",
+      "length": 1,
+      "vanilla_bytes": "75",
+      "patched_bytes": "73"
+    },
+    {
+      "rom_offset": "0x08BA45",
+      "length": 1,
+      "vanilla_bytes": "7E",
+      "patched_bytes": "7C"
+    },
+    {
+      "rom_offset": "0x08BA47",
+      "length": 1,
+      "vanilla_bytes": "83",
+      "patched_bytes": "81"
+    },
+    {
+      "rom_offset": "0x08BA49",
+      "length": 3,
+      "vanilla_bytes": "8CBB93",
+      "patched_bytes": "08BC90"
+    },
+    {
+      "rom_offset": "0x08BA4D",
+      "length": 1,
+      "vanilla_bytes": "9C",
+      "patched_bytes": "99"
+    },
+    {
+      "rom_offset": "0x08BA4F",
+      "length": 1,
+      "vanilla_bytes": "A4",
+      "patched_bytes": "A1"
+    },
+    {
+      "rom_offset": "0x08BA51",
+      "length": 1,
+      "vanilla_bytes": "AD",
+      "patched_bytes": "AA"
+    },
+    {
+      "rom_offset": "0x08BA59",
+      "length": 1,
+      "vanilla_bytes": "C9",
+      "patched_bytes": "CA"
+    },
+    {
+      "rom_offset": "0x08BA5B",
+      "length": 1,
+      "vanilla_bytes": "CE",
+      "patched_bytes": "CF"
+    },
+    {
+      "rom_offset": "0x08BA5D",
+      "length": 1,
+      "vanilla_bytes": "D4",
+      "patched_bytes": "D5"
+    },
+    {
+      "rom_offset": "0x08BA5F",
+      "length": 1,
+      "vanilla_bytes": "DB",
+      "patched_bytes": "DC"
+    },
+    {
+      "rom_offset": "0x08BA61",
+      "length": 1,
+      "vanilla_bytes": "E2",
+      "patched_bytes": "E3"
+    },
+    {
+      "rom_offset": "0x08BA63",
+      "length": 1,
+      "vanilla_bytes": "E7",
+      "patched_bytes": "E8"
+    },
+    {
+      "rom_offset": "0x08BA65",
+      "length": 1,
+      "vanilla_bytes": "EF",
+      "patched_bytes": "F0"
+    },
+    {
+      "rom_offset": "0x08BA67",
+      "length": 1,
+      "vanilla_bytes": "F5",
+      "patched_bytes": "F6"
+    },
+    {
+      "rom_offset": "0x08BA69",
+      "length": 1,
+      "vanilla_bytes": "FE",
+      "patched_bytes": "FF"
+    },
+    {
+      "rom_offset": "0x08BA6B",
+      "length": 3,
+      "vanilla_bytes": "07BC10",
+      "patched_bytes": "8BBB11"
+    },
+    {
+      "rom_offset": "0x08BA6F",
+      "length": 1,
+      "vanilla_bytes": "18",
+      "patched_bytes": "19"
+    },
+    {
+      "rom_offset": "0x08BA71",
+      "length": 1,
+      "vanilla_bytes": "20",
+      "patched_bytes": "21"
+    },
+    {
+      "rom_offset": "0x08BA73",
+      "length": 1,
+      "vanilla_bytes": "29",
+      "patched_bytes": "2A"
+    },
+    {
+      "rom_offset": "0x08BA75",
+      "length": 1,
+      "vanilla_bytes": "31",
+      "patched_bytes": "32"
+    },
+    {
+      "rom_offset": "0x08BA77",
+      "length": 1,
+      "vanilla_bytes": "3B",
+      "patched_bytes": "3C"
+    },
+    {
+      "rom_offset": "0x08BA79",
+      "length": 1,
+      "vanilla_bytes": "41",
+      "patched_bytes": "42"
+    },
+    {
+      "rom_offset": "0x08BA7B",
+      "length": 1,
+      "vanilla_bytes": "4B",
+      "patched_bytes": "4C"
+    },
+    {
+      "rom_offset": "0x08BA7D",
+      "length": 1,
+      "vanilla_bytes": "55",
+      "patched_bytes": "56"
+    },
+    {
+      "rom_offset": "0x08BA7F",
+      "length": 1,
+      "vanilla_bytes": "5B",
+      "patched_bytes": "5C"
+    },
+    {
+      "rom_offset": "0x08BA81",
+      "length": 1,
+      "vanilla_bytes": "64",
+      "patched_bytes": "65"
+    },
+    {
+      "rom_offset": "0x08BA83",
+      "length": 1,
+      "vanilla_bytes": "6A",
+      "patched_bytes": "6B"
+    },
+    {
+      "rom_offset": "0x08BA85",
+      "length": 1,
+      "vanilla_bytes": "74",
+      "patched_bytes": "73"
+    },
+    {
+      "rom_offset": "0x08BA87",
+      "length": 1,
+      "vanilla_bytes": "7E",
+      "patched_bytes": "7D"
+    },
+    {
+      "rom_offset": "0x08BA89",
+      "length": 1,
+      "vanilla_bytes": "87",
+      "patched_bytes": "86"
+    },
+    {
+      "rom_offset": "0x08BA8B",
+      "length": 1,
+      "vanilla_bytes": "8F",
+      "patched_bytes": "8E"
+    },
+    {
+      "rom_offset": "0x08BA8D",
+      "length": 1,
+      "vanilla_bytes": "96",
+      "patched_bytes": "95"
+    },
+    {
+      "rom_offset": "0x08BA8F",
+      "length": 1,
+      "vanilla_bytes": "9D",
+      "patched_bytes": "9C"
+    },
+    {
+      "rom_offset": "0x08BA91",
+      "length": 1,
+      "vanilla_bytes": "A2",
+      "patched_bytes": "A1"
+    },
+    {
+      "rom_offset": "0x08BA93",
+      "length": 1,
+      "vanilla_bytes": "AA",
+      "patched_bytes": "A9"
+    },
+    {
+      "rom_offset": "0x08BA95",
+      "length": 1,
+      "vanilla_bytes": "B1",
+      "patched_bytes": "B0"
+    },
+    {
+      "rom_offset": "0x08BB40",
+      "length": 46,
+      "vanilla_bytes": "57494C44204D414E004556494C204F4E450053414D55524149004D4153544552004E494E4A41004D415354455200",
+      "patched_bytes": "4252555445004556494C204F4E450053414D55524149004B454E534549004E494E4A41005348494E4F424900414D"
+    },
+    {
+      "rom_offset": "0x08BB6F",
+      "length": 30,
+      "vanilla_bytes": "4D415A4F4E0056414C4B59524945004D5553450042454153544D414E004D",
+      "patched_bytes": "5A4F4E0056414C4B59524945004D5553450057494C44204D414E004C5943"
+    },
+    {
+      "rom_offset": "0x08BB8E",
+      "length": 3,
+      "vanilla_bytes": "535445",
+      "patched_bytes": "4E0044"
+    },
+    {
+      "rom_offset": "0x08BB92",
+      "length": 33,
+      "vanilla_bytes": "00445241474F4E4552008F4D415354455200444F4C4C4D414745004D4153544552",
+      "patched_bytes": "41474F4E4552008F4D415354455200444F4C4C4D41474500414C4348454D495354"
+    },
+    {
+      "rom_offset": "0x08BBC7",
+      "length": 96,
+      "vanilla_bytes": "52004C49434800574954434800434C45524943005348414D414E004D4F4E4B004D45524D414944004E495849450057455245574F4C460054494745524D414E0042454153544D414E0056414D505952450056414D50595245005052494E434553",
+      "patched_bytes": "5353004C49434800574954434800434C45524943005348414D414E004D4F4E4B004D45524D414944004E495849450057455245574F4C460054494745524D414E0042454153544D414E0056414D505952450056414D50595245005052494E4345"
+    },
+    {
+      "rom_offset": "0x08BC28",
+      "length": 12,
+      "vanilla_bytes": "0050554D504B494E0048414C",
+      "patched_bytes": "530050554D504B494E004841"
+    },
+    {
+      "rom_offset": "0x08BC35",
+      "length": 3,
+      "vanilla_bytes": "4F5745",
+      "patched_bytes": "4C4F57"
+    },
+    {
+      "rom_offset": "0x08BC39",
+      "length": 61,
+      "vanilla_bytes": "4E00474F4C454D00524F434B474F4C454D0049524F4E474F4C454D004749414E54004943454749414E5400544954414E00464952454749414E54004845",
+      "patched_bytes": "454E00474F4C454D00524F434B474F4C454D0049524F4E474F4C454D004749414E54004943454749414E5400544954414E0042414E534845450048454C"
+    },
+    {
+      "rom_offset": "0x08BC77",
+      "length": 61,
+      "vanilla_bytes": "4C484F554E44004345524245525553004F43544F505553004B52414B454E00445241474F4E005245448F0053494C5645528F00424C41434B8F00524544",
+      "patched_bytes": "484F554E44004345524245525553004F43544F505553004B52414B454E00445241474F4E005245448F0053494C5645528F00424C41434B8F0046495245"
+    },
+    {
+      "rom_offset": "0x08BE3C",
+      "length": 5,
+      "vanilla_bytes": "4245415354",
+      "patched_bytes": "57494C4420"
+    },
+    {
+      "rom_offset": "0x08BE5E",
+      "length": 8,
+      "vanilla_bytes": "57494C44204D414E",
+      "patched_bytes": "4252555445000000"
+    },
+    {
+      "rom_offset": "0x08BE67",
+      "length": 5,
+      "vanilla_bytes": "4245415354",
+      "patched_bytes": "57494C4420"
+    },
+    {
+      "rom_offset": "0x08BEE1",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "01"
+    },
+    {
+      "rom_offset": "0x08BEF7",
+      "length": 1,
+      "vanilla_bytes": "02",
+      "patched_bytes": "01"
+    },
+    {
+      "rom_offset": "0x08BF89",
+      "length": 6,
+      "vanilla_bytes": "504F49534F4E",
+      "patched_bytes": "4D414C494345"
+    },
+    {
+      "rom_offset": "0x08BFC2",
+      "length": 5,
+      "vanilla_bytes": "4649524557",
+      "patched_bytes": "504C41534D"
+    },
+    {
+      "rom_offset": "0x08BFC8",
+      "length": 7,
+      "vanilla_bytes": "4C4C004B41544F",
+      "patched_bytes": "004B41544F4E00"
+    },
+    {
+      "rom_offset": "0x08BFD0",
+      "length": 23,
+      "vanilla_bytes": "004E4F56410049434553544F524D00535549544F4E0049",
+      "patched_bytes": "4F56410049434553544F524D00535549544F4E00494345"
+    },
+    {
+      "rom_offset": "0x08BFE8",
+      "length": 30,
+      "vanilla_bytes": "45434C4F5544005448554E44455200494B415A55434849005048414E544F",
+      "patched_bytes": "4C4F5544005448554E44455200494B415A55434849005048414E544F4D00"
+    },
+    {
+      "rom_offset": "0x08C007",
+      "length": 2,
+      "vanilla_bytes": "004D",
+      "patched_bytes": "4554"
+    },
+    {
+      "rom_offset": "0x08C00A",
+      "length": 57,
+      "vanilla_bytes": "54454F52004556494C4445414400414349440047414C45004D4953534C45004A4948414400535441524C4954450047414C45004D41454C5354",
+      "patched_bytes": "4F52004556494C52494E470041434944005741494C004D495353494C45004A4948414400535441524C4954450047414C45004D41454C535452"
+    },
+    {
+      "rom_offset": "0x08C22E",
+      "length": 1,
+      "vanilla_bytes": "69",
+      "patched_bytes": "65"
+    }
+  ]
+}

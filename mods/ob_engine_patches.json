@@ -1,0 +1,98 @@
+{
+  "mod_title": "Ogre Battle Community Bugfixes & Engine Tables (by D)",
+  "format_version": "1.0",
+  "description": "Consolidated assembly micro-patches: Magic AI elemental resistance fix, Crown drop reroll, and character size table decoupling.",
+  "rom_size_bytes": 2097152,
+  "features": [
+    "Magic AI Item Resistance Check (hooks at $018F8B -> $308800)",
+    "Random Crown Drop Prevention & Undead Relic Reroll (hooks at $02C0D5 -> $30811B)",
+    "Extensible Character Size Table (table at $18002C, hooks at $01EC67)"
+  ],
+  "modified_domains": [],
+  "micro_patches": [
+    {
+      "rom_offset": "0x018F8B",
+      "length": 4,
+      "vanilla_bytes": "E8E8840A",
+      "patched_bytes": "5C008830"
+    },
+    {
+      "rom_offset": "0x180800",
+      "length": 19,
+      "vanilla_bytes": "00000000000000000000000000000000000000",
+      "patched_bytes": "DAAFC8F97EAABF8CF97EAABD810EC9649006A9"
+    },
+    {
+      "rom_offset": "0x180814",
+      "length": 10,
+      "vanilla_bytes": "00000000000000000000",
+      "patched_bytes": "840A8020AABFBCF57EC9"
+    },
+    {
+      "rom_offset": "0x18081F",
+      "length": 17,
+      "vanilla_bytes": "0000000000000000000000000000000000",
+      "patched_bytes": "F0F1840AC220E210650AE9A0F6C210AA29"
+    },
+    {
+      "rom_offset": "0x180832",
+      "length": 16,
+      "vanilla_bytes": "00000000000000000000000000000000",
+      "patched_bytes": "E220BF6CC807FAE8E87A710A5C928F03"
+    },
+    {
+      "rom_offset": "0x02C0CE",
+      "length": 1,
+      "vanilla_bytes": "1F",
+      "patched_bytes": "24"
+    },
+    {
+      "rom_offset": "0x02C0D5",
+      "length": 4,
+      "vanilla_bytes": "18699748",
+      "patched_bytes": "5C1B8130"
+    },
+    {
+      "rom_offset": "0x180100",
+      "length": 2,
+      "vanilla_bytes": "0000",
+      "patched_bytes": "C06A"
+    },
+    {
+      "rom_offset": "0x180103",
+      "length": 50,
+      "vanilla_bytes": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "patched_bytes": "9028C8C8B9C8118CC6118D0242A9248D0342EBEBEAAD1742C905F0E1C906F0DDC91EF0D9C908D002A969186993485CD9C005"
+    },
+    {
+      "rom_offset": "0x01EC67",
+      "length": 66,
+      "vanilla_bytes": "7B68C93A9010C93EB00C48BDFA0809209DFA0868802CC9259028C93A9018C94A9020C94E9010C9529018C9559008C95B9010C95DB00C48BDFA0809409DFA08688000",
+      "patched_bytes": "DAAABF0F8030FA1DFA089DFA08688032FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+    },
+    {
+      "rom_offset": "0x18002C",
+      "length": 5,
+      "vanilla_bytes": "0000000000",
+      "patched_bytes": "1008100404"
+    },
+    {
+      "rom_offset": "0x180034",
+      "length": 25,
+      "vanilla_bytes": "00000000000000000000000000000000000000000000000000",
+      "patched_bytes": "40404040404040404040404040404040404040404020202020"
+    },
+    {
+      "rom_offset": "0x180059",
+      "length": 4,
+      "vanilla_bytes": "00000000",
+      "patched_bytes": "40404040"
+    },
+    {
+      "rom_offset": "0x180063",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "40"
+    }
+  ]
+}

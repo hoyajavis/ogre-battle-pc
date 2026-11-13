@@ -1,0 +1,15 @@
+{
+  "profile_name": "Fin Balancing Overhaul + Fixes",
+  "description": "Fin's Balancing Mod v0.71 rebalance combined with Dragoner promotion requirements and Magic AI elemental fix.",
+  "base_preset": "fin_071",
+  "memory_size": "2.0MB",
+  "overlays": [
+    "mods/dragoner_rebalance.json"
+  ],
+  "engine_features": {
+    "magic_ai_elemental_fix": true,
+    "prevent_random_crown_drops": true,
+    "extensible_size_tables": false
+  },
+  "recalculate_checksum": true
+}

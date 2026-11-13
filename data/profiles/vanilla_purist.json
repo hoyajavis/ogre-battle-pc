@@ -1,0 +1,13 @@
+{
+  "profile_name": "Vanilla Purist",
+  "description": "Bit-exact 100% faithful clean USA LoROM build with zero modifications (Gate 4A Certified).",
+  "base_preset": "vanilla",
+  "memory_size": "1.5MB",
+  "overlays": [],
+  "engine_features": {
+    "magic_ai_elemental_fix": false,
+    "prevent_random_crown_drops": false,
+    "extensible_size_tables": false
+  },
+  "recalculate_checksum": true
+}

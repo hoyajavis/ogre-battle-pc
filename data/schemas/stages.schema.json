@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OgreBattleStagesManifest",
+  "description": "Schema definition for Ogre Battle stages, goals, and encounters",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["stage_id", "stage_name", "goal_code", "neutral_encounters"],
+    "properties": {
+      "stage_id": { "type": "integer", "minimum": 1, "maximum": 30 },
+      "stage_name": { "type": "string" },
+      "goal_code": { "type": "integer" },
+      "goal_hex": { "type": "string" },
+      "neutral_encounters": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "slot",
+            "location_code",
+            "unit_level",
+            "unit_class_id",
+            "unit_class_name"
+          ],
+          "properties": {
+            "slot": { "type": "integer", "minimum": 1, "maximum": 3 },
+            "location_code": { "type": "integer" },
+            "location_hex": { "type": "string" },
+            "unit_level": { "type": "integer", "minimum": 1, "maximum": 99 },
+            "unit_class_id": { "type": "integer", "minimum": 1, "maximum": 125 },
+            "unit_class_hex": { "type": "string" },
+            "unit_class_name": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "profile_name": "UPRC Class Expansion Total Conversion",
+  "description": "Total overhaul with 14 new classes, custom promotion paths, palette persistence hooks, and 2MB expansion.",
+  "base_preset": "class_expansion",
+  "memory_size": "2.0MB",
+  "overlays": [],
+  "engine_features": {
+    "magic_ai_elemental_fix": false,
+    "prevent_random_crown_drops": false,
+    "extensible_size_tables": false
+  },
+  "recalculate_checksum": true
+}
