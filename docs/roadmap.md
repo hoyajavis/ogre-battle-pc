@@ -142,18 +142,21 @@ flowchart TD
 
 ---
 
-### Milestone 5: True 16:9 Expanded Map Viewport & Gate 3 Certification [PLANNED — POST-GATE 2]
+### Milestone 5: True 16:9 Widescreen Compositor, Area 1 Wing Integration & Gate 3 Certification [ACTIVE]
 * **Git Branch**: `gate/3-widescreen`
-* **Objective**: Widen the tactical map streaming engine to native 16:9 (`400 × 224` / `50 × 28` tiles) while cleanly framing non-map scenes.
+* **Architectural Specification**: [`docs/widescreen_16_9_architecture.md`](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/widescreen_16_9_architecture.md)
+* **Objective**: Expand the display from 4:3 (`256 × 224`) to 16:9 (`400 × 224` PPU / `800 × 448` `2×` master compositor) across all 7 game screens, migrating the Area 1 telemetry UI into context-switched `144 × 448 px` (`18 × 56` tile) Left/Right Wing Cards built with the authentic SNES UI software rasterizer.
 * **Deliverables**:
-  * Extended Mode-7 Scanline Rendering widening horizontal scanlines from 256 to 400 px (+72 px / 9 tiles per side).
-  * `RECOMP_PATCH(Map_StreamTiles)` widening metatile active generation buffer from $16 \times 14$ to $25 \times 14$ metatiles.
-  * Widened OAM sprite clipping threshold (`X: 0..399`) so units remain visible across peripheral fields of view.
-  * Dynamic Scene Manager: Automatic pillarboxing/letterboxing to 4:3 during combat clashes, character creation, and dialogue, or populating the $\pm 72\text{ px}$ side wings with interactive telemetry (Area 1) and command docks (Area 2).
+  * [x] **Shared Authentic SNES UI Rasterizer (`include/ob_snes_ui_theme.h`, `src/engine/snes_ui_rasterizer.c`)**: 15-bit BGR555 Royal Blue gradients (`#182868` $\rightarrow$ `#080830`), `8×8` ornate gold 9-slice borders, dual shadowed pixel fonts (`8×8` header/primary + `6×8` compact data rows), segmented RPG gauges, `16×24` mini Tarot cards, and `16×16` Zodiac gemstones.
+  * [x] **Dual-Layer `800 × 448` (`2×` Tile Grid) 16:9 Compositor (`src/engine/widescreen.c`)**:
+    * **Base Layer (`OB_DISPLAY_16_9_VANILLA_HORIZON`)**: Extended Mode-7 affine scanline rendering (`X: 0..399`), BG1/BG2/BG3 VRAM tilemap reveal, OAM sprite X-clipping (`0..399`), and Zenobian Stone & Parchment tapestry borders for fixed 32-tile menus.
+    * **Context-Switched Wing HUD Layer (`OB_DISPLAY_16_9_TACTICIAN_WINGS`)**: Reflows 9 of the 12 Area 1 telemetry panels into vertical `144 × 448 px` (`18 × 56` tile) Left and Right Wing stacks across all 7 screens, with automatic hover-driven target inspection (`OB_SNAP_CITY` Compatibility Advisor, `OB_SNAP_SQUAD` Pre-Clash Morality Drift, and Terrain Neutral Spawn Matrix).
+    * **In-Window `[Tab]` Campaign Grimoire Overlay**: Centered `512 × 384 px` SNES ledger displaying all 18 Special Heroes (with Deneb/Galf tradeoff warnings), all 12 Zodiac Stones & Brunhild prerequisites, Bank `$09` Promotion Trees, and the 2,344-bit Event Diff stream.
+  * [x] **Widescreen Mouse Coordinate Routing & Interactive Wing Hit-Boxes (`src/engine/input.c`)**: Automatic `+72 px` core offset translation (`snes_x ∈ [72, 327]` $\rightarrow$ `core_x ∈ [0, 255]`) plus interactive Left/Right Wing docks (Squad plate camera jump, Combat Tactic Stance & Tarot card click, Spatial Radar click, and `[F10]` display mode toggle).
 * **Exit Criteria (Gate 3 Certification)**:
-  * Tactical map scrolls smoothly across 16:9 viewports with zero visual tearing, tile corruption, or despawning.
-  * Dual-execution core confirms core 256×224 simulation state maintains 0 drift against golden reference.
-  * Tag `v0.3.0-gate3-wide` on merge to `main`.
+  * [x] Automated 16:9 Widescreen & Wing verification suite (`tests/test_widescreen_16_9.c`) and Three-Pillar Mouse suite (`tests/test_mouse_three_pillar.c`) pass 100% with **0-byte memory drift** on the core simulation.
+  * [x] Closed-loop visual verification of exported `.png` artifacts across Tactical Map, Combat Stage, World Map + `[Tab]` Grimoire, and Warren's Quiz confirms 0 text clipping, clean 9-slice corners, and 100% BGR555 palette compliance.
+  * [ ] Tag `v0.3.0-gate3-wide` on merge to `main`.
 
 ---
 

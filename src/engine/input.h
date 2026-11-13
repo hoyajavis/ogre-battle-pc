@@ -130,7 +130,9 @@ typedef enum ObMouseMode {
     OB_MOUSE_MODE_ICON_BAR = 2,       /* Pillar 2A: 7-Icon Horizontal Command Strip */
     OB_MOUSE_MODE_FORMATION_GRID = 3, /* Pillar 2B: 3x2 Unit Formation Grid */
     OB_MOUSE_MODE_WORLD_MAP = 4,      /* Pillar 3: Continental World Map Stage Nodes */
-    OB_MOUSE_MODE_MENU_LIST = 5       /* Pillar 2C: Vertical Command / Tarot List */
+    OB_MOUSE_MODE_MENU_LIST = 5,      /* Pillar 2C: Vertical Command / Tarot List */
+    OB_MOUSE_MODE_LEFT_WING = 6,      /* Gate 3: 16:9 Left Wing Interactive Squad Dock */
+    OB_MOUSE_MODE_RIGHT_WING = 7      /* Gate 3: 16:9 Right Wing Telemetry / Radar / Tarot Dock */
 } ObMouseMode;
 
 /* Snap Target Classification on Tactical Map */
@@ -144,6 +146,7 @@ typedef enum ObSnapTargetType {
 typedef struct ObMouseState {
     int viewport_w;                   /* 256 (Gate 2 4:3) or 400 (Gate 3 16:9) */
     int viewport_h;                   /* 224 */
+    bool wings_enabled;               /* True in 16:9 Tactician Wing mode (+72px core offset) */
 
     int snes_x;                       /* Mapped SNES X in [0, viewport_w - 1] */
     int snes_y;                       /* Mapped SNES Y in [0, viewport_h - 1] */
@@ -176,6 +179,9 @@ typedef struct ObMouseState {
 
 /* Initialize the Three-Pillar mouse state machine (starts in passive/idle mode) */
 void ob_input_init(ObMouseState *state, int viewport_width, int viewport_height);
+
+/* Enable or disable 16:9 Left/Right Wing Docks (shifts 256px core to X = 72..327 when true) */
+void ob_input_set_wings_enabled(ObMouseState *state, bool wings_enabled);
 
 /* Convert host window (win_x, win_y) into aspect-correct SNES viewport coordinates */
 bool ob_input_map_window_to_snes(
@@ -211,7 +217,7 @@ void ob_input_on_mouse_button(
     uint32_t current_frame
 );
 
-/* Classify active screen context into one of the Three Pillars */
+/* Classify active screen context into one of the Three Pillars or 16:9 Wing Docks */
 ObMouseMode ob_input_detect_mode(
     const ObMouseState *state,
     const uint8_t *wram,
@@ -229,6 +235,9 @@ int ob_input_apply_formation_grid(ObMouseState *state, uint8_t *wram);
 
 /* Pillar 3: Apply Continental World Map stage node hit-testing and camera drag/edge panning */
 int ob_input_apply_world_map(ObMouseState *state, uint8_t *wram, const uint8_t *ppu_oam);
+
+/* Gate 3 Wing Docks: Handle Left/Right Wing hover & click actions (Squad jump, Radar pan, Tarot) */
+int ob_input_apply_wing_dock(ObMouseState *state, uint8_t *wram);
 
 /* Execute one frame of the Three-Pillar mouse architecture and return final 16-bit joypad mask */
 uint16_t ob_input_step_frame(

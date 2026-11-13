@@ -189,6 +189,20 @@ void ob_input_on_mouse_button(
     }
 }
 
+void ob_input_set_wings_enabled(ObMouseState *state, bool wings_enabled) {
+    if (state == NULL) {
+        return;
+    }
+    state->wings_enabled = wings_enabled;
+}
+
+static inline int get_core_x(const ObMouseState *state) {
+    if (state->wings_enabled && state->viewport_w >= OB_VIEWPORT_WIDTH_16_9) {
+        return state->snes_x - 72;
+    }
+    return state->snes_x;
+}
+
 ObMouseMode ob_input_detect_mode(
     const ObMouseState *state,
     const uint8_t *wram,
@@ -196,6 +210,16 @@ ObMouseMode ob_input_detect_mode(
 ) {
     if (state == NULL || wram == NULL || !state->mouse_active) {
         return OB_MOUSE_MODE_PASSIVE;
+    }
+
+    /* Gate 3 Widescreen Wing Docks (Left Wing X: 0..71, Right Wing X: 328..399) */
+    if (state->wings_enabled && state->viewport_w >= OB_VIEWPORT_WIDTH_16_9 && !state->drag_active) {
+        if (state->snes_x < 72) {
+            return OB_MOUSE_MODE_LEFT_WING;
+        }
+        if (state->snes_x >= 328) {
+            return OB_MOUSE_MODE_RIGHT_WING;
+        }
     }
 
     uint8_t oam1_y    = wram[OB_WRAM_OAM1_Y];
@@ -295,11 +319,15 @@ void ob_input_apply_tactical_map(ObMouseState *state, uint8_t *wram) {
     /* Step 1: Update decoupled Mode-7 camera ONLY on Right/Middle-drag or 10px edge margin */
     apply_decoupled_camera_pan(state, wram);
 
-    /* Step 2: Compute 1:1 viewport screen coordinates across the full active viewport */
-    int max_screen_x = state->viewport_w - 1 - OB_TACTICAL_MARGIN;
-    int max_screen_y = state->viewport_h - 1 - OB_TACTICAL_MARGIN;
-    int screen_x     = clamp_int(state->snes_x, OB_TACTICAL_MIN_X, max_screen_x);
-    int screen_y     = clamp_int(state->snes_y, OB_TACTICAL_MIN_Y, max_screen_y);
+    /* Step 2: Compute 1:1 viewport screen coordinates across the active core viewport */
+    int active_core_w = (state->wings_enabled && state->viewport_w >= OB_VIEWPORT_WIDTH_16_9)
+                        ? OB_VIEWPORT_WIDTH_4_3
+                        : state->viewport_w;
+    int core_x        = get_core_x(state);
+    int max_screen_x  = active_core_w - 1 - OB_TACTICAL_MARGIN;
+    int max_screen_y  = state->viewport_h - 1 - OB_TACTICAL_MARGIN;
+    int screen_x      = clamp_int(core_x, OB_TACTICAL_MIN_X, max_screen_x);
+    int screen_y      = clamp_int(state->snes_y, OB_TACTICAL_MIN_Y, max_screen_y);
 
     /* Step 3: Synchronize cursor world coordinates ($14E2, $14E4) from camera + screen offset */
     int cam_x = (int)wram_read_u16(wram, OB_WRAM_CAM_X);
@@ -382,10 +410,11 @@ int ob_input_apply_icon_bar(ObMouseState *state, uint8_t *wram) {
         return -1;
     }
 
-    int x_max = OB_ICON_BAR_X0 + (OB_ICON_BAR_COUNT * OB_ICON_BAR_STRIDE);
-    if (state->snes_x >= OB_ICON_BAR_X0 && state->snes_x < x_max &&
+    int core_x = get_core_x(state);
+    int x_max  = OB_ICON_BAR_X0 + (OB_ICON_BAR_COUNT * OB_ICON_BAR_STRIDE);
+    if (core_x >= OB_ICON_BAR_X0 && core_x < x_max &&
         state->snes_y >= OB_ICON_BAR_Y_MIN && state->snes_y <= OB_ICON_BAR_Y_MAX) {
-        int slot        = (state->snes_x - OB_ICON_BAR_X0) / OB_ICON_BAR_STRIDE;
+        int slot        = (core_x - OB_ICON_BAR_X0) / OB_ICON_BAR_STRIDE;
         slot            = clamp_int(slot, 0, OB_ICON_BAR_COUNT - 1);
         uint16_t icon_x = (uint16_t)(OB_ICON_BAR_X0 + slot * OB_ICON_BAR_STRIDE);
 
@@ -408,9 +437,10 @@ int ob_input_apply_formation_grid(ObMouseState *state, uint8_t *wram) {
         return -1;
     }
 
-    if (state->snes_x >= OB_FORMATION_X_MIN && state->snes_x < OB_FORMATION_X_MAX &&
+    int core_x = get_core_x(state);
+    if (core_x >= OB_FORMATION_X_MIN && core_x < OB_FORMATION_X_MAX &&
         state->snes_y >= OB_FORMATION_Y_ROW0_MIN && state->snes_y < OB_FORMATION_Y_ROW2_MAX) {
-        int col = (state->snes_x >= OB_FORMATION_X_MID) ? 1 : 0;
+        int col = (core_x >= OB_FORMATION_X_MID) ? 1 : 0;
         int row = 0;
         if (state->snes_y >= OB_FORMATION_Y_ROW1_MAX) {
             row = 2;
@@ -447,6 +477,8 @@ int ob_input_apply_world_map(ObMouseState *state, uint8_t *wram, const uint8_t *
         return -1;
     }
 
+    int core_x = get_core_x(state);
+
     /* Hit-test active stage banner sprites (16x16 bounding boxes in OAM[24..35]) */
     for (int i = 24; i < 36; ++i) {
         uint8_t spr_x    = ppu_oam[i * 4 + 0];
@@ -457,7 +489,7 @@ int ob_input_apply_world_map(ObMouseState *state, uint8_t *wram, const uint8_t *
             continue;
         }
 
-        if (state->snes_x >= (int)spr_x && state->snes_x < (int)spr_x + 16 &&
+        if (core_x >= (int)spr_x && core_x < (int)spr_x + 16 &&
             state->snes_y >= (int)spr_y && state->snes_y < (int)spr_y + 16) {
             int node_idx = i - 24;
             wram[OB_WRAM_WORLD_NODE_INDEX] = (uint8_t)node_idx;
@@ -466,6 +498,67 @@ int ob_input_apply_world_map(ObMouseState *state, uint8_t *wram, const uint8_t *
             state->hovered_slot = node_idx;
             return node_idx;
         }
+    }
+
+    state->hovered_slot = -1;
+    return -1;
+}
+
+int ob_input_apply_wing_dock(ObMouseState *state, uint8_t *wram) {
+    if (state == NULL || wram == NULL || !state->mouse_active) {
+        return -1;
+    }
+
+    /* Left Wing (snes_x in [0, 71]): Deployed Squad Plates 0..5 (Y: 12..197, stride 31px) */
+    if (state->snes_x < 72) {
+        if (state->snes_y >= 12 && state->snes_y < 198) {
+            int sq_slot = (state->snes_y - 12) / 31;
+            sq_slot     = clamp_int(sq_slot, 0, 5);
+            state->hovered_slot = sq_slot;
+
+            /* Left-clicking a squad plate jumps camera ($00BD/$00BF) to that squad's world pos */
+            if (state->left_pressed) {
+                uint16_t sx = wram_read_u16(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(sq_slot * 2));
+                uint16_t sy = wram_read_u16(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(sq_slot * 2));
+                if (sx != 0xFFFFu && sy != 0xFFFFu && (sx != 0u || sy != 0u)) {
+                    int min_x = (int)wram_read_u16(wram, OB_WRAM_CAM_MIN_X);
+                    int min_y = (int)wram_read_u16(wram, OB_WRAM_CAM_MIN_Y);
+                    int max_x = (int)wram_read_u16(wram, OB_WRAM_CAM_MAX_X);
+                    int max_y = (int)wram_read_u16(wram, OB_WRAM_CAM_MAX_Y);
+                    if (max_x <= min_x) { min_x = 0; max_x = 1024; }
+                    if (max_y <= min_y) { min_y = 0; max_y = 1024; }
+
+                    int cam_x = clamp_int((int)sx - 128, min_x, max_x);
+                    int cam_y = clamp_int((int)sy - 112, min_y, max_y);
+                    wram_write_u16(wram, OB_WRAM_CAM_X, (uint16_t)cam_x);
+                    wram_write_u16(wram, OB_WRAM_CAM_Y, (uint16_t)cam_y);
+                    wram_write_u16(wram, OB_WRAM_CAM_WORLD_X, (uint16_t)cam_x);
+                    wram_write_u16(wram, OB_WRAM_CAM_WORLD_Y, (uint16_t)cam_y);
+                    wram_write_u16(wram, OB_WRAM_CUR_WORLD_X, sx);
+                    wram_write_u16(wram, OB_WRAM_CUR_WORLD_Y, sy);
+                    wram_write_u16(wram, OB_WRAM_CUR_SCREEN_X, (uint16_t)((int)sx - cam_x));
+                    wram_write_u16(wram, OB_WRAM_CUR_SCREEN_Y, (uint16_t)((int)sy - cam_y));
+                    state->snapped_type  = OB_SNAP_SQUAD;
+                    state->snapped_index = sq_slot;
+                }
+                state->left_pressed = false;
+            }
+            return sq_slot;
+        }
+        state->hovered_slot = -1;
+        return -1;
+    }
+
+    /* Right Wing (snes_x in [328, 399]): Tarot Cards (Y: 70..198) or Spatial Radar (Y: 159..194) */
+    if (state->snes_x >= 328) {
+        if (state->snes_y >= 70 && state->snes_y < 199) {
+            int card_slot = (state->snes_y - 70) / 43;
+            card_slot     = clamp_int(card_slot, 0, 2);
+            state->hovered_slot = card_slot;
+            return card_slot;
+        }
+        state->hovered_slot = -1;
+        return -1;
     }
 
     state->hovered_slot = -1;
@@ -510,6 +603,10 @@ uint16_t ob_input_step_frame(
             break;
         case OB_MOUSE_MODE_WORLD_MAP:
             ob_input_apply_world_map(state, wram, ppu_oam);
+            break;
+        case OB_MOUSE_MODE_LEFT_WING:
+        case OB_MOUSE_MODE_RIGHT_WING:
+            ob_input_apply_wing_dock(state, wram);
             break;
         case OB_MOUSE_MODE_MENU_LIST:
         case OB_MOUSE_MODE_PASSIVE:
