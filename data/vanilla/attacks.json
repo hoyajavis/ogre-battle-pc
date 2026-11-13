@@ -1,0 +1,267 @@
+[
+  {
+    "id": 0,
+    "hex_id": "0x00",
+    "name": "FIREBALL"
+  },
+  {
+    "id": 1,
+    "hex_id": "0x01",
+    "name": "KATON"
+  },
+  {
+    "id": 2,
+    "hex_id": "0x02",
+    "name": "ICEFIELD"
+  },
+  {
+    "id": 3,
+    "hex_id": "0x03",
+    "name": "SUITON"
+  },
+  {
+    "id": 4,
+    "hex_id": "0x04",
+    "name": "BLIZZARD"
+  },
+  {
+    "id": 5,
+    "hex_id": "0x05",
+    "name": "BOLT"
+  },
+  {
+    "id": 6,
+    "hex_id": "0x06",
+    "name": "IKAZUCHI"
+  },
+  {
+    "id": 7,
+    "hex_id": "0x07",
+    "name": "NITEMARE"
+  },
+  {
+    "id": 8,
+    "hex_id": "0x08",
+    "name": "POISON"
+  },
+  {
+    "id": 9,
+    "hex_id": "0x09",
+    "name": "TORNADO"
+  },
+  {
+    "id": 10,
+    "hex_id": "0x0A",
+    "name": "BANISH"
+  },
+  {
+    "id": 11,
+    "hex_id": "0x0B",
+    "name": "INFERNO"
+  },
+  {
+    "id": 12,
+    "hex_id": "0x0C",
+    "name": "FIRE"
+  },
+  {
+    "id": 13,
+    "hex_id": "0x0D",
+    "name": "COLD"
+  },
+  {
+    "id": 14,
+    "hex_id": "0x0E",
+    "name": "THUNDER"
+  },
+  {
+    "id": 15,
+    "hex_id": "0x0F",
+    "name": "ROT"
+  },
+  {
+    "id": 16,
+    "hex_id": "0x10",
+    "name": "ACID"
+  },
+  {
+    "id": 17,
+    "hex_id": "0x11",
+    "name": "FIREWALL"
+  },
+  {
+    "id": 18,
+    "hex_id": "0x12",
+    "name": "KATON"
+  },
+  {
+    "id": 19,
+    "hex_id": "0x13",
+    "name": "NOVA"
+  },
+  {
+    "id": 20,
+    "hex_id": "0x14",
+    "name": "ICESTORM"
+  },
+  {
+    "id": 21,
+    "hex_id": "0x15",
+    "name": "SUITON"
+  },
+  {
+    "id": 22,
+    "hex_id": "0x16",
+    "name": "ICECLOUD"
+  },
+  {
+    "id": 23,
+    "hex_id": "0x17",
+    "name": "THUNDER"
+  },
+  {
+    "id": 24,
+    "hex_id": "0x18",
+    "name": "IKAZUCHI"
+  },
+  {
+    "id": 25,
+    "hex_id": "0x19",
+    "name": "PHANTOM"
+  },
+  {
+    "id": 26,
+    "hex_id": "0x1A",
+    "name": "METEOR"
+  },
+  {
+    "id": 27,
+    "hex_id": "0x1B",
+    "name": "EVILDEAD"
+  },
+  {
+    "id": 28,
+    "hex_id": "0x1C",
+    "name": "ACID"
+  },
+  {
+    "id": 29,
+    "hex_id": "0x1D",
+    "name": "GALE"
+  },
+  {
+    "id": 30,
+    "hex_id": "0x1E",
+    "name": "MISSLE"
+  },
+  {
+    "id": 31,
+    "hex_id": "0x1F",
+    "name": "JIHAD"
+  },
+  {
+    "id": 32,
+    "hex_id": "0x20",
+    "name": "STARLITE"
+  },
+  {
+    "id": 33,
+    "hex_id": "0x21",
+    "name": "GALE"
+  },
+  {
+    "id": 34,
+    "hex_id": "0x22",
+    "name": "MAELSTOM"
+  },
+  {
+    "id": 35,
+    "hex_id": "0x23",
+    "name": "HEALING"
+  },
+  {
+    "id": 36,
+    "hex_id": "0x24",
+    "name": "KISS"
+  },
+  {
+    "id": 37,
+    "hex_id": "0x25",
+    "name": "HEALING+"
+  },
+  {
+    "id": 38,
+    "hex_id": "0x26",
+    "name": "QUAKE"
+  },
+  {
+    "id": 39,
+    "hex_id": "0x27",
+    "name": "DEATH"
+  },
+  {
+    "id": 40,
+    "hex_id": "0x28",
+    "name": "ASMODEUS"
+  },
+  {
+    "id": 41,
+    "hex_id": "0x29",
+    "name": "STUN"
+  },
+  {
+    "id": 42,
+    "hex_id": "0x2A",
+    "name": "CHARM"
+  },
+  {
+    "id": 43,
+    "hex_id": "0x2B",
+    "name": "CHARM"
+  },
+  {
+    "id": 44,
+    "hex_id": "0x2C",
+    "name": "PUMPKIN"
+  },
+  {
+    "id": 45,
+    "hex_id": "0x2D",
+    "name": "PETRIFY"
+  },
+  {
+    "id": 46,
+    "hex_id": "0x2E",
+    "name": "GEMINI"
+  },
+  {
+    "id": 47,
+    "hex_id": "0x2F",
+    "name": "BLADE"
+  },
+  {
+    "id": 48,
+    "hex_id": "0x30",
+    "name": "IAINUKI"
+  },
+  {
+    "id": 49,
+    "hex_id": "0x31",
+    "name": "LIFESUCK"
+  },
+  {
+    "id": 50,
+    "hex_id": "0x32",
+    "name": "LUNGE"
+  },
+  {
+    "id": 51,
+    "hex_id": "0x33",
+    "name": "BLAST"
+  },
+  {
+    "id": 52,
+    "hex_id": "0x34",
+    "name": "HEALING"
+  }
+]

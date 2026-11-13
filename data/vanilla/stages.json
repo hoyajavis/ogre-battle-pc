@@ -1,0 +1,1052 @@
+[
+  {
+    "stage_id": 1,
+    "stage_name": "Castle of Warren",
+    "goal_code": 3,
+    "goal_hex": "0x0003",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 17,
+        "location_hex": "0x11",
+        "unit_level": 8,
+        "unit_class_id": 48,
+        "unit_class_hex": "0x30",
+        "unit_class_name": "DRAGON"
+      },
+      {
+        "slot": 2,
+        "location_code": 17,
+        "location_hex": "0x11",
+        "unit_level": 8,
+        "unit_class_id": 76,
+        "unit_class_hex": "0x4C",
+        "unit_class_name": "WYRM"
+      },
+      {
+        "slot": 3,
+        "location_code": 17,
+        "location_hex": "0x11",
+        "unit_level": 8,
+        "unit_class_id": 75,
+        "unit_class_hex": "0x4B",
+        "unit_class_name": "COCKATRIS"
+      }
+    ]
+  },
+  {
+    "stage_id": 2,
+    "stage_name": "Borders of Sharom",
+    "goal_code": 3,
+    "goal_hex": "0x0003",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 3,
+        "unit_class_id": 62,
+        "unit_class_hex": "0x3E",
+        "unit_class_name": "HAWK MAN"
+      },
+      {
+        "slot": 2,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 1,
+        "unit_class_id": 48,
+        "unit_class_hex": "0x30",
+        "unit_class_name": "DRAGON"
+      },
+      {
+        "slot": 3,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 3,
+        "unit_class_id": 37,
+        "unit_class_hex": "0x25",
+        "unit_class_name": "GOLEM"
+      }
+    ]
+  },
+  {
+    "stage_id": 3,
+    "stage_name": "Sharom District",
+    "goal_code": 3,
+    "goal_hex": "0x0003",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 4,
+        "unit_class_id": 46,
+        "unit_class_hex": "0x2E",
+        "unit_class_name": "OCTOPUS"
+      },
+      {
+        "slot": 2,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 4,
+        "unit_class_id": 74,
+        "unit_class_hex": "0x4A",
+        "unit_class_name": "GRYPHON"
+      },
+      {
+        "slot": 3,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 4,
+        "unit_class_id": 40,
+        "unit_class_hex": "0x28",
+        "unit_class_name": "GIANT"
+      }
+    ]
+  },
+  {
+    "stage_id": 4,
+    "stage_name": "Pogrom Forest",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 9,
+        "unit_class_id": 58,
+        "unit_class_hex": "0x3A",
+        "unit_class_name": "SKELETON"
+      },
+      {
+        "slot": 2,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 6,
+        "unit_class_id": 68,
+        "unit_class_hex": "0x44",
+        "unit_class_name": "IMP"
+      },
+      {
+        "slot": 3,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 9,
+        "unit_class_id": 60,
+        "unit_class_hex": "0x3C",
+        "unit_class_name": "GHOST"
+      }
+    ]
+  },
+  {
+    "stage_id": 5,
+    "stage_name": "Lake Jansenia",
+    "goal_code": 3,
+    "goal_hex": "0x0003",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 5,
+        "unit_class_id": 64,
+        "unit_class_hex": "0x40",
+        "unit_class_name": "RAVENMAN"
+      },
+      {
+        "slot": 2,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 5,
+        "unit_class_id": 29,
+        "unit_class_hex": "0x1D",
+        "unit_class_name": "WEREWOLF"
+      },
+      {
+        "slot": 3,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 5,
+        "unit_class_id": 46,
+        "unit_class_hex": "0x2E",
+        "unit_class_name": "OCTOPUS"
+      }
+    ]
+  },
+  {
+    "stage_id": 6,
+    "stage_name": "Deneb's Garden",
+    "goal_code": 3,
+    "goal_hex": "0x0003",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 1,
+        "unit_class_id": 35,
+        "unit_class_hex": "0x23",
+        "unit_class_name": "PUMPKIN"
+      },
+      {
+        "slot": 2,
+        "location_code": 10,
+        "location_hex": "0x0A",
+        "unit_level": 5,
+        "unit_class_id": 48,
+        "unit_class_hex": "0x30",
+        "unit_class_name": "DRAGON"
+      },
+      {
+        "slot": 3,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 8,
+        "unit_class_id": 71,
+        "unit_class_hex": "0x47",
+        "unit_class_name": "FAERIE"
+      }
+    ]
+  },
+  {
+    "stage_id": 7,
+    "stage_name": "Slums of Zenobia",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 9,
+        "unit_class_id": 46,
+        "unit_class_hex": "0x2E",
+        "unit_class_name": "OCTOPUS"
+      },
+      {
+        "slot": 2,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 7,
+        "unit_class_id": 48,
+        "unit_class_hex": "0x30",
+        "unit_class_name": "DRAGON"
+      },
+      {
+        "slot": 3,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 9,
+        "unit_class_id": 44,
+        "unit_class_hex": "0x2C",
+        "unit_class_name": "HELLHOUND"
+      }
+    ]
+  },
+  {
+    "stage_id": 8,
+    "stage_name": "Island Avalon",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 10,
+        "unit_class_id": 27,
+        "unit_class_hex": "0x1B",
+        "unit_class_name": "MERMAID"
+      },
+      {
+        "slot": 2,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 10,
+        "unit_class_id": 46,
+        "unit_class_hex": "0x2E",
+        "unit_class_name": "OCTOPUS"
+      },
+      {
+        "slot": 3,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 10,
+        "unit_class_id": 65,
+        "unit_class_hex": "0x41",
+        "unit_class_name": "ANGEL"
+      }
+    ]
+  },
+  {
+    "stage_id": 9,
+    "stage_name": "Kastolatian Sea",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 9,
+        "unit_class_id": 46,
+        "unit_class_hex": "0x2E",
+        "unit_class_name": "OCTOPUS"
+      },
+      {
+        "slot": 2,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 11,
+        "unit_class_id": 68,
+        "unit_class_hex": "0x44",
+        "unit_class_name": "IMP"
+      },
+      {
+        "slot": 3,
+        "location_code": 12,
+        "location_hex": "0x0C",
+        "unit_level": 10,
+        "unit_class_id": 43,
+        "unit_class_hex": "0x2B",
+        "unit_class_name": "FIREGIANT"
+      }
+    ]
+  },
+  {
+    "stage_id": 10,
+    "stage_name": "Diaspola",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 10,
+        "location_hex": "0x0A",
+        "unit_level": 9,
+        "unit_class_id": 50,
+        "unit_class_hex": "0x32",
+        "unit_class_name": "SILVER\u008f"
+      },
+      {
+        "slot": 2,
+        "location_code": 10,
+        "location_hex": "0x0A",
+        "unit_level": 10,
+        "unit_class_id": 41,
+        "unit_class_hex": "0x29",
+        "unit_class_name": "ICEGIANT"
+      },
+      {
+        "slot": 3,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 10,
+        "unit_class_id": 65,
+        "unit_class_hex": "0x41",
+        "unit_class_name": "ANGEL"
+      }
+    ]
+  },
+  {
+    "stage_id": 11,
+    "stage_name": "Kalbian Peninsula",
+    "goal_code": 5,
+    "goal_hex": "0x0005",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 10,
+        "location_hex": "0x0A",
+        "unit_level": 11,
+        "unit_class_id": 50,
+        "unit_class_hex": "0x32",
+        "unit_class_name": "SILVER\u008f"
+      },
+      {
+        "slot": 2,
+        "location_code": 10,
+        "location_hex": "0x0A",
+        "unit_level": 11,
+        "unit_class_id": 41,
+        "unit_class_hex": "0x29",
+        "unit_class_name": "ICEGIANT"
+      },
+      {
+        "slot": 3,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 11,
+        "unit_class_id": 38,
+        "unit_class_hex": "0x26",
+        "unit_class_name": "ROCKGOLEM"
+      }
+    ]
+  },
+  {
+    "stage_id": 12,
+    "stage_name": "Valley of Kastro",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 12,
+        "unit_class_id": 49,
+        "unit_class_hex": "0x31",
+        "unit_class_name": "RED\u008f"
+      },
+      {
+        "slot": 2,
+        "location_code": 7,
+        "location_hex": "0x07",
+        "unit_level": 13,
+        "unit_class_id": 51,
+        "unit_class_hex": "0x33",
+        "unit_class_name": "BLACK\u008f"
+      },
+      {
+        "slot": 3,
+        "location_code": 13,
+        "location_hex": "0x0D",
+        "unit_level": 14,
+        "unit_class_id": 76,
+        "unit_class_hex": "0x4C",
+        "unit_class_name": "WYRM"
+      }
+    ]
+  },
+  {
+    "stage_id": 13,
+    "stage_name": "Balmorian Ruins",
+    "goal_code": 5,
+    "goal_hex": "0x0005",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 8,
+        "location_hex": "0x08",
+        "unit_level": 15,
+        "unit_class_id": 59,
+        "unit_class_hex": "0x3B",
+        "unit_class_name": "WRAITH"
+      },
+      {
+        "slot": 2,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 12,
+        "unit_class_id": 51,
+        "unit_class_hex": "0x33",
+        "unit_class_name": "BLACK\u008f"
+      },
+      {
+        "slot": 3,
+        "location_code": 7,
+        "location_hex": "0x07",
+        "unit_level": 10,
+        "unit_class_id": 38,
+        "unit_class_hex": "0x26",
+        "unit_class_name": "ROCKGOLEM"
+      }
+    ]
+  },
+  {
+    "stage_id": 14,
+    "stage_name": "City of Malano",
+    "goal_code": 5,
+    "goal_hex": "0x0005",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 15,
+        "unit_class_id": 77,
+        "unit_class_hex": "0x4D",
+        "unit_class_name": "WYVERN"
+      },
+      {
+        "slot": 2,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 14,
+        "unit_class_id": 62,
+        "unit_class_hex": "0x3E",
+        "unit_class_name": "HAWK MAN"
+      },
+      {
+        "slot": 3,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 15,
+        "unit_class_id": 43,
+        "unit_class_hex": "0x2B",
+        "unit_class_name": "FIREGIANT"
+      }
+    ]
+  },
+  {
+    "stage_id": 15,
+    "stage_name": "The Tundra",
+    "goal_code": 5,
+    "goal_hex": "0x0005",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 11,
+        "location_hex": "0x0B",
+        "unit_level": 15,
+        "unit_class_id": 41,
+        "unit_class_hex": "0x29",
+        "unit_class_name": "ICEGIANT"
+      },
+      {
+        "slot": 2,
+        "location_code": 11,
+        "location_hex": "0x0B",
+        "unit_level": 14,
+        "unit_class_id": 50,
+        "unit_class_hex": "0x32",
+        "unit_class_name": "SILVER\u008f"
+      },
+      {
+        "slot": 3,
+        "location_code": 11,
+        "location_hex": "0x0B",
+        "unit_level": 15,
+        "unit_class_id": 65,
+        "unit_class_hex": "0x41",
+        "unit_class_name": "ANGEL"
+      }
+    ]
+  },
+  {
+    "stage_id": 16,
+    "stage_name": "Antalia",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 8,
+        "location_hex": "0x08",
+        "unit_level": 20,
+        "unit_class_id": 61,
+        "unit_class_hex": "0x3D",
+        "unit_class_name": "PHANTOM"
+      },
+      {
+        "slot": 2,
+        "location_code": 7,
+        "location_hex": "0x07",
+        "unit_level": 20,
+        "unit_class_id": 59,
+        "unit_class_hex": "0x3B",
+        "unit_class_name": "WRAITH"
+      },
+      {
+        "slot": 3,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 16,
+        "unit_class_id": 45,
+        "unit_class_hex": "0x2D",
+        "unit_class_name": "CERBERUS"
+      }
+    ]
+  },
+  {
+    "stage_id": 17,
+    "stage_name": "Shangrila",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 17,
+        "location_hex": "0x11",
+        "unit_level": 18,
+        "unit_class_id": 63,
+        "unit_class_hex": "0x3F",
+        "unit_class_name": "EAGLEMAN"
+      },
+      {
+        "slot": 2,
+        "location_code": 17,
+        "location_hex": "0x11",
+        "unit_level": 18,
+        "unit_class_id": 66,
+        "unit_class_hex": "0x42",
+        "unit_class_name": "CHERUBIM"
+      },
+      {
+        "slot": 3,
+        "location_code": 17,
+        "location_hex": "0x11",
+        "unit_level": 18,
+        "unit_class_id": 74,
+        "unit_class_hex": "0x4A",
+        "unit_class_name": "GRYPHON"
+      }
+    ]
+  },
+  {
+    "stage_id": 18,
+    "stage_name": "Fort Allamoot",
+    "goal_code": 5,
+    "goal_hex": "0x0005",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 18,
+        "unit_class_id": 49,
+        "unit_class_hex": "0x31",
+        "unit_class_name": "RED\u008f"
+      },
+      {
+        "slot": 2,
+        "location_code": 14,
+        "location_hex": "0x0E",
+        "unit_level": 17,
+        "unit_class_id": 56,
+        "unit_class_hex": "0x38",
+        "unit_class_name": "TIAMAT"
+      },
+      {
+        "slot": 3,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 17,
+        "unit_class_id": 47,
+        "unit_class_hex": "0x2F",
+        "unit_class_name": "KRAKEN"
+      }
+    ]
+  },
+  {
+    "stage_id": 19,
+    "stage_name": "Dalmuhd Desert",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 17,
+        "unit_class_id": 52,
+        "unit_class_hex": "0x34",
+        "unit_class_name": "RED\u008f"
+      },
+      {
+        "slot": 2,
+        "location_code": 0,
+        "location_hex": "0x00",
+        "unit_level": 18,
+        "unit_class_id": 43,
+        "unit_class_hex": "0x2B",
+        "unit_class_name": "FIREGIANT"
+      },
+      {
+        "slot": 3,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 19,
+        "unit_class_id": 76,
+        "unit_class_hex": "0x4C",
+        "unit_class_name": "WYRM"
+      }
+    ]
+  },
+  {
+    "stage_id": 20,
+    "stage_name": "Ryhan Sea",
+    "goal_code": 5,
+    "goal_hex": "0x0005",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 20,
+        "unit_class_id": 72,
+        "unit_class_hex": "0x48",
+        "unit_class_name": "PIXIE"
+      },
+      {
+        "slot": 2,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 19,
+        "unit_class_id": 47,
+        "unit_class_hex": "0x2F",
+        "unit_class_name": "KRAKEN"
+      },
+      {
+        "slot": 3,
+        "location_code": 0,
+        "location_hex": "0x00",
+        "unit_level": 19,
+        "unit_class_id": 28,
+        "unit_class_hex": "0x1C",
+        "unit_class_name": "NIXIE"
+      }
+    ]
+  },
+  {
+    "stage_id": 21,
+    "stage_name": "Fort Shulamana",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 12,
+        "location_hex": "0x0C",
+        "unit_level": 23,
+        "unit_class_id": 53,
+        "unit_class_hex": "0x35",
+        "unit_class_name": "SALAMAND"
+      },
+      {
+        "slot": 2,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 23,
+        "unit_class_id": 47,
+        "unit_class_hex": "0x2F",
+        "unit_class_name": "KRAKEN"
+      },
+      {
+        "slot": 3,
+        "location_code": 8,
+        "location_hex": "0x08",
+        "unit_level": 25,
+        "unit_class_id": 61,
+        "unit_class_hex": "0x3D",
+        "unit_class_name": "PHANTOM"
+      }
+    ]
+  },
+  {
+    "stage_id": 22,
+    "stage_name": "Shrine of Kulyn",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 23,
+        "unit_class_id": 47,
+        "unit_class_hex": "0x2F",
+        "unit_class_name": "KRAKEN"
+      },
+      {
+        "slot": 2,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 23,
+        "unit_class_id": 45,
+        "unit_class_hex": "0x2D",
+        "unit_class_name": "CERBERUS"
+      },
+      {
+        "slot": 3,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 23,
+        "unit_class_id": 72,
+        "unit_class_hex": "0x48",
+        "unit_class_name": "PIXIE"
+      }
+    ]
+  },
+  {
+    "stage_id": 23,
+    "stage_name": "Xanadu",
+    "goal_code": 6,
+    "goal_hex": "0x0006",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 24,
+        "unit_class_id": 55,
+        "unit_class_hex": "0x37",
+        "unit_class_name": "PLATINUM\u008f"
+      },
+      {
+        "slot": 2,
+        "location_code": 2,
+        "location_hex": "0x02",
+        "unit_level": 20,
+        "unit_class_id": 75,
+        "unit_class_hex": "0x4B",
+        "unit_class_name": "COCKATRIS"
+      },
+      {
+        "slot": 3,
+        "location_code": 11,
+        "location_hex": "0x0B",
+        "unit_level": 23,
+        "unit_class_id": 41,
+        "unit_class_hex": "0x29",
+        "unit_class_name": "ICEGIANT"
+      }
+    ]
+  },
+  {
+    "stage_id": 24,
+    "stage_name": "Zeteginea",
+    "goal_code": 6,
+    "goal_hex": "0x0006",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 5,
+        "location_hex": "0x05",
+        "unit_level": 24,
+        "unit_class_id": 56,
+        "unit_class_hex": "0x38",
+        "unit_class_name": "TIAMAT"
+      },
+      {
+        "slot": 2,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 24,
+        "unit_class_id": 64,
+        "unit_class_hex": "0x40",
+        "unit_class_name": "RAVENMAN"
+      },
+      {
+        "slot": 3,
+        "location_code": 10,
+        "location_hex": "0x0A",
+        "unit_level": 24,
+        "unit_class_id": 45,
+        "unit_class_hex": "0x2D",
+        "unit_class_name": "CERBERUS"
+      }
+    ]
+  },
+  {
+    "stage_id": 25,
+    "stage_name": "Temple Shalina",
+    "goal_code": 7,
+    "goal_hex": "0x0007",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 6,
+        "location_hex": "0x06",
+        "unit_level": 25,
+        "unit_class_id": 54,
+        "unit_class_hex": "0x36",
+        "unit_class_name": "GOLD\u008f"
+      },
+      {
+        "slot": 2,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 25,
+        "unit_class_id": 67,
+        "unit_class_hex": "0x43",
+        "unit_class_name": "SERAPHIM"
+      },
+      {
+        "slot": 3,
+        "location_code": 6,
+        "location_hex": "0x06",
+        "unit_level": 25,
+        "unit_class_id": 41,
+        "unit_class_hex": "0x29",
+        "unit_class_name": "ICEGIANT"
+      }
+    ]
+  },
+  {
+    "stage_id": 26,
+    "stage_name": "Muspelm",
+    "goal_code": 3,
+    "goal_hex": "0x0003",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 15,
+        "unit_class_id": 49,
+        "unit_class_hex": "0x31",
+        "unit_class_name": "RED\u008f"
+      },
+      {
+        "slot": 2,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 15,
+        "unit_class_id": 43,
+        "unit_class_hex": "0x2B",
+        "unit_class_name": "FIREGIANT"
+      },
+      {
+        "slot": 3,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 15,
+        "unit_class_id": 64,
+        "unit_class_hex": "0x40",
+        "unit_class_name": "RAVENMAN"
+      }
+    ]
+  },
+  {
+    "stage_id": 27,
+    "stage_name": "Organa",
+    "goal_code": 3,
+    "goal_hex": "0x0003",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 0,
+        "location_hex": "0x00",
+        "unit_level": 15,
+        "unit_class_id": 39,
+        "unit_class_hex": "0x27",
+        "unit_class_name": "IRONGOLEM"
+      },
+      {
+        "slot": 2,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 14,
+        "unit_class_id": 69,
+        "unit_class_hex": "0x45",
+        "unit_class_name": "DEMON"
+      },
+      {
+        "slot": 3,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 14,
+        "unit_class_id": 45,
+        "unit_class_hex": "0x2D",
+        "unit_class_name": "CERBERUS"
+      }
+    ]
+  },
+  {
+    "stage_id": 28,
+    "stage_name": "Shiguld",
+    "goal_code": 4,
+    "goal_hex": "0x0004",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 19,
+        "unit_class_id": 52,
+        "unit_class_hex": "0x34",
+        "unit_class_name": "RED\u008f"
+      },
+      {
+        "slot": 2,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 19,
+        "unit_class_id": 54,
+        "unit_class_hex": "0x36",
+        "unit_class_name": "GOLD\u008f"
+      },
+      {
+        "slot": 3,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 19,
+        "unit_class_id": 56,
+        "unit_class_hex": "0x38",
+        "unit_class_name": "TIAMAT"
+      }
+    ]
+  },
+  {
+    "stage_id": 29,
+    "stage_name": "Antanyl",
+    "goal_code": 3,
+    "goal_hex": "0x0003",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 8,
+        "location_hex": "0x08",
+        "unit_level": 16,
+        "unit_class_id": 30,
+        "unit_class_hex": "0x1E",
+        "unit_class_name": "TIGERMAN"
+      },
+      {
+        "slot": 2,
+        "location_code": 1,
+        "location_hex": "0x01",
+        "unit_level": 16,
+        "unit_class_id": 32,
+        "unit_class_hex": "0x20",
+        "unit_class_name": "VAMPYRE"
+      },
+      {
+        "slot": 3,
+        "location_code": 6,
+        "location_hex": "0x06",
+        "unit_level": 16,
+        "unit_class_id": 29,
+        "unit_class_hex": "0x1D",
+        "unit_class_name": "WEREWOLF"
+      }
+    ]
+  },
+  {
+    "stage_id": 30,
+    "stage_name": "Dragon's Haven",
+    "goal_code": 3,
+    "goal_hex": "0x0003",
+    "neutral_encounters": [
+      {
+        "slot": 1,
+        "location_code": 2,
+        "location_hex": "0x02",
+        "unit_level": 18,
+        "unit_class_id": 55,
+        "unit_class_hex": "0x37",
+        "unit_class_name": "PLATINUM\u008f"
+      },
+      {
+        "slot": 2,
+        "location_code": 7,
+        "location_hex": "0x07",
+        "unit_level": 18,
+        "unit_class_id": 57,
+        "unit_class_hex": "0x39",
+        "unit_class_name": "ZOMBIE\u008f"
+      },
+      {
+        "slot": 3,
+        "location_code": 9,
+        "location_hex": "0x09",
+        "unit_level": 18,
+        "unit_class_id": 53,
+        "unit_class_hex": "0x35",
+        "unit_class_name": "SALAMAND"
+      }
+    ]
+  }
+]

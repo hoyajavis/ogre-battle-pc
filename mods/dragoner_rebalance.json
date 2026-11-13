@@ -1,0 +1,100 @@
+{
+  "mod_title": "Dragoner Promotion Rebalance",
+  "format_version": "1.0",
+  "description": "Decompiled from legacy binary patch",
+  "rom_size_bytes": 1572864,
+  "modified_domains": [
+    {
+      "table": "promo_ptrs",
+      "domain": "promotions",
+      "range": "0x4AD4C..0x4AE46",
+      "modified_byte_count": 5
+    },
+    {
+      "table": "promo_targets",
+      "domain": "promotions",
+      "range": "0x4AE46..0x4AED4",
+      "modified_byte_count": 8
+    },
+    {
+      "table": "promo_min_lvl",
+      "domain": "promotions",
+      "range": "0x4AED4..0x4AF21",
+      "modified_byte_count": 2
+    },
+    {
+      "table": "promo_min_ali",
+      "domain": "promotions",
+      "range": "0x4AF21..0x4AF6E",
+      "modified_byte_count": 1
+    },
+    {
+      "table": "promo_max_ali",
+      "domain": "promotions",
+      "range": "0x4AF6E..0x4AFBB",
+      "modified_byte_count": 1
+    },
+    {
+      "table": "promo_min_cha",
+      "domain": "promotions",
+      "range": "0x4AFBB..0x4B008",
+      "modified_byte_count": 1
+    }
+  ],
+  "micro_patches": [
+    {
+      "rom_offset": "0x04AD5E",
+      "length": 1,
+      "vanilla_bytes": "36",
+      "patched_bytes": "46"
+    },
+    {
+      "rom_offset": "0x04AD68",
+      "length": 1,
+      "vanilla_bytes": "46",
+      "patched_bytes": "36"
+    },
+    {
+      "rom_offset": "0x04AE36",
+      "length": 3,
+      "vanilla_bytes": "0B1718",
+      "patched_bytes": "0A1000"
+    },
+    {
+      "rom_offset": "0x04AE46",
+      "length": 4,
+      "vanilla_bytes": "010D0E10",
+      "patched_bytes": "0B0F1718"
+    },
+    {
+      "rom_offset": "0x04AE4B",
+      "length": 4,
+      "vanilla_bytes": "010D0E0F",
+      "patched_bytes": "0F000000"
+    },
+    {
+      "rom_offset": "0x04AEE2",
+      "length": 2,
+      "vanilla_bytes": "0114",
+      "patched_bytes": "050C"
+    },
+    {
+      "rom_offset": "0x04AF2F",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "3C"
+    },
+    {
+      "rom_offset": "0x04AF7D",
+      "length": 1,
+      "vanilla_bytes": "3C",
+      "patched_bytes": "64"
+    },
+    {
+      "rom_offset": "0x04AFC9",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "32"
+    }
+  ]
+}

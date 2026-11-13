@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OgreBattleClassesManifest",
+  "description": "Schema definition for Ogre Battle character and monster class definitions",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "movement",
+      "costs",
+      "stats",
+      "combat",
+      "resistances"
+    ],
+    "properties": {
+      "id": { "type": "integer", "minimum": 1, "maximum": 125 },
+      "hex_id": { "type": "string" },
+      "name": { "type": "string" },
+      "movement": {
+        "type": "object",
+        "required": ["type_code", "type_name", "weight"],
+        "properties": {
+          "type_code": { "type": "integer", "minimum": 0, "maximum": 9 },
+          "type_name": { "type": "string" },
+          "weight": { "type": "integer", "minimum": 0, "maximum": 255 }
+        }
+      },
+      "costs": {
+        "type": "object",
+        "required": ["base_deploy_goth", "daily_upkeep_per_level", "can_lead_squad"],
+        "properties": {
+          "base_deploy_goth": { "type": "integer", "minimum": 0, "maximum": 65535 },
+          "daily_upkeep_per_level": { "type": "integer", "minimum": 0, "maximum": 65535 },
+          "can_lead_squad": { "type": "boolean" }
+        }
+      },
+      "stats": {
+        "type": "object",
+        "required": [
+          "base_hp", "hp_growth",
+          "base_str", "str_growth",
+          "base_agi", "agi_growth",
+          "base_int", "int_growth",
+          "base_cha", "base_ali", "base_luk"
+        ],
+        "properties": {
+          "base_hp": { "type": "integer", "minimum": 0, "maximum": 65535 },
+          "hp_growth": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "base_str": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "str_growth": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "base_agi": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "agi_growth": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "base_int": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "int_growth": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "base_cha": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "base_ali": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "base_luk": { "type": "integer", "minimum": 0, "maximum": 100 }
+        }
+      },
+      "combat": {
+        "type": "object",
+        "required": ["front_row_actions", "back_row_actions", "front_attack", "back_attack"],
+        "properties": {
+          "front_row_actions": { "type": "integer", "minimum": 0, "maximum": 15 },
+          "back_row_actions": { "type": "integer", "minimum": 0, "maximum": 15 },
+          "front_attack": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+              "id": { "type": "integer", "minimum": 0, "maximum": 255 },
+              "hex_id": { "type": "string" },
+              "name": { "type": "string" }
+            }
+          },
+          "back_attack": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+              "id": { "type": "integer", "minimum": 0, "maximum": 255 },
+              "hex_id": { "type": "string" },
+              "name": { "type": "string" }
+            }
+          }
+        }
+      },
+      "resistances": {
+        "type": "object",
+        "required": ["physical", "fire", "cold", "lightning", "black", "white"],
+        "properties": {
+          "physical": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "fire": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "cold": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "lightning": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "black": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "white": { "type": "integer", "minimum": 0, "maximum": 255 }
+        }
+      }
+    }
+  }
+}

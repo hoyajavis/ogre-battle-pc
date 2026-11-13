@@ -1,0 +1,39 @@
+{
+  "mod_title": "OB Character Size Table Expansion",
+  "format_version": "1.0",
+  "description": "Decompiled from legacy binary patch",
+  "rom_size_bytes": 2097152,
+  "modified_domains": [],
+  "micro_patches": [
+    {
+      "rom_offset": "0x01EC67",
+      "length": 66,
+      "vanilla_bytes": "7B68C93A9010C93EB00C48BDFA0809209DFA0868802CC9259028C93A9018C94A9020C94E9010C9529018C9559008C95B9010C95DB00C48BDFA0809409DFA08688000",
+      "patched_bytes": "DAAABF0F8030FA1DFA089DFA08688032FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+    },
+    {
+      "rom_offset": "0x18002C",
+      "length": 5,
+      "vanilla_bytes": "0000000000",
+      "patched_bytes": "1008100404"
+    },
+    {
+      "rom_offset": "0x180034",
+      "length": 25,
+      "vanilla_bytes": "00000000000000000000000000000000000000000000000000",
+      "patched_bytes": "40404040404040404040404040404040404040404020202020"
+    },
+    {
+      "rom_offset": "0x180059",
+      "length": 4,
+      "vanilla_bytes": "00000000",
+      "patched_bytes": "40404040"
+    },
+    {
+      "rom_offset": "0x180063",
+      "length": 1,
+      "vanilla_bytes": "00",
+      "patched_bytes": "40"
+    }
+  ]
+}

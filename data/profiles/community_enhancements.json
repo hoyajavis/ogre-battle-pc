@@ -1,0 +1,15 @@
+{
+  "profile_name": "Community Enhancements",
+  "description": "Clean base game enhanced with D's community bugfixes, extensible character size table in 2MB space, and Dragoner promotion tuning.",
+  "base_preset": "vanilla",
+  "memory_size": "2.0MB",
+  "overlays": [
+    "mods/dragoner_rebalance.json"
+  ],
+  "engine_features": {
+    "magic_ai_elemental_fix": true,
+    "prevent_random_crown_drops": true,
+    "extensible_size_tables": true
+  },
+  "recalculate_checksum": true
+}

@@ -1,0 +1,3334 @@
+[
+  {
+    "id": 1,
+    "hex_id": "0x01",
+    "name": "SONIC [Sword]",
+    "is_equipment": true,
+    "price_goth": 720,
+    "bonuses": {
+      "strength": 13,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 2,
+    "hex_id": "0x02",
+    "name": "DURANDAL [Sword]",
+    "is_equipment": true,
+    "price_goth": 255,
+    "bonuses": {
+      "strength": 12,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 3,
+    "hex_id": "0x03",
+    "name": "BIZEN [Sword]",
+    "is_equipment": true,
+    "price_goth": 780,
+    "bonuses": {
+      "strength": 11,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 4,
+    "hex_id": "0x04",
+    "name": "ZEPYULOS",
+    "is_equipment": true,
+    "price_goth": 270,
+    "bonuses": {
+      "strength": 15,
+      "intelligence": 3,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 5,
+    "hex_id": "0x05",
+    "name": "FAFHNIEL",
+    "is_equipment": true,
+    "price_goth": 220,
+    "bonuses": {
+      "strength": 20,
+      "intelligence": 4,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 6,
+    "hex_id": "0x06",
+    "name": "ZANZIBAR",
+    "is_equipment": true,
+    "price_goth": 255,
+    "bonuses": {
+      "strength": 18,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 7,
+    "hex_id": "0x07",
+    "name": "BRUNHILD",
+    "is_equipment": true,
+    "price_goth": 1120,
+    "bonuses": {
+      "strength": 20,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 8,
+    "hex_id": "0x08",
+    "name": "BLACK [Sword]",
+    "is_equipment": true,
+    "price_goth": 480,
+    "bonuses": {
+      "strength": 3,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 9,
+    "hex_id": "0x09",
+    "name": "SLICING [Sword]",
+    "is_equipment": true,
+    "price_goth": 980,
+    "bonuses": {
+      "strength": 4,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 10,
+    "hex_id": "0x0A",
+    "name": "MIKADO [Sword]",
+    "is_equipment": true,
+    "price_goth": 295,
+    "bonuses": {
+      "strength": 8,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 11,
+    "hex_id": "0x0B",
+    "name": "HEROES [Sword]",
+    "is_equipment": true,
+    "price_goth": 130,
+    "bonuses": {
+      "strength": 11,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 12,
+    "hex_id": "0x0C",
+    "name": "HOULOU [Sword]",
+    "is_equipment": true,
+    "price_goth": 245,
+    "bonuses": {
+      "strength": 15,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 13,
+    "hex_id": "0x0D",
+    "name": "OGRE [Sword]",
+    "is_equipment": true,
+    "price_goth": 590,
+    "bonuses": {
+      "strength": 20,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 14,
+    "hex_id": "0x0E",
+    "name": "FLAME [Sword]",
+    "is_equipment": true,
+    "price_goth": 685,
+    "bonuses": {
+      "strength": 6,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 15,
+    "hex_id": "0x0F",
+    "name": "MUSASHI [Sword]",
+    "is_equipment": true,
+    "price_goth": 150,
+    "bonuses": {
+      "strength": 12,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 16,
+    "hex_id": "0x10",
+    "name": "ESKENDALE",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 15,
+      "intelligence": 3,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 17,
+    "hex_id": "0x11",
+    "name": "ICE [Sword]",
+    "is_equipment": true,
+    "price_goth": 340,
+    "bonuses": {
+      "strength": 3,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 18,
+    "hex_id": "0x12",
+    "name": "ICEBLADE",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 7,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 19,
+    "hex_id": "0x13",
+    "name": "PERIDAT [Sword]",
+    "is_equipment": true,
+    "price_goth": 1020,
+    "bonuses": {
+      "strength": 11,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 20,
+    "hex_id": "0x14",
+    "name": "EUROS",
+    "is_equipment": true,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 15,
+      "intelligence": 3,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 21,
+    "hex_id": "0x15",
+    "name": "MALACHITE [Sword]",
+    "is_equipment": true,
+    "price_goth": 880,
+    "bonuses": {
+      "strength": 18,
+      "intelligence": -4,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 22,
+    "hex_id": "0x16",
+    "name": "DWARVEN",
+    "is_equipment": true,
+    "price_goth": 20,
+    "bonuses": {
+      "strength": 7,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 23,
+    "hex_id": "0x17",
+    "name": "NOTOS",
+    "is_equipment": true,
+    "price_goth": 260,
+    "bonuses": {
+      "strength": 15,
+      "intelligence": 3,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 24,
+    "hex_id": "0x18",
+    "name": "SIGMUND",
+    "is_equipment": true,
+    "price_goth": 40,
+    "bonuses": {
+      "strength": 19,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 25,
+    "hex_id": "0x19",
+    "name": "BROKEN [Sword]",
+    "is_equipment": true,
+    "price_goth": 960,
+    "bonuses": {
+      "strength": 4,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 26,
+    "hex_id": "0x1A",
+    "name": "DEATH [Sword]",
+    "is_equipment": true,
+    "price_goth": 90,
+    "bonuses": {
+      "strength": 8,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 27,
+    "hex_id": "0x1B",
+    "name": "EVIL [Sword]",
+    "is_equipment": true,
+    "price_goth": 850,
+    "bonuses": {
+      "strength": 8,
+      "intelligence": 3,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 28,
+    "hex_id": "0x1C",
+    "name": "RELIC [Sword]",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 24,
+      "intelligence": -16,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 29,
+    "hex_id": "0x1D",
+    "name": "DRAGON [Sword]",
+    "is_equipment": true,
+    "price_goth": 200,
+    "bonuses": {
+      "strength": 5,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 30,
+    "hex_id": "0x1E",
+    "name": "PRISTINE [Sword]",
+    "is_equipment": true,
+    "price_goth": 50,
+    "bonuses": {
+      "strength": 8,
+      "intelligence": 10,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 31,
+    "hex_id": "0x1F",
+    "name": "KUSANAGI [Sword]",
+    "is_equipment": true,
+    "price_goth": 490,
+    "bonuses": {
+      "strength": 15,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 32,
+    "hex_id": "0x20",
+    "name": "KARANBORG",
+    "is_equipment": true,
+    "price_goth": 60,
+    "bonuses": {
+      "strength": 17,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 33,
+    "hex_id": "0x21",
+    "name": "DRAGON\u0096",
+    "is_equipment": true,
+    "price_goth": 225,
+    "bonuses": {
+      "strength": 7,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 34,
+    "hex_id": "0x22",
+    "name": "BENKAY\u0096",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 12,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 35,
+    "hex_id": "0x23",
+    "name": "OZRICH\u0096",
+    "is_equipment": true,
+    "price_goth": 875,
+    "bonuses": {
+      "strength": 14,
+      "intelligence": 7,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 36,
+    "hex_id": "0x24",
+    "name": "THUNDER\u0096",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 9,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 37,
+    "hex_id": "0x25",
+    "name": "BOLEAS",
+    "is_equipment": true,
+    "price_goth": 1000,
+    "bonuses": {
+      "strength": 17,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 38,
+    "hex_id": "0x26",
+    "name": "ICE AXE",
+    "is_equipment": true,
+    "price_goth": 25,
+    "bonuses": {
+      "strength": 11,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 39,
+    "hex_id": "0x27",
+    "name": "BLACK\u0097",
+    "is_equipment": true,
+    "price_goth": 920,
+    "bonuses": {
+      "strength": 16,
+      "intelligence": -8,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 40,
+    "hex_id": "0x28",
+    "name": "RUNE\u0097",
+    "is_equipment": true,
+    "price_goth": 255,
+    "bonuses": {
+      "strength": 15,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 41,
+    "hex_id": "0x29",
+    "name": "BATTLE\u0097",
+    "is_equipment": true,
+    "price_goth": 240,
+    "bonuses": {
+      "strength": 3,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 42,
+    "hex_id": "0x2A",
+    "name": "FIRE\u0099",
+    "is_equipment": true,
+    "price_goth": 60,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 3,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 43,
+    "hex_id": "0x2B",
+    "name": "FLAME\u0099",
+    "is_equipment": true,
+    "price_goth": 410,
+    "bonuses": {
+      "strength": 4,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 44,
+    "hex_id": "0x2C",
+    "name": "THUNDER\u0099",
+    "is_equipment": true,
+    "price_goth": 15,
+    "bonuses": {
+      "strength": 6,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 45,
+    "hex_id": "0x2D",
+    "name": "DEMON\u0099",
+    "is_equipment": true,
+    "price_goth": 1230,
+    "bonuses": {
+      "strength": 12,
+      "intelligence": -4,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 46,
+    "hex_id": "0x2E",
+    "name": "KUKAI\u0099",
+    "is_equipment": true,
+    "price_goth": 245,
+    "bonuses": {
+      "strength": 8,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 47,
+    "hex_id": "0x2F",
+    "name": "MYSTIC\u0099",
+    "is_equipment": true,
+    "price_goth": 20,
+    "bonuses": {
+      "strength": 2,
+      "intelligence": 7,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 48,
+    "hex_id": "0x30",
+    "name": "LIEBEL\u0099",
+    "is_equipment": true,
+    "price_goth": 80,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 14,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 49,
+    "hex_id": "0x31",
+    "name": "BOLT\u0098",
+    "is_equipment": true,
+    "price_goth": 260,
+    "bonuses": {
+      "strength": 7,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 50,
+    "hex_id": "0x32",
+    "name": "BLACK\u0098",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 3,
+      "intelligence": 2,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 51,
+    "hex_id": "0x33",
+    "name": "EARTH\u009b",
+    "is_equipment": true,
+    "price_goth": 1060,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 3,
+      "ice_defense": 3,
+      "lightning_defense": 3,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 52,
+    "hex_id": "0x34",
+    "name": "ELDER\u009b",
+    "is_equipment": true,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 11,
+      "intelligence": 5,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 16,
+      "white_defense": 14
+    }
+  },
+  {
+    "id": 53,
+    "hex_id": "0x35",
+    "name": "FLAME\u009b",
+    "is_equipment": true,
+    "price_goth": 690,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 5,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 54,
+    "hex_id": "0x36",
+    "name": "HYDRA\u009b",
+    "is_equipment": true,
+    "price_goth": 10,
+    "bonuses": {
+      "strength": 4,
+      "intelligence": 0,
+      "physical_defense": 6,
+      "fire_defense": 8,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 55,
+    "hex_id": "0x37",
+    "name": "ICE CHARM\u009b",
+    "is_equipment": true,
+    "price_goth": 640,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 5,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 56,
+    "hex_id": "0x38",
+    "name": "BYAK\u009b",
+    "is_equipment": true,
+    "price_goth": 110,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 7,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 12,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 57,
+    "hex_id": "0x39",
+    "name": "SNOW ORB",
+    "is_equipment": true,
+    "price_goth": 360,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 11,
+      "physical_defense": 0,
+      "fire_defense": -8,
+      "ice_defense": 14,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 58,
+    "hex_id": "0x3A",
+    "name": "THUNDER\u009b",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 5,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 59,
+    "hex_id": "0x3B",
+    "name": "BOLT ORB",
+    "is_equipment": true,
+    "price_goth": 920,
+    "bonuses": {
+      "strength": 6,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 17,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 60,
+    "hex_id": "0x3C",
+    "name": "BLACK\u009b",
+    "is_equipment": true,
+    "price_goth": 55,
+    "bonuses": {
+      "strength": 8,
+      "intelligence": -4,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 13,
+      "white_defense": -16
+    }
+  },
+  {
+    "id": 61,
+    "hex_id": "0x3D",
+    "name": "WHITE\u009b",
+    "is_equipment": true,
+    "price_goth": 360,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 5
+    }
+  },
+  {
+    "id": 62,
+    "hex_id": "0x3E",
+    "name": "ANGEL\u009b",
+    "is_equipment": true,
+    "price_goth": 40,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 16,
+      "physical_defense": 7,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 23
+    }
+  },
+  {
+    "id": 63,
+    "hex_id": "0x3F",
+    "name": "POWER\u009a",
+    "is_equipment": true,
+    "price_goth": 900,
+    "bonuses": {
+      "strength": 18,
+      "intelligence": -7,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 64,
+    "hex_id": "0x40",
+    "name": "MAGIC\u009a",
+    "is_equipment": true,
+    "price_goth": 75,
+    "bonuses": {
+      "strength": -12,
+      "intelligence": 16,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 65,
+    "hex_id": "0x41",
+    "name": "DRAGON\u009a",
+    "is_equipment": true,
+    "price_goth": 820,
+    "bonuses": {
+      "strength": 6,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 14,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 66,
+    "hex_id": "0x42",
+    "name": "THUNDER\u009a",
+    "is_equipment": true,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 3,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 15,
+      "black_defense": 0,
+      "white_defense": 6
+    }
+  },
+  {
+    "id": 67,
+    "hex_id": "0x43",
+    "name": "ENGRAVED\u009a",
+    "is_equipment": true,
+    "price_goth": 450,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 11,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 19,
+      "white_defense": -11
+    }
+  },
+  {
+    "id": 68,
+    "hex_id": "0x44",
+    "name": "DEMON\u009a",
+    "is_equipment": true,
+    "price_goth": 25,
+    "bonuses": {
+      "strength": 21,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 17,
+      "white_defense": -15
+    }
+  },
+  {
+    "id": 69,
+    "hex_id": "0x45",
+    "name": "PROTECT\u009a",
+    "is_equipment": true,
+    "price_goth": 610,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 5,
+      "physical_defense": 12,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 14
+    }
+  },
+  {
+    "id": 70,
+    "hex_id": "0x46",
+    "name": "BUGLE",
+    "is_equipment": true,
+    "price_goth": 65,
+    "bonuses": {
+      "strength": 2,
+      "intelligence": 0,
+      "physical_defense": 2,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 71,
+    "hex_id": "0x47",
+    "name": "NINJA\u0092",
+    "is_equipment": true,
+    "price_goth": 190,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 3,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 2,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 72,
+    "hex_id": "0x48",
+    "name": "SAMURAI\u0092",
+    "is_equipment": true,
+    "price_goth": 10,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 5,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 73,
+    "hex_id": "0x49",
+    "name": "NEIL\u0092",
+    "is_equipment": true,
+    "price_goth": 810,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 7,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 74,
+    "hex_id": "0x4A",
+    "name": "GOLDEN\u0092",
+    "is_equipment": true,
+    "price_goth": 265,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 12,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 75,
+    "hex_id": "0x4B",
+    "name": "EARTH\u0092",
+    "is_equipment": true,
+    "price_goth": 1030,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 16,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 7
+    }
+  },
+  {
+    "id": 76,
+    "hex_id": "0x4C",
+    "name": "HOULOU\u0092",
+    "is_equipment": true,
+    "price_goth": 20,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 7,
+      "fire_defense": 11,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 77,
+    "hex_id": "0x4D",
+    "name": "SNOW CAPE",
+    "is_equipment": true,
+    "price_goth": 140,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 11,
+      "fire_defense": 0,
+      "ice_defense": 16,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 78,
+    "hex_id": "0x4E",
+    "name": "BLACK\u0092",
+    "is_equipment": true,
+    "price_goth": 35,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 8,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 4,
+      "white_defense": -3
+    }
+  },
+  {
+    "id": 79,
+    "hex_id": "0x4F",
+    "name": "DEATH\u0092",
+    "is_equipment": true,
+    "price_goth": 50,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 13,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 17,
+      "white_defense": -11
+    }
+  },
+  {
+    "id": 80,
+    "hex_id": "0x50",
+    "name": "WHITE\u0092",
+    "is_equipment": true,
+    "price_goth": 50,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 4,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 3
+    }
+  },
+  {
+    "id": 81,
+    "hex_id": "0x51",
+    "name": "ROBE",
+    "is_equipment": true,
+    "price_goth": 75,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 5,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 13
+    }
+  },
+  {
+    "id": 82,
+    "hex_id": "0x52",
+    "name": "PIRATE\u0091",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 2,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 83,
+    "hex_id": "0x53",
+    "name": "SILVER\u0091",
+    "is_equipment": true,
+    "price_goth": 250,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 3,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 1
+    }
+  },
+  {
+    "id": 84,
+    "hex_id": "0x54",
+    "name": "TIARA",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 3,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 8
+    }
+  },
+  {
+    "id": 85,
+    "hex_id": "0x55",
+    "name": "MYSTIC\u0091",
+    "is_equipment": true,
+    "price_goth": 600,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 7,
+      "ice_defense": 11,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 5
+    }
+  },
+  {
+    "id": 86,
+    "hex_id": "0x56",
+    "name": "KING\u0091",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 17,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 87,
+    "hex_id": "0x57",
+    "name": "BURNING\u0091",
+    "is_equipment": true,
+    "price_goth": 1050,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 6,
+      "ice_defense": -4,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 88,
+    "hex_id": "0x58",
+    "name": "BANDANA",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": -9,
+      "ice_defense": 7,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 89,
+    "hex_id": "0x59",
+    "name": "THUNDER\u0091",
+    "is_equipment": true,
+    "price_goth": 560,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 5,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 8,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 90,
+    "hex_id": "0x5A",
+    "name": "DEMON\u0091",
+    "is_equipment": true,
+    "price_goth": 15,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 4,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 8,
+      "white_defense": -6
+    }
+  },
+  {
+    "id": 91,
+    "hex_id": "0x5B",
+    "name": "ROYAL\u0091",
+    "is_equipment": true,
+    "price_goth": 875,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 7,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 13
+    }
+  },
+  {
+    "id": 92,
+    "hex_id": "0x5C",
+    "name": "IRON\u0094",
+    "is_equipment": true,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 2,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 93,
+    "hex_id": "0x5D",
+    "name": "THUNDER\u0094",
+    "is_equipment": true,
+    "price_goth": 990,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 3,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 4,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 94,
+    "hex_id": "0x5E",
+    "name": "SPIKED\u0093",
+    "is_equipment": true,
+    "price_goth": 10,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 6,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 95,
+    "hex_id": "0x5F",
+    "name": "POWER\u0093",
+    "is_equipment": true,
+    "price_goth": 410,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 19,
+      "fire_defense": -8,
+      "ice_defense": -5,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 96,
+    "hex_id": "0x60",
+    "name": "HONOUR\u0093",
+    "is_equipment": true,
+    "price_goth": 240,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 14,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 7
+    }
+  },
+  {
+    "id": 97,
+    "hex_id": "0x61",
+    "name": "OGRE\u0093",
+    "is_equipment": true,
+    "price_goth": 890,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 18,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 21,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 98,
+    "hex_id": "0x62",
+    "name": "FIRE\u0093",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 9,
+      "fire_defense": 12,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 99,
+    "hex_id": "0x63",
+    "name": "COLD\u0093",
+    "is_equipment": true,
+    "price_goth": 330,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 8,
+      "fire_defense": 0,
+      "ice_defense": 15,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 100,
+    "hex_id": "0x64",
+    "name": "NUE\u0093",
+    "is_equipment": true,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 7,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 14,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 101,
+    "hex_id": "0x65",
+    "name": "CAKE",
+    "is_equipment": false,
+    "price_goth": 360,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 102,
+    "hex_id": "0x66",
+    "name": "LOTUS",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 103,
+    "hex_id": "0x67",
+    "name": "ORB",
+    "is_equipment": false,
+    "price_goth": 900,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 104,
+    "hex_id": "0x68",
+    "name": "BOOK",
+    "is_equipment": false,
+    "price_goth": 100,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 105,
+    "hex_id": "0x69",
+    "name": "CAPE",
+    "is_equipment": false,
+    "price_goth": 220,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 106,
+    "hex_id": "0x6A",
+    "name": "NUGGET",
+    "is_equipment": false,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 107,
+    "hex_id": "0x6B",
+    "name": "STATUE",
+    "is_equipment": false,
+    "price_goth": 1200,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 108,
+    "hex_id": "0x6C",
+    "name": "MEDAL",
+    "is_equipment": false,
+    "price_goth": 25,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 109,
+    "hex_id": "0x6D",
+    "name": "MAP",
+    "is_equipment": false,
+    "price_goth": 220,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 110,
+    "hex_id": "0x6E",
+    "name": "THE SAGA",
+    "is_equipment": false,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 111,
+    "hex_id": "0x6F",
+    "name": "DEMON",
+    "is_equipment": false,
+    "price_goth": 800,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 112,
+    "hex_id": "0x70",
+    "name": "CARVING",
+    "is_equipment": false,
+    "price_goth": 50,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 113,
+    "hex_id": "0x71",
+    "name": "FONT",
+    "is_equipment": false,
+    "price_goth": 640,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 114,
+    "hex_id": "0x72",
+    "name": "WING",
+    "is_equipment": false,
+    "price_goth": 60,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 115,
+    "hex_id": "0x73",
+    "name": "PENDANT",
+    "is_equipment": false,
+    "price_goth": 220,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 116,
+    "hex_id": "0x74",
+    "name": "SILVER",
+    "is_equipment": false,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 117,
+    "hex_id": "0x75",
+    "name": "HERBS",
+    "is_equipment": false,
+    "price_goth": 920,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 118,
+    "hex_id": "0x76",
+    "name": "FUR",
+    "is_equipment": false,
+    "price_goth": 30,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 119,
+    "hex_id": "0x77",
+    "name": "MOONROSE",
+    "is_equipment": false,
+    "price_goth": 1200,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 120,
+    "hex_id": "0x78",
+    "name": "CARVING",
+    "is_equipment": false,
+    "price_goth": 25,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 121,
+    "hex_id": "0x79",
+    "name": "TOME",
+    "is_equipment": false,
+    "price_goth": 220,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 122,
+    "hex_id": "0x7A",
+    "name": "GOBLET",
+    "is_equipment": false,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 123,
+    "hex_id": "0x7B",
+    "name": "GOLDCOIN",
+    "is_equipment": false,
+    "price_goth": 180,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 124,
+    "hex_id": "0x7C",
+    "name": "AMATSU",
+    "is_equipment": false,
+    "price_goth": 95,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 125,
+    "hex_id": "0x7D",
+    "name": "BONES",
+    "is_equipment": false,
+    "price_goth": 540,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 126,
+    "hex_id": "0x7E",
+    "name": "BOUGH",
+    "is_equipment": false,
+    "price_goth": 35,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 127,
+    "hex_id": "0x7F",
+    "name": "CENSER",
+    "is_equipment": false,
+    "price_goth": 100,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 128,
+    "hex_id": "0x80",
+    "name": "SHELL",
+    "is_equipment": false,
+    "price_goth": 25,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 129,
+    "hex_id": "0x81",
+    "name": "FRAGMENT",
+    "is_equipment": false,
+    "price_goth": 780,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 130,
+    "hex_id": "0x82",
+    "name": "ORC FUR",
+    "is_equipment": false,
+    "price_goth": 20,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 131,
+    "hex_id": "0x83",
+    "name": "COIN",
+    "is_equipment": false,
+    "price_goth": 500,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 132,
+    "hex_id": "0x84",
+    "name": "CAMEO",
+    "is_equipment": false,
+    "price_goth": 25,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 133,
+    "hex_id": "0x85",
+    "name": "FIRESEAL",
+    "is_equipment": false,
+    "price_goth": 680,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 134,
+    "hex_id": "0x86",
+    "name": "KEY",
+    "is_equipment": false,
+    "price_goth": 45,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 135,
+    "hex_id": "0x87",
+    "name": "GEM",
+    "is_equipment": false,
+    "price_goth": 1180,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 136,
+    "hex_id": "0x88",
+    "name": "PEARL",
+    "is_equipment": false,
+    "price_goth": 95,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 137,
+    "hex_id": "0x89",
+    "name": "BEEHIVE",
+    "is_equipment": false,
+    "price_goth": 1070,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 138,
+    "hex_id": "0x8A",
+    "name": "TROPHY",
+    "is_equipment": false,
+    "price_goth": 30,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 139,
+    "hex_id": "0x8B",
+    "name": "FOLIO",
+    "is_equipment": false,
+    "price_goth": 155,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 140,
+    "hex_id": "0x8C",
+    "name": "JEWEL",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 141,
+    "hex_id": "0x8D",
+    "name": "DOUN GEM",
+    "is_equipment": false,
+    "price_goth": 225,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 142,
+    "hex_id": "0x8E",
+    "name": "TABLET",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 143,
+    "hex_id": "0x8F",
+    "name": "LEXICON",
+    "is_equipment": false,
+    "price_goth": 340,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 144,
+    "hex_id": "0x90",
+    "name": "TRUE GEM",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 145,
+    "hex_id": "0x91",
+    "name": "SABLEFUR",
+    "is_equipment": false,
+    "price_goth": 405,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 146,
+    "hex_id": "0x92",
+    "name": "RELIEF",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 147,
+    "hex_id": "0x93",
+    "name": "GODDESS",
+    "is_equipment": false,
+    "price_goth": 60,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 148,
+    "hex_id": "0x94",
+    "name": "BOX",
+    "is_equipment": false,
+    "price_goth": 15,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 149,
+    "hex_id": "0x95",
+    "name": "CHEST",
+    "is_equipment": false,
+    "price_goth": 640,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 150,
+    "hex_id": "0x96",
+    "name": "FOULTOME",
+    "is_equipment": false,
+    "price_goth": 60,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 151,
+    "hex_id": "0x97",
+    "name": "DRAGOS",
+    "is_equipment": false,
+    "price_goth": 1230,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 152,
+    "hex_id": "0x98",
+    "name": "STAFF",
+    "is_equipment": false,
+    "price_goth": 20,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 153,
+    "hex_id": "0x99",
+    "name": "UNDEAD",
+    "is_equipment": false,
+    "price_goth": 40,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 154,
+    "hex_id": "0x9A",
+    "name": "BLOOD",
+    "is_equipment": false,
+    "price_goth": 35,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 155,
+    "hex_id": "0x9B",
+    "name": "CROWN",
+    "is_equipment": false,
+    "price_goth": 490,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 156,
+    "hex_id": "0x9C",
+    "name": "PUMPKIN+",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 157,
+    "hex_id": "0x9D",
+    "name": "PROMOTE",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 158,
+    "hex_id": "0x9E",
+    "name": "HP.",
+    "is_equipment": false,
+    "price_goth": 50,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 159,
+    "hex_id": "0x9F",
+    "name": "STR.",
+    "is_equipment": false,
+    "price_goth": 360,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 160,
+    "hex_id": "0xA0",
+    "name": "AGI.",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 161,
+    "hex_id": "0xA1",
+    "name": "INT.",
+    "is_equipment": false,
+    "price_goth": 570,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 162,
+    "hex_id": "0xA2",
+    "name": "CHA.",
+    "is_equipment": false,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 163,
+    "hex_id": "0xA3",
+    "name": "ALI.",
+    "is_equipment": false,
+    "price_goth": 140,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 164,
+    "hex_id": "0xA4",
+    "name": "LUK.",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 165,
+    "hex_id": "0xA5",
+    "name": "CURE",
+    "is_equipment": false,
+    "price_goth": 160,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 166,
+    "hex_id": "0xA6",
+    "name": "HEAL",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 167,
+    "hex_id": "0xA7",
+    "name": "REVIVE",
+    "is_equipment": false,
+    "price_goth": 900,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 168,
+    "hex_id": "0xA8",
+    "name": "CHIME",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 169,
+    "hex_id": "0xA9",
+    "name": "ALL HEAL",
+    "is_equipment": false,
+    "price_goth": 895,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 170,
+    "hex_id": "0xAA",
+    "name": "BEAST",
+    "is_equipment": false,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 171,
+    "hex_id": "0xAB",
+    "name": "FULLMOON",
+    "is_equipment": false,
+    "price_goth": 1100,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 172,
+    "hex_id": "0xAC",
+    "name": "JOKER",
+    "is_equipment": false,
+    "price_goth": 25,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 173,
+    "hex_id": "0xAD",
+    "name": "BELL",
+    "is_equipment": false,
+    "price_goth": 215,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 174,
+    "hex_id": "0xAE",
+    "name": "DOWSER",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 175,
+    "hex_id": "0xAF",
+    "name": "MERCHANT",
+    "is_equipment": false,
+    "price_goth": 190,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 176,
+    "hex_id": "0xB0",
+    "name": "SUMMONS",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 177,
+    "hex_id": "0xB1",
+    "name": "CHARM",
+    "is_equipment": false,
+    "price_goth": 70,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 178,
+    "hex_id": "0xB2",
+    "name": "BOOTS",
+    "is_equipment": false,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 179,
+    "hex_id": "0xB3",
+    "name": "TERMITES",
+    "is_equipment": false,
+    "price_goth": 320,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 180,
+    "hex_id": "0xB4",
+    "name": "MOONBEAM",
+    "is_equipment": false,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 181,
+    "hex_id": "0xB5",
+    "name": "SUNSHINE",
+    "is_equipment": false,
+    "price_goth": 545,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 182,
+    "hex_id": "0xB6",
+    "name": "CRYSTAL",
+    "is_equipment": false,
+    "price_goth": 5,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 183,
+    "hex_id": "0xB7",
+    "name": "PUMPKIN",
+    "is_equipment": false,
+    "price_goth": 100,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 184,
+    "hex_id": "0xB8",
+    "name": "HEROSTAR",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 185,
+    "hex_id": "0xB9",
+    "name": "BELL",
+    "is_equipment": false,
+    "price_goth": 440,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 186,
+    "hex_id": "0xBA",
+    "name": "GRAIL",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 187,
+    "hex_id": "0xBB",
+    "name": "ARMBAND",
+    "is_equipment": false,
+    "price_goth": 600,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 188,
+    "hex_id": "0xBC",
+    "name": "GARNET",
+    "is_equipment": false,
+    "price_goth": 0,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 189,
+    "hex_id": "0xBD",
+    "name": "AMETHYST",
+    "is_equipment": false,
+    "price_goth": 300,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 190,
+    "hex_id": "0xBE",
+    "name": "AQUA.",
+    "is_equipment": false,
+    "price_goth": 25,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 191,
+    "hex_id": "0xBF",
+    "name": "DIAMOND",
+    "is_equipment": false,
+    "price_goth": 1040,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 192,
+    "hex_id": "0xC0",
+    "name": "EMERALD",
+    "is_equipment": false,
+    "price_goth": 10,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 193,
+    "hex_id": "0xC1",
+    "name": "PEARL",
+    "is_equipment": false,
+    "price_goth": 220,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 194,
+    "hex_id": "0xC2",
+    "name": "RUBY",
+    "is_equipment": false,
+    "price_goth": 130,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 195,
+    "hex_id": "0xC3",
+    "name": "PERIDOT",
+    "is_equipment": false,
+    "price_goth": 140,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  },
+  {
+    "id": 196,
+    "hex_id": "0xC4",
+    "name": "SAPPHIRE",
+    "is_equipment": false,
+    "price_goth": 10,
+    "bonuses": {
+      "strength": 0,
+      "intelligence": 0,
+      "physical_defense": 0,
+      "fire_defense": 0,
+      "ice_defense": 0,
+      "lightning_defense": 0,
+      "black_defense": 0,
+      "white_defense": 0
+    }
+  }
+]

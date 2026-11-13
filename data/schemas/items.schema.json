@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OgreBattleItemsManifest",
+  "description": "Schema definition for Ogre Battle equipment, relic, and consumable items",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "name", "price_goth", "bonuses"],
+    "properties": {
+      "id": { "type": "integer", "minimum": 1, "maximum": 255 },
+      "hex_id": { "type": "string" },
+      "name": { "type": "string" },
+      "price_goth": { "type": "integer", "minimum": 0 },
+      "bonuses": {
+        "type": "object",
+        "required": [
+          "strength",
+          "intelligence",
+          "physical_defense",
+          "fire_defense",
+          "ice_defense",
+          "lightning_defense",
+          "black_defense",
+          "white_defense"
+        ],
+        "properties": {
+          "strength": { "type": "integer", "minimum": -128, "maximum": 127 },
+          "intelligence": { "type": "integer", "minimum": -128, "maximum": 127 },
+          "physical_defense": { "type": "integer", "minimum": -128, "maximum": 127 },
+          "fire_defense": { "type": "integer", "minimum": -128, "maximum": 127 },
+          "ice_defense": { "type": "integer", "minimum": -128, "maximum": 127 },
+          "lightning_defense": { "type": "integer", "minimum": -128, "maximum": 127 },
+          "black_defense": { "type": "integer", "minimum": -128, "maximum": 127 },
+          "white_defense": { "type": "integer", "minimum": -128, "maximum": 127 }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "mod_title": "OB Magic AI Elemental Resistance Fix",
+  "format_version": "1.0",
+  "description": "Decompiled from legacy binary patch",
+  "rom_size_bytes": 2097152,
+  "modified_domains": [],
+  "micro_patches": [
+    {
+      "rom_offset": "0x018F8B",
+      "length": 4,
+      "vanilla_bytes": "E8E8840A",
+      "patched_bytes": "5C008830"
+    },
+    {
+      "rom_offset": "0x180800",
+      "length": 19,
+      "vanilla_bytes": "00000000000000000000000000000000000000",
+      "patched_bytes": "DAAFC8F97EAABF8CF97EAABD810EC9649006A9"
+    },
+    {
+      "rom_offset": "0x180814",
+      "length": 10,
+      "vanilla_bytes": "00000000000000000000",
+      "patched_bytes": "840A8020AABFBCF57EC9"
+    },
+    {
+      "rom_offset": "0x18081F",
+      "length": 17,
+      "vanilla_bytes": "0000000000000000000000000000000000",
+      "patched_bytes": "F0F1840AC220E210650AE9A0F6C210AA29"
+    },
+    {
+      "rom_offset": "0x180832",
+      "length": 16,
+      "vanilla_bytes": "00000000000000000000000000000000",
+      "patched_bytes": "E220BF6CC807FAE8E87A710A5C928F03"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "mod_title": "Tactician Modern Rebalance Pack",
+  "version": "1.0.0",
+  "author": "Antigravity Modernization Lab",
+  "description": "Curated PC ergonomics rebalance: improves Samurai Master & Valkyrie back-row viability, lowers Paladin upkeep costs, and equips Dragoners with Low Sky mobility.",
+  "classes": [
+    {
+      "id": 7,
+      "hex_id": "0x07",
+      "name": "MASTER",
+      "movement": {
+        "type_code": 2,
+        "type_name": "Plains",
+        "weight": 3
+      },
+      "costs": {
+        "base_deploy_goth": 1020,
+        "daily_upkeep_per_level": 180,
+        "can_lead_squad": true
+      },
+      "stats": {
+        "base_hp": 96,
+        "hp_growth": 5,
+        "base_str": 55,
+        "str_growth": 3,
+        "base_agi": 59,
+        "agi_growth": 2,
+        "base_int": 54,
+        "int_growth": 2,
+        "base_cha": 64,
+        "base_ali": 79,
+        "base_luk": 54
+      },
+      "combat": {
+        "front_row_actions": 3,
+        "back_row_actions": 2,
+        "front_attack": { "id": 16, "hex_id": "0x10", "name": "ACID" },
+        "back_attack": { "id": 173, "hex_id": "0xAD", "name": "IANUKI" }
+      },
+      "resistances": {
+        "physical": 52,
+        "fire": 34,
+        "cold": 35,
+        "lightning": 37,
+        "black": 21,
+        "white": 69
+      }
+    },
+    {
+      "id": 3,
+      "hex_id": "0x03",
+      "name": "PALADIN",
+      "movement": {
+        "type_code": 2,
+        "type_name": "Plains",
+        "weight": 4
+      },
+      "costs": {
+        "base_deploy_goth": 800,
+        "daily_upkeep_per_level": 120,
+        "can_lead_squad": true
+      },
+      "stats": {
+        "base_hp": 67,
+        "hp_growth": 6,
+        "base_str": 56,
+        "str_growth": 3,
+        "base_agi": 56,
+        "agi_growth": 2,
+        "base_int": 45,
+        "int_growth": 2,
+        "base_cha": 62,
+        "base_ali": 78,
+        "base_luk": 60
+      },
+      "combat": {
+        "front_row_actions": 3,
+        "back_row_actions": 1,
+        "front_attack": { "id": 16, "hex_id": "0x10", "name": "ACID" },
+        "back_attack": { "id": 160, "hex_id": "0xA0", "name": "HEAL" }
+      },
+      "resistances": {
+        "physical": 53,
+        "fire": 41,
+        "cold": 46,
+        "lightning": 40,
+        "black": 26,
+        "white": 54
+      }
+    },
+    {
+      "id": 15,
+      "hex_id": "0x0F",
+      "name": "DRAGONER",
+      "movement": {
+        "type_code": 1,
+        "type_name": "Low Sky",
+        "weight": 3
+      },
+      "costs": {
+        "base_deploy_goth": 350,
+        "daily_upkeep_per_level": 100,
+        "can_lead_squad": true
+      },
+      "stats": {
+        "base_hp": 83,
+        "hp_growth": 4,
+        "base_str": 48,
+        "str_growth": 3,
+        "base_agi": 49,
+        "agi_growth": 2,
+        "base_int": 49,
+        "int_growth": 2,
+        "base_cha": 55,
+        "base_ali": 50,
+        "base_luk": 58
+      },
+      "combat": {
+        "front_row_actions": 2,
+        "back_row_actions": 2,
+        "front_attack": { "id": 16, "hex_id": "0x10", "name": "ACID" },
+        "back_attack": { "id": 16, "hex_id": "0x10", "name": "ACID" }
+      },
+      "resistances": {
+        "physical": 43,
+        "fire": 26,
+        "cold": 54,
+        "lightning": 40,
+        "black": 40,
+        "white": 40
+      }
+    }
+  ]
+}

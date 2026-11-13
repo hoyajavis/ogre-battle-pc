@@ -1,0 +1,932 @@
+[
+  {
+    "stage_id": 1,
+    "stage_name": "Castle of Warren",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 176,
+        "hex_id": "0xB0",
+        "name": "SUMMONS"
+      }
+    ]
+  },
+  {
+    "stage_id": 2,
+    "stage_name": "Borders of Sharom",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 176,
+        "hex_id": "0xB0",
+        "name": "SUMMONS"
+      }
+    ]
+  },
+  {
+    "stage_id": 3,
+    "stage_name": "Sharom District",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      },
+      {
+        "item_id": 176,
+        "hex_id": "0xB0",
+        "name": "SUMMONS"
+      }
+    ]
+  },
+  {
+    "stage_id": 4,
+    "stage_name": "Pogrom Forest",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 176,
+        "hex_id": "0xB0",
+        "name": "SUMMONS"
+      }
+    ]
+  },
+  {
+    "stage_id": 5,
+    "stage_name": "Lake Jansenia",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 181,
+        "hex_id": "0xB5",
+        "name": "SUNSHINE"
+      }
+    ]
+  },
+  {
+    "stage_id": 6,
+    "stage_name": "Deneb's Garden",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 181,
+        "hex_id": "0xB5",
+        "name": "SUNSHINE"
+      }
+    ]
+  },
+  {
+    "stage_id": 7,
+    "stage_name": "Slums of Zenobia",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      }
+    ]
+  },
+  {
+    "stage_id": 8,
+    "stage_name": "Island Avalon",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 176,
+        "hex_id": "0xB0",
+        "name": "SUMMONS"
+      },
+      {
+        "item_id": 136,
+        "hex_id": "0x88",
+        "name": "PEARL"
+      }
+    ]
+  },
+  {
+    "stage_id": 9,
+    "stage_name": "Kastolatian Sea",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 178,
+        "hex_id": "0xB2",
+        "name": "BOOTS"
+      }
+    ]
+  },
+  {
+    "stage_id": 10,
+    "stage_name": "Diaspola",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 178,
+        "hex_id": "0xB2",
+        "name": "BOOTS"
+      },
+      {
+        "item_id": 126,
+        "hex_id": "0x7E",
+        "name": "BOUGH"
+      },
+      {
+        "item_id": 137,
+        "hex_id": "0x89",
+        "name": "BEEHIVE"
+      }
+    ]
+  },
+  {
+    "stage_id": 11,
+    "stage_name": "Kalbian Peninsula",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 180,
+        "hex_id": "0xB4",
+        "name": "MOONBEAM"
+      }
+    ]
+  },
+  {
+    "stage_id": 12,
+    "stage_name": "Valley of Kastro",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      }
+    ]
+  },
+  {
+    "stage_id": 13,
+    "stage_name": "Balmorian Ruins",
+    "inventory": [
+      {
+        "item_id": 165,
+        "hex_id": "0xA5",
+        "name": "CURE"
+      },
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      }
+    ]
+  },
+  {
+    "stage_id": 14,
+    "stage_name": "City of Malano",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 178,
+        "hex_id": "0xB2",
+        "name": "BOOTS"
+      },
+      {
+        "item_id": 177,
+        "hex_id": "0xB1",
+        "name": "CHARM"
+      }
+    ]
+  },
+  {
+    "stage_id": 15,
+    "stage_name": "The Tundra",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 178,
+        "hex_id": "0xB2",
+        "name": "BOOTS"
+      },
+      {
+        "item_id": 180,
+        "hex_id": "0xB4",
+        "name": "MOONBEAM"
+      }
+    ]
+  },
+  {
+    "stage_id": 16,
+    "stage_name": "Antalia",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 176,
+        "hex_id": "0xB0",
+        "name": "SUMMONS"
+      },
+      {
+        "item_id": 181,
+        "hex_id": "0xB5",
+        "name": "SUNSHINE"
+      }
+    ]
+  },
+  {
+    "stage_id": 17,
+    "stage_name": "Shangrila",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      }
+    ]
+  },
+  {
+    "stage_id": 18,
+    "stage_name": "Fort Allamoot",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 178,
+        "hex_id": "0xB2",
+        "name": "BOOTS"
+      }
+    ]
+  },
+  {
+    "stage_id": 19,
+    "stage_name": "Dalmuhd Desert",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      },
+      {
+        "item_id": 180,
+        "hex_id": "0xB4",
+        "name": "MOONBEAM"
+      }
+    ]
+  },
+  {
+    "stage_id": 20,
+    "stage_name": "Ryhan Sea",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      },
+      {
+        "item_id": 180,
+        "hex_id": "0xB4",
+        "name": "MOONBEAM"
+      }
+    ]
+  },
+  {
+    "stage_id": 21,
+    "stage_name": "Fort Shulamana",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      }
+    ]
+  },
+  {
+    "stage_id": 22,
+    "stage_name": "Shrine of Kulyn",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      },
+      {
+        "item_id": 180,
+        "hex_id": "0xB4",
+        "name": "MOONBEAM"
+      }
+    ]
+  },
+  {
+    "stage_id": 23,
+    "stage_name": "Xanadu",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 178,
+        "hex_id": "0xB2",
+        "name": "BOOTS"
+      },
+      {
+        "item_id": 139,
+        "hex_id": "0x8B",
+        "name": "FOLIO"
+      }
+    ]
+  },
+  {
+    "stage_id": 24,
+    "stage_name": "Zeteginea",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      },
+      {
+        "item_id": 181,
+        "hex_id": "0xB5",
+        "name": "SUNSHINE"
+      }
+    ]
+  },
+  {
+    "stage_id": 25,
+    "stage_name": "Temple Shalina",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 173,
+        "hex_id": "0xAD",
+        "name": "BELL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      }
+    ]
+  },
+  {
+    "stage_id": 26,
+    "stage_name": "Muspelm",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      },
+      {
+        "item_id": 177,
+        "hex_id": "0xB1",
+        "name": "CHARM"
+      }
+    ]
+  },
+  {
+    "stage_id": 27,
+    "stage_name": "Organa",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      },
+      {
+        "item_id": 177,
+        "hex_id": "0xB1",
+        "name": "CHARM"
+      }
+    ]
+  },
+  {
+    "stage_id": 28,
+    "stage_name": "Shiguld",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      },
+      {
+        "item_id": 174,
+        "hex_id": "0xAE",
+        "name": "DOWSER"
+      }
+    ]
+  },
+  {
+    "stage_id": 29,
+    "stage_name": "Antanyl",
+    "inventory": [
+      {
+        "item_id": 166,
+        "hex_id": "0xA6",
+        "name": "HEAL"
+      },
+      {
+        "item_id": 169,
+        "hex_id": "0xA9",
+        "name": "ALL HEAL"
+      },
+      {
+        "item_id": 167,
+        "hex_id": "0xA7",
+        "name": "REVIVE"
+      },
+      {
+        "item_id": 172,
+        "hex_id": "0xAC",
+        "name": "JOKER"
+      },
+      {
+        "item_id": 182,
+        "hex_id": "0xB6",
+        "name": "CRYSTAL"
+      }
+    ]
+  },
+  {
+    "stage_id": 30,
+    "stage_name": "Dragon's Haven",
+    "inventory": [
+      {
+        "item_id": 159,
+        "hex_id": "0x9F",
+        "name": "STR."
+      },
+      {
+        "item_id": 161,
+        "hex_id": "0xA1",
+        "name": "INT."
+      },
+      {
+        "item_id": 160,
+        "hex_id": "0xA0",
+        "name": "AGI."
+      },
+      {
+        "item_id": 158,
+        "hex_id": "0x9E",
+        "name": "HP."
+      },
+      {
+        "item_id": 164,
+        "hex_id": "0xA4",
+        "name": "LUK."
+      }
+    ]
+  }
+]

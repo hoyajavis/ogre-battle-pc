@@ -40,10 +40,12 @@ jobs:
           print('All configuration files validated successfully.')
           PY
 
-      - name: Run Gate 2 & Gate 3 Automated Verification Suites
+      - name: Run Gate 2, Gate 3 & Area 4 Automated Verification Suites
         run: |
           gcc -O2 -Wall -Wextra -Werror src/engine/input.c tests/test_mouse_three_pillar.c -o /tmp/test_mouse_three_pillar
           /tmp/test_mouse_three_pillar
           gcc -O2 -Wall -Wextra -Werror src/engine/input.c src/engine/snes_ui_rasterizer.c src/engine/widescreen.c tests/test_widescreen_16_9.c -o /tmp/test_widescreen_16_9
           /tmp/test_widescreen_16_9
+          gcc -O2 -Wall -Wextra -Werror -Iinclude -c src/engine/boot_loader.c -o /tmp/boot_loader.o
+          python3 -m unittest discover -s tests -p "*.py" -v
 
