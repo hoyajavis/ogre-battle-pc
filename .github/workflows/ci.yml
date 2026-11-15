@@ -1,10 +1,14 @@
-name: CI & Quality Gates
+name: CI & Cross-Platform Release
 
 on:
   push:
-    branches: [ main, gate/* ]
+    branches: [ main, gate/*, release/* ]
+    tags: [ 'v*' ]
   pull_request:
     branches: [ main, gate/* ]
+
+permissions:
+  contents: write
 
 jobs:
   lint-and-validate:
@@ -40,12 +44,123 @@ jobs:
           print('All configuration files validated successfully.')
           PY
 
-      - name: Run Gate 2, Gate 3 & Area 4 Automated Verification Suites
+      - name: Run Area 4 Python Verification Suite
         run: |
-          gcc -O2 -Wall -Wextra -Werror src/engine/input.c tests/test_mouse_three_pillar.c -o /tmp/test_mouse_three_pillar
-          /tmp/test_mouse_three_pillar
-          gcc -O2 -Wall -Wextra -Werror src/engine/input.c src/engine/snes_ui_rasterizer.c src/engine/widescreen.c tests/test_widescreen_16_9.c -o /tmp/test_widescreen_16_9
-          /tmp/test_widescreen_16_9
-          gcc -O2 -Wall -Wextra -Werror -Iinclude -c src/engine/boot_loader.c -o /tmp/boot_loader.o
-          python3 -m unittest discover -s tests -p "*.py" -v
+          PYTHONPATH=tools python3 -m unittest discover -s tests -p "*.py" -v
 
+  build-and-package:
+    name: Build & Test (${{ matrix.os }})
+    needs: lint-and-validate
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_name: ogre-battle-pc-linux-x64
+            archive_ext: tar.gz
+          - os: macos-latest
+            artifact_name: ogre-battle-pc-macos-universal
+            archive_ext: tar.gz
+          - os: windows-latest
+            artifact_name: ogre-battle-pc-windows-x64
+            archive_ext: zip
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install SDL2 (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsdl2-dev
+
+      - name: Install SDL2 (macOS)
+        if: runner.os == 'macOS'
+        run: brew install sdl2
+
+      - name: Setup MSYS2 & SDL2 (Windows)
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-ninja
+            mingw-w64-x86_64-SDL2
+
+      - name: Configure & Build (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j4
+
+      - name: Configure & Build (Windows MSYS2)
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
+        run: |
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j4
+
+      - name: Run ROM-Independent Engine CTest Suites (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          ctest --test-dir build -R "Gate2MouseThreePillarTest|Gate3Widescreen16x9Test|Gate5ConfigGuiTest" --output-on-failure
+
+      - name: Run ROM-Independent Engine CTest Suites (Windows)
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
+        run: |
+          ctest --test-dir build -R "Gate2MouseThreePillarTest|Gate3Widescreen16x9Test|Gate5ConfigGuiTest" --output-on-failure
+
+      - name: Stage Release Package (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          mkdir -p dist/${{ matrix.artifact_name }}
+          cp build/ogre_battle_pc dist/${{ matrix.artifact_name }}/
+          cp -r data dist/${{ matrix.artifact_name }}/
+          cp README.md dist/${{ matrix.artifact_name }}/
+          tar -czf ${{ matrix.artifact_name }}.tar.gz -C dist ${{ matrix.artifact_name }}
+
+      - name: Stage Release Package (Windows)
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
+        run: |
+          mkdir -p dist/${{ matrix.artifact_name }}
+          cp build/ogre_battle_pc.exe dist/${{ matrix.artifact_name }}/
+          cp /mingw64/bin/SDL2.dll dist/${{ matrix.artifact_name }}/
+          cp -r data dist/${{ matrix.artifact_name }}/
+          cp README.md dist/${{ matrix.artifact_name }}/
+          (cd dist && cmake -E tar "cf" ../${{ matrix.artifact_name }}.zip --format=zip ${{ matrix.artifact_name }})
+
+      - name: Upload Release Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_name }}.${{ matrix.archive_ext }}
+
+  publish-release:
+    name: Publish GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build-and-package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts
+
+      - name: Flatten Artifacts
+        run: |
+          mkdir -p release-files
+          find release-artifacts -type f \( -name "*.tar.gz" -o -name "*.zip" \) -exec cp {} release-files/ \;
+          ls -lh release-files/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release-files/*
+          generate_release_notes: true

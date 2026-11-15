@@ -91,22 +91,32 @@ target_link_libraries(runner_core PUBLIC ob_recomp snesrecomp lakesnes)
 
 # Core OgreBattlePC runner / harness (requires SDL2)
 find_package(SDL2 QUIET)
-if(SDL2_FOUND OR WIN32)
+if(SDL2_FOUND)
     add_executable(ogre_battle_pc
         src/main.c
+        src/engine/config.c
+        src/engine/gui_menu.c
+        src/engine/input.c
+        src/engine/widescreen.c
+        src/engine/snes_ui_rasterizer.c
+        src/engine/boot_loader.c
     )
     target_include_directories(ogre_battle_pc PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/engine
         ${CMAKE_CURRENT_SOURCE_DIR}/runner/include
-        ${SDL2_INCLUDE_DIR}
+        ${SDL2_INCLUDE_DIRS}
         ${LAKESNES_DIR}
     )
-    target_link_libraries(ogre_battle_pc PRIVATE
-        runner_core
-        lakesnes
-        SDL2
-        m
-    )
+    if(WIN32)
+        target_compile_definitions(ogre_battle_pc PRIVATE SDL_MAIN_HANDLED)
+    endif()
+    if(TARGET SDL2::SDL2)
+        target_link_libraries(ogre_battle_pc PRIVATE runner_core lakesnes SDL2::SDL2 m)
+    else()
+        target_link_libraries(ogre_battle_pc PRIVATE runner_core lakesnes ${SDL2_LIBRARIES} m)
+    endif()
 endif()
 
 # Oracle & Lockstep Verification Test Suite
