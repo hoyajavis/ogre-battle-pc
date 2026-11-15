@@ -1,18 +1,27 @@
 /* Bank $02 recompiled routines for Ogre Battle: The March of the Black Queen.
  * Generated automatically by tools/lift_all_banks.py. DO NOT COMMIT DERIVED CODE. */
 
-/* Statistics: 96 lifted, 244 unlifted in Bank $02 */
+/* Statistics: 63 lifted, 277 unlifted in Bank $02 */
 /* not lifted: $028000: calls unlifted target 0x028052: executes native on LakeSnes */
 /* not lifted: $028014: calls unlifted target 0x028052: executes native on LakeSnes */
 /* not lifted: $028052: COP at $02:806A */
-/* not lifted: $028099: calls unlifted target 0x02FD30: executes native on LakeSnes */
+/* not lifted: $028099: calls unlifted target 0x0284DD: executes native on LakeSnes */
+/* not lifted: $02813E: calls unlifted target 0x028455: executes native on LakeSnes */
 /* not lifted: $028199: calls unlifted target 0x028426: executes native on LakeSnes */
 /* not lifted: $0281DE: calls unlifted target 0x028426: executes native on LakeSnes */
 /* not lifted: $0281F2: calls unlifted target 0x02DA11: executes native on LakeSnes */
 /* not lifted: $028207: calls unlifted target 0x02DA1F: executes native on LakeSnes */
 /* not lifted: $02828A: calls unlifted target 0x02DA07: executes native on LakeSnes */
 /* not lifted: $028335: BRK at $02:838C */
+/* not lifted: $0283C8: hardware timing / wait loop (executes genuine on LakeSnes) */
+/* not lifted: $0283D7: hardware timing / wait loop (executes genuine on LakeSnes) */
+/* not lifted: $0283E6: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $028400: PLA at $840B pulls below the entry stack (return-address trick) */
+/* not lifted: $02840E: hardware timing / wait loop (executes genuine on LakeSnes) */
+/* not lifted: $02843D: calls unlifted target 0x02D779: executes native on LakeSnes */
+/* not lifted: $028455: calls unlifted target 0x02D779: executes native on LakeSnes */
+/* not lifted: $02847F: calls unlifted target 0x02D779: executes native on LakeSnes */
+/* not lifted: $0284DD: calls unlifted target 0x02D779: executes native on LakeSnes */
 /* not lifted: $028505: calls unlifted target 0x02F2BD: executes native on LakeSnes */
 /* not lifted: $02853A: calls unlifted target 0x02DA26: executes native on LakeSnes */
 /* not lifted: $0285FB: calls unlifted target 0x02DA26: executes native on LakeSnes */
@@ -43,10 +52,10 @@
 /* not lifted: $029556: calls RAM trampoline/sub-8000 ($021199): executes native on LakeSnes */
 /* not lifted: $029594: BRK at $02:95B3 */
 /* not lifted: $0296DE: calls unlifted target 0x02AD29: executes native on LakeSnes */
-/* not lifted: $029723: calls unlifted target 0x02AD29: executes native on LakeSnes */
+/* not lifted: $029723: calls unlifted target 0x0283E6: executes native on LakeSnes */
 /* not lifted: $029738: calls RAM trampoline/sub-8000 ($021199): executes native on LakeSnes */
 /* not lifted: $02973B: calls RAM trampoline/sub-8000 ($021199): executes native on LakeSnes */
-/* not lifted: $0297D1: calls unlifted target 0x02AD29: executes native on LakeSnes */
+/* not lifted: $0297D1: calls unlifted target 0x0283E6: executes native on LakeSnes */
 /* not lifted: $0298C6: calls RAM trampoline/sub-8000 ($021199): executes native on LakeSnes */
 /* not lifted: $029943: calls unlifted target 0x02BE28: executes native on LakeSnes */
 /* not lifted: $0299B5: calls unlifted target 0x028757: executes native on LakeSnes */
@@ -99,13 +108,17 @@
 /* not lifted: $02B524: calls unlifted target 0x02B828: executes native on LakeSnes */
 /* not lifted: $02B568: BRK at $02:B576 */
 /* not lifted: $02B610: calls unlifted target 0x02B828: executes native on LakeSnes */
+/* not lifted: $02B62D: calls unlifted target 0x0283E6: executes native on LakeSnes */
+/* not lifted: $02B6A8: calls unlifted target 0x0283E6: executes native on LakeSnes */
 /* not lifted: $02B744: calls unlifted target 0x02DA34: executes native on LakeSnes */
 /* not lifted: $02B786: calls unlifted target 0x02DA34: executes native on LakeSnes */
 /* not lifted: $02B7C8: calls unlifted target 0x02DA34: executes native on LakeSnes */
 /* not lifted: $02B828: calls RAM trampoline/sub-8000 ($021199): executes native on LakeSnes */
+/* not lifted: $02B8E7: calls unlifted target 0x02B9ED: executes native on LakeSnes */
 /* not lifted: $02B900: calls unlifted target 0x02B904: executes native on LakeSnes */
 /* not lifted: $02B904: RTS at $B9E8 with 2 bytes still pushed */
 /* not lifted: $02B9E9: calls unlifted target 0x02F70F: executes native on LakeSnes */
+/* not lifted: $02B9ED: calls unlifted target 0x02D99A: executes native on LakeSnes */
 /* not lifted: $02BA1C: calls RAM trampoline/sub-8000 ($021199): executes native on LakeSnes */
 /* not lifted: $02BAEF: calls unlifted target 0x02AD29: executes native on LakeSnes */
 /* not lifted: $02BB02: BRK at $02:BBE3 */
@@ -134,9 +147,11 @@
 /* not lifted: $02C737: calls unlifted target 0x02DA11: executes native on LakeSnes */
 /* not lifted: $02C74F: calls unlifted target 0x02DA07: executes native on LakeSnes */
 /* not lifted: $02C769: BRK at $02:C771 */
-/* not lifted: $02C932: calls unlifted target 0x02DA0E: executes native on LakeSnes */
+/* not lifted: $02C932: calls unlifted target 0x0283E6: executes native on LakeSnes */
 /* not lifted: $02C952: calls unlifted target 0x02DA0E: executes native on LakeSnes */
 /* not lifted: $02CD0B: calls unlifted target 0x02F34D: executes native on LakeSnes */
+/* not lifted: $02D0A7: calls unlifted target 0x02D779: executes native on LakeSnes */
+/* not lifted: $02D11B: calls unlifted target 0x02D77F: executes native on LakeSnes */
 /* not lifted: $02D191: BRK at $02:D269 */
 /* not lifted: $02D293: $02:D2A8 reached with two different M/X/stack states */
 /* not lifted: $02D2D6: calls unlifted target 0x02DA26: executes native on LakeSnes */
@@ -150,11 +165,14 @@
 /* not lifted: $02D631: calls unlifted target 0x029594: executes native on LakeSnes */
 /* not lifted: $02D650: calls unlifted target 0x029594: executes native on LakeSnes */
 /* not lifted: $02D766: BRK at $02:D776 */
+/* not lifted: $02D779: hardware timing / wait loop (executes genuine on LakeSnes) */
+/* not lifted: $02D77F: calls unlifted target 0x02D99A: executes native on LakeSnes */
 /* not lifted: $02D790: calls unlifted target 0x029594: executes native on LakeSnes */
 /* not lifted: $02D852: calls unlifted target 0x02D85A: executes native on LakeSnes */
 /* not lifted: $02D85A: calls unlifted target 0x02F2BD: executes native on LakeSnes */
 /* not lifted: $02D861: calls unlifted target 0x02BD84: executes native on LakeSnes */
 /* not lifted: $02D918: calls unlifted target 0x02D766: executes native on LakeSnes */
+/* not lifted: $02D99A: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $02D9B5: BRK at $02:D9C0 */
 /* not lifted: $02DA07: calls RAM trampoline/sub-8000 ($021199): executes native on LakeSnes */
 /* not lifted: $02DA0E: BRK at $02:DA16 */
@@ -171,8 +189,11 @@
 /* not lifted: $02E003: BRK at $02:DEE4 */
 /* not lifted: $02E06A: BRK at $02:E08A */
 /* not lifted: $02E1DA: PLX at $E860 pulls below the entry stack (return-address trick) */
+/* not lifted: $02E309: calls unlifted target 0x02B9ED: executes native on LakeSnes */
 /* not lifted: $02E424: BRK at $02:E456 */
+/* not lifted: $02E66F: calls unlifted target 0x02D779: executes native on LakeSnes */
 /* not lifted: $02E6F8: RTS at $E723 with 1 bytes still pushed */
+/* not lifted: $02E724: calls unlifted target 0x02B9ED: executes native on LakeSnes */
 /* not lifted: $02E73C: calls unlifted target 0x02E791: executes native on LakeSnes */
 /* not lifted: $02E774: calls unlifted target 0x02E79C: executes native on LakeSnes */
 /* not lifted: $02E791: tail jump at $E834 with 4 bytes pushed */
@@ -184,13 +205,15 @@
 /* not lifted: $02E8B5: RTS at $E8CD with 2 bytes still pushed */
 /* not lifted: $02E8CE: calls unlifted target 0x02F34D: executes native on LakeSnes */
 /* not lifted: $02E902: calls RAM trampoline/sub-8000 ($021199): executes native on LakeSnes */
-/* not lifted: $02E909: calls unlifted target 0x02E962: executes native on LakeSnes */
+/* not lifted: $02E909: calls unlifted target 0x02E968: executes native on LakeSnes */
 /* not lifted: $02E962: COP at $02:E97A */
+/* not lifted: $02E968: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $02E9B2: calls unlifted target 0x02E9E1: executes native on LakeSnes */
 /* not lifted: $02E9E1: BRK at $02:EA77 */
-/* not lifted: $02EAAF: calls unlifted target 0x02EB7A: executes native on LakeSnes */
-/* not lifted: $02EADB: calls unlifted target 0x02EB7A: executes native on LakeSnes */
-/* not lifted: $02EAFA: calls unlifted target 0x02EB7A: executes native on LakeSnes */
+/* not lifted: $02EAAF: calls unlifted target 0x02EB20: executes native on LakeSnes */
+/* not lifted: $02EADB: calls unlifted target 0x02EB20: executes native on LakeSnes */
+/* not lifted: $02EAFA: calls unlifted target 0x02EB20: executes native on LakeSnes */
+/* not lifted: $02EB20: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $02EB7A: calls unlifted target 0x02EBAA: executes native on LakeSnes */
 /* not lifted: $02EBAA: BRK at $02:EBD1 */
 /* not lifted: $02EBD3: BRK at $02:EBEF */
@@ -203,6 +226,7 @@
 /* not lifted: $02EC8A: BRK at $02:ECEE */
 /* not lifted: $02EC90: BRK at $02:ECEE */
 /* not lifted: $02EC97: BRK at $02:ECEE */
+/* not lifted: $02EDF8: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $02F004: BRK at $02:ECEE */
 /* not lifted: $02F1E8: RTS at $F222 with 1 bytes still pushed */
 /* not lifted: $02F1F5: calls unlifted target 0x02EBD3: executes native on LakeSnes */
@@ -217,30 +241,39 @@
 /* not lifted: $02F2ED: PLX at $F346 pulls below the entry stack (return-address trick) */
 /* not lifted: $02F34D: BRK at $02:F3DE */
 /* not lifted: $02F369: BRK at $02:F3DE */
+/* not lifted: $02F417: hardware timing / wait loop (executes genuine on LakeSnes) */
+/* not lifted: $02F42D: hardware timing / wait loop (executes genuine on LakeSnes) */
+/* not lifted: $02F469: hardware timing / wait loop (executes genuine on LakeSnes) */
+/* not lifted: $02F479: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $02F483: calls unlifted target 0x02F9F0: executes native on LakeSnes */
 /* not lifted: $02F4BE: calls unlifted target 0x02F9F0: executes native on LakeSnes */
 /* not lifted: $02F4DA: calls unlifted target 0x02F9F0: executes native on LakeSnes */
 /* not lifted: $02F4F6: BRK at $02:F58C */
+/* not lifted: $02F5C2: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $02F5E0: calls unlifted target 0x02F8E4: executes native on LakeSnes */
 /* not lifted: $02F70F: calls unlifted target 0x02F8E4: executes native on LakeSnes */
+/* not lifted: $02F817: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $02F853: calls unlifted target 0x02F8C0: executes native on LakeSnes */
 /* not lifted: $02F880: calls unlifted target 0x02F893: executes native on LakeSnes */
 /* not lifted: $02F893: calls unlifted target 0x02F8E4: executes native on LakeSnes */
-/* not lifted: $02F8C0: calls unlifted target 0x02F8E4: executes native on LakeSnes */
-/* not lifted: $02F8E4: calls unlifted target 0x02F905: executes native on LakeSnes */
-/* not lifted: $02F8EF: calls unlifted target 0x02F905: executes native on LakeSnes */
+/* not lifted: $02F8C0: calls unlifted target 0x02F817: executes native on LakeSnes */
+/* not lifted: $02F8E4: calls unlifted target 0x02F936: executes native on LakeSnes */
+/* not lifted: $02F8EF: calls unlifted target 0x02F936: executes native on LakeSnes */
 /* not lifted: $02F905: calls unlifted target 0x02DA07: executes native on LakeSnes */
+/* not lifted: $02F936: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $02F965: calls RAM trampoline/sub-8000 ($027FA9): executes native on LakeSnes */
 /* not lifted: $02F9B2: calls unlifted target 0x00A773: executes native on LakeSnes */
+/* not lifted: $02F9BD: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $02F9F0: PLY at $F9F8 pulls below the entry stack (return-address trick) */
+/* not lifted: $02FB1D: hardware timing / wait loop (executes genuine on LakeSnes) */
 /* not lifted: $02FB1F: PLY at $FB27 pulls below the entry stack (return-address trick) */
 /* not lifted: $02FBDE: PLA at $FBEC pulls below the entry stack (return-address trick) */
 /* not lifted: $02FC29: calls unlifted target 0x02FC49: executes native on LakeSnes */
 /* not lifted: $02FC49: calls unlifted target 0x02FCB4: executes native on LakeSnes */
 /* not lifted: $02FC6E: calls unlifted target 0x02FC90: executes native on LakeSnes */
-/* not lifted: $02FC90: calls unlifted target 0x02FCB4: executes native on LakeSnes */
-/* not lifted: $02FCB4: calls unlifted target 0x02FCD5: executes native on LakeSnes */
-/* not lifted: $02FCBF: calls unlifted target 0x02FCD5: executes native on LakeSnes */
+/* not lifted: $02FC90: calls unlifted target 0x02F817: executes native on LakeSnes */
+/* not lifted: $02FCB4: calls unlifted target 0x02F936: executes native on LakeSnes */
+/* not lifted: $02FCBF: calls unlifted target 0x02F936: executes native on LakeSnes */
 /* not lifted: $02FCD5: calls unlifted target 0x02DA1F: executes native on LakeSnes */
 /* not lifted: $02FD17: calls unlifted target 0x05CE98: executes native on LakeSnes */
 /* not lifted: $02FD26: calls unlifted target 0x05CFC7: executes native on LakeSnes */
@@ -254,223 +287,6 @@
 #if defined(_MSC_VER)
 #pragma warning(disable: 4102)
 #endif
-
-/* $02813E, entered with P=$20 via JSR */
-void gen_02813E(void) {
-    goto L_813E;
-L_813E:;
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x04E2)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 813E LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x00);  /* 8141 CMP */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_8149;  /* 8143 BEQ */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x01);  /* 8145 CMP */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_815A;  /* 8147 BNE */
-L_8149:;
-    recomp_tick(24); { uint16_t _v = 0x0002; g_cpu.X = _v; g_nz16(_v); }  /* 8149 LDX */
-    recomp_tick(40); g_wr16(g_abs(0x04D0), (uint16_t)g_cpu.X);  /* 814C STX */
-    recomp_tick(16); { uint8_t _v = 0x00; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 814F LDA */
-    recomp_tick(32); g_wr8(g_abs(0x04D2), (uint8_t)(uint8_t)g_cpu.C);  /* 8151 STA */
-    recomp_tick(16); { uint8_t _v = 0x01; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8154 LDA */
-    recomp_tick(32); g_wr8(g_abs(0x04D3), (uint8_t)(uint8_t)g_cpu.C);  /* 8156 STA */
-    recomp_tick(14); return;  /* 8159 RTS */
-L_815A:;
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x4A)); g_cpu.X = _v; g_nz16(_v); }  /* 815A LDX */
-    recomp_tick(40); g_wr16(g_abs(0x04D0), (uint16_t)g_cpu.X);  /* 815C STX */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x04D0)); g_cpu.X = _v; g_nz16(_v); }  /* 815F LDX */
-    recomp_tick(40); { uint32_t _e = g_abs(0x04D0); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* 8162 INC */
-    recomp_tick(16); { uint8_t _v = 0x07; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8165 LDA */
-    recomp_tick(32); g_wr8(g_absx(0x04D2), (uint8_t)(uint8_t)g_cpu.C);  /* 8167 STA */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x04D0)); g_cpu.X = _v; g_nz16(_v); }  /* 816A LDX */
-    recomp_tick(40); { uint32_t _e = g_abs(0x04D0); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* 816D INC */
-    recomp_tick(16); { uint8_t _v = 0x08; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8170 LDA */
-    recomp_tick(32); g_wr8(g_absx(0x04D2), (uint8_t)(uint8_t)g_cpu.C);  /* 8172 STA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x04EE)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8175 LDA */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_818A;  /* 8178 BEQ */
-    recomp_tick(30); g_push16(0x817C); func_table_call_jsr(0x028455); g_cpu.S += 2;  /* 817A JSR */
-    recomp_tick(16); if (!g_cpu.flag_C) goto L_818A;  /* 817D BCC */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x04D0)); g_cpu.X = _v; g_nz16(_v); }  /* 817F LDX */
-    recomp_tick(40); { uint32_t _e = g_abs(0x04D0); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* 8182 INC */
-    recomp_tick(16); { uint8_t _v = 0x0A; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8185 LDA */
-    recomp_tick(32); g_wr8(g_absx(0x04D2), (uint8_t)(uint8_t)g_cpu.C);  /* 8187 STA */
-L_818A:;
-    recomp_tick(30); g_push16(0x818C); func_table_call_jsr(0x02857F); g_cpu.S += 2;  /* 818A JSR */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x04D0)); g_cpu.X = _v; g_nz16(_v); }  /* 818D LDX */
-    recomp_tick(40); { uint32_t _e = g_abs(0x04D0); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* 8190 INC */
-    recomp_tick(16); { uint8_t _v = 0x20; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8193 LDA */
-    recomp_tick(32); g_wr8(g_absx(0x04D2), (uint8_t)(uint8_t)g_cpu.C);  /* 8195 STA */
-    recomp_tick(14); return;  /* 8198 RTS */
-}
-
-/* $0283C8, entered with P=$20 via JSR */
-void gen_0283C8(void) {
-    goto L_83C8;
-L_83C8:;
-    recomp_tick(14); g_push8((uint8_t)g_cpu.C);  /* 83C8 PHA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x14DE)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 83C9 LDA */
-    recomp_tick(32); g_wr8(g_abs(0x174D), (uint8_t)(uint8_t)g_cpu.C);  /* 83CC STA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x14E0)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 83CF LDA */
-    recomp_tick(32); g_wr8(g_abs(0x174F), (uint8_t)(uint8_t)g_cpu.C);  /* 83D2 STA */
-    recomp_tick(14); { uint8_t _v = g_pull8(); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 83D5 PLA */
-    recomp_tick(14); return;  /* 83D6 RTS */
-}
-
-/* $0283D7, entered with P=$20 via JSR */
-void gen_0283D7(void) {
-    goto L_83D7;
-L_83D7:;
-    recomp_tick(14); g_push8((uint8_t)g_cpu.C);  /* 83D7 PHA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x174D)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 83D8 LDA */
-    recomp_tick(32); g_wr8(g_abs(0x14DE), (uint8_t)(uint8_t)g_cpu.C);  /* 83DB STA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x174F)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 83DE LDA */
-    recomp_tick(32); g_wr8(g_abs(0x14E0), (uint8_t)(uint8_t)g_cpu.C);  /* 83E1 STA */
-    recomp_tick(14); { uint8_t _v = g_pull8(); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 83E4 PLA */
-    recomp_tick(14); return;  /* 83E5 RTS */
-}
-
-/* $0283E6, entered with P=$20 via JSR */
-void gen_0283E6(void) {
-    goto L_83E6;
-L_83E6:;
-    recomp_tick(14); g_push16((uint16_t)g_cpu.X);  /* 83E6 PHX */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0104)); g_cpu.X = _v; g_nz16(_v); }  /* 83E7 LDX */
-    recomp_tick(24); g_cmp16((uint16_t)g_cpu.X, 0xE001);  /* 83EA CPX */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_840C;  /* 83ED BEQ */
-    recomp_tick(14); g_push8((uint8_t)g_cpu.C);  /* 83EF PHA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0300)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 83F0 LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0xF3); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 83F3 AND */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C | 0x04); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 83F5 ORA */
-    recomp_tick(32); g_wr8(g_abs(0x0300), (uint8_t)(uint8_t)g_cpu.C);  /* 83F7 STA */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0476)); g_cpu.Y = _v; g_nz16(_v); }  /* 83FA LDY */
-    recomp_tick(40); g_wr16(g_abs(0x0467), (uint16_t)g_cpu.Y);  /* 83FD STY */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x4A)); g_cpu.Y = _v; g_nz16(_v); }  /* 8400 LDY */
-    recomp_tick(40); g_wr16(g_abs(0x0476), (uint16_t)g_cpu.Y);  /* 8402 STY */
-    recomp_tick(24); { uint16_t _v = 0xE001; g_cpu.X = _v; g_nz16(_v); }  /* 8405 LDX */
-    recomp_tick(40); g_wr16(g_abs(0x0104), (uint16_t)g_cpu.X);  /* 8408 STX */
-    recomp_tick(14); { uint8_t _v = g_pull8(); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 840B PLA */
-L_840C:;
-    recomp_tick(14); { uint16_t _v = g_pull16(); g_cpu.X = _v; g_nz16(_v); }  /* 840C PLX */
-    recomp_tick(14); return;  /* 840D RTS */
-}
-
-/* $02840E, entered with P=$20 via JSR */
-void gen_02840E(void) {
-    goto L_840E;
-L_840E:;
-    recomp_tick(14); g_push8((uint8_t)g_cpu.C);  /* 840E PHA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0300)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 840F LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x04); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8412 AND */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_8424;  /* 8414 BEQ */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0300)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8416 LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0xFB); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8419 AND */
-    recomp_tick(32); g_wr8(g_abs(0x0300), (uint8_t)(uint8_t)g_cpu.C);  /* 841B STA */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0467)); g_cpu.Y = _v; g_nz16(_v); }  /* 841E LDY */
-    recomp_tick(40); g_wr16(g_abs(0x0476), (uint16_t)g_cpu.Y);  /* 8421 STY */
-L_8424:;
-    recomp_tick(14); { uint8_t _v = g_pull8(); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8424 PLA */
-    recomp_tick(14); return;  /* 8425 RTS */
-}
-
-/* $02843D, entered with P=$20 via JSR */
-void gen_02843D(void) {
-    goto L_843D;
-L_843D:;
-    recomp_tick(30); g_push16(0x843F); func_table_call_jsr(0x02D779); g_cpu.S += 2;  /* 843D JSR */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x1E)); g_cpu.X = _v; g_nz16(_v); }  /* 8440 LDX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8442 LDA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* 8445 TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x085A)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8446 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x15);  /* 8449 CMP */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_8453;  /* 844B BEQ */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x16);  /* 844D CMP */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_8453;  /* 844F BEQ */
-    recomp_tick(14); g_cpu.flag_C = false;  /* 8451 CLC */
-    recomp_tick(14); return;  /* 8452 RTS */
-L_8453:;
-    recomp_tick(14); g_cpu.flag_C = true;  /* 8453 SEC */
-    recomp_tick(14); return;  /* 8454 RTS */
-}
-
-/* $028455, entered with P=$20 via JSR */
-void gen_028455(void) {
-    goto L_8455;
-L_8455:;
-    recomp_tick(30); g_push16(0x8457); func_table_call_jsr(0x02D779); g_cpu.S += 2;  /* 8455 JSR */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x1E)); g_cpu.X = _v; g_nz16(_v); }  /* 8458 LDX */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* 845A INX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 845B LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFF);  /* 845E CMP */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_847B;  /* 8460 BEQ */
-    recomp_tick(24); { uint16_t _v = 0x0004; g_cpu.Y = _v; g_nz16(_v); }  /* 8462 LDY */
-L_8465:;
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* 8465 TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8466 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFE);  /* 8469 CMP */
-    recomp_tick(16); if (g_cpu.flag_C) goto L_8477;  /* 846B BCS */
-    recomp_tick(14); g_push16((uint16_t)g_cpu.X);  /* 846D PHX */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* 846E TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x08FA)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 846F LDA */
-    recomp_tick(14); { uint16_t _v = g_pull16(); g_cpu.X = _v; g_nz16(_v); }  /* 8472 PLX */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x01); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8473 AND */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_847D;  /* 8475 BEQ */
-L_8477:;
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* 8477 INX */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.Y - 1); g_cpu.Y = _v; g_nz16(_v); }  /* 8478 DEY */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_8465;  /* 8479 BNE */
-L_847B:;
-    recomp_tick(14); g_cpu.flag_C = false;  /* 847B CLC */
-    recomp_tick(14); return;  /* 847C RTS */
-L_847D:;
-    recomp_tick(14); g_cpu.flag_C = true;  /* 847D SEC */
-    recomp_tick(14); return;  /* 847E RTS */
-}
-
-/* $02847F, entered with P=$20 via JSR */
-void gen_02847F(void) {
-    goto L_847F;
-L_847F:;
-    recomp_tick(30); g_push16(0x8481); func_table_call_jsr(0x02D779); g_cpu.S += 2;  /* 847F JSR */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x1E)); g_cpu.X = _v; g_nz16(_v); }  /* 8482 LDX */
-    recomp_tick(24); { uint16_t _v = 0x0005; g_cpu.Y = _v; g_nz16(_v); }  /* 8484 LDY */
-L_8487:;
-    recomp_tick(14); g_push16((uint16_t)g_cpu.X);  /* 8487 PHX */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* 8488 TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8489 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFE);  /* 848C CMP */
-    recomp_tick(16); if (g_cpu.flag_C) goto L_8498;  /* 848E BCS */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* 8490 TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x08FA)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8491 LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x01); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 8494 AND */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_849F;  /* 8496 BNE */
-L_8498:;
-    recomp_tick(14); { uint16_t _v = g_pull16(); g_cpu.X = _v; g_nz16(_v); }  /* 8498 PLX */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* 8499 INX */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.Y - 1); g_cpu.Y = _v; g_nz16(_v); }  /* 849A DEY */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_8487;  /* 849B BNE */
-    recomp_tick(14); g_cpu.flag_C = false;  /* 849D CLC */
-    recomp_tick(14); return;  /* 849E RTS */
-L_849F:;
-    recomp_tick(14); { uint16_t _v = g_pull16(); g_cpu.X = _v; g_nz16(_v); }  /* 849F PLX */
-    recomp_tick(14); g_cpu.flag_C = true;  /* 84A0 SEC */
-    recomp_tick(14); return;  /* 84A1 RTS */
-}
-
-/* $0284DD, entered with P=$20 via JSR */
-void gen_0284DD(void) {
-    goto L_84DD;
-L_84DD:;
-    recomp_tick(30); g_push16(0x84DF); func_table_call_jsr(0x02D779); g_cpu.S += 2;  /* 84DD JSR */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x1E)); g_cpu.X = _v; g_nz16(_v); }  /* 84E0 LDX */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* 84E2 TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 84E3 LDA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* 84E6 TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x08FA)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 84E7 LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x01); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* 84EA AND */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_84F0;  /* 84EC BNE */
-    recomp_tick(14); g_cpu.flag_C = false;  /* 84EE CLC */
-    recomp_tick(14); return;  /* 84EF RTS */
-L_84F0:;
-    recomp_tick(14); g_cpu.flag_C = true;  /* 84F0 SEC */
-    recomp_tick(14); return;  /* 84F1 RTS */
-}
 
 /* $02857F, entered with P=$20 via JSR */
 void gen_02857F(void) {
@@ -1515,115 +1331,6 @@ L_B42C:;
     recomp_tick(14); return;  /* B436 RTS */
 }
 
-/* $02B62D, entered with P=$20 via JSR */
-void gen_02B62D(void) {
-    goto L_B62D;
-L_B62D:;
-    recomp_tick(30); g_push16(0xB62F); func_table_call_jsr(0x0283E6); g_cpu.S += 2;  /* B62D JSR */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x4A)); g_cpu.X = _v; g_nz16(_v); }  /* B630 LDX */
-    recomp_tick(16); { uint8_t _v = 0xFF; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B632 LDA */
-L_B634:;
-    recomp_tick(32); g_wr8(g_absx(0x04B2), (uint8_t)(uint8_t)g_cpu.C);  /* B634 STA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* B637 INX */
-    recomp_tick(24); g_cmp16((uint16_t)g_cpu.X, 0x001E);  /* B638 CPX */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_B634;  /* B63B BNE */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* B63D TDC */
-    recomp_tick(14); g_cpu.flag_C = false;  /* B63E CLC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x1777)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B63F LDA */
-    recomp_tick(32); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_abs(0x0474)))));  /* B642 ADC */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* B645 TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0350)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B646 LDA */
-    recomp_tick(30); g_push16(0xB64B); func_table_call_jsr(0x02D99A); g_cpu.S += 2;  /* B649 JSR */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x4A)); g_cpu.Y = _v; g_nz16(_v); }  /* B64C LDY */
-    recomp_tick(40); g_wr16(g_abs(0x0474), (uint16_t)g_cpu.Y);  /* B64E STY */
-    recomp_tick(40); g_wr16(g_abs(0x0420), (uint16_t)g_cpu.Y);  /* B651 STY */
-    recomp_tick(16); { uint8_t _v = 0x05; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B654 LDA */
-    recomp_tick(24); g_wr8(g_dp(0x00), (uint8_t)(uint8_t)g_cpu.C);  /* B656 STA */
-L_B658:;
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0422)); g_cpu.X = _v; g_nz16(_v); }  /* B658 LDX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B65B LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFF);  /* B65E CMP */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_B687;  /* B660 BEQ */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0420)); g_cpu.Y = _v; g_nz16(_v); }  /* B662 LDY */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0422)); g_cpu.X = _v; g_nz16(_v); }  /* B665 LDX */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* B668 TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0DCD)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B669 LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x0F); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B66C AND */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* B66E TAX */
-    recomp_tick(40); { uint8_t _v = g_rd8(g_longx(0x02B694u)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B66F LDA */
-    recomp_tick(32); g_wr8(g_absy(0x0426), (uint8_t)(uint8_t)g_cpu.C);  /* B673 STA */
-    recomp_tick(40); { uint8_t _v = g_rd8(g_longx(0x02B69Eu)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B676 LDA */
-    recomp_tick(32); g_wr8(g_absy(0x0446), (uint8_t)(uint8_t)g_cpu.C);  /* B67A STA */
-    recomp_tick(40); { uint32_t _e = g_abs(0x0420); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* B67D INC */
-    recomp_tick(40); { uint32_t _e = g_abs(0x0422); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* B680 INC */
-    recomp_tick(32); { uint32_t _e = g_dp(0x00); uint8_t _v = (uint8_t)(g_rd8(_e) - 1); g_wr8(_e, _v); g_nz8(_v); }  /* B683 DEC */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_B658;  /* B685 BNE */
-L_B687:;
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0420)); g_cpu.X = _v; g_nz16(_v); }  /* B687 LDX */
-    recomp_tick(40); g_wr16(g_abs(0x0424), (uint16_t)g_cpu.X);  /* B68A STX */
-    recomp_tick(40); g_wr16(g_abs(0x0444), (uint16_t)g_cpu.X);  /* B68D STX */
-    recomp_tick(40); g_wr16(g_abs(0x04B0), (uint16_t)g_cpu.X);  /* B690 STX */
-    recomp_tick(14); return;  /* B693 RTS */
-}
-
-/* $02B6A8, entered with P=$20 via JSR */
-void gen_02B6A8(void) {
-    goto L_B6A8;
-L_B6A8:;
-    recomp_tick(30); g_push16(0xB6AA); func_table_call_jsr(0x0283E6); g_cpu.S += 2;  /* B6A8 JSR */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x4A)); g_cpu.X = _v; g_nz16(_v); }  /* B6AB LDX */
-    recomp_tick(16); { uint8_t _v = 0xFF; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B6AD LDA */
-L_B6AF:;
-    recomp_tick(32); g_wr8(g_absx(0x04B2), (uint8_t)(uint8_t)g_cpu.C);  /* B6AF STA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* B6B2 INX */
-    recomp_tick(24); g_cmp16((uint16_t)g_cpu.X, 0x001E);  /* B6B3 CPX */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_B6AF;  /* B6B6 BNE */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* B6B8 TDC */
-    recomp_tick(14); g_cpu.flag_C = false;  /* B6B9 CLC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x1777)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B6BA LDA */
-    recomp_tick(32); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_abs(0x0474)))));  /* B6BD ADC */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* B6C0 TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0350)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B6C1 LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x0F); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B6C4 AND */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* B6C6 ASL */
-    recomp_tick(24); g_wr8(g_dp(0x00), (uint8_t)(uint8_t)g_cpu.C);  /* B6C7 STA */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* B6C9 ASL */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* B6CA ASL */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* B6CB ASL */
-    recomp_tick(14); g_cpu.flag_C = false;  /* B6CC CLC */
-    recomp_tick(24); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_dp(0x00)))));  /* B6CD ADC */
-    recomp_tick(24); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_dp(0x00)))));  /* B6CF ADC */
-    recomp_tick(24); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_dp(0x00)))));  /* B6D1 ADC */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* B6D3 TAX */
-    recomp_tick(40); g_wr16(g_abs(0x0422), (uint16_t)g_cpu.X);  /* B6D4 STX */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x4A)); g_cpu.Y = _v; g_nz16(_v); }  /* B6D7 LDY */
-    recomp_tick(40); g_wr16(g_abs(0x0474), (uint16_t)g_cpu.Y);  /* B6D9 STY */
-    recomp_tick(40); g_wr16(g_abs(0x0420), (uint16_t)g_cpu.Y);  /* B6DC STY */
-    recomp_tick(16); { uint8_t _v = 0x16; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B6DF LDA */
-    recomp_tick(24); g_wr8(g_dp(0x00), (uint8_t)(uint8_t)g_cpu.C);  /* B6E1 STA */
-L_B6E3:;
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0422)); g_cpu.X = _v; g_nz16(_v); }  /* B6E3 LDX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0F35)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B6E6 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFF);  /* B6E9 CMP */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_B709;  /* B6EB BEQ */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0420)); g_cpu.Y = _v; g_nz16(_v); }  /* B6ED LDY */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0422)); g_cpu.X = _v; g_nz16(_v); }  /* B6F0 LDX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absy(0xB716)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B6F3 LDA */
-    recomp_tick(32); g_wr8(g_absy(0x0426), (uint8_t)(uint8_t)g_cpu.C);  /* B6F6 STA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absy(0xB72E)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B6F9 LDA */
-    recomp_tick(32); g_wr8(g_absy(0x0446), (uint8_t)(uint8_t)g_cpu.C);  /* B6FC STA */
-    recomp_tick(40); { uint32_t _e = g_abs(0x0420); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* B6FF INC */
-    recomp_tick(40); { uint32_t _e = g_abs(0x0422); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* B702 INC */
-    recomp_tick(32); { uint32_t _e = g_dp(0x00); uint8_t _v = (uint8_t)(g_rd8(_e) - 1); g_wr8(_e, _v); g_nz8(_v); }  /* B705 DEC */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_B6E3;  /* B707 BNE */
-L_B709:;
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0420)); g_cpu.X = _v; g_nz16(_v); }  /* B709 LDX */
-    recomp_tick(40); g_wr16(g_abs(0x0424), (uint16_t)g_cpu.X);  /* B70C STX */
-    recomp_tick(40); g_wr16(g_abs(0x0444), (uint16_t)g_cpu.X);  /* B70F STX */
-    recomp_tick(40); g_wr16(g_abs(0x04B0), (uint16_t)g_cpu.X);  /* B712 STX */
-    recomp_tick(14); return;  /* B715 RTS */
-}
-
 /* $02B813, entered with P=$20 via JSR */
 void gen_02B813(void) {
     goto L_B813;
@@ -1639,56 +1346,6 @@ L_B81A:;
     recomp_tick(16); if (!g_cpu.flag_Z) goto L_B81A;  /* B823 BNE */
     recomp_tick(16); g_sep(0x20);  /* B825 SEP */
     recomp_tick(14); return;  /* B827 RTS */
-}
-
-/* $02B8E7, entered with P=$20 via JSR */
-void gen_02B8E7(void) {
-    goto L_B8E7;
-L_B8E7:;
-    recomp_tick(30); g_push16(0xB8E9); func_table_call_jsr(0x02B9ED); g_cpu.S += 2;  /* B8E7 JSR */
-    recomp_tick(14); g_cpu.flag_C = false;  /* B8EA CLC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x1E)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B8EB LDA */
-    recomp_tick(32); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_abs(0x0474)))));  /* B8ED ADC */
-    recomp_tick(24); g_wr8(g_dp(0x1E), (uint8_t)(uint8_t)g_cpu.C);  /* B8F0 STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x1F)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B8F2 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x00)));  /* B8F4 ADC */
-    recomp_tick(24); g_wr8(g_dp(0x1F), (uint8_t)(uint8_t)g_cpu.C);  /* B8F6 STA */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x1E)); g_cpu.X = _v; g_nz16(_v); }  /* B8F8 LDX */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* B8FA TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B8FB LDA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* B8FE TAX */
-    recomp_tick(14); return;  /* B8FF RTS */
-}
-
-/* $02B9ED, entered with P=$20 via JSR */
-void gen_02B9ED(void) {
-    goto L_B9ED;
-L_B9ED:;
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0347)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B9ED LDA */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_B9F9;  /* B9F0 BNE */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0346)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B9F2 LDA */
-    recomp_tick(30); g_push16(0xB9F7); func_table_call_jsr(0x02D99A); g_cpu.S += 2;  /* B9F5 JSR */
-    recomp_tick(14); return;  /* B9F8 RTS */
-L_B9F9:;
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0346)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* B9F9 LDA */
-    recomp_tick(24); g_wr8(g_dp(0x1E), (uint8_t)(uint8_t)g_cpu.C);  /* B9FC STA */
-    recomp_tick(24); g_wr8(g_dp(0x1F), 0);  /* B9FE STZ */
-    recomp_tick(16); g_rep(0x20);  /* BA00 REP */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x1E)); g_cpu.C = (uint16_t)(_v); g_nz16(_v); }  /* BA02 LDA */
-    recomp_tick(14); { uint16_t _v = g_asl16(g_cpu.C); g_cpu.C = (uint16_t)(_v); }  /* BA04 ASL */
-    recomp_tick(32); g_wr16(g_dp(0x1E), (uint16_t)g_cpu.C);  /* BA05 STA */
-    recomp_tick(14); { uint16_t _v = g_asl16(g_cpu.C); g_cpu.C = (uint16_t)(_v); }  /* BA07 ASL */
-    recomp_tick(14); { uint16_t _v = g_asl16(g_cpu.C); g_cpu.C = (uint16_t)(_v); }  /* BA08 ASL */
-    recomp_tick(14); { uint16_t _v = g_asl16(g_cpu.C); g_cpu.C = (uint16_t)(_v); }  /* BA09 ASL */
-    recomp_tick(14); g_cpu.flag_C = false;  /* BA0A CLC */
-    recomp_tick(32); g_cpu.C = (uint16_t)(g_adc16(g_cpu.C, g_rd16(g_dp(0x1E))));  /* BA0B ADC */
-    recomp_tick(32); g_cpu.C = (uint16_t)(g_adc16(g_cpu.C, g_rd16(g_dp(0x1E))));  /* BA0D ADC */
-    recomp_tick(32); g_cpu.C = (uint16_t)(g_adc16(g_cpu.C, g_rd16(g_dp(0x1E))));  /* BA0F ADC */
-    recomp_tick(24); g_cpu.C = (uint16_t)(g_adc16(g_cpu.C, 0x00B4));  /* BA11 ADC */
-    recomp_tick(32); g_wr16(g_dp(0x1E), (uint16_t)g_cpu.C);  /* BA14 STA */
-    recomp_tick(40); g_wr16(g_abs(0x0422), (uint16_t)g_cpu.C);  /* BA16 STA */
-    recomp_tick(16); g_sep(0x20);  /* BA19 SEP */
-    recomp_tick(14); return;  /* BA1B RTS */
 }
 
 /* $02B9F9, entered with P=$20 via JSR */
@@ -2100,125 +1757,6 @@ L_CDBB:;
     recomp_tick(14); return;  /* CDDE RTS */
 }
 
-/* $02D0A7, entered with P=$20 via JSR */
-void gen_02D0A7(void) {
-    goto L_D0A7;
-L_D0A7:;
-    recomp_tick(30); g_push16(0xD0A9); func_table_call_jsr(0x02D11B); g_cpu.S += 2;  /* D0A7 JSR */
-    recomp_tick(30); g_push16(0xD0AC); func_table_call_jsr(0x02D779); g_cpu.S += 2;  /* D0AA JSR */
-    recomp_tick(24); g_wr8(g_dp(0x00), 0);  /* D0AD STZ */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0422)); g_cpu.X = _v; g_nz16(_v); }  /* D0AF LDX */
-    recomp_tick(32); g_wr16(g_dp(0x02), (uint16_t)g_cpu.X);  /* D0B2 STX */
-L_D0B4:;
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x02)); g_cpu.X = _v; g_nz16(_v); }  /* D0B4 LDX */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* D0B6 TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D0B7 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFF);  /* D0BA CMP */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_D0DB;  /* D0BC BEQ */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* D0BE TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x08FA)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D0BF LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x80); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D0C2 AND */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_D0D1;  /* D0C4 BEQ */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x00)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D0C6 LDA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* D0C8 TAX */
-    recomp_tick(16); { uint8_t _v = 0xFF; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D0C9 LDA */
-    recomp_tick(32); g_wr8(g_absx(0x0426), (uint8_t)(uint8_t)g_cpu.C);  /* D0CB STA */
-    recomp_tick(32); g_wr8(g_absx(0x0446), (uint8_t)(uint8_t)g_cpu.C);  /* D0CE STA */
-L_D0D1:;
-    recomp_tick(32); { uint32_t _e = g_dp(0x02); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* D0D1 INC */
-    recomp_tick(32); { uint32_t _e = g_dp(0x00); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* D0D3 INC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x00)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D0D5 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x05);  /* D0D7 CMP */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_D0B4;  /* D0D9 BNE */
-L_D0DB:;
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x4A)); g_cpu.X = _v; g_nz16(_v); }  /* D0DB LDX */
-L_D0DD:;
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0426)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D0DD LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFF);  /* D0E0 CMP */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_D0E7;  /* D0E2 BNE */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* D0E4 INX */
-    recomp_tick(16); goto L_D0DD;  /* D0E5 BRA */
-L_D0E7:;
-    recomp_tick(40); g_wr16(g_abs(0x0474), (uint16_t)g_cpu.X);  /* D0E7 STX */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x071A)); g_cpu.X = _v; g_nz16(_v); }  /* D0EA LDX */
-    recomp_tick(24); g_cmp16((uint16_t)g_cpu.X, 0xFFFF);  /* D0ED CPX */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_D115;  /* D0F0 BEQ */
-    recomp_tick(24); g_cmp16((uint16_t)g_cpu.X, 0xF0F0);  /* D0F2 CPX */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_D112;  /* D0F5 BEQ */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x4A)); g_cpu.X = _v; g_nz16(_v); }  /* D0F7 LDX */
-L_D0F9:;
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0426)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D0F9 LDA */
-    recomp_tick(32); g_cmp8((uint8_t)g_cpu.C, g_rd8(g_abs(0x071C)));  /* D0FC CMP */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_D109;  /* D0FF BNE */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0446)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D101 LDA */
-    recomp_tick(32); g_cmp8((uint8_t)g_cpu.C, g_rd8(g_abs(0x071D)));  /* D104 CMP */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_D112;  /* D107 BEQ */
-L_D109:;
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* D109 INX */
-    recomp_tick(24); g_cmp16((uint16_t)g_cpu.X, 0x001E);  /* D10A CPX */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_D0F9;  /* D10D BNE */
-    recomp_tick(24); goto L_D116;  /* D10F JMP */
-L_D112:;
-    recomp_tick(40); g_wr16(g_abs(0x0474), (uint16_t)g_cpu.X);  /* D112 STX */
-L_D115:;
-    recomp_tick(14); return;  /* D115 RTS */
-L_D116:;
-    recomp_tick(14); ;  /* D116 NOP */
-    recomp_tick(14); ;  /* D117 NOP */
-    recomp_tick(14); ;  /* D118 NOP */
-    recomp_tick(16); goto L_D116;  /* D119 BRA */
-}
-
-/* $02D11B, entered with P=$20 via JSR */
-void gen_02D11B(void) {
-    goto L_D11B;
-L_D116:;
-    recomp_tick(14); ;  /* D116 NOP */
-    recomp_tick(14); ;  /* D117 NOP */
-    recomp_tick(14); ;  /* D118 NOP */
-    recomp_tick(16); goto L_D116;  /* D119 BRA */
-L_D11B:;
-    recomp_tick(30); g_push16(0xD11D); func_table_call_jsr(0x02D77F); g_cpu.S += 2;  /* D11B JSR */
-    recomp_tick(16); { uint8_t _v = 0x05; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D11E LDA */
-    recomp_tick(24); g_wr8(g_dp(0x00), (uint8_t)(uint8_t)g_cpu.C);  /* D120 STA */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0422)); g_cpu.X = _v; g_nz16(_v); }  /* D122 LDX */
-    recomp_tick(32); g_wr16(g_dp(0x02), (uint16_t)g_cpu.X);  /* D125 STX */
-L_D127:;
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x02)); g_cpu.X = _v; g_nz16(_v); }  /* D127 LDX */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* D129 TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D12A LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFF);  /* D12D CMP */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_D14E;  /* D12F BEQ */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* D131 TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x08FA)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D132 LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x80); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D135 AND */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_D144;  /* D137 BEQ */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x00)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D139 LDA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* D13B TAX */
-    recomp_tick(16); { uint8_t _v = 0xFF; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D13C LDA */
-    recomp_tick(32); g_wr8(g_absx(0x0426), (uint8_t)(uint8_t)g_cpu.C);  /* D13E STA */
-    recomp_tick(32); g_wr8(g_absx(0x0446), (uint8_t)(uint8_t)g_cpu.C);  /* D141 STA */
-L_D144:;
-    recomp_tick(32); { uint32_t _e = g_dp(0x02); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* D144 INC */
-    recomp_tick(32); { uint32_t _e = g_dp(0x00); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* D146 INC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x00)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D148 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x0A);  /* D14A CMP */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_D127;  /* D14C BNE */
-L_D14E:;
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x4A)); g_cpu.X = _v; g_nz16(_v); }  /* D14E LDX */
-L_D150:;
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0426)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D150 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFF);  /* D153 CMP */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_D160;  /* D155 BNE */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* D157 INX */
-    recomp_tick(24); g_cmp16((uint16_t)g_cpu.X, 0x000A);  /* D158 CPX */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_D150;  /* D15B BNE */
-    recomp_tick(24); goto L_D116;  /* D15D JMP */
-L_D160:;
-    recomp_tick(40); g_wr16(g_abs(0x0474), (uint16_t)g_cpu.X);  /* D160 STX */
-    recomp_tick(14); return;  /* D163 RTS */
-}
-
 /* $02D495, entered with P=$20 via JSR */
 void gen_02D495(void) {
     goto L_D495;
@@ -2612,38 +2150,6 @@ L_D99A:;
     recomp_tick(14); return;  /* D9B4 RTS */
 }
 
-/* $02D779, entered with P=$20 via JSR */
-void gen_02D779(void) {
-    goto L_D779;
-L_D779:;
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* D779 TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x04EE)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D77A LDA */
-    recomp_tick(16); goto L_D783;  /* D77D BRA */
-L_D783:;
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* D783 ASL */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* D784 TAX */
-    recomp_tick(16); g_sep(0x10);  /* D785 SEP */
-    recomp_tick(16); g_rep(0x10);  /* D787 REP */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x19CD)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D789 LDA */
-    recomp_tick(30); g_push16(0xD78E); func_table_call_jsr(0x02D99A); g_cpu.S += 2;  /* D78C JSR */
-    recomp_tick(14); return;  /* D78F RTS */
-}
-
-/* $02D77F, entered with P=$20 via JSR */
-void gen_02D77F(void) {
-    goto L_D77F;
-L_D77F:;
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* D77F TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x04DF)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D780 LDA */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* D783 ASL */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* D784 TAX */
-    recomp_tick(16); g_sep(0x10);  /* D785 SEP */
-    recomp_tick(16); g_rep(0x10);  /* D787 REP */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x19CD)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D789 LDA */
-    recomp_tick(30); g_push16(0xD78E); func_table_call_jsr(0x02D99A); g_cpu.S += 2;  /* D78C JSR */
-    recomp_tick(14); return;  /* D78F RTS */
-}
-
 /* $02D7BC, entered with P=$20 via JSR */
 void gen_02D7BC(void) {
     goto L_D7BC;
@@ -2739,27 +2245,6 @@ L_D999:;
     recomp_tick(14); return;  /* D999 RTS */
 }
 
-/* $02D99A, entered with P=$20 via JSR */
-void gen_02D99A(void) {
-    goto L_D99A;
-L_D99A:;
-    recomp_tick(24); g_wr8(g_dp(0x1E), (uint8_t)(uint8_t)g_cpu.C);  /* D99A STA */
-    recomp_tick(24); g_wr8(g_dp(0x1F), 0);  /* D99C STZ */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* D99E ASL */
-    recomp_tick(32); { uint32_t _e = g_dp(0x1F); uint8_t _v = g_rol8(g_rd8(_e)); g_wr8(_e, _v); }  /* D99F ROL */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* D9A1 ASL */
-    recomp_tick(32); { uint32_t _e = g_dp(0x1F); uint8_t _v = g_rol8(g_rd8(_e)); g_wr8(_e, _v); }  /* D9A2 ROL */
-    recomp_tick(14); g_cpu.flag_C = false;  /* D9A4 CLC */
-    recomp_tick(24); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_dp(0x1E)))));  /* D9A5 ADC */
-    recomp_tick(24); g_wr8(g_dp(0x1E), (uint8_t)(uint8_t)g_cpu.C);  /* D9A7 STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x1F)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* D9A9 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x00)));  /* D9AB ADC */
-    recomp_tick(24); g_wr8(g_dp(0x1F), (uint8_t)(uint8_t)g_cpu.C);  /* D9AD STA */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x1E)); g_cpu.X = _v; g_nz16(_v); }  /* D9AF LDX */
-    recomp_tick(40); g_wr16(g_abs(0x0422), (uint16_t)g_cpu.X);  /* D9B1 STX */
-    recomp_tick(14); return;  /* D9B4 RTS */
-}
-
 /* $02D9C2, entered with P=$20 via JSR */
 void gen_02D9C2(void) {
     goto L_D9C2;
@@ -2833,65 +2318,6 @@ L_DDDB:;
 L_DDE1:;
     recomp_tick(14); { uint16_t _v = g_pull16(); g_cpu.X = _v; g_nz16(_v); }  /* DDE1 PLX */
     recomp_tick(14); return;  /* DDE2 RTS */
-}
-
-/* $02E309, entered with P=$20 via JSR */
-void gen_02E309(void) {
-    goto L_E309;
-L_E309:;
-    recomp_tick(30); g_push16(0xE30B); func_table_call_jsr(0x02B9ED); g_cpu.S += 2;  /* E309 JSR */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x1E)); g_cpu.X = _v; g_nz16(_v); }  /* E30C LDX */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* E30E TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E30F LDA */
-    recomp_tick(24); g_wr8(g_dp(0x04), (uint8_t)(uint8_t)g_cpu.C);  /* E312 STA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0DCD)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E314 LDA */
-    recomp_tick(24); g_wr8(g_dp(0x05), (uint8_t)(uint8_t)g_cpu.C);  /* E317 STA */
-    recomp_tick(32); g_wr16(g_dp(0x00), (uint16_t)g_cpu.X);  /* E319 STX */
-    recomp_tick(14); g_cpu.flag_C = false;  /* E31B CLC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x1E)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E31C LDA */
-    recomp_tick(32); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_abs(0x0474)))));  /* E31E ADC */
-    recomp_tick(24); g_wr8(g_dp(0x1E), (uint8_t)(uint8_t)g_cpu.C);  /* E321 STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x1F)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E323 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x00)));  /* E325 ADC */
-    recomp_tick(24); g_wr8(g_dp(0x1F), (uint8_t)(uint8_t)g_cpu.C);  /* E327 STA */
-    recomp_tick(14); g_push16((uint16_t)g_cpu.X);  /* E329 PHX */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x1E)); g_cpu.X = _v; g_nz16(_v); }  /* E32A LDX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E32C LDA */
-    recomp_tick(24); g_wr8(g_dp(0x06), (uint8_t)(uint8_t)g_cpu.C);  /* E32F STA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0DCD)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E331 LDA */
-    recomp_tick(24); g_wr8(g_dp(0x07), (uint8_t)(uint8_t)g_cpu.C);  /* E334 STA */
-    recomp_tick(32); g_wr16(g_dp(0x02), (uint16_t)g_cpu.X);  /* E336 STX */
-    recomp_tick(14); { uint16_t _v = g_pull16(); g_cpu.X = _v; g_nz16(_v); }  /* E338 PLX */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x06)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E339 LDA */
-    recomp_tick(32); g_wr8(g_absx(0x0E81), (uint8_t)(uint8_t)g_cpu.C);  /* E33B STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x07)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E33E LDA */
-    recomp_tick(32); g_wr8(g_absx(0x0DCD), (uint8_t)(uint8_t)g_cpu.C);  /* E340 STA */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x02)); g_cpu.X = _v; g_nz16(_v); }  /* E343 LDX */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x04)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E345 LDA */
-    recomp_tick(32); g_wr8(g_absx(0x0E81), (uint8_t)(uint8_t)g_cpu.C);  /* E347 STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x05)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E34A LDA */
-    recomp_tick(32); g_wr8(g_absx(0x0DCD), (uint8_t)(uint8_t)g_cpu.C);  /* E34C STA */
-    recomp_tick(24); g_wr8(g_dp(0x05), 0);  /* E34F STZ */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x04)); g_cpu.X = _v; g_nz16(_v); }  /* E351 LDX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x08FA)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E353 LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x7F); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E356 AND */
-    recomp_tick(32); g_wr8(g_absx(0x08FA), (uint8_t)(uint8_t)g_cpu.C);  /* E358 STA */
-    recomp_tick(24); g_wr8(g_dp(0x07), 0);  /* E35B STZ */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x06)); g_cpu.X = _v; g_nz16(_v); }  /* E35D LDX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x08FA)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E35F LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C | 0x80); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E362 ORA */
-    recomp_tick(32); g_wr8(g_absx(0x08FA), (uint8_t)(uint8_t)g_cpu.C);  /* E364 STA */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* E367 TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x04EE)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E368 LDA */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* E36B ASL */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* E36C TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x1A45)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E36D LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x09);  /* E370 CMP */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_E37A;  /* E372 BNE */
-    recomp_tick(32); g_wr8(g_absx(0x19A6), 0);  /* E374 STZ */
-    recomp_tick(32); g_wr8(g_absx(0x1A45), 0);  /* E377 STZ */
-L_E37A:;
-    recomp_tick(14); return;  /* E37A RTS */
 }
 
 /* $02E4B2, entered with P=$20 via JSR */
@@ -2976,119 +2402,6 @@ L_E549:;
     recomp_tick(14); return;  /* E56C RTS */
 }
 
-/* $02E66F, entered with P=$20 via JSR */
-void gen_02E66F(void) {
-    goto L_E66F;
-L_E66F:;
-    recomp_tick(30); g_push16(0xE671); func_table_call_jsr(0x02D779); g_cpu.S += 2;  /* E66F JSR */
-    recomp_tick(24); g_wr8(g_dp(0x00), 0);  /* E672 STZ */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0422)); g_cpu.X = _v; g_nz16(_v); }  /* E674 LDX */
-    recomp_tick(32); g_wr16(g_dp(0x02), (uint16_t)g_cpu.X);  /* E677 STX */
-L_E679:;
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x02)); g_cpu.X = _v; g_nz16(_v); }  /* E679 LDX */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* E67B TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E67C LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFF);  /* E67F CMP */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_E6A7;  /* E681 BEQ */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* E683 TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x08FA)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E684 LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x01); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E687 AND */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_E692;  /* E689 BNE */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x08FA)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E68B LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x80); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E68E AND */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_E69D;  /* E690 BEQ */
-L_E692:;
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x00)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E692 LDA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* E694 TAX */
-    recomp_tick(16); { uint8_t _v = 0xFF; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E695 LDA */
-    recomp_tick(32); g_wr8(g_absx(0x0426), (uint8_t)(uint8_t)g_cpu.C);  /* E697 STA */
-    recomp_tick(32); g_wr8(g_absx(0x0446), (uint8_t)(uint8_t)g_cpu.C);  /* E69A STA */
-L_E69D:;
-    recomp_tick(32); { uint32_t _e = g_dp(0x02); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* E69D INC */
-    recomp_tick(32); { uint32_t _e = g_dp(0x00); uint8_t _v = (uint8_t)(g_rd8(_e) + 1); g_wr8(_e, _v); g_nz8(_v); }  /* E69F INC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x00)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E6A1 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x05);  /* E6A3 CMP */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_E679;  /* E6A5 BNE */
-L_E6A7:;
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x4A)); g_cpu.X = _v; g_nz16(_v); }  /* E6A7 LDX */
-L_E6A9:;
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0426)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E6A9 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0xFF);  /* E6AC CMP */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_E6B3;  /* E6AE BNE */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* E6B0 INX */
-    recomp_tick(16); goto L_E6A9;  /* E6B1 BRA */
-L_E6B3:;
-    recomp_tick(40); g_wr16(g_abs(0x0474), (uint16_t)g_cpu.X);  /* E6B3 STX */
-    recomp_tick(14); return;  /* E6B6 RTS */
-}
-
-/* $02E724, entered with P=$20 via JSR */
-void gen_02E724(void) {
-    goto L_E724;
-L_E724:;
-    recomp_tick(30); g_push16(0xE726); func_table_call_jsr(0x02B9ED); g_cpu.S += 2;  /* E724 JSR */
-    recomp_tick(14); g_cpu.flag_C = false;  /* E727 CLC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x1E)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E728 LDA */
-    recomp_tick(32); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_abs(0x0474)))));  /* E72A ADC */
-    recomp_tick(24); g_wr8(g_dp(0x1E), (uint8_t)(uint8_t)g_cpu.C);  /* E72D STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x1F)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E72F LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x00)));  /* E731 ADC */
-    recomp_tick(24); g_wr8(g_dp(0x1F), (uint8_t)(uint8_t)g_cpu.C);  /* E733 STA */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x1E)); g_cpu.X = _v; g_nz16(_v); }  /* E735 LDX */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* E737 TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E738 LDA */
-    recomp_tick(14); return;  /* E73B RTS */
-}
-
-/* $02E968, entered with P=$20 via JSR */
-void gen_02E968(void) {
-    goto L_E968;
-L_E968:;
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* E968 TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x04EE)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E969 LDA */
-    recomp_tick(16); goto L_E972;  /* E96C BRA */
-L_E972:;
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* E972 ASL */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* E973 TAX */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x19CD)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E974 LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x19);  /* E977 CMP */
-    recomp_tick(16); if (!g_cpu.flag_C) goto L_E97D;  /* E979 BCC */
-    recomp_tick(14); g_cpu.flag_C = true;  /* E97B SEC */
-    recomp_tick(14); return;  /* E97C RTS */
-L_E97D:;
-    recomp_tick(14); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C + 1); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E97D INC */
-    recomp_tick(24); g_wr8(g_dp(0x00), (uint8_t)(uint8_t)g_cpu.C);  /* E97E STA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x0A);  /* E980 CMP */
-    recomp_tick(16); if (g_cpu.flag_C) goto L_E988;  /* E982 BCS */
-    recomp_tick(16); { uint8_t _v = 0x7D; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E984 LDA */
-    recomp_tick(16); goto L_E99C;  /* E986 BRA */
-L_E988:;
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x14);  /* E988 CMP */
-    recomp_tick(16); if (g_cpu.flag_C) goto L_E995;  /* E98A BCS */
-    recomp_tick(14); g_cpu.flag_C = true;  /* E98C SEC */
-    recomp_tick(16); g_seta8((uint8_t)(g_sbc8((uint8_t)g_cpu.C, 0x0A)));  /* E98D SBC */
-    recomp_tick(24); g_wr8(g_dp(0x00), (uint8_t)(uint8_t)g_cpu.C);  /* E98F STA */
-    recomp_tick(16); { uint8_t _v = 0x74; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E991 LDA */
-    recomp_tick(16); goto L_E99C;  /* E993 BRA */
-L_E995:;
-    recomp_tick(14); g_cpu.flag_C = true;  /* E995 SEC */
-    recomp_tick(16); g_seta8((uint8_t)(g_sbc8((uint8_t)g_cpu.C, 0x14)));  /* E996 SBC */
-    recomp_tick(24); g_wr8(g_dp(0x00), (uint8_t)(uint8_t)g_cpu.C);  /* E998 STA */
-    recomp_tick(16); { uint8_t _v = 0x75; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E99A LDA */
-L_E99C:;
-    recomp_tick(32); g_wr8(g_abs(0x1789), (uint8_t)(uint8_t)g_cpu.C);  /* E99C STA */
-    recomp_tick(14); g_cpu.flag_C = false;  /* E99F CLC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x00)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E9A0 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x73)));  /* E9A2 ADC */
-    recomp_tick(32); g_wr8(g_abs(0x178A), (uint8_t)(uint8_t)g_cpu.C);  /* E9A4 STA */
-    recomp_tick(16); { uint8_t _v = 0x5E; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E9A7 LDA */
-    recomp_tick(32); g_wr8(g_abs(0x1788), (uint8_t)(uint8_t)g_cpu.C);  /* E9A9 STA */
-    recomp_tick(14); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C + 1); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* E9AC INC */
-    recomp_tick(32); g_wr8(g_abs(0x178B), (uint8_t)(uint8_t)g_cpu.C);  /* E9AD STA */
-    recomp_tick(14); g_cpu.flag_C = false;  /* E9B0 CLC */
-    recomp_tick(14); return;  /* E9B1 RTS */
-}
-
 /* $02E96E, entered with P=$20 via JSR */
 void gen_02E96E(void) {
     goto L_E96E;
@@ -3134,168 +2447,6 @@ L_E99C:;
     recomp_tick(32); g_wr8(g_abs(0x178B), (uint8_t)(uint8_t)g_cpu.C);  /* E9AD STA */
     recomp_tick(14); g_cpu.flag_C = false;  /* E9B0 CLC */
     recomp_tick(14); return;  /* E9B1 RTS */
-}
-
-/* $02EB20, entered with P=$20 via JSR */
-void gen_02EB20(void) {
-    goto L_EB20;
-L_EB20:;
-    recomp_tick(32); g_wr8(g_absx(0x0500), (uint8_t)(uint8_t)g_cpu.C);  /* EB20 STA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* EB23 INX */
-    recomp_tick(32); { uint32_t _e = g_dp(0x15); uint8_t _v = (uint8_t)(g_rd8(_e) - 1); g_wr8(_e, _v); g_nz8(_v); }  /* EB24 DEC */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_EB20;  /* EB26 BNE */
-    recomp_tick(14); return;  /* EB28 RTS */
-}
-
-/* $02EDF8, entered with P=$20 via JSR */
-void gen_02EDF8(void) {
-    goto L_EDF8;
-L_EDF8:;
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x0E);  /* EDF8 CMP */
-    recomp_tick(16); if (g_cpu.flag_C) goto L_EDFE;  /* EDFA BCS */
-    recomp_tick(14); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C + 1); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* EDFC INC */
-    recomp_tick(14); return;  /* EDFD RTS */
-L_EDFE:;
-    recomp_tick(16); { uint8_t _v = 0x0A; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* EDFE LDA */
-    recomp_tick(14); g_cpu.flag_C = true;  /* EE00 SEC */
-    recomp_tick(14); return;  /* EE01 RTS */
-}
-
-/* $02F417, entered with P=$20 via JSR */
-void gen_02F417(void) {
-    goto L_F417;
-L_F417:;
-    recomp_tick(14); g_push8((uint8_t)g_cpu.C);  /* F417 PHA */
-    recomp_tick(14); g_cpu.flag_C = false;  /* F418 CLC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x18)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F419 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x40)));  /* F41B ADC */
-    recomp_tick(24); g_wr8(g_dp(0x18), (uint8_t)(uint8_t)g_cpu.C);  /* F41D STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x19)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F41F LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x00)));  /* F421 ADC */
-    recomp_tick(24); g_wr8(g_dp(0x19), (uint8_t)(uint8_t)g_cpu.C);  /* F423 STA */
-    recomp_tick(16); { uint8_t _v = 0x80; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F425 LDA */
-    recomp_tick(32); g_wr8(g_abs(0x0472), (uint8_t)(uint8_t)g_cpu.C);  /* F427 STA */
-    recomp_tick(14); { uint8_t _v = g_pull8(); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F42A PLA */
-    recomp_tick(16); goto L_F434;  /* F42B BRA */
-L_F434:;
-    recomp_tick(14); g_push8((uint8_t)g_cpu.C);  /* F434 PHA */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* F435 ASL */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* F436 ASL */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* F437 ASL */
-    recomp_tick(14); g_cpu.flag_C = false;  /* F438 CLC */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x34)));  /* F439 ADC */
-    recomp_tick(32); g_wr8(g_abs(0x0471), (uint8_t)(uint8_t)g_cpu.C);  /* F43B STA */
-    recomp_tick(14); { uint8_t _v = g_pull8(); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F43E PLA */
-    recomp_tick(14); g_cpu.flag_C = false;  /* F43F CLC */
-    recomp_tick(24); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_dp(0x19)))));  /* F440 ADC */
-    recomp_tick(24); g_wr8(g_dp(0x19), (uint8_t)(uint8_t)g_cpu.C);  /* F442 STA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0473)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F444 LDA */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_F459;  /* F447 BNE */
-    recomp_tick(14); g_cpu.flag_C = false;  /* F449 CLC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x18)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F44A LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x20)));  /* F44C ADC */
-    recomp_tick(32); g_wr8(g_abs(0x047C), (uint8_t)(uint8_t)g_cpu.C);  /* F44E STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x19)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F451 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x00)));  /* F453 ADC */
-    recomp_tick(32); g_wr8(g_abs(0x047D), (uint8_t)(uint8_t)g_cpu.C);  /* F455 STA */
-    recomp_tick(14); return;  /* F458 RTS */
-L_F459:;
-    recomp_tick(14); g_cpu.flag_C = true;  /* F459 SEC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x18)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F45A LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_sbc8((uint8_t)g_cpu.C, 0x20)));  /* F45C SBC */
-    recomp_tick(32); g_wr8(g_abs(0x047C), (uint8_t)(uint8_t)g_cpu.C);  /* F45E STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x19)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F461 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_sbc8((uint8_t)g_cpu.C, 0x00)));  /* F463 SBC */
-    recomp_tick(32); g_wr8(g_abs(0x047D), (uint8_t)(uint8_t)g_cpu.C);  /* F465 STA */
-    recomp_tick(14); return;  /* F468 RTS */
-}
-
-/* $02F42D, entered with P=$20 via JSR */
-void gen_02F42D(void) {
-    goto L_F42D;
-L_F42D:;
-    recomp_tick(14); g_push8((uint8_t)g_cpu.C);  /* F42D PHA */
-    recomp_tick(16); { uint8_t _v = 0x60; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F42E LDA */
-    recomp_tick(32); g_wr8(g_abs(0x0472), (uint8_t)(uint8_t)g_cpu.C);  /* F430 STA */
-    recomp_tick(14); { uint8_t _v = g_pull8(); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F433 PLA */
-    recomp_tick(14); g_push8((uint8_t)g_cpu.C);  /* F434 PHA */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* F435 ASL */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* F436 ASL */
-    recomp_tick(14); { uint8_t _v = g_asl8((uint8_t)g_cpu.C); g_seta8((uint8_t)(_v)); }  /* F437 ASL */
-    recomp_tick(14); g_cpu.flag_C = false;  /* F438 CLC */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x34)));  /* F439 ADC */
-    recomp_tick(32); g_wr8(g_abs(0x0471), (uint8_t)(uint8_t)g_cpu.C);  /* F43B STA */
-    recomp_tick(14); { uint8_t _v = g_pull8(); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F43E PLA */
-    recomp_tick(14); g_cpu.flag_C = false;  /* F43F CLC */
-    recomp_tick(24); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_dp(0x19)))));  /* F440 ADC */
-    recomp_tick(24); g_wr8(g_dp(0x19), (uint8_t)(uint8_t)g_cpu.C);  /* F442 STA */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0473)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F444 LDA */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_F459;  /* F447 BNE */
-    recomp_tick(14); g_cpu.flag_C = false;  /* F449 CLC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x18)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F44A LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x20)));  /* F44C ADC */
-    recomp_tick(32); g_wr8(g_abs(0x047C), (uint8_t)(uint8_t)g_cpu.C);  /* F44E STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x19)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F451 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x00)));  /* F453 ADC */
-    recomp_tick(32); g_wr8(g_abs(0x047D), (uint8_t)(uint8_t)g_cpu.C);  /* F455 STA */
-    recomp_tick(14); return;  /* F458 RTS */
-L_F459:;
-    recomp_tick(14); g_cpu.flag_C = true;  /* F459 SEC */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x18)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F45A LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_sbc8((uint8_t)g_cpu.C, 0x20)));  /* F45C SBC */
-    recomp_tick(32); g_wr8(g_abs(0x047C), (uint8_t)(uint8_t)g_cpu.C);  /* F45E STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x19)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F461 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_sbc8((uint8_t)g_cpu.C, 0x00)));  /* F463 SBC */
-    recomp_tick(32); g_wr8(g_abs(0x047D), (uint8_t)(uint8_t)g_cpu.C);  /* F465 STA */
-    recomp_tick(14); return;  /* F468 RTS */
-}
-
-/* $02F469, entered with P=$20 via JSR */
-void gen_02F469(void) {
-    goto L_F469;
-L_F469:;
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0473)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F469 LDA */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_F479;  /* F46C BEQ */
-    recomp_tick(30); g_push16(0xF470); func_table_call_jsr(0x02F479); g_cpu.S += 2;  /* F46E JSR */
-    recomp_tick(24); g_wr8(g_dp(0x1E), (uint8_t)(uint8_t)g_cpu.C);  /* F471 STA */
-    recomp_tick(14); g_cpu.flag_C = true;  /* F473 SEC */
-    recomp_tick(16); { uint8_t _v = 0x09; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F474 LDA */
-    recomp_tick(24); g_seta8((uint8_t)(g_sbc8((uint8_t)g_cpu.C, g_rd8(g_dp(0x1E)))));  /* F476 SBC */
-    recomp_tick(14); return;  /* F478 RTS */
-L_F479:;
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0422)); g_cpu.X = _v; g_nz16(_v); }  /* F479 LDX */
-    recomp_tick(40); { uint8_t _v = g_rd8(g_longx(0x000DCDu)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F47C LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x0F); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F480 AND */
-    recomp_tick(14); return;  /* F482 RTS */
-}
-
-/* $02F479, entered with P=$20 via JSR */
-void gen_02F479(void) {
-    goto L_F479;
-L_F479:;
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x0422)); g_cpu.X = _v; g_nz16(_v); }  /* F479 LDX */
-    recomp_tick(40); { uint8_t _v = g_rd8(g_longx(0x000DCDu)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F47C LDA */
-    recomp_tick(16); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C & 0x0F); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F480 AND */
-    recomp_tick(14); return;  /* F482 RTS */
-}
-
-/* $02F5C2, entered with P=$20 via JSR */
-void gen_02F5C2(void) {
-    goto L_F5C2;
-L_F5C2:;
-    recomp_tick(14); g_cpu.flag_C = false;  /* F5C2 CLC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x041F)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F5C3 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x03)));  /* F5C6 ADC */
-    recomp_tick(32); g_wr8(g_abs(0x041F), (uint8_t)(uint8_t)g_cpu.C);  /* F5C8 STA */
-    recomp_tick(40); { uint16_t _v = g_rd16(g_abs(0x041E)); g_cpu.Y = _v; g_nz16(_v); }  /* F5CB LDY */
-    recomp_tick(32); g_wr16(g_dp(0x18), (uint16_t)g_cpu.Y);  /* F5CE STY */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0470)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F5D0 LDA */
-    recomp_tick(32); g_wr8(g_abs(0x0472), (uint8_t)(uint8_t)g_cpu.C);  /* F5D3 STA */
-    recomp_tick(14); g_cpu.flag_C = false;  /* F5D6 CLC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x0471)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F5D7 LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x18)));  /* F5DA ADC */
-    recomp_tick(32); g_wr8(g_abs(0x0471), (uint8_t)(uint8_t)g_cpu.C);  /* F5DC STA */
-    recomp_tick(14); return;  /* F5DF RTS */
 }
 
 /* $02F7A7, entered with P=$20 via JSR */
@@ -3371,109 +2522,7 @@ L_F7EF:;
     recomp_tick(14); return;  /* F816 RTS */
 }
 
-/* $02F817, entered with P=$20 via JSR */
-void gen_02F817(void) {
-    goto L_F817;
-L_F817:;
-    recomp_tick(14); g_push8((uint8_t)g_cpu.C);  /* F817 PHA */
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* F818 TDC */
-    recomp_tick(14); { uint8_t _v = g_pull8(); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F819 PLA */
-    recomp_tick(14); g_push8((uint8_t)g_cpu.C);  /* F81A PHA */
-    recomp_tick(16); g_rep(0x20);  /* F81B REP */
-    recomp_tick(14); { uint16_t _v = g_asl16(g_cpu.C); g_cpu.C = (uint16_t)(_v); }  /* F81D ASL */
-    recomp_tick(14); { uint16_t _v = g_asl16(g_cpu.C); g_cpu.C = (uint16_t)(_v); }  /* F81E ASL */
-    recomp_tick(14); { uint16_t _v = g_asl16(g_cpu.C); g_cpu.C = (uint16_t)(_v); }  /* F81F ASL */
-    recomp_tick(14); { uint16_t _v = g_asl16(g_cpu.C); g_cpu.C = (uint16_t)(_v); }  /* F820 ASL */
-    recomp_tick(14); { uint16_t _v = g_asl16(g_cpu.C); g_cpu.C = (uint16_t)(_v); }  /* F821 ASL */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* F822 TAX */
-    recomp_tick(24); { uint16_t _v = 0x0008; g_cpu.Y = _v; g_nz16(_v); }  /* F823 LDY */
-L_F826:;
-    recomp_tick(48); { uint16_t _v = g_rd16(g_longx(0x0AA000u)); g_cpu.C = (uint16_t)(_v); g_nz16(_v); }  /* F826 LDA */
-    recomp_tick(48); { uint16_t _v = (uint16_t)(g_cpu.C | g_rd16(g_longx(0x0AA010u))); g_cpu.C = (uint16_t)(_v); g_nz16(_v); }  /* F82A ORA */
-    recomp_tick(32); g_wr16(g_dp(0x04), (uint16_t)g_cpu.C);  /* F82E STA */
-    recomp_tick(32); { uint16_t _v = g_rd16(g_dp(0x04)); g_cpu.C = (uint16_t)(_v); g_nz16(_v); }  /* F830 LDA */
-    recomp_tick(32); { uint16_t _v = (uint16_t)(g_cpu.C | g_rd16(g_dp(0x05))); g_cpu.C = (uint16_t)(_v); g_nz16(_v); }  /* F832 ORA */
-    recomp_tick(24); { uint16_t _v = (uint16_t)(g_cpu.C ^ 0x00FF); g_cpu.C = (uint16_t)(_v); g_nz16(_v); }  /* F834 EOR */
-    recomp_tick(24); { uint16_t _v = (uint16_t)(g_cpu.C & 0x00FF); g_cpu.C = (uint16_t)(_v); g_nz16(_v); }  /* F837 AND */
-    recomp_tick(48); { uint16_t _v = (uint16_t)(g_cpu.C | g_rd16(g_longx(0x0AA000u))); g_cpu.C = (uint16_t)(_v); g_nz16(_v); }  /* F83A ORA */
-    recomp_tick(48); g_wr16(g_longx(0x7F2000u), (uint16_t)g_cpu.C);  /* F83E STA */
-    recomp_tick(48); { uint16_t _v = g_rd16(g_longx(0x0AA010u)); g_cpu.C = (uint16_t)(_v); g_nz16(_v); }  /* F842 LDA */
-    recomp_tick(48); g_wr16(g_longx(0x7F2010u), (uint16_t)g_cpu.C);  /* F846 STA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* F84A INX */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.X + 1); g_cpu.X = _v; g_nz16(_v); }  /* F84B INX */
-    recomp_tick(14); { uint16_t _v = (uint16_t)(g_cpu.Y - 1); g_cpu.Y = _v; g_nz16(_v); }  /* F84C DEY */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_F826;  /* F84D BNE */
-    recomp_tick(16); g_sep(0x20);  /* F84F SEP */
-    recomp_tick(14); { uint8_t _v = g_pull8(); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F851 PLA */
-    recomp_tick(14); return;  /* F852 RTS */
-}
-
-/* $02F936, entered with P=$20 via JSR */
-void gen_02F936(void) {
-    goto L_F936;
-L_F936:;
-    recomp_tick(14); g_cpu.flag_C = false;  /* F936 CLC */
-    recomp_tick(24); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, g_rd8(g_dp(0x18)))));  /* F937 ADC */
-    recomp_tick(24); g_wr8(g_dp(0x18), (uint8_t)(uint8_t)g_cpu.C);  /* F939 STA */
-    recomp_tick(24); { uint8_t _v = g_rd8(g_dp(0x19)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F93B LDA */
-    recomp_tick(16); g_seta8((uint8_t)(g_adc8((uint8_t)g_cpu.C, 0x00)));  /* F93D ADC */
-    recomp_tick(24); g_wr8(g_dp(0x19), (uint8_t)(uint8_t)g_cpu.C);  /* F93F STA */
-    recomp_tick(14); return;  /* F941 RTS */
-}
-
-/* $02F9BD, entered with P=$20 via JSR */
-void gen_02F9BD(void) {
-    goto L_F9BD;
-L_F9BD:;
-    recomp_tick(14); g_cpu.C = g_cpu.DP; g_nz16(g_cpu.C);  /* F9BD TDC */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x0E81)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9BE LDA */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* F9C1 TAX */
-    recomp_tick(24); g_cmp16((uint16_t)g_cpu.X, 0x0064);  /* F9C2 CPX */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_F9E3;  /* F9C5 BEQ */
-L_F9C7:;
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x085A)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9C7 LDA */
-    recomp_tick(14); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C - 1); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9CA DEC */
-    recomp_tick(14); { uint16_t _v = (uint16_t)g_cpu.C; g_cpu.X = _v; g_nz16(_v); }  /* F9CB TAX */
-    recomp_tick(40); { uint8_t _v = g_rd8(g_longx(0x01E068u)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9CC LDA */
-    recomp_tick(16); g_cmp8((uint8_t)g_cpu.C, 0x26);  /* F9D0 CMP */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_F9E0;  /* F9D2 BNE */
-    recomp_tick(40); { uint8_t _v = g_rd8(0x7EF620u); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9D4 LDA */
-    recomp_tick(16); if (g_cpu.flag_Z) goto L_F9DE;  /* F9D8 BEQ */
-    recomp_tick(16); { uint8_t _v = 0x27; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9DA LDA */
-    recomp_tick(16); goto L_F9E0;  /* F9DC BRA */
-L_F9DE:;
-    recomp_tick(16); { uint8_t _v = 0x26; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9DE LDA */
-L_F9E0:;
-    recomp_tick(14); { uint8_t _v = (uint8_t)((uint8_t)g_cpu.C - 1); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9E0 DEC */
-    recomp_tick(16); goto L_F9EF;  /* F9E1 BRA */
-L_F9E3:;
-    recomp_tick(32); { uint8_t _v = g_rd8(g_abs(0x1630)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9E3 LDA */
-    recomp_tick(16); if (!g_cpu.flag_Z) goto L_F9C7;  /* F9E6 BNE */
-    recomp_tick(32); { uint8_t _v = g_rd8(g_absx(0x08FA)); g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9E8 LDA */
-    recomp_tick(16); if (!g_cpu.flag_N) goto L_F9C7;  /* F9EB BPL */
-    recomp_tick(16); { uint8_t _v = 0x3E; g_seta8((uint8_t)(_v)); g_nz8(_v); }  /* F9ED LDA */
-L_F9EF:;
-    recomp_tick(14); return;  /* F9EF RTS */
-}
-
-/* $02FB1D, entered with P=$20 via JSR */
-void gen_02FB1D(void) {
-    goto L_FB1D;
-L_FB1D:;
-    recomp_tick(14); ;  /* FB1D NOP */
-    recomp_tick(14); return;  /* FB1E RTS */
-}
-
 void gen_register_bank_02(void) {
-    func_table_register_flags(0x02813E, gen_02813E, false);
-    func_table_register_flags(0x0283C8, gen_0283C8, false);
-    func_table_register_flags(0x0283D7, gen_0283D7, false);
-    func_table_register_flags(0x0283E6, gen_0283E6, false);
-    func_table_register_flags(0x02840E, gen_02840E, false);
-    func_table_register_flags(0x02843D, gen_02843D, false);
-    func_table_register_flags(0x028455, gen_028455, false);
-    func_table_register_flags(0x02847F, gen_02847F, false);
-    func_table_register_flags(0x0284DD, gen_0284DD, false);
     func_table_register_flags(0x02857F, gen_02857F, false);
     func_table_register_flags(0x02872B, gen_02872B, false);
     func_table_register_flags(0x0287E7, gen_0287E7, false);
@@ -3504,11 +2553,7 @@ void gen_register_bank_02(void) {
     func_table_register_flags(0x02B267, gen_02B267, false);
     func_table_register_flags(0x02B3B6, gen_02B3B6, false);
     func_table_register_flags(0x02B40E, gen_02B40E, false);
-    func_table_register_flags(0x02B62D, gen_02B62D, false);
-    func_table_register_flags(0x02B6A8, gen_02B6A8, false);
     func_table_register_flags(0x02B813, gen_02B813, false);
-    func_table_register_flags(0x02B8E7, gen_02B8E7, false);
-    func_table_register_flags(0x02B9ED, gen_02B9ED, false);
     func_table_register_flags(0x02B9F9, gen_02B9F9, false);
     func_table_register_flags(0x02BCCB, gen_02BCCB, false);
     func_table_register_flags(0x02BDB3, gen_02BDB3, false);
@@ -3521,8 +2566,6 @@ void gen_register_bank_02(void) {
     func_table_register_flags(0x02C718, gen_02C718, false);
     func_table_register_flags(0x02CBA0, gen_02CBA0, false);
     func_table_register_flags(0x02CD90, gen_02CD90, false);
-    func_table_register_flags(0x02D0A7, gen_02D0A7, false);
-    func_table_register_flags(0x02D11B, gen_02D11B, false);
     func_table_register_flags(0x02D495, gen_02D495, false);
     func_table_register_flags(0x02D4C4, gen_02D4C4, false);
     func_table_register_flags(0x02D56B, gen_02D56B, false);
@@ -3532,33 +2575,15 @@ void gen_register_bank_02(void) {
     func_table_register_flags(0x02D72D, gen_02D72D, false);
     func_table_register_flags(0x02D747, gen_02D747, false);
     func_table_register_flags(0x02D75A, gen_02D75A, false);
-    func_table_register_flags(0x02D779, gen_02D779, false);
-    func_table_register_flags(0x02D77F, gen_02D77F, false);
     func_table_register_flags(0x02D7BC, gen_02D7BC, false);
     func_table_register_flags(0x02D7D6, gen_02D7D6, false);
     func_table_register_flags(0x02D89A, gen_02D89A, false);
     func_table_register_flags(0x02D999, gen_02D999, false);
-    func_table_register_flags(0x02D99A, gen_02D99A, false);
     func_table_register_flags(0x02D9C2, gen_02D9C2, false);
     func_table_register_flags(0x02D9D1, gen_02D9D1, false);
     func_table_register_flags(0x02DDB6, gen_02DDB6, false);
-    func_table_register_flags(0x02E309, gen_02E309, false);
     func_table_register_flags(0x02E4B2, gen_02E4B2, false);
     func_table_register_flags(0x02E549, gen_02E549, false);
-    func_table_register_flags(0x02E66F, gen_02E66F, false);
-    func_table_register_flags(0x02E724, gen_02E724, false);
-    func_table_register_flags(0x02E968, gen_02E968, false);
     func_table_register_flags(0x02E96E, gen_02E96E, false);
-    func_table_register_flags(0x02EB20, gen_02EB20, false);
-    func_table_register_flags(0x02EDF8, gen_02EDF8, false);
-    func_table_register_flags(0x02F417, gen_02F417, false);
-    func_table_register_flags(0x02F42D, gen_02F42D, false);
-    func_table_register_flags(0x02F469, gen_02F469, false);
-    func_table_register_flags(0x02F479, gen_02F479, false);
-    func_table_register_flags(0x02F5C2, gen_02F5C2, false);
     func_table_register_flags(0x02F7A7, gen_02F7A7, false);
-    func_table_register_flags(0x02F817, gen_02F817, false);
-    func_table_register_flags(0x02F936, gen_02F936, false);
-    func_table_register_flags(0x02F9BD, gen_02F9BD, false);
-    func_table_register_flags(0x02FB1D, gen_02FB1D, false);
 }
