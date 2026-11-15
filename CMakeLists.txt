@@ -215,6 +215,17 @@ target_include_directories(test_area_1_telemetry PRIVATE
 )
 target_link_libraries(test_area_1_telemetry PRIVATE lakesnes m)
 
+add_executable(test_config_gui
+    tests/test_config_gui.c
+    src/engine/config.c
+    src/engine/gui_menu.c
+    src/engine/snes_ui_rasterizer.c
+)
+target_include_directories(test_config_gui PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/engine
+)
+
 # Custom target for ROM verification
 add_custom_target(verify_rom
     COMMAND ${CMAKE_COMMAND} -E echo "Verifying Ogre Battle ROM..."
@@ -228,6 +239,7 @@ add_test(NAME OracleHarnessTest COMMAND test_oracle ${OGRE_BATTLE_ROM})
 add_test(NAME Gate2MouseThreePillarTest COMMAND test_mouse_three_pillar)
 add_test(NAME Gate3Widescreen16x9Test COMMAND test_widescreen_16_9)
 add_test(NAME Gate4TelemetryTest COMMAND test_area_1_telemetry ${OGRE_BATTLE_ROM})
+add_test(NAME Gate5ConfigGuiTest COMMAND test_config_gui)
 add_test(NAME CanonicalTrace1Test COMMAND verify_trace 
     ${CMAKE_CURRENT_SOURCE_DIR}/traces/trace_01_boot_to_title.obrec 
     ${CMAKE_CURRENT_BINARY_DIR}/trace_01.obsav 
