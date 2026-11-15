@@ -153,18 +153,18 @@ main (Certified Golden Releases Only)
 
 ## Repository Directory Structure
 
-> [!NOTE]
-> Entries marked ⏳ belong to the Gate 1 recompilation pipeline. They currently live on a cloud development instance and haven't been pushed to this repository yet.
-
 ```
 ├── .github/                        # CI workflow, issue & PR templates
 ├── .gitignore                      # Strict legal cleanliness & build artifact filters
 ├── CONTRIBUTING.md                 # Contribution guidelines
 ├── LICENSE                         # MIT license
 ├── README.md                       # Project overview and architecture guide
+├── CMakeLists.txt                  # Cross-platform build & CTest verification configuration
 ├── config/                         # Empirical symbols & jump table dispatch databases
-│   ├── jumptables.ini              # ⏳ 1,713 indirect jump dispatch targets
-│   └── symbols.ini                 # ⏳ Subroutine boundary and M/X flag map
+│   ├── jumptables.ini              # ✅ 1,713 indirect jump dispatch targets
+│   ├── routines_to_lift.txt        # ✅ 3,669 static lifting routine boundaries
+│   ├── symbols.ini                 # ✅ Subroutine boundary and M/X flag map
+│   └── symbols.sym                 # ✅ WLA-DX / Mesen-S symbol export
 ├── data/                           # Area 4 decoupled game data
 │   ├── vanilla/                    # Canonical manifests (classes, promotions, items, shops, stages, attacks)
 │   ├── schemas/                    # JSON Schemas (boot_config, classes, items, stages)
@@ -186,7 +186,13 @@ main (Certified Golden Releases Only)
 │   ├── gap_analysis.md             # Operational comparison against zelda3 & snesrecomp
 │   └── snes_rom_transpilation_research_plan.md # Framework analysis & 65816 lifting research
 ├── include/                        # Public headers (boot_loader, telemetry, telemetry_math, telemetry_window, ob_snes_ui_theme)
+├── runner/                         # ✅ Oracle, Snapshot, Replay & Dual-Execution Lockstep harness
+│   ├── include/                    # lockstep.h, oracle.h, replay.h, snapshot.h
+│   ├── src/                        # lockstep.c, oracle.c, replay.c, snapshot.c
+│   └── test/                       # test_oracle.c
 ├── src/                            # Native port engine source code
+│   ├── main.c                      # ✅ Native runtime entrypoint
+│   ├── platform_win32.c            # ✅ Win32 D3D11 + XInput platform layer
 │   ├── engine/                     # Modernized C modules
 │   │   ├── input.c/.h              # Three-Pillar mouse & widescreen wing docks
 │   │   ├── widescreen.c/.h         # 16:9 compositor & scene classifier
@@ -194,7 +200,7 @@ main (Certified Golden Releases Only)
 │   │   ├── telemetry*.c            # Area 1 telemetry engine, predictive math & Companion Window
 │   │   └── boot_loader.c           # Area 4 pre-reset in-memory table injection
 │   ├── tools/                      # C tooling (telemetry_trace_runner.c)
-│   └── gen/                        # ⏳ Machine-lifted bank translation units (ob_bank_*.c)
+│   └── gen/                        # ✅ Machine-lifted bank translation units (ob_bank_*.c, 570 routines)
 ├── tests/                          # Gate 2, Gate 3, Area 1 & Area 4 verification suites
 ├── tools/                          # Analysis, crawler, build, and verification tooling
 │   ├── boot_pipeline.py            # Layered boot pipeline (presets, overlays, toggles, conflicts)
@@ -205,10 +211,14 @@ main (Certified Golden Releases Only)
 │   ├── dump_telemetry_trace.py     # Telemetry trace dumper
 │   ├── mine_telemetry_patterns.py  # Pattern Discovery Lab miner
 │   ├── extract_snes_ui_assets.py   # SNES UI asset extractor
-│   ├── crawler.py                  # ⏳ Recursive-descent static call-graph crawler
-│   ├── verify_rom.py               # ⏳ ROM checksum and header integrity validator
+│   ├── crawler.py                  # ✅ Recursive-descent static call-graph crawler
+│   ├── lift_all_banks.py           # ✅ Automated 65816 static lifter
+│   ├── cdl_collector.c             # ✅ Dynamic Code/Data Log collector
+│   ├── generate_canonical_traces.c # ✅ Deterministic 8-trace .obrec generator
+│   ├── verify_trace.c              # ✅ Dual-execution lockstep trace verifier
+│   ├── verify_rom.py               # ✅ ROM checksum and header integrity validator
 │   └── git-hooks/                  # Automated quality gate scripts (pre-commit, pre-push)
-└── traces/                         # ⏳ Canonical regression test fixtures (83,450 frames .obrec)
+└── traces/                         # ✅ Canonical regression test fixtures (83,450 frames .obrec)
 ```
 
 ---

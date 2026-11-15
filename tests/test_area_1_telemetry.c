@@ -566,13 +566,15 @@ static void test_06_phase_5b_walkthrough_models(const uint8_t *rom, uint32_t rom
     printf("  -> [PASS] Phase 5B Walkthrough Models & 3-Page Companion Window Certified!\n");
 }
 
-int main(void) {
+int main(int argc, char **argv) {
     printf("================================================================================\n");
     printf("  OGRE BATTLE PC PORT: AREA 1 TELEMETRY & LOCKSTEP CERTIFICATION SUITE\n");
     printf("================================================================================\n");
 
+    const char *rom_path = (argc > 1) ? argv[1] : "/home/antigravity/ogre_battle.sfc";
     uint32_t rom_size = 0;
-    uint8_t *rom = load_rom_file("/home/antigravity/ogre_battle.sfc", &rom_size);
+    uint8_t *rom = load_rom_file(rom_path, &rom_size);
+    if (!rom) rom = load_rom_file("/tmp/ogre_battle.sfc", &rom_size);
     assert(rom != NULL && rom_size == OB_ROM_BASE_SIZE_BYTES);
 
     test_01_gate_1a_lockstep_zero_invasion(rom, rom_size);
