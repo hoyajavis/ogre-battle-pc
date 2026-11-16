@@ -8,6 +8,12 @@ This directory documents the reusable engineering patterns and architecture of *
 - **[SNES ROM Transpilation Research Plan](snes_rom_transpilation_research_plan.md)** — Comparative analysis of `snesrecomp`, `snesrev` (`zelda3`/`smw`/`sm`), and `gilgamesh`, plus 65816 static lifting challenges (`REP`/`SEP` $M/X$ widths, jump tables).
 - **[RHDN Patch & Modding Catalog](rhdn_patches_catalog.md)** — How legacy `.ips` community patches are decompiled into structured JSON overlays and assembled pre-reset (`tools/boot_pipeline.py`, `tools/rom_builder.py`, `src/engine/boot_loader.c`).
 
+## Origin & Design History (3 Attempts)
+This port is the third attempt at bringing *Ogre Battle: The March of the Black Queen* natively to PC, and its hybrid architecture reflects the lessons of the first two:
+1. **Attempt 1 — Disassembly → Pygame:** Game logic worked notionally, but reimplementing the SNES PPU (Mode-7 tactical maps, HDMA horizon effects, window masks, color math) from scratch proved unsustainable.
+2. **Attempt 2 — Pure Automated Rust Static Recompiler:** Ahead-of-time lifting hit a wall on dynamic `REP`/`SEP` register-width (`M`/`X`) switches, indirect jump tables, hardware MMIO multipliers (`$4202 * $4203`), and NMI-sensitive Bank `$00`/`$02` routines.
+3. **Attempt 3 — Hybrid `snesrecomp` + `snesrev` + Custom 16:9 Engine:** Uses `sp00nznet/snesrecomp` + LakeSnes for cycle-accurate PPU/APU/DMA silicon and tiered interpreter fallback, paired with a `snesrev`-style frame-by-frame `memcmp` lockstep oracle (`runner/`) and a custom SDL2 `800×448` compositor (`src/main.c`).
+
 ## Adopting Features in Another SNES Port
 
 | Feature | Key Source Files | Portability Notes |
