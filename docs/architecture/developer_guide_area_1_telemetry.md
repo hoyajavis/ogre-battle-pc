@@ -54,7 +54,7 @@ flowchart LR
    - `Instance A`: Runs vanilla SNES execution without telemetry.
    - `Instance B`: Runs full 60Hz telemetry extraction and companion window rasterization on every VBlank.
    - Result: `0` byte difference across `128 KB` WRAM, `64 KB` VRAM, `512 B` CGRAM, and `544 B` OAM across 600+ frames.
-3. **Decoupled Framebuffers**: The primary viewport remains locked at native `256 × 224` (4:3). Telemetry rasterization outputs exclusively to a separate `640 × 480` RGBA buffer ([`ob_telemetry_render_companion_window`](../../src/engine/telemetry_window.c#L156-L550)).
+3. **Decoupled Framebuffers**: The core `256 × 224` (`4:3`) simulation buffer is never mutated by telemetry. In standalone `--companion-window` mode, telemetry rasterizes into a separate `640 × 480` RGBA buffer ([`ob_telemetry_render_companion_window`](../../src/engine/telemetry_window.c)); in `16:9` mode, 9 of the 12 modules render into the `144 × 448` Tactician Wings and the `[Tab]` Campaign Grimoire via [`widescreen.c`](../../src/engine/widescreen.c) (see [`widescreen_16_9_architecture.md`](widescreen_16_9_architecture.md)).
 
 ---
 
@@ -217,12 +217,12 @@ The Companion Window rasterizer ([`src/engine/telemetry_window.c`](../../src/eng
 ```
 
 ### Rendering Pipeline
-- **Primitives**: `draw_rect_fill()`, `draw_rect_outline()`, `draw_char()`, `draw_text()`.
-- **Built-in Font**: 5x7 ASCII bitmap table with dedicated glyphs for pipes (`|`), arrows (`->`), and status symbols.
-- **Coordinate Projection**: World coordinates (`0..1024 px`) are mapped to radar canvas space (`136 × 96 px`) via affine transform.
+- **Authentic SNES Primitives**: `draw_snes_screen_backdrop()` (Mode 1 diamond tapestry + brass corner studs), `draw_snes_window_fill()` (Quest Royal Blue `#182868` $\rightarrow$ `#080830` scanline-dithered gradient), `draw_snes_9slice_box()` (4-color 2BPP border extracted from ROM `$14EEE7`), `draw_snes_tile_text()` (2-pass drop-shadowed bitmap font from ROM `$090000`), `draw_snes_minimap()`, `draw_snes_mini_tarot()`, and `draw_snes_zodiac_tray()`.
+- **Palette & Theme**: Shared BGR555 palette definitions live in [`include/ob_snes_ui_theme.h`](../../include/ob_snes_ui_theme.h).
+- **Coordinate Projection**: World coordinates (`0..1024 px`) are mapped to the `152 × 108 px` cartographic parchment minimap via affine transform.
 - **Output Interfaces**:
   - Framebuffer pointer: `uint32_t *out_rgba_buffer`
-  - PPM snapshot export: [`ob_companion_window_save_ppm`](../../src/engine/telemetry_window.c#L130-L154)
+  - PPM snapshot export: [`ob_companion_window_save_ppm`](../../src/engine/telemetry_window.c)
 
 ---
 
