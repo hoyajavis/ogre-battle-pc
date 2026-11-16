@@ -45,7 +45,12 @@ cmake --build build -j
 # 3. Run ROM-independent C & Python verification suites
 ctest --test-dir build -R "Gate2MouseThreePillarTest|Gate3Widescreen16x9Test|Gate4TelemetryTest|Gate5ConfigGuiTest" --output-on-failure
 PYTHONPATH=tools python3 -m unittest discover -s tests -p "*.py" -v
+
+# 4. (Optional, requires verified ogre_battle.sfc) Run Gate 1 lockstep oracle parity
+ctest --test-dir build -R "OracleHarnessTest" --output-on-failure
 ```
+
+See [`docs/verification/gate_1_certification.md`](docs/verification/gate_1_certification.md) for full 8-trace lockstep parity details.
 
 ---
 

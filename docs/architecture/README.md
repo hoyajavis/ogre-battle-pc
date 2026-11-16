@@ -20,7 +20,7 @@ For the complete multi-disciplinary retrospective covering SNES engine internals
 
 | Feature | Key Source Files | Portability Notes |
 | :--- | :--- | :--- |
-| **BGR555 9-Slice UI Rasterizer** | `src/engine/snes_ui_rasterizer.c/.h`, `include/ob_snes_ui_theme.h` | **Game-agnostic.** Drop into any 32-bit RGBA framebuffer port to render authentic 1993 SNES windows, gauges, and shadowed bitmap fonts. |
+| **BGR555 9-Slice UI Rasterizer** | `src/engine/snes_ui_rasterizer.c/.h`, `include/ob_snes_ui_theme.h` | **Game-agnostic.** Drop into any 32-bit RGBA framebuffer port to render authentic 1993 SNES windows, gauges, and shadowed bitmap fonts. Keep `include/ob_snes_ui_theme.h` as the single shared palette/border header across overlays and menus. |
 | **16:9 Side-Wing Compositor** | `src/engine/widescreen.c/.h` | Compositor loop and tapestry/wing framing are reusable; replace `ob_widescreen_detect_scene` and wing card layouts with your game's WRAM/OAM state. |
 | **Hybrid Mouse + Keyboard Handoff** | `src/engine/input.c/.h` | Coordinate mapping (`ob_input_map_window_to_snes`), cooldown handoff, and zero-invasion idle lockstep are reusable; swap WRAM cursor/OAM hit-test rules per game. |
 | **Pre-Boot Launcher & `.ini` Config** | `src/engine/gui_menu.c/.h`, `src/engine/config.c/.h` | Reusable ROM picker, display-mode selector, and settings overlay. |

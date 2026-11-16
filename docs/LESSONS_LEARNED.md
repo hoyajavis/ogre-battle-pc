@@ -197,6 +197,13 @@ Working with AI coding agents on low-level 65816 assembly and emulator internals
 3. **Automated Legal Hygiene (Rule 4 + Pre-Commit Hook):** When working with local `.sfc` ROMs and `.obsav` memory dumps for testing, a single careless `git add .` can contaminate the git history with copyrighted assets. Installing a hard blocker in [`tools/git-hooks/pre-commit`](../tools/git-hooks/pre-commit) that aborts on `.sfc`, `.smc`, `.rom`, `.bin`, and `.obsav` files prevents accidents before they happen.
 4. **Git Worktrees for Heavy QA (`../ob-qa-worktree`):** Running an 83,450-frame headless trace suite or cross-compiling Windows MinGW binaries while simultaneously editing C code in the same directory causes CMake cache thrashing and dirty worktree errors. Dedicating separate `git worktree` checkouts keeps active development fast and clean.
 
+### 5.4 Parallel Agent PRs, Header Divergence & Hook Drift
+Integrating PRs #1–#4 in parallel surfaced four practical multi-branch lessons:
+1. **Define Shared Interface Headers on `main` First:** PR #1 (`feat/telemetry-overlays`) and PR #3 (`gate/3-widescreen`) were developed concurrently and both independently created `include/ob_snes_ui_theme.h` with incompatible types and constants (`ObSnesPalette` vs. `ObSnesPaletteId`, raw `0xAARRGGBB` hex vs. `OB_BGR555_RGBA`, `OB_COLOR_TEXT_SKY` vs. `OB_COLOR_TEXT_CYAN`), causing an add/add merge conflict. Establish shared UI/engine headers on `main` before branching parallel work, or land the shared primitive PR first.
+2. **Respect PR Dependency Order & Rebase Stale Bases:** PR #3 branched off PR #2 (`gate/2-mouse-input`), whereas PR #4 (`gate/4-boot-decoupling`) was authored against an older `main` predating PRs #1–#3. Merge foundational gate branches before dependent ones, and rebase or merge `main` into older branches before review so `CMakeLists.txt` and header drift are caught early.
+3. **Keep Git Hooks & CI Aligned with Real Targets:** [`tools/git-hooks/pre-push`](../tools/git-hooks/pre-push) checked for a legacy `./build/test_trace` binary and exited `0` when absent—silently skipping verification instead of running the actual `ctest` targets (`Gate2*`–`Gate5*` / `OracleHarnessTest`). Similarly, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) required fixes for inline Python formatting and ROM-check edge cases during early PR runs.
+4. **Workspace & Public URI Hygiene:** When initializing Git in a shared workspace or `$HOME`, enforce `.gitignore` exclusions for local agent/editor directories (e.g. `.gemini/`, `.local/`) and scrub machine-local `file:///` links from markdown before publishing.
+
 ---
 
 ## Part 6: The 10-Point Blueprint for Future Retro PC Ports
