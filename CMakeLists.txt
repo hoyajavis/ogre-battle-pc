@@ -74,6 +74,11 @@ target_include_directories(ob_recomp PUBLIC
     ${LAKESNES_DIR}
 )
 target_link_libraries(ob_recomp PUBLIC snesrecomp lakesnes)
+if(MSVC)
+    target_compile_options(ob_recomp PRIVATE "/FI${CMAKE_CURRENT_SOURCE_DIR}/runner/include/recomp_compat.h")
+else()
+    target_compile_options(ob_recomp PRIVATE -include "${CMAKE_CURRENT_SOURCE_DIR}/runner/include/recomp_compat.h")
+endif()
 
 # Runner / Oracle verification framework
 add_library(runner_core STATIC
@@ -89,6 +94,11 @@ target_include_directories(runner_core PUBLIC
     ${LAKESNES_DIR}
 )
 target_link_libraries(runner_core PUBLIC ob_recomp snesrecomp lakesnes)
+if(MSVC)
+    target_compile_options(runner_core PRIVATE "/FI${CMAKE_CURRENT_SOURCE_DIR}/runner/include/recomp_compat.h")
+else()
+    target_compile_options(runner_core PRIVATE -include "${CMAKE_CURRENT_SOURCE_DIR}/runner/include/recomp_compat.h")
+endif()
 
 # Core OgreBattlePC runner / harness (requires SDL2)
 find_package(SDL2 QUIET)
