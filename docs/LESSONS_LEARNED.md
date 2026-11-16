@@ -105,6 +105,7 @@ One of the subtlest bugs encountered late in development occurred when wiring th
   - Until the game's Reset routine finishes its DMA zero-fill of WRAM around Frame 118, every byte in WRAM reads `0x55`.
   - Any host C check written as `if ((wram[0x14E6] & 0xC0) != 0)` evaluates to `true` because `0x55 & 0xC0 == 0x40`!
   - Even after the game clears low WRAM (`$0000`–`$1FFF`), high WRAM (`$F942` combat accumulators) stays `0x5555` until the first battle occurs.
+  - **Sprite-Visibility vs. Scene-Mode Flags (`$14E6` vs. `$00CB/$00CC`):** In live gameplay, `$14E6` is a cursor-visibility flag (`0x00`/`0x01` when drawn, `0x80` when suppressed) rather than a scene ID. Anchoring `ob_input_detect_mode` on primary game-mode bytes (`$00CB == 0x01`, `$00CC == 0x10`, `$00CE == 0x00`, `$07BA != 0x55`) prevented false positives on boot while fixing live Tactical Map detection.
 
 > **Lesson 2 (The `0x55` Cold-Boot Rule):** Never assume uninitialized emulator RAM is zeroed! Always add an explicit cold-boot signature check (e.g., verifying that unreferenced WRAM sentinel words have been cleared from `0x55` by the game's boot DMA) before enabling host scene detectors, telemetry overlays, or mouse WRAM injectors.
 
@@ -124,9 +125,9 @@ We iterated through **eight revisions (`Rev 1`–`Rev 8`)** of synthetic D-Pad s
 2. **60 Hz Menu Wrap-Around Spinning (7-Icon Command Bar):** On the 1D horizontal command bar (`OAM[1]` tile `0xCE` at `X = 75..171, Y = 119`), moving the mouse to `X = 200` caused `Rev 8` to hold `BTN_RIGHT` every frame. Because the menu wraps from slot 6 (`X = 171`) back to slot 0 (`X = 75`), the cursor spun in an infinite 60 Hz loop!
 3. **The Fix (`Rev 9+` Three-Pillar Direct-State Architecture):**
    - **Never emit continuous synthetic D-Pad bits on mouse hover.**
-   - **Pillar 1 (Tactical Map):** Write screen coordinates (`$14DE`/`$14E0`) and raycast world coordinates (`$14E2`/`$14E4`) **directly to WRAM**, force `$14E7 = 0` so hover never scrolls the camera, snap ±8 px to squads/cities, and pan the Mode-7 camera (`$00BD`/`$00BF`) *only* on Right/Middle-drag or a 10 px screen-edge zone.
+   - **Pillar 1 (Tactical Map):** Write screen coordinates (`$14DE`/`$14E0`) and world coordinates (`$14E2`/`$14E4`) **directly to WRAM** *before* the frame's 65816 step so `$00:B2FC -> JSR $CBAE` remains authoritative for Mode-7 zoom (`$14BB`) raycasting. Force `$14E7 = 0` so hover never scrolls the camera, snap ±8 px to squads/cities, and pan the Mode-7 camera (`$00BD`/`$00BF`) *only* on Right/Middle-drag or a 10 px screen-edge zone.
    - **Pillar 2 (Menus & Grids):** Use deterministic 2D bounding-box hit-tests (`slot = (mouse_x - 71) / 16`) and write the slot index (`WRAM $0474`) directly. If the mouse is outside the menu box, do nothing.
-   - **Pillar 3 (Keyboard Coexistence):** Track `last_mouse_win_x/y`. If the mouse is stationary, yield 100% of control back to the keyboard/gamepad so `WASD`/Arrows work seamlessly alongside the mouse.
+   - **Pillar 3 (World Map & Keyboard Coexistence):** Scan hardware `ppu_oam` in two passes (`OAM[24..35]` then `OAM[1..23]` for `attr & 0x38 == 0x38` stage banners) while updating `$14DE`/`$14E0` over open ocean so the pointer stays responsive. Track `last_mouse_win_x/y` (initializing `has_prev_pos = true` at center so the first motion event wakes the cursor immediately), map window coordinates through aspect-correct letterbox/pillarbox clamping (`ob_input_map_window_to_snes`), and yield 100% of control back to the keyboard/gamepad whenever the mouse is stationary.
 
 ### 4.2 The 16:9 Widescreen Evolution: Companion Window $\rightarrow$ `400×224` $\rightarrow$ `800×448` Dual-Layer Canvas
 Our widescreen and UI architecture evolved through three distinct phases ([`docs/architecture/widescreen_16_9_architecture.md`](architecture/widescreen_16_9_architecture.md)):
