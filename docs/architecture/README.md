@@ -10,9 +10,9 @@ This directory documents the reusable engineering patterns and architecture of *
 
 ## Origin & Design History (3 Attempts)
 This port is the third attempt at bringing *Ogre Battle: The March of the Black Queen* natively to PC, and its hybrid architecture reflects the lessons of the first two:
-1. **Attempt 1 — Disassembly → Pygame:** Game logic worked notionally, but reimplementing the SNES PPU (Mode-7 tactical maps, HDMA horizon effects, window masks, color math) from scratch proved unsustainable.
-2. **Attempt 2 — Pure Automated Rust Static Recompiler:** Ahead-of-time lifting hit a wall on dynamic `REP`/`SEP` register-width (`M`/`X`) switches, indirect jump tables, hardware MMIO multipliers (`$4202 * $4203`), and NMI-sensitive Bank `$00`/`$02` routines.
-3. **Attempt 3 — Hybrid `snesrecomp` + `snesrev` + Custom 16:9 Engine:** Uses `sp00nznet/snesrecomp` + LakeSnes for cycle-accurate PPU/APU/DMA silicon and tiered interpreter fallback, paired with a `snesrev`-style frame-by-frame `memcmp` lockstep oracle (`runner/`) and a custom SDL2 `800×448` compositor (`src/main.c`).
+1. **Attempt 1 — Disassembly & Static Recompilation into Rust (`romatlas`):** Ahead-of-time 65816 lifting into Rust hit a wall on dynamic `REP`/`SEP` register-width (`M`/`X`) switches, indirect jump tables, hardware MMIO multipliers (`$4202 * $4203`), and NMI-sensitive routines.
+2. **Attempt 2 — Pygame Reimplementation from Community Documentation:** Reimplementing the game logic from community docs worked notionally, but faithfully reproducing the SNES graphics rendering (Mode-7 tactical maps, HDMA horizon effects, window masks, color math) in Pygame proved unsustainable.
+3. **Attempt 3 — Hybrid `snesrecomp` + `snesrev` + Custom 16:9 Engine (This Repo):** Uses `sp00nznet/snesrecomp` + LakeSnes for cycle-accurate PPU/APU/DMA silicon and tiered interpreter fallback, paired with a `snesrev`-style frame-by-frame `memcmp` lockstep oracle (`runner/`) and a custom SDL2 `800×448` compositor (`src/main.c`).
 
 ## Adopting Features in Another SNES Port
 
