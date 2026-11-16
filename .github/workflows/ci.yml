@@ -72,6 +72,16 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Fetch snesrecomp & LakeSnes
+        shell: bash
+        run: |
+          if [ ! -d third_party/snesrecomp ]; then
+            mkdir -p third_party
+            git clone --recursive https://github.com/sp00nznet/snesrecomp.git third_party/snesrecomp
+            git -C third_party/snesrecomp checkout 03bf617
+            git -C third_party/snesrecomp submodule update --init --recursive
+          fi
+
       - name: Install SDL2 (Linux)
         if: runner.os == 'Linux'
         run: |

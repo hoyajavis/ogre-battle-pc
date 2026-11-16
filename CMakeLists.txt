@@ -55,6 +55,7 @@ add_library(snesrecomp STATIC
     ${SNESRECOMP_DIR}/src/cpu.c
     ${SNESRECOMP_DIR}/src/func_table.c
     ${SNESRECOMP_DIR}/src/recomp_interp.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/runner/src/recomp_compat.c
 )
 target_include_directories(snesrecomp PUBLIC
     ${SNESRECOMP_DIR}/include

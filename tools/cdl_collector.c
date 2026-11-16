@@ -8,6 +8,9 @@
 #include "cpu.h"
 #include "cart.h"
 #include "dma.h"
+
+extern void (*g_cpuOpcodeHook)(void* mem, uint32_t pb_pc, uint8_t opcode, bool mf, bool xf);
+extern void (*g_cartReadHook)(uint32_t rom_offset, bool is_dma);
 #include "oracle.h"
 #include "replay.h"
 #include "opcodes_65816.h"
