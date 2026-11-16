@@ -39,7 +39,8 @@ typedef enum ObSceneId {
     OB_SCENE_WARREN_QUIZ  = 3, /* Screen 1: Opening Seer Tent & Tarot Quiz */
     OB_SCENE_CAMP_ROSTER  = 4, /* Screen 5: Army Organization & Promotion Workbench */
     OB_SCENE_SHOP_TEMPLE  = 5, /* Screen 6: Town Merchant / Temple Tarot Draw */
-    OB_SCENE_EPILOGUE     = 6  /* Screen 7: 13-Ending Tableau & Roll Call */
+    OB_SCENE_EPILOGUE     = 6, /* Screen 7: 13-Ending Tableau & Roll Call */
+    OB_SCENE_TITLE_BOOT   = 7  /* Pre-Campaign Title / Intro Demo */
 } ObSceneId;
 
 /* Right-Wing Middle Card Context Mode on Tactical Map */

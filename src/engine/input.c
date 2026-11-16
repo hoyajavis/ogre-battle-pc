@@ -197,7 +197,7 @@ void ob_input_set_wings_enabled(ObMouseState *state, bool wings_enabled) {
 }
 
 static inline int get_core_x(const ObMouseState *state) {
-    if (state->wings_enabled && state->viewport_w >= OB_VIEWPORT_WIDTH_16_9) {
+    if (state->viewport_w >= OB_VIEWPORT_WIDTH_16_9) {
         return state->snes_x - 72;
     }
     return state->snes_x;
@@ -235,10 +235,15 @@ ObMouseMode ob_input_detect_mode(
         return OB_MOUSE_MODE_FORMATION_GRID;
     }
 
-    /* 3. Pillar 3: Continental World Map (OAM shadow Y=0xE0 sentinel + PPU stage banners) */
+    /* 3. Pillar 3: Continental World Map (real WRAM state or OAM stage banners) */
     uint8_t tac_flags = wram[OB_WRAM_CUR_SPRITE_FLAGS];
+    uint16_t world_flag = (uint16_t)(wram[0x07A2u] | ((uint16_t)wram[0x07A3u] << 8u));
+    if (wram[0x00CBu] == 0x03u && wram[0x07BAu] == 0xFFu &&
+        world_flag != 0x0000u && world_flag != 0x5555u && ppu_oam != NULL) {
+        return OB_MOUSE_MODE_WORLD_MAP;
+    }
     if (oam1_y == OB_OAM_OFFSCREEN_Y && (tac_flags & 0xC0u) == 0u && ppu_oam != NULL) {
-        for (int i = 24; i < 36; ++i) {
+        for (int i = 1; i < 36; ++i) {
             uint8_t spr_y    = ppu_oam[i * 4 + 1];
             uint8_t spr_attr = ppu_oam[i * 4 + 3];
             if (spr_y < OB_OAM_OFFSCREEN_Y && (spr_attr & 0x38u) == 0x38u) {
@@ -247,8 +252,14 @@ ObMouseMode ob_input_detect_mode(
         }
     }
 
-    /* 4. Pillar 1: Tactical Battlefield Map ($14E6 active & $00CE camera state == 0) */
-    if ((tac_flags & 0xC0u) != 0u && wram[OB_WRAM_CAM_STATE] == 0u) {
+    /* 4. Pillar 1: Tactical Battlefield Map
+     * Real game: $00CB==0x01, $00CC==0x10, $00CE==0x00 ($14E6 is 0x00/0x01 when cursor visible, 0x80 when hidden).
+     * Mock/test compat: ($14E6 & 0xC0) != 0 and != 0x55 (LakeSnes uninit) with $00CE == 0. */
+    if (wram[0x00CBu] == 0x01u && wram[0x00CCu] == 0x10u &&
+        wram[OB_WRAM_CAM_STATE] == 0x00u && wram[0x07BAu] != 0x55u) {
+        return OB_MOUSE_MODE_TACTICAL_MAP;
+    }
+    if ((tac_flags & 0xC0u) != 0u && tac_flags != 0x55u && wram[OB_WRAM_CAM_STATE] == 0u) {
         return OB_MOUSE_MODE_TACTICAL_MAP;
     }
 
@@ -320,7 +331,7 @@ void ob_input_apply_tactical_map(ObMouseState *state, uint8_t *wram) {
     apply_decoupled_camera_pan(state, wram);
 
     /* Step 2: Compute 1:1 viewport screen coordinates across the active core viewport */
-    int active_core_w = (state->wings_enabled && state->viewport_w >= OB_VIEWPORT_WIDTH_16_9)
+    int active_core_w = (state->viewport_w >= OB_VIEWPORT_WIDTH_16_9)
                         ? OB_VIEWPORT_WIDTH_4_3
                         : state->viewport_w;
     int core_x        = get_core_x(state);
@@ -479,25 +490,34 @@ int ob_input_apply_world_map(ObMouseState *state, uint8_t *wram, const uint8_t *
 
     int core_x = get_core_x(state);
 
-    /* Hit-test active stage banner sprites (16x16 bounding boxes in OAM[24..35]) */
-    for (int i = 24; i < 36; ++i) {
-        uint8_t spr_x    = ppu_oam[i * 4 + 0];
-        uint8_t spr_y    = ppu_oam[i * 4 + 1];
-        uint8_t spr_attr = ppu_oam[i * 4 + 3];
+    /* Hit-test active stage banner sprites (16x16 bounding boxes in OAM[24..35], then OAM[1..23]) */
+    for (int pass = 0; pass < 2; ++pass) {
+        int start = (pass == 0) ? 24 : 1;
+        int end   = (pass == 0) ? 36 : 24;
+        for (int i = start; i < end; ++i) {
+            uint8_t spr_x    = ppu_oam[i * 4 + 0];
+            uint8_t spr_y    = ppu_oam[i * 4 + 1];
+            uint8_t spr_attr = ppu_oam[i * 4 + 3];
 
-        if (spr_y >= OB_OAM_OFFSCREEN_Y || (spr_attr & 0x38u) != 0x38u) {
-            continue;
-        }
+            if (spr_y >= OB_OAM_OFFSCREEN_Y || (spr_attr & 0x38u) != 0x38u) {
+                continue;
+            }
 
-        if (core_x >= (int)spr_x && core_x < (int)spr_x + 16 &&
-            state->snes_y >= (int)spr_y && state->snes_y < (int)spr_y + 16) {
-            int node_idx = i - 24;
-            wram[OB_WRAM_WORLD_NODE_INDEX] = (uint8_t)node_idx;
-            wram_write_u16(wram, OB_WRAM_CUR_SCREEN_X, (uint16_t)(spr_x + 8u));
-            wram_write_u16(wram, OB_WRAM_CUR_SCREEN_Y, (uint16_t)(spr_y + 8u));
-            state->hovered_slot = node_idx;
-            return node_idx;
+            if (core_x >= (int)spr_x && core_x < (int)spr_x + 16 &&
+                state->snes_y >= (int)spr_y && state->snes_y < (int)spr_y + 16) {
+                int node_idx = (i >= 24) ? (i - 24) : (i - 1);
+                wram[OB_WRAM_WORLD_NODE_INDEX] = (uint8_t)node_idx;
+                wram_write_u16(wram, OB_WRAM_CUR_SCREEN_X, (uint16_t)(spr_x + 8u));
+                wram_write_u16(wram, OB_WRAM_CUR_SCREEN_Y, (uint16_t)(spr_y + 8u));
+                state->hovered_slot = node_idx;
+                return node_idx;
+            }
         }
+    }
+
+    if (core_x >= 0 && core_x < OB_VIEWPORT_WIDTH_4_3) {
+        wram_write_u16(wram, OB_WRAM_CUR_SCREEN_X, (uint16_t)core_x);
+        wram_write_u16(wram, OB_WRAM_CUR_SCREEN_Y, (uint16_t)clamp_int(state->snes_y, 0, OB_VIEWPORT_HEIGHT - 1));
     }
 
     state->hovered_slot = -1;

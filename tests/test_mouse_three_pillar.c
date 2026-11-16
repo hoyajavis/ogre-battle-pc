@@ -250,6 +250,67 @@ static void test_gate_2d_pillar3_world_map_and_hybrid(void) {
     free(wram);
 }
 
+/* =========================================================================
+ * Gate 2E: LakeSnes 0x55 Guard, Live $14E6=0x00 Tactical & OAM[1] World Map
+ * ========================================================================= */
+static void test_gate_2e_uninit_wram_and_live_maps(void) {
+    uint8_t *wram = (uint8_t *)malloc(OB_WRAM_SIZE);
+    uint8_t  ppu_oam[OB_PPU_OAM_SIZE];
+    assert(wram != NULL);
+    memset(wram, 0x55, OB_WRAM_SIZE);
+    memset(ppu_oam, 0xE0, sizeof(ppu_oam));
+
+    ObMouseState mouse;
+    ob_input_init(&mouse, OB_VIEWPORT_WIDTH_16_9, OB_VIEWPORT_HEIGHT);
+    ob_input_set_wings_enabled(&mouse, true);
+
+    /* 1. Uninitialized 0x55 WRAM must stay PASSIVE in core area (not false Tactical Map) */
+    ob_input_on_mouse_move(&mouse, 180, 100, 400, 224, 10u);
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 10u);
+    assert(mouse.active_mode == OB_MOUSE_MODE_PASSIVE);
+
+    /* 2. Live Tactical Map with $14E6=0x00 (cursor visible) must detect TACTICAL_MAP */
+    wram[0x00CBu]                  = 0x01u;
+    wram[0x00CCu]                  = 0x10u;
+    wram[OB_WRAM_CAM_STATE]        = 0x00u;
+    wram[0x07BAu]                  = 0x4Fu;
+    wram[OB_WRAM_CUR_SPRITE_FLAGS] = 0x00u;
+    write_u16(wram, OB_WRAM_CAM_X, 0u);
+    write_u16(wram, OB_WRAM_CAM_Y, 0u);
+    write_u16(wram, OB_WRAM_MAP_TILES_X, 64u);
+    write_u16(wram, OB_WRAM_MAP_TILES_Y, 64u);
+    for (int i = 0; i < OB_MAX_DEPLOYED_SQUADS; ++i) {
+        write_u16(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(i * 2), 0xFFFFu);
+        write_u16(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(i * 2), 0xFFFFu);
+    }
+    for (int j = 0; j < OB_MAX_STAGE_CITIES; ++j) {
+        write_u16(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2), 0xFFFFu);
+        write_u16(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2), 0xFFFFu);
+    }
+    ob_input_on_mouse_move(&mouse, 180, 120, 400, 224, 11u);
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 11u);
+    assert(mouse.active_mode == OB_MOUSE_MODE_TACTICAL_MAP);
+    assert(read_u16(wram, OB_WRAM_CUR_SCREEN_X) == 108u);
+    assert(read_u16(wram, OB_WRAM_CUR_SCREEN_Y) == 120u);
+
+    /* 3. Live World Map with $14E6=0x55 and stage banner in OAM[1] */
+    memset(wram, 0x55, OB_WRAM_SIZE);
+    wram[0x00CBu] = 0x03u;
+    wram[0x07BAu] = 0xFFu;
+    write_u16(wram, 0x07A2u, 0x0008u);
+    ppu_oam[1 * 4 + 0] = 104u;
+    ppu_oam[1 * 4 + 1] = 95u;
+    ppu_oam[1 * 4 + 2] = 0x40u;
+    ppu_oam[1 * 4 + 3] = 0x38u;
+    ob_input_on_mouse_move(&mouse, 180, 99, 400, 224, 12u); /* core_x=108, y=99 */
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 12u);
+    assert(mouse.active_mode == OB_MOUSE_MODE_WORLD_MAP);
+    assert(mouse.hovered_slot == 0);
+
+    printf("[PASS] Gate 2E: LakeSnes 0x55 Guard, Live $14E6=0x00 Tactical & OAM[1] World Map\n");
+    free(wram);
+}
+
 int main(void) {
     printf("====================================================================\n");
     printf(" Ogre Battle PC: Gate 2 Three-Pillar Mouse Architecture Verification\n");
@@ -259,6 +320,7 @@ int main(void) {
     test_gate_2b_pillar1_tactical_map();
     test_gate_2c_pillar2_menu_hitboxes();
     test_gate_2d_pillar3_world_map_and_hybrid();
+    test_gate_2e_uninit_wram_and_live_maps();
 
     printf("====================================================================\n");
     printf(" ALL GATE 2 THREE-PILLAR MOUSE ARCHITECTURE TESTS PASSED (100%%)\n");

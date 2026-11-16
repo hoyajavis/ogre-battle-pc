@@ -225,11 +225,7 @@ int main(int argc, char *argv[]) {
     apply_video_settings(window, &cfg, &ws);
 
     ObMouseState mouse;
-    ob_input_init(
-        &mouse,
-        (ws.display_mode != OB_DISPLAY_4_3_CLASSIC) ? OB_VIEWPORT_WIDTH_16_9 : OB_VIEWPORT_WIDTH_4_3,
-        OB_VIEWPORT_HEIGHT
-    );
+    ob_input_init(&mouse, OB_VIEWPORT_WIDTH_16_9, OB_VIEWPORT_HEIGHT);
     ob_input_set_wings_enabled(&mouse, ws.display_mode == OB_DISPLAY_16_9_TACTICIAN_WINGS);
 
     Snes *snes = NULL;
@@ -259,8 +255,9 @@ int main(int argc, char *argv[]) {
         int win_x = 0, win_y = 0, win_w = OB_WIDE_2X_W, win_h = OB_WIDE_2X_H;
         uint32_t btn_mask = SDL_GetMouseState(&win_x, &win_y);
         SDL_GetWindowSize(window, &win_w, &win_h);
-        int canvas_x = (win_w > 0) ? (win_x * OB_WIDE_2X_W) / win_w : 0;
-        int canvas_y = (win_h > 0) ? (win_y * OB_WIDE_2X_H) / win_h : 0;
+        int canvas_x = 0;
+        int canvas_y = 0;
+        ob_input_map_window_to_snes(win_x, win_y, win_w, win_h, OB_WIDE_2X_W, OB_WIDE_2X_H, &canvas_x, &canvas_y);
 
         SDL_Event ev;
         while (SDL_PollEvent(&ev)) {

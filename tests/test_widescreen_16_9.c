@@ -224,6 +224,37 @@ int main(void) {
     assert(mouse.hovered_slot == 1);
     printf("[PASS] Gate 3D (Widescreen Mouse +72px Core Offset & Interactive Wing Docks): Verified\n");
 
+    /* ========================================================================
+     * GATE 3E: LakeSnes 0x55 Uninitialized WRAM Guard Regression Tests
+     * ======================================================================== */
+    memset(wram_live, 0x55, OB_WRAM_SIZE);
+    memset(ppu_oam, 0xE0, OB_PPU_OAM_SIZE);
+    ws.active_scene = ob_widescreen_detect_scene(wram_live, ppu_oam);
+    assert(ws.active_scene == OB_SCENE_TITLE_BOOT);
+    ob_widescreen_extract_telemetry(&ws, wram_live, &mouse);
+    assert(ws.telemetry.chaos_frame == 0u);
+    assert(ws.telemetry.goth_treasury == 0u);
+    assert(ws.telemetry.player_clash_dmg == 0u);
+    assert(ws.telemetry.enemy_clash_dmg == 0u);
+    assert(ws.telemetry.lord_level == 0u);
+    assert(ws.telemetry.tarot_count == 0u);
+    ob_widescreen_render_frame(&ws, wram_live, NULL, fb_800x448);
+    assert_bgr555_compliance(fb_800x448, OB_WIDE_2X_W * OB_WIDE_2X_H);
+
+    /* World Map with 0x55 in uninitialized WRAM ($14E6=0x55, $F942=0x5555) */
+    wram_live[0x00CBu] = 0x03u;
+    wram_live[0x00CCu] = 0x0Du;
+    write_u16_le(wram_live, 0x07A2u, 0x0008u);
+    wram_live[0x07BAu] = 0xFFu;
+    write_u32_le(wram_live, 0x1578u, 30000u);
+    assert(ob_widescreen_detect_scene(wram_live, ppu_oam) == OB_SCENE_WORLD_MAP);
+
+    /* Warren's Quiz with 0x55 in uninitialized WRAM */
+    wram_live[0x00CCu] = 0x03u;
+    write_u16_le(wram_live, 0x07A2u, 0x0000u);
+    assert(ob_widescreen_detect_scene(wram_live, ppu_oam) == OB_SCENE_WARREN_QUIZ);
+    printf("[PASS] Gate 3E (LakeSnes 0x55 Uninitialized WRAM Guard): Verified\n");
+
     free(wram_live);
     free(wram_golden);
     free(ppu_oam);

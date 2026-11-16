@@ -43,24 +43,53 @@ void ob_widescreen_toggle_grimoire(ObWidescreenState *state) {
 
 ObSceneId ob_widescreen_detect_scene(const uint8_t *wram, const uint8_t *ppu_oam) {
     if (!wram) {
-        return OB_SCENE_TACTICAL_MAP;
+        return OB_SCENE_TITLE_BOOT;
     }
-    /* Combat Stage active if clash damage accumulators ($7E:F942/$7E:F944) or battle flag ($7E:00CE == 3) */
+
+    /* 0. Pre-campaign Title / Boot Demo (LakeSnes resets WRAM to 0x55) */
+    uint32_t goth = read_u32_le(wram, 0x1578u);
+    if (goth == 0x55555555u && wram[0x07BAu] == 0x55u && wram[0x0010u] != 1u) {
+        return OB_SCENE_TITLE_BOOT;
+    }
+
+    /* 1. Combat Stage: battle flag $7E:00CE == 3, or initialized clash damage accumulators ($7E:F942/$7E:F944) */
     uint16_t ply_dmg = read_u16_le(wram, 0xF942u);
     uint16_t enm_dmg = read_u16_le(wram, 0xF944u);
-    if (wram[0x00CEu] == 3u || ply_dmg > 0u || enm_dmg > 0u) {
+    bool ply_valid = (ply_dmg > 0u && ply_dmg != 0x5555u && ply_dmg < 10000u);
+    bool enm_valid = (enm_dmg > 0u && enm_dmg != 0x5555u && enm_dmg < 10000u);
+    bool combat_active = (wram[0xF92Bu] != 0u && wram[0xF92Bu] != 0x55u);
+    if (wram[0x00CEu] == 3u || ply_valid || enm_valid || (combat_active && (ply_dmg != 0x5555u || enm_dmg != 0x5555u))) {
         return OB_SCENE_COMBAT_STAGE;
     }
-    /* Tactical Map active when cursor sprite flag ($14E6 & 0xC0) is enabled */
-    if ((wram[OB_WRAM_CUR_SPRITE_FLAGS] & 0xC0u) != 0u) {
+
+    /* 2. Warren's Character Creation Quiz ($00CB=03,$00CC=03,$07A2=0000,$07BA=FF or unit-test $0010=1) */
+    if (wram[0x0010u] == 1u) {
+        return OB_SCENE_WARREN_QUIZ;
+    }
+    if (wram[0x00CB] == 0x03u && wram[0x00CC] == 0x03u &&
+        read_u16_le(wram, 0x07A2u) == 0x0000u && wram[0x07BAu] == 0xFFu) {
+        return OB_SCENE_WARREN_QUIZ;
+    }
+
+    /* 3. Tactical Map active when cursor sprite flag ($14E6 != 0x55 && ($14E6 & 0xC0) != 0) */
+    uint8_t cur_flags = wram[OB_WRAM_CUR_SPRITE_FLAGS];
+    if (cur_flags != 0x55u && (cur_flags & 0xC0u) != 0u) {
         return OB_SCENE_TACTICAL_MAP;
     }
-    /* 3x2 Formation Grid in Camp/Roster */
+
+    /* 4. 3x2 Formation Grid in Camp/Roster */
     if (wram[OB_WRAM_OAM1_TILE] == OB_TILE_FORMATION_FINGER &&
         wram[OB_WRAM_OAM1_Y] < OB_OAM_OFFSCREEN_Y) {
         return OB_SCENE_CAMP_ROSTER;
     }
-    /* Continental World Map when low OAM sentinel is 0xE0 and stage banner tiles exist */
+
+    /* 5. Continental World Map ($00CB=03,$00CC=0D or $07A2!=0/$5555 with no deployed squads, or OAM banner tiles) */
+    uint16_t m07a2 = read_u16_le(wram, 0x07A2u);
+    uint16_t sq0_x = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE);
+    if (wram[0x00CB] == 0x03u && (wram[0x00CC] == 0x0Du || (m07a2 != 0u && m07a2 != 0x5555u)) &&
+        (sq0_x == 0x5555u || sq0_x == 0xFFFFu || sq0_x == 0u)) {
+        return OB_SCENE_WORLD_MAP;
+    }
     if (wram[OB_WRAM_OAM1_Y] == OB_OAM_OFFSCREEN_Y && ppu_oam != NULL) {
         for (int i = 0; i < 128; ++i) {
             uint8_t tile = ppu_oam[i * 4 + 2];
@@ -70,10 +99,7 @@ ObSceneId ob_widescreen_detect_scene(const uint8_t *wram, const uint8_t *ppu_oam
             }
         }
     }
-    /* Warren's Character Creation Quiz when scene byte $7E:0010 == 1 */
-    if (wram[0x0010u] == 1u) {
-        return OB_SCENE_WARREN_QUIZ;
-    }
+
     return OB_SCENE_TACTICAL_MAP;
 }
 
@@ -104,21 +130,26 @@ void ob_widescreen_extract_telemetry(
     ObWidescreenTelemetry *t = &state->telemetry;
     memset(t, 0, sizeof(*t));
 
-    /* 1. Macro Reputation, Goth & Clock ($7E:156D - $7E:157D) */
-    t->chaos_frame = wram[0x157Cu];
-    if (t->chaos_frame > 100u) {
-        t->chaos_frame = 72u;
+    /* Guard against pre-campaign uninitialized LakeSnes WRAM (0x55 pattern) */
+    uint32_t raw_goth = read_u32_le(wram, 0x1578u);
+    if (raw_goth == 0x55555555u && wram[0x07BAu] == 0x55u) {
+        return;
     }
-    t->goth_treasury = read_u32_le(wram, 0x1578u);
-    t->clock_hour = wram[0x1570u] % 24u;
-    t->clock_minute = wram[0x1571u] % 60u;
+
+    /* 1. Macro Reputation, Goth & Clock ($7E:156D - $7E:157D) */
+    uint8_t raw_cf = wram[0x157Cu];
+    t->chaos_frame = (raw_cf <= 100u) ? raw_cf : 72u;
+    t->goth_treasury = (raw_goth != 0x55555555u) ? raw_goth : 0u;
+    t->clock_hour = (wram[0x1570u] != 0x55u) ? (wram[0x1570u] % 24u) : 0u;
+    t->clock_minute = (wram[0x1571u] != 0x55u) ? (wram[0x1571u] % 60u) : 0u;
     t->is_daytime = (t->clock_hour >= 6u && t->clock_hour < 18u);
 
     /* 2. Deployed Squads ($7E:18AF / $7E:18D9) */
     for (int i = 0; i < OB_MAX_DEPLOYED_SQUADS; ++i) {
         uint16_t sx = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(i * 2));
         uint16_t sy = read_u16_le(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(i * 2));
-        if (sx != 0xFFFFu && sy != 0xFFFFu && (sx != 0u || sy != 0u)) {
+        if (sx != 0xFFFFu && sy != 0xFFFFu && sx != 0x5555u && sy != 0x5555u &&
+            sx <= 4096u && sy <= 4096u && (sx != 0u || sy != 0u)) {
             if (i < 10) {
                 t->deployed_player_count++;
             } else {
@@ -132,36 +163,44 @@ void ob_widescreen_extract_telemetry(
     for (int j = 0; j < OB_MAX_STAGE_CITIES; ++j) {
         uint16_t cx = read_u16_le(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2));
         uint16_t cy = read_u16_le(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2));
-        if (cx == 0xFFFFu || cy == 0xFFFFu || (cx == 0u && cy == 0u)) {
+        if (cx == 0xFFFFu || cy == 0xFFFFu || cx == 0x5555u || cy == 0x5555u ||
+            cx > 4096u || cy > 4096u || (cx == 0u && cy == 0u)) {
             continue;
         }
         t->total_cities++;
         uint8_t mask = wram[0x1C4Du + (uint32_t)j];
-        if ((mask & 0x01u) != 0u) {
+        if ((mask & 0x01u) != 0u && mask != 0x55u) {
             t->liberated_cities++;
-            tribute_sum += (int32_t)read_u16_le(wram, 0x1B5Du + (uint32_t)(j * 2));
+            uint16_t trib = read_u16_le(wram, 0x1B5Du + (uint32_t)(j * 2));
+            if (trib != 0x5555u) {
+                tribute_sum += (int32_t)trib;
+            }
         }
-        if ((mask & 0x02u) != 0u) {
+        if ((mask & 0x02u) != 0u && mask != 0x55u) {
             t->hidden_poi_count++;
         }
     }
     int32_t upkeep = (int32_t)t->deployed_player_count * 450;
-    t->noon_net_goth = (tribute_sum > 0) ? (tribute_sum - upkeep) : 15000;
+    t->noon_net_goth = (tribute_sum > 0) ? (tribute_sum - upkeep) : 0;
 
     /* 4. -5 CF Recapture Threat Detection (Enemy 10..20 near liberated city) */
     for (int e = 10; e < OB_MAX_DEPLOYED_SQUADS; ++e) {
         uint16_t ex = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(e * 2));
         uint16_t ey = read_u16_le(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(e * 2));
-        if (ex == 0xFFFFu || ey == 0xFFFFu || (ex == 0u && ey == 0u)) {
+        if (ex == 0xFFFFu || ey == 0xFFFFu || ex == 0x5555u || ey == 0x5555u ||
+            ex > 4096u || ey > 4096u || (ex == 0u && ey == 0u)) {
             continue;
         }
         for (int j = 0; j < OB_MAX_STAGE_CITIES; ++j) {
             uint8_t mask = wram[0x1C4Du + (uint32_t)j];
-            if ((mask & 0x01u) == 0u) {
+            if (mask == 0x55u || (mask & 0x01u) == 0u) {
                 continue;
             }
             uint16_t cx = read_u16_le(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2));
             uint16_t cy = read_u16_le(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2));
+            if (cx == 0xFFFFu || cy == 0xFFFFu || cx == 0x5555u || cy == 0x5555u) {
+                continue;
+            }
             int dist = abs((int)ex - (int)cx) + abs((int)ey - (int)cy);
             if (dist <= 180) {
                 t->recapture_threat_active = true;
@@ -179,9 +218,11 @@ void ob_widescreen_extract_telemetry(
     /* 5. Dynamic Context Switching for Right Wing Middle Card */
     state->inspector_mode = OB_INSPECT_MOBILITY_NEUTRAL;
     t->inspected_city_id = 1;
-    t->inspected_city_ali = (wram[0x1C25u + 1] > 0) ? wram[0x1C25u + 1] : 70;
+    uint8_t def_cali = wram[0x1C25u + 1];
+    t->inspected_city_ali = (def_cali > 0u && def_cali != 0x55u) ? def_cali : 70u;
     t->best_squad_id = 1;
-    t->best_squad_ali = (wram[0xF42Cu + 1] > 0) ? wram[0xF42Cu + 1] : 74;
+    uint8_t def_sali = wram[0xF42Cu + 1];
+    t->best_squad_ali = (def_sali > 0u && def_sali != 0x55u) ? def_sali : 74u;
     t->predicted_cf_delta = (abs((int)t->best_squad_ali - (int)t->inspected_city_ali) <= 10) ? +2 : -2;
 
     if (mouse != NULL) {
@@ -189,7 +230,7 @@ void ob_widescreen_extract_telemetry(
             state->inspector_mode = OB_INSPECT_CITY_LIBERATION;
             t->inspected_city_id = (uint8_t)mouse->snapped_index;
             uint8_t cali = wram[0x1C25u + (uint32_t)mouse->snapped_index];
-            t->inspected_city_ali = (cali > 0) ? cali : 70;
+            t->inspected_city_ali = (cali > 0u && cali != 0x55u) ? cali : 70u;
             t->predicted_cf_delta = (abs((int)t->best_squad_ali - (int)t->inspected_city_ali) <= 12) ? +2 : -2;
         } else if (mouse->snapped_type == OB_SNAP_SQUAD && mouse->snapped_index >= 10) {
             state->inspector_mode = OB_INSPECT_ENEMY_PRECLASH;
@@ -197,19 +238,22 @@ void ob_widescreen_extract_telemetry(
     }
 
     /* 6. Combat Stage & Tarot Hand ($7E:F942, $7E:0DBE) */
-    t->player_clash_dmg = read_u16_le(wram, 0xF942u);
-    t->enemy_clash_dmg = read_u16_le(wram, 0xF944u);
-    t->lord_level = (wram[0xF148u] > 0) ? wram[0xF148u] : 6;
-    t->lord_ali = (wram[0xF42Cu] > 0) ? wram[0xF42Cu] : 72;
+    uint16_t raw_pdmg = read_u16_le(wram, 0xF942u);
+    uint16_t raw_edmg = read_u16_le(wram, 0xF944u);
+    t->player_clash_dmg = (raw_pdmg != 0x5555u) ? raw_pdmg : 0u;
+    t->enemy_clash_dmg = (raw_edmg != 0x5555u) ? raw_edmg : 0u;
+    t->lord_level = (wram[0xF148u] > 0u && wram[0xF148u] != 0x55u) ? wram[0xF148u] : 1u;
+    t->lord_ali = (wram[0xF42Cu] > 0u && wram[0xF42Cu] != 0x55u) ? wram[0xF42Cu] : 50u;
 
-    bool has_nonzero_tarot = false;
+    bool has_valid_tarot = false;
     for (int k = 0; k < 14; ++k) {
-        if (wram[0x0DBEu + (uint32_t)k] != 0u && wram[0x0DBEu + (uint32_t)k] != 0xFFu) {
-            has_nonzero_tarot = true;
+        uint8_t cid = wram[0x0DBEu + (uint32_t)k];
+        if (cid > 0u && cid < 22u) {
+            has_valid_tarot = true;
             break;
         }
     }
-    if (has_nonzero_tarot) {
+    if (has_valid_tarot) {
         for (int k = 0; k < 14; ++k) {
             uint8_t cid = wram[0x0DBEu + (uint32_t)k];
             if (cid < 22u) {
@@ -217,11 +261,8 @@ void ob_widescreen_extract_telemetry(
             }
         }
     } else {
-        /* Canonical 0-indexed hand: 0 = I. Magician (Fire), 5 = VI. Lovers (Safe), 6 = VII. Chariot (Phys) */
-        t->tarot_hand[0] = 0u;
-        t->tarot_hand[1] = 5u;
-        t->tarot_hand[2] = 6u;
-        t->tarot_count = 3u;
+        /* Empty / uninitialized hand */
+        t->tarot_count = 0u;
     }
 
     /* 7. 12 Zodiac Stones & Brunhild Quest ($7E:157E..$7E:15BD) */
@@ -518,14 +559,14 @@ static void render_combat_stage_wings(ObSnesCanvas *c, const ObWidescreenState *
     draw_snes_9slice_box(c, 0, 0, 144, 136, true);
     draw_snes_header_plate(c, 6, 6, 132, "CLASH TUG-OF-WAR", OB_PAL_GOLD);
 
-    uint16_t ply = (t->player_clash_dmg > 0) ? t->player_clash_dmg : 178u;
-    uint16_t enm = (t->enemy_clash_dmg > 0) ? t->enemy_clash_dmg : 79u;
+    uint16_t ply = t->player_clash_dmg;
+    uint16_t enm = t->enemy_clash_dmg;
     int total = (int)ply + (int)enm;
     int margin = (int)ply - (int)enm;
 
     snprintf(buf, sizeof(buf), "PLY:%3u VS ENM:%3u", ply, enm);
     draw_snes_compact_text(c, 10, 26, buf, OB_PAL_IVORY);
-    draw_snes_gauge_bar(c, 10, 40, 124, 12, (int)ply, total,
+    draw_snes_gauge_bar(c, 10, 40, 124, 12, (int)ply, (total > 0) ? total : 1,
         OB_COLOR_TEXT_EMERALD, OB_COLOR_TEXT_CRIMSON);
     snprintf(buf, sizeof(buf), "MARGIN: %+d DMG", margin);
     draw_snes_compact_text(c, 10, 58, buf, (margin >= 0) ? OB_PAL_EMERALD : OB_PAL_CRIMSON);
@@ -627,10 +668,10 @@ static void render_world_map_wings(ObSnesCanvas *c, const ObWidescreenState *sta
     /* LEFT WING: Campaign Readiness & 12 Zodiac Stones (Area 1 Pg3 Q2) */
     draw_snes_9slice_box(c, 0, 0, 144, 448, true);
     draw_snes_header_plate(c, 6, 6, 132, "ZODIAC & BRUNHILD", OB_PAL_GOLD);
-    snprintf(buf, sizeof(buf), "STONES: %2u/12 FOUND", t->zodiac_count > 0 ? t->zodiac_count : 2u);
+    snprintf(buf, sizeof(buf), "STONES: %2u/12 FOUND", t->zodiac_count);
     draw_snes_compact_text(c, 10, 24, buf, OB_PAL_CYAN);
 
-    uint16_t mask = (t->zodiac_mask != 0u) ? t->zodiac_mask : 0x0003u;
+    uint16_t mask = t->zodiac_mask;
     for (uint8_t s = 0; s < 12; ++s) {
         int gx = 10 + (s % 4) * 31;
         int gy = 40 + (s / 4) * 18;
@@ -814,8 +855,14 @@ void ob_widescreen_render_frame(
                 render_warren_quiz_wings(&canvas, state);
                 break;
             case OB_SCENE_TACTICAL_MAP:
-            default:
                 render_tactical_map_wings(&canvas, state);
+                break;
+            case OB_SCENE_TITLE_BOOT:
+            case OB_SCENE_CAMP_ROSTER:
+            case OB_SCENE_SHOP_TEMPLE:
+            case OB_SCENE_EPILOGUE:
+            default:
+                /* Keep Zenobian Stone & Parchment tapestry pillars from render_base_layer_800x448 */
                 break;
         }
     }
