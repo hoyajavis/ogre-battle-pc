@@ -1,0 +1,20 @@
+# Third-Party Notices & Attributions
+
+This project incorporates or builds upon the following third-party software and community work:
+
+## Runtime & Emulation Libraries
+- **snesrecomp** (`sp00nznet/snesrecomp`) — 65816 static recompilation bus, function table, and timed-recomp adapter.
+- **LakeSnes** (`sp00nznet/LakeSnes`, forked from `angelo-wf/LakeSnes`) — MIT-licensed cycle-accurate SNES PPU, APU/SPC700, DMA, and cartridge hardware backend.
+- **SDL2** — Cross-platform windowing, input, and audio output.
+
+## Community Modding & Patch Attributions (Area 4 Overlays)
+The structured JSON mod overlays in `mods/` are derived from community patches catalogued in `docs/architecture/rhdn_patches_catalog.md`:
+
+| Overlay | Original Patch | Author |
+| :--- | :--- | :--- |
+| `dragoner_rebalance.json` | Dragoner Promotion Rebalance | Dragoner |
+| `fin_balancing_071.json` | Fin's Balancing Mod v0.71 | Fin |
+| `ob_engine_patches.json`, `ob_magic_fix.json`, `ob_ran_drops.json`, `ob_size_tables.json` | OB Bug Fixes & Engine Tables | D |
+| `class_expansion.json` | OB Class Expansion | UPRC |
+
+All rights to these modifications remain with their respective original authors.

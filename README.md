@@ -79,7 +79,7 @@ Toggle with **`[F10]`**:
 | `OB_DISPLAY_16_9_VANILLA_HORIZON` | Extended Mode-7 scanlines & BG/OAM reveal to `400×224`; Stone & Parchment tapestry borders for fixed 32-tile menus |
 | `OB_DISPLAY_16_9_TACTICIAN_WINGS` | Context-switched `144×448 px` Left/Right Wing HUDs populated by Area 1 telemetry (City Compatibility Advisor, Pre-Clash Morality Drift, Clash Tug-of-War, Tarot Guard Dock, etc.) |
 
-Press **`[Tab]`** for the centered **Zenobian Campaign Grimoire** (18 Special Heroes, 12 Zodiac Stones & relics, Bank `$09` Promotion Trees, 2,344-bit Event Diff stream). Mouse input is automatically translated by `+72 px` into core coordinates, and wing panels are clickable. See [`docs/widescreen_16_9_architecture.md`](docs/widescreen_16_9_architecture.md).
+Press **`[Tab]`** for the centered **Zenobian Campaign Grimoire** (18 Special Heroes, 12 Zodiac Stones & relics, Bank `$09` Promotion Trees, 2,344-bit Event Diff stream). Mouse input is automatically translated by `+72 px` into core coordinates, and wing panels are clickable. See [`docs/architecture/widescreen_16_9_architecture.md`](docs/architecture/widescreen_16_9_architecture.md).
 
 ---
 
@@ -109,7 +109,7 @@ python3 tools/ips_importer.py --rom path/to/ogre_battle.sfc --patch hack.ips --o
 python3 tools/randomizer.py --seed zenobia --rom path/to/ogre_battle.sfc --out-manifest mods/my_seed.json
 ```
 
-The `ConflictValidator` rejects incompatible combinations, such as UPRC Class Expansion together with Bank `$30` engine toggles, or a forced 1.5MB size on a 2MB profile. When overlays overlap, the later overlay wins. Schemas are in [`data/schemas/`](data/schemas/). Full details: [`docs/area_4/boot_pipeline_certification.md`](docs/area_4/boot_pipeline_certification.md).
+The `ConflictValidator` rejects incompatible combinations, such as UPRC Class Expansion together with Bank `$30` engine toggles, or a forced 1.5MB size on a 2MB profile. When overlays overlap, the later overlay wins. Schemas are in [`data/schemas/`](data/schemas/). Full details: [`docs/verification/boot_pipeline_certification.md`](docs/verification/boot_pipeline_certification.md).
 
 ---
 
@@ -160,7 +160,7 @@ main (Certified Golden Releases Only)
 * **Pre-Commit Hook:** Automatically blocks commits containing copyrighted ROMs (`.sfc`), raw memory dumps (`.obsav`), or invalid configuration syntax.
 * **Pre-Push Hook:** Executes the oracle smoke test (`trace_01_boot_to_title.obrec`) in `RM_BOTH` mode before allowing pushes to remote.
 * **Bisection Traceability:** Commit messages resolving memory desyncs must reference the failing Frame Number, PC Address, and Divergent WRAM location.
-* **Session Handoffs:** Each agent session ends with a handoff record in `docs/handoffs/`.
+* **Session Handoffs:** Historical session handoff records are archived in `docs/archive/handoffs/`.
 
 ---
 
@@ -169,9 +169,12 @@ main (Certified Golden Releases Only)
 ```
 ├── .github/                        # CI workflow, issue & PR templates
 ├── .gitignore                      # Strict legal cleanliness & build artifact filters
+├── CHANGELOG.md                    # Release & milestone history
 ├── CONTRIBUTING.md                 # Contribution guidelines
 ├── LICENSE                         # MIT license
+├── NOTICE                          # Third-party & community patch attributions
 ├── README.md                       # Project overview and architecture guide
+├── ROADMAP.md                      # Current status, next milestones & scope
 ├── CMakeLists.txt                  # Cross-platform build & CTest verification configuration
 ├── config/                         # Empirical symbols & jump table dispatch databases
 │   ├── jumptables.ini              # ✅ 1,713 indirect jump dispatch targets
@@ -183,21 +186,13 @@ main (Certified Golden Releases Only)
 │   ├── schemas/                    # JSON Schemas (boot_config, classes, items, stages)
 │   └── profiles/                   # Ready-to-run boot profiles
 ├── mods/                           # JSON mod overlays (Dragoner, Fin 0.71, Class Expansion, engine fixes, randomizer seed)
-├── docs/                           # Project specifications & governance
+├── docs/                           # Project specifications, guides & governance
 │   ├── agents.md                   # Subagent operating rules, roles & Git protocols
-│   ├── plan.md                     # Master project plan & architectural decisions
-│   ├── roadmap.md                  # Milestone dependency graph & gate criteria
-│   ├── gate_1_certification.md     # Formal 83,450-frame bit-exact parity certification report
-│   ├── mouse_architecture_deprecation_and_redesign.md # Gate 2 Rev 1-8 deprecation & Three-Pillar spec
-│   ├── widescreen_16_9_architecture.md # Gate 3 dual-layer 16:9 compositor spec
-│   ├── developer_guide_area_1_telemetry.md # Area 1 telemetry technical reference
-│   ├── player_manual_companion_window.md   # Player-facing Companion Window manual
-│   ├── area_4/                     # Area 4 plan, Gate 4A & boot pipeline certifications, RHDN patch catalog
-│   ├── handoffs/                   # Per-session agent handoff records
-│   ├── user_testing_guide.md       # Windows preview executable testing guide
-│   ├── ogre_battle_modernization_areas.md # 16:9 viewport & 4-area modernization spec
-│   ├── gap_analysis.md             # Operational comparison against zelda3 & snesrecomp
-│   └── snes_rom_transpilation_research_plan.md # Framework analysis & 65816 lifting research
+│   ├── user_testing_guide.md       # Desktop preview & gameplay testing guide
+│   ├── player_manual_companion_window.md # Player-facing Companion Window manual
+│   ├── architecture/               # Developer adoption guides (16:9 UI, telemetry, transpilation, RHDN catalog)
+│   ├── verification/               # Grouped gate & pipeline certification reports (Gate 1, Gate 4A, Boot Pipeline)
+│   └── archive/                    # Archived build-time plans, gap analysis, deprecation memos & handoffs
 ├── include/                        # Public headers (boot_loader, telemetry, telemetry_math, telemetry_window, ob_snes_ui_theme)
 ├── runner/                         # ✅ Oracle, Snapshot, Replay & Dual-Execution Lockstep harness
 │   ├── include/                    # lockstep.h, oracle.h, replay.h, snapshot.h
@@ -253,7 +248,7 @@ This repository does **not** contain a complete or playable ROM image, decompres
 
 ### Credits & permissions
 
-The mod overlays in `mods/` are derived from community patches catalogued in [`docs/area_4/rhdn_patches_catalog.md`](docs/area_4/rhdn_patches_catalog.md):
+The mod overlays in `mods/` are derived from community patches catalogued in [`docs/architecture/rhdn_patches_catalog.md`](docs/architecture/rhdn_patches_catalog.md):
 
 | Overlay | Original Patch | Author |
 | :--- | :--- | :--- |

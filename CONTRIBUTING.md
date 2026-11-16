@@ -20,13 +20,12 @@ This project bridges Quest's 1993 Super NES classic with modern desktop ergonomi
 
 Development proceeds strictly through outer progression gates:
 
-1. **Gate 1: Bit-Exact 4:3 Hardware Parity (100% Certified)**
+1. **Gate 1: Bit-Exact 4:3 Hardware Parity (Certified)**
    * Baseline verified with **0-byte memory drift** across 128KB WRAM, VRAM, OAM, CGRAM, and SRAM over 83,450 canonical gameplay frames.
-2. **Gate 2: Direct-State Mouse & Hybrid Input (Active Milestone)**
-   * Window cursor coordinates mapped to WRAM `$14E7` / `0x7E:00BD`.
-   * Left-click (Joypad A) / Right-click (Joypad B) click injection with instant gamepad handoff.
-3. **Gate 3: True 16:9 Viewport Extension (Upcoming Milestone)**
-   * 400×224 Mode-7 overland map metatile streaming buffer expansion.
+2. **Gate 2: Direct-State Mouse & Hybrid Input (Certified)**
+   * Direct-state cursor mapping (`$14DE/$14E0`), decoupled camera (`$00BD/$00BF`), menu hit-boxes, and World Map stage node hit-testing with instant keyboard handoff.
+3. **Gate 3: True 16:9 Viewport Extension (Certified)**
+   * `800×448` (`400×224` 1×) dual-layer compositor with Area 1 telemetry wings and BGR555 software rasterizer.
 
 ### Rule of the Gates
 Under no circumstances may a pull request introduce memory drift or desync to the 4:3 simulation core. Modernizations must operate via non-destructive shims (`RECOMP_PATCH`) or 60Hz read-only WRAM telemetry.
