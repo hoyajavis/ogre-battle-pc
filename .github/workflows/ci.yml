@@ -69,6 +69,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install SDL2 (Linux)
         if: runner.os == 'Linux'
@@ -84,13 +86,13 @@ jobs:
         if: runner.os == 'Windows'
         uses: msys2/setup-msys2@v2
         with:
-          msystem: MINGW64
+          msystem: UCRT64
           update: true
           install: >-
-            mingw-w64-x86_64-gcc
-            mingw-w64-x86_64-cmake
-            mingw-w64-x86_64-ninja
-            mingw-w64-x86_64-SDL2
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-SDL2
 
       - name: Configure & Build (Unix)
         if: runner.os != 'Windows'
@@ -131,7 +133,7 @@ jobs:
         run: |
           mkdir -p dist/${{ matrix.artifact_name }}
           cp build/ogre_battle_pc.exe dist/${{ matrix.artifact_name }}/
-          cp /mingw64/bin/SDL2.dll dist/${{ matrix.artifact_name }}/
+          cp /ucrt64/bin/SDL2.dll dist/${{ matrix.artifact_name }}/
           cp -r data dist/${{ matrix.artifact_name }}/
           cp README.md dist/${{ matrix.artifact_name }}/
           (cd dist && cmake -E tar "cf" ../${{ matrix.artifact_name }}.zip --format=zip ${{ matrix.artifact_name }})
