@@ -56,6 +56,19 @@ flowchart TD
 
 ---
 
+## Why This Architecture? (Design History & Lessons Learned)
+
+This port is the **third attempt** at bringing *Ogre Battle: The March of the Black Queen* natively to PC, and its hybrid design reflects the lessons of the first two:
+
+1. **Attempt 1 — Disassembly → Pygame:** Reimplementing game logic from a disassembly worked notionally, but faithfully reproducing the SNES PPU (Mode-7 tactical maps, HDMA horizon effects, window masks, and color math) from scratch proved unsustainable.
+2. **Attempt 2 — Pure Automated Rust Static Recompiler:** Ahead-of-time 65816 static recompilation hit a wall on Ogre Battle's dynamic `REP`/`SEP` register-width (`M`/`X`) switches, indirect jump tables, hardware MMIO multiplier indexing (`$4202 * $4203`), and NMI-boundary-sensitive Bank `$00`/`$02` routines.
+3. **Attempt 3 — Hybrid `snesrecomp` + `snesrev` + Custom PC Engine (This Repo):**
+   - **Real Silicon Where It Counts:** Uses `sp00nznet/snesrecomp` + LakeSnes for cycle-accurate PPU/APU/DMA rendering and tiered interpreter fallback on timing-sensitive routines, paired with a small compatibility shim ([`runner/src/recomp_compat.c`](runner/src/recomp_compat.c)) so the project can consume upstream `snesrecomp` unmodified.
+   - **`snesrev`-Style Frame Lockstep Oracle:** Rather than relying solely on per-instruction checks, [`runner/`](runner/) runs full-subsystem `memcmp` verification (128 KB WRAM, 64 KB VRAM, CGRAM, OAM, SRAM) against LakeSnes across 83,450 deterministic trace frames.
+   - **Custom 16:9 Desktop Shell:** Instead of `snesrecomp`'s standard Dear ImGui shell, [`src/main.c`](src/main.c) hosts an `800×448` software-composited 16:9 canvas, direct-state mouse control, and Area 4 pre-boot ROM assembly.
+
+---
+
 ## 16:9 Widescreen Display Modes (Gate 3)
 
 Toggle with **`[F10]`**:
