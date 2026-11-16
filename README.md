@@ -11,7 +11,7 @@ A native desktop PC port (Windows, Linux, macOS) of Quest's 1993 Super Nintendo 
 
 - **Bit-Exact Core Simulation:** Lifted 65816 C routines verified with 0-byte memory drift across 83,450 canonical gameplay frames (`docs/verification/gate_1_certification.md`).
 - **Pre-Boot Launcher & `[Esc]` Settings Overlay:** Choose mod profiles, toggle community bug fixes, configure video/audio/mouse settings, and persist preferences to `ogre_battle.ini`.
-- **16:9 Widescreen & Tactician Wings (`[F10]`):** Context-switched `144×448` sidebars displaying live Chaos Frame, Noon Tribute, City Liberation compatibility, `-5 CF` recapture alerts, Clash Tug-of-War, and Tarot Overlevel warnings—plus a **`[Tab]` Campaign Grimoire** modal.
+- **16:9 Widescreen & Tactician Wings (`[F10]`):** Context-switched `144×448` sidebars displaying live Chaos Frame, Noon Tribute, City Liberation compatibility, `-5 CF` recapture alerts, Clash Tug-of-War, and Tarot Overlevel warnings—plus a **`[Tab]` Campaign Grimoire** modal and an optional `--companion-window` `640×480` 3-page window for `4:3` / dual-monitor setups.
 - **Direct-State Mouse + Keyboard Handoff:** 1:1 Tactical Map cursor with ±8 px squad/city snapping, Right/Middle-drag camera panning, direct menu hit-boxes, World Map stage node selection, and instant keyboard takeover.
 - **Boot-Time JSON Modding:** Vanilla tables (`data/vanilla/*.json`) and community overlays (`mods/*.json`) are validated and assembled in memory before reset with zero runtime CPU overhead.
 
@@ -19,7 +19,7 @@ A native desktop PC port (Windows, Linux, macOS) of Quest's 1993 Super Nintendo 
 
 ## Quick Start
 
-1. Download a release build (or build from source below) and place your verified `ogre_battle.sfc` next to `ogre_battle_pc` (or pass `--rom=path/to/ogre_battle.sfc`).
+1. Download a release build (or build from source below) and place your verified `ogre_battle.sfc` next to `ogre_battle_pc` (or pass `--rom=path/to/ogre_battle.sfc`; pass `--companion-window` to also open the standalone 3-page `640×480` telemetry window).
 2. Launch **`ogre_battle_pc`** to open the **Pre-Boot Launcher**, select a profile (*Vanilla Purist*, *Community Fixes*, *Fin 0.71 Overhaul*, or *Class Expansion*), and click **LAUNCH GAME**.
 3. Key hotkeys in-game:
    - **`[F10]`** — Cycle display mode (`16:9 Tactician Wings` / `16:9 Vanilla Horizon` / `4:3 Classic`)
