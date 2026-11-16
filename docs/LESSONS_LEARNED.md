@@ -76,6 +76,7 @@ Decompiling the ROM tables and community patches ([`docs/architecture/rhdn_patch
 - **Bitwise Class Size Hardcoding (`$01:EC67`):** Rather than storing unit size (1-slot Small vs. 2-slot Large Beast/Dragon) in a clean table byte, the vanilla engine used hardcoded class-ID range checks and bitshifts at `$01:EC67`—which is why adding new monster classes required rewriting `$01:EC67` to read a lookup table in Bank `$30`.
 - **Directed-Graph Promotions (`0x04AD4C`):** Class promotions in Bank `$09` are encoded as 125 16-bit pointers to null-terminated target class arrays, paired with 77 branch threshold records (`Min Level`, `Min ALI`, `Max ALI`, `Min CHA` at `0x4AED4`–`0x4AFF2`) and 6 special relic overrides (`0x317A6` for *Undead Ring*, *Royal Crown*, *Blood Kiss*, *Rotten Pumpkin*, *Stone of Dragos*, *Undead Staff*).
 - **12Mbit (1.5 MB) LoROM Checksum Mirroring:** Because 1.5 MB (`12 Mbit`) is not a power of two, the SNES internal header checksum (`$D316` at `0x7FDE`) is computed as `sum(first_1MB) + 2 * sum(last_512KB)`. When expanding the ROM buffer in memory to `2.0 MB` (`16 Mbit`, header byte `0x7FD7 = 0x05`) for Bank `$30`/`$3B` mods, the checksum formula must dynamically switch to a linear 2.0 MB sum.
+- **Asymmetric Table Bounds (`101` vs. `125` Classes; `100` vs. `196` Items):** While the game defines 125 class IDs (`0x01` Fighter through `0x7D` Galf), only the first **101** standard army/monster classes (`0x01`–`0x65` Fogel) have entries in Bank `$02`/`$03` movement, weight, cost, leadership, growth, action-count, and elemental resistance tables. Special boss/NPC classes (`0x66`–`0x7D`) have base stats only, and executable 65816 assembly begins immediately at `0x17FF8`. Likewise, only the first **100** of **196** items have signed 8-bit stat bonus tables (`0x3C7A3`–`0x3CACA`). Writing 125 entries across Bank `$02` silently corrupts live code—a bug caught immediately by our 0-byte `Gate 4A` roundtrip assertion.
 
 ---
 
@@ -159,9 +160,15 @@ When adding complex predictive calculators (such as pre-clash Alignment/Charisma
 Traditional SNES modding relies on binary `.ips`/`.bps` patches that overwrite hardcoded ROM offsets—making it impossible to combine two mods that touch adjacent tables or mix headered (`+512 B` copier header) and unheadered patches.
 - **Our Solution (Area 4 Boot-Time ROM Builder):**
   1. Extract canonical vanilla tables (`classes.json`, `promotions.json`, `items.json`, `shops.json`, `stages.json`, `attacks.json`) and certify a **0-byte roundtrip (`Gate 4A`)** where `reconstruct(extract(ROM)) == ROM`.
-  2. Decompile legacy `.ips` hacks (`tools/ips_importer.py`) with automatic **512-byte copier header detection** into structured JSON overlays + verified assembly `micro_patches`.
-  3. Assemble selected JSON overlays and dynamic `1.5 MB -> 2.0 MB` Bank `$30` expansions into the in-memory ROM buffer **once before `snes_reset()`** (`src/engine/boot_loader.c`).
-- **Result:** Zero runtime CPU overhead, 100% compatibility with both interpreted and lifted 65816 instructions, and deterministic conflict detection (`ConflictValidator`) before launch.
+  2. Decompile legacy `.ips` hacks (`tools/ips_importer.py`) with automatic **512-byte copier header detection** (`detect_header_shift()` scores record offsets against the SNES internal header `0x7FC0..0x7FFF` vs. `0x81C0..0x81FF` and promotion tables—essential because older 2010 patches like `dragoner.ips` and `OBabmod071.ips` are `+0x200` headered while modern patches like `OB_ClassExpansion.ips` are unheadered).
+  3. Classify mods into a **4-Tier Abstraction Taxonomy** ([`docs/architecture/rhdn_patches_catalog.md`](architecture/rhdn_patches_catalog.md)) so `ConflictValidator` can enforce safe stacking:
+     - **Level 1 (Pure Data Schema):** E.g., `dragoner_rebalance.json` (100% mapped to `promotions.json`).
+     - **Level 2 (Data + Text/Spell Tables):** E.g., `fin_balancing_071.json` (31 structured domains + string/spell timing tables).
+     - **Level 3 (Bank `$30` ASM Hooks + 2.0 MB Expansion):** E.g., D's `OBMagicFix`, `OBRanDrops`, `OBwSizeTables`.
+     - **Level 4 (Total Conversion Overhaul):** E.g., UPRC `ClassExpansion` (14 new classes, Bank `$3B` palette persistence, mutually exclusive with Level 3 Bank `$30` hooks).
+  4. Assemble selected JSON overlays and dynamic `1.5 MB -> 2.0 MB` Bank `$30` expansions into the in-memory ROM buffer **once before `snes_reset()`** (`src/engine/boot_loader.c`).
+- **Static Recompilation vs. Binary ASM Hooks:** In a hybrid lifted engine (`snesrecomp` + LakeSnes), pure data-table mods (`Level 1`/`2`) work transparently with statically lifted C banks because lifted functions still read `rom_buffer` via `snes_read()`. However, **executable 65816 code hooks** (`Level 3`/`4`, such as `JMP $308800` patched at `$01:8F8B`) will be bypassed if `$01:8F8B` is dispatched to a pre-compiled C function in `func_table`. Any binary code patch targeting a lifted bank must either unregister that subroutine from `func_table` (falling back to the interpreter, which executes the patched 65816 bytes and Bank `$30` routines) or mirror the fix as a native `RECOMP_PATCH`.
+- **Result:** Zero runtime CPU overhead for data tables, 100% compatibility across both interpreted and lifted execution paths, and deterministic conflict detection (`ConflictValidator`) before launch.
 
 ---
 
