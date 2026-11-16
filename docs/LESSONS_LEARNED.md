@@ -135,6 +135,7 @@ Our widescreen and UI architecture evolved through three distinct phases ([`docs
 3. **Phase 3 (The `2×` `800×448` Dual-Layer Master Canvas):**
    - By integer-scaling the `256×224` PPU output by **`2×` to `512×448`** in the center of an **`800×448` (16:9)** master canvas, each side wing becomes **`144×448 px`** (`18 columns × 56 rows` of `8×8` tiles, or `24 columns` using our compact `6×8` glyph font).
    - This doubled the horizontal information density while keeping 100% integer-scaled pixel art, allowing us to retire the separate companion window and embed context-switched **Left/Right Tactician Wings** plus a **`[Tab]` Campaign Grimoire** modal inside a single window.
+   - **Modal vs. Wing Clearance (`480×384` Inside `512×448` Core):** Rather than filling the entire `512×448` center viewport, the `[Tab]` Zenobian Campaign Grimoire is sized to **`480×384 px` (`x = 160..639, y = 32..415`)**, leaving a `16 px` (`2`-tile) breathing margin on both sides so it never collides with the `144 px` Left/Right Wings—allowing players to cross-reference the 18-Hero Audit against live Stage Recon and Zodiac Wings simultaneously.
 
 ```
                      800 × 448 MASTER 16:9 COMPOSITOR CANVAS
@@ -145,11 +146,17 @@ Our widescreen and UI architecture evolved through three distinct phases ([`docs
 └────────────────────┴───────────────────────────────────────┴────────────────────┘
 ```
 
-### 4.3 Authentic 1993 SNES UI Aesthetics (`BGR555` & 2-Pass Shadowed Fonts)
+### 4.3 Authentic 1993 SNES UI Aesthetics (`BGR555`, 2-Pass Shadowed Fonts & Visual QA)
 Nothing ruins a retro PC port faster than slapping modern flat floating ImGui/TTF text over 1993 pixel art. To make the 16:9 Tactician Wings, Pre-Boot Launcher, and `[Esc]` Settings Overlay look like Quest built them in 1993 (`src/engine/snes_ui_rasterizer.c`):
 - **Strict 15-Bit `BGR555` Color Quantization:** Every UI color is quantized via `OB_BGR555_RGBA(r, g, b)` (5 bits per channel, steps of 8) so no 24-bit gradients clash with the SNES palette.
 - **8-Step Vertical HDMA Window Fills:** Panels replicate the SNES PPU's per-scanline HDMA backdrop color writes (`Royal Blue`, `Crimson Alert`, `Emerald Safe`, `Obsidian Ledger`).
 - **Beveled Gold 9-Slice Borders & 2-Pass Shadowed Bitmap Fonts:** Every glyph renders a `1px` bottom-right drop shadow in `OB_COLOR_TEXT_SHADOW` before drawing the foreground glyph, ensuring crisp legibility against any background.
+- **Closed-Loop Visual Verification Beyond Byte Assertions:** In Gate 3 (`test_widescreen_16_9.c`), our automated C tests verified 0-byte WRAM drift and 100% `BGR555` palette quantization across all `358,400` pixels per `800×448` frame. Yet exporting `.ppm` $\rightarrow$ `.png` frames and inspecting the rendered images caught four layout bugs that numerical assertions could not see:
+  1. Missing `'&'` and `'$'` glyphs in the `5×7` bitmap font table (`REPUTATION & CLK`, `($45)`).
+  2. Multi-byte UTF-8 checkmarks (`✓`) splitting into 3 blank spaces in a byte-by-byte C font blitter (resolved by mapping a dedicated `5×7` checkmark glyph to ASCII `'*'`).
+  3. `[PLN]` mobility badges at `x = 108` touching the right `8×8` gold 9-slice border at `x = 136` (fixed by shifting to `x = 102`).
+  4. A 1-indexed vs. 0-indexed Tarot ID mismatch on `I. MAGICIAN` in the Tarot Guard Dock.
+  Always pair headless framebuffer assertions with exported PNG visual inspection when building custom software rasterizers.
 
 ### 4.4 The "Zero-Invasion" Telemetry Rule (`const uint8_t *`)
 When adding complex predictive calculators (such as pre-clash Alignment/Charisma drift, `-5 CF` enemy town recapture warnings, and Bank `$09` promotion tree inspection), there is a real danger of accidentally mutating emulator state and breaking deterministic replays.

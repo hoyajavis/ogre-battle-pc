@@ -27,4 +27,12 @@ for file in $(git diff --cached --name-only | grep -E '\.(ini|json)$'); do
     fi
 done
 
+# 4. Reject machine-local file:/// URIs in staged Markdown files
+for file in $(git diff --cached --name-only | grep -E '\.md$' || true); do
+    if [ -f "$file" ] && grep -E 'file:///(home|Users)/' "$file" >/dev/null 2>&1; then
+        echo "ERROR: Machine-local file:/// URI detected in $file. Use relative repository links." >&2
+        exit 1
+    fi
+done
+
 exit 0

@@ -50,11 +50,11 @@ flowchart LR
 
 ### The Zero-Invasion Invariant
 1. **Strict `const` Semantics**: All public and internal telemetry functions accept memory as `const uint8_t *wram` and `const uint8_t *rom`. Writing to these pointers is a compile-time and runtime error.
-2. **Dual-Core Lockstep Certification**: Verified via [`test_01_gate_1a_lockstep_zero_invasion`](file:///home/antigravity/tests/test_area_1_telemetry.c#L125-L180), which executes two parallel LakeSnes instances with identical inputs:
+2. **Dual-Core Lockstep Certification**: Verified via [`test_01_gate_1a_lockstep_zero_invasion`](../../tests/test_area_1_telemetry.c#L125-L180), which executes two parallel LakeSnes instances with identical inputs:
    - `Instance A`: Runs vanilla SNES execution without telemetry.
    - `Instance B`: Runs full 60Hz telemetry extraction and companion window rasterization on every VBlank.
    - Result: `0` byte difference across `128 KB` WRAM, `64 KB` VRAM, `512 B` CGRAM, and `544 B` OAM across 600+ frames.
-3. **Decoupled Framebuffers**: The primary viewport remains locked at native `256 × 224` (4:3). Telemetry rasterization outputs exclusively to a separate `640 × 480` RGBA buffer ([`ob_telemetry_render_companion_window`](file:///home/antigravity/src/engine/telemetry_window.c#L156-L550)).
+3. **Decoupled Framebuffers**: The primary viewport remains locked at native `256 × 224` (4:3). Telemetry rasterization outputs exclusively to a separate `640 × 480` RGBA buffer ([`ob_telemetry_render_companion_window`](../../src/engine/telemetry_window.c#L156-L550)).
 
 ---
 
@@ -141,17 +141,17 @@ flowchart TD
 
 ## 4. Predictive Algorithms & Walkthrough Mechanics (Phase 5B)
 
-The predictive math engine in [`src/engine/telemetry_math.c`](file:///home/antigravity/src/engine/telemetry_math.c) provides 8 distinct walkthrough models to demystify SNES mechanics.
+The predictive math engine in [`src/engine/telemetry_math.c`](../../src/engine/telemetry_math.c) provides 8 distinct walkthrough models to demystify SNES mechanics.
 
 ### 4.1 `-5 CF` Recapture Threat Detection
-- **Function**: [`ob_telemetry_detect_recapture_threats`](file:///home/antigravity/src/engine/telemetry_math.c#L330-L375)
+- **Function**: [`ob_telemetry_detect_recapture_threats`](../../src/engine/telemetry_math.c#L330-L375)
 - **Mathematical Model**:
   $$\text{Dist} = |X_{\text{enemy}} - X_{\text{city}}| + |Y_{\text{enemy}} - Y_{\text{city}}|$$
   $$\text{Closing} = (\Delta X \cdot V_x > 0) + (\Delta Y \cdot V_y > 0)$$
 - **Logic**: Evaluates all active enemy slots (`10..20`) against all liberated nodes (Ownership mask bit `0 == 1`). If the enemy's target coordinates match the node or if $\text{Dist} \le 180\text{ px}$ with a positive closing velocity vector, a threat record is dispatched with $\text{ETA} = \frac{\text{Dist}}{\text{Speed}}$ and a fixed `penalty_cf = -5`.
 
 ### 4.2 Tarot Hand Audit & Leader Overlevel Guard
-- **Function**: [`ob_telemetry_audit_tarot_hand`](file:///home/antigravity/src/engine/telemetry_math.c#L475-L545)
+- **Function**: [`ob_telemetry_audit_tarot_hand`](../../src/engine/telemetry_math.c#L475-L545)
 - **SNES Quirk**: In *Ogre Battle*, damage kills dealt by Tarot cards do not distribute EXP to squad members. **100% of kill EXP and morality delta is awarded directly to Unit #00 (Opinion Leader)**.
 - **Risk Assessment**:
   $$\text{Offensive Cards} \in \{\text{Magician}(0), \text{Justice}(7), \text{Tower}(8), \text{Judgement}(10), \text{Sun}(12), \text{Star}(16), \text{Moon}(17), \text{Chariot}(6), \text{Death}(11), \dots\}$$
@@ -159,7 +159,7 @@ The predictive math engine in [`src/engine/telemetry_math.c`](file:///home/antig
   If triggered, the Companion Window warns the player that using this card against lower-level enemies will degrade Opinion Leader alignment, permanently locking out the best endings (*The World*, *The Sun*).
 
 ### 4.3 Neutral Encounter & Persuasion Forecasting
-- **Function**: [`ob_telemetry_forecast_neutral_encounters`](file:///home/antigravity/src/engine/telemetry_math.c#L376-L472)
+- **Function**: [`ob_telemetry_forecast_neutral_encounters`](../../src/engine/telemetry_math.c#L376-L472)
 - **Logic**: Reads the underlying terrain ID from Domain E (`$7E:1A11 + slot*2`). Cross-references squad unit classes:
   - **Forest (Terrain 2)**: Spawns Ghosts/Skeletons (Lv 9). If squad has a Cleric or Princess, flags `persuade_ready = true` and `is_undead_ali_farm = true`.
   - **Mountain (Terrain 3)**: Spawns Griffons/Cockatrices (Lv 8). Requires Beast Master. If squad has Witch and inventory contains Glass Pumpkin (`$4D`), activates `is_pumpkin_ali_tank = true`.
@@ -169,20 +169,20 @@ The predictive math engine in [`src/engine/telemetry_math.c`](file:///home/antig
   - **Plains / Road (Terrain 1)**: Spawns Dragons/Hawkmen (Lv 7). Beast Master or Wizard recruit.
 
 ### 4.4 18 Special Character Recruitment Auditor
-- **Function**: [`ob_telemetry_audit_special_recruits`](file:///home/antigravity/src/engine/telemetry_math.c#L546-L620)
+- **Function**: [`ob_telemetry_audit_special_recruits`](../../src/engine/telemetry_math.c#L546-L620)
 - **Coverage**: All 18 named characters: Lans, Warren, Canopus, Ashe, Lyon, Yushis, Saradin, Tristan, Rauny, Debonair, Norn, Slust, Fenril, Aisha, Fogel, Destro, Deneb, Galf.
 - **Tradeoff Engine**:
   - **Deneb (`#16`)**: Flags requirement $\text{CF} \le 35$ and $\text{Leader ALI} \le 40$. Injects tradeoff alert: `"Forfeits Halloween Ending & High CF"`.
   - **Galf (`#17`)**: Flags requirement $\text{CF} \le 20$ and $\text{Leader ALI} \le 30$. Injects irreversible tradeoff alert: `"Irrevocably forfeits Top 3 Endings (World/Sun/Justice)"`.
 
 ### 4.5 12 Zodiac Stones & Tablet of Yaru Checklist
-- **Function**: [`ob_telemetry_track_zodiac_stones`](file:///home/antigravity/src/engine/telemetry_math.c#L671-L715)
+- **Function**: [`ob_telemetry_track_zodiac_stones`](../../src/engine/telemetry_math.c#L671-L715)
 - **Item Mapping**: Scans `$7E:157E..$7E:15BD` for Quicksilver (`0x45`), Tablet of Yaru (`0x49`), and Zodiac Stones 1–12 (`0x50..0x5B`: Garnet, Amethyst, Aquamarine, Diamond, Emerald, Pearl, Ruby, Peridot, Sapphire, Opal, Topaz, Turquoise).
 - **Brunhild Eligibility**:
   $$\text{Brunhild Ready} = \text{HasQuicksilver} \land \text{HasTabletOfYaru} \land (\text{StonesCount} == 12)$$
 
 ### 4.6 Squad Mobility & Flyer Upgrade Advisor
-- **Function**: [`ob_telemetry_analyze_squad_mobility`](file:///home/antigravity/src/engine/telemetry_math.c#L625-L670)
+- **Function**: [`ob_telemetry_analyze_squad_mobility`](../../src/engine/telemetry_math.c#L625-L670)
 - **Mobility Classes**: Normal, Plains, Forest, Mountain, Low Sky, High Sky.
 - **Elevation Calculation**:
   $$\text{Flyers Needed} = \max(0, \lceil \text{Total Members} / 2 \rceil - \text{Current Flyers})$$
@@ -192,7 +192,7 @@ The predictive math engine in [`src/engine/telemetry_math.c`](file:///home/antig
 
 ## 5. Secondary Companion Window Rasterizer
 
-The Companion Window rasterizer ([`src/engine/telemetry_window.c`](file:///home/antigravity/src/engine/telemetry_window.c)) is a self-contained, software renderer that draws into a `640 × 480` 32-bit RGBA pixel array:
+The Companion Window rasterizer ([`src/engine/telemetry_window.c`](../../src/engine/telemetry_window.c)) is a self-contained, software renderer that draws into a `640 × 480` 32-bit RGBA pixel array:
 
 ### Visual Page Layouts
 
@@ -222,13 +222,13 @@ The Companion Window rasterizer ([`src/engine/telemetry_window.c`](file:///home/
 - **Coordinate Projection**: World coordinates (`0..1024 px`) are mapped to radar canvas space (`136 × 96 px`) via affine transform.
 - **Output Interfaces**:
   - Framebuffer pointer: `uint32_t *out_rgba_buffer`
-  - PPM snapshot export: [`ob_companion_window_save_ppm`](file:///home/antigravity/src/engine/telemetry_window.c#L130-L154)
+  - PPM snapshot export: [`ob_companion_window_save_ppm`](../../src/engine/telemetry_window.c#L130-L154)
 
 ---
 
 ## 6. C API Reference
 
-All declarations reside in [`include/telemetry.h`](file:///home/antigravity/include/telemetry.h), [`include/telemetry_math.h`](file:///home/antigravity/include/telemetry_math.h), and [`include/telemetry_window.h`](file:///home/antigravity/include/telemetry_window.h).
+All declarations reside in [`include/telemetry.h`](../../include/telemetry.h), [`include/telemetry_math.h`](../../include/telemetry_math.h), and [`include/telemetry_window.h`](../../include/telemetry_window.h).
 
 ### Lifecycle & Telemetry Extraction
 ```c

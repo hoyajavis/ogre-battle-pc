@@ -1,7 +1,7 @@
 # Gate 3 Architectural Specification: 4:3 to 16:9 Widescreen Display & Area 1 Telemetry Wing Integration
 
-> **Status:** Active Architectural Specification (Gate 3 — `gate/3-widescreen`)  
-> **Related Documents:** [plan.md](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/plan.md) | [roadmap.md](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/roadmap.md) | [ogre_battle_modernization_areas.md](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/ogre_battle_modernization_areas.md) | [mouse_architecture_deprecation_and_redesign.md](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/mouse_architecture_deprecation_and_redesign.md)
+> **Status:** Certified & Merged (Gate 3 — Tag `v0.3.0-gate3-wide`)  
+> **Related Documents:** [plan.md](../archive/plan.md) | [roadmap.md](../archive/roadmap.md) | [ogre_battle_modernization_areas.md](../archive/ogre_battle_modernization_areas.md) | [mouse_architecture_deprecation_and_redesign.md](../archive/mouse_architecture_deprecation_and_redesign.md)
 
 ---
 

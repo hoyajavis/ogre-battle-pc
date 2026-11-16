@@ -121,7 +121,7 @@ flowchart TD
 
 ### Milestone 4: Three-Pillar Direct-State & Hit-Box Mouse Control & Gate 2 Certification [ACTIVE — REV 9 REDESIGN]
 * **Git Branch**: `gate/2-mouse-input` (Target Tag: `v0.2.0-gate2-mouse`)
-* **Architectural Specification**: [`docs/mouse_architecture_deprecation_and_redesign.md`](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/mouse_architecture_deprecation_and_redesign.md)
+* **Architectural Specification**: [`docs/archive/mouse_architecture_deprecation_and_redesign.md`](mouse_architecture_deprecation_and_redesign.md)
 * **Objective**: Replace the deprecated `Rev 1`–`Rev 8` closed-loop synthetic D-Pad steering with the **Three-Pillar Direct-State & Hit-Box Architecture (`Rev 9+`)** within the certified 4:3 baseline (with forward-compatible 400×224 bounds for Gate 3).
 * **Deliverables**:
   * [x] **Formal Deprecation of Rev 1–Rev 8 Synthetic D-Pad Steering**: Strip closed-loop `BTN_UP/DOWN/LEFT/RIGHT` position injection and OAM `0xCC/0xCE` heuristic tracking that caused the center-box camera feedback loop and 7-icon menu wrap-around spinning.
@@ -144,7 +144,7 @@ flowchart TD
 
 ### Milestone 5: True 16:9 Widescreen Compositor, Area 1 Wing Integration & Gate 3 Certification [ACTIVE]
 * **Git Branch**: `gate/3-widescreen`
-* **Architectural Specification**: [`docs/widescreen_16_9_architecture.md`](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/widescreen_16_9_architecture.md)
+* **Architectural Specification**: [`docs/architecture/widescreen_16_9_architecture.md`](../architecture/widescreen_16_9_architecture.md)
 * **Objective**: Expand the display from 4:3 (`256 × 224`) to 16:9 (`400 × 224` PPU / `800 × 448` `2×` master compositor) across all 7 game screens, migrating the Area 1 telemetry UI into context-switched `144 × 448 px` (`18 × 56` tile) Left/Right Wing Cards built with the authentic SNES UI software rasterizer.
 * **Deliverables**:
   * [x] **Shared Authentic SNES UI Rasterizer (`include/ob_snes_ui_theme.h`, `src/engine/snes_ui_rasterizer.c`)**: 15-bit BGR555 Royal Blue gradients (`#182868` $\rightarrow$ `#080830`), `8×8` ornate gold 9-slice borders, dual shadowed pixel fonts (`8×8` header/primary + `6×8` compact data rows), segmented RPG gauges, `16×24` mini Tarot cards, and `16×16` Zodiac gemstones.

@@ -2,7 +2,7 @@
 
 > **Status:** Active Architectural Specification (Gate 2 — `gate/2-mouse-input`, Rev 9+)  
 > **Supersedes:** Legacy Mouse Control Revisions 1–8 (`Rev 5` MD5 `c944bd95fa981705b5c51d92833a2ff9`, `Rev 8` MD5 `73658652c2429cf553cfbd40de2aedc5`)  
-> **Related Documents:** [plan.md](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/plan.md) | [roadmap.md](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/roadmap.md) | [ogre_battle_modernization_areas.md](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/ogre_battle_modernization_areas.md) | [user_testing_guide.md](file:///home/antigravity/hoyajavis/ogre-battle-pc/docs/user_testing_guide.md)
+> **Related Documents:** [plan.md](plan.md) | [roadmap.md](roadmap.md) | [ogre_battle_modernization_areas.md](ogre_battle_modernization_areas.md) | [user_testing_guide.md](../user_testing_guide.md)
 
 ---
 
