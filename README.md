@@ -55,6 +55,7 @@ PYTHONPATH=tools python3 -m unittest discover -s tests -p "*.py" -v
 | :--- | :--- |
 | [`docs/user_testing_guide.md`](docs/user_testing_guide.md) | Pre-Boot Launcher, `[Esc]` Settings, controls & testing checklist |
 | [`docs/player_manual_companion_window.md`](docs/player_manual_companion_window.md) | 16:9 Tactician Wings, Campaign Grimoire & hidden mechanics guide |
+| [`docs/LESSONS_LEARNED.md`](docs/LESSONS_LEARNED.md) | Engineering post-mortem: how SNES *Ogre Battle* works, porting lessons, modernizations, traces & agentic workflows |
 | [`docs/architecture/README.md`](docs/architecture/README.md) | Developer guide for adopting the 16:9 UI, mouse layer, modding pipeline & hybrid oracle |
 | [`docs/verification/`](docs/verification) | Certification reports for Gate 1, Gate 4A, and the Boot Pipeline |
 | [`ROADMAP.md`](ROADMAP.md) | Current status, upcoming release polish & deferred items |

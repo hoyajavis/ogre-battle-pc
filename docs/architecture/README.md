@@ -14,6 +14,8 @@ This port is the third attempt at bringing *Ogre Battle: The March of the Black 
 2. **Attempt 2 — Pygame Reimplementation from Community Documentation:** Reimplementing the game logic from community docs worked notionally, but faithfully reproducing the SNES graphics rendering (Mode-7 tactical maps, HDMA horizon effects, window masks, color math) in Pygame proved unsustainable.
 3. **Attempt 3 — Hybrid `snesrecomp` + `snesrev` + Custom 16:9 Engine (This Repo):** Uses `sp00nznet/snesrecomp` + LakeSnes for cycle-accurate PPU/APU/DMA silicon and tiered interpreter fallback, paired with a `snesrev`-style frame-by-frame `memcmp` lockstep oracle (`runner/`) and a custom SDL2 `800×448` compositor (`src/main.c`).
 
+For the complete multi-disciplinary retrospective covering SNES engine internals, static recompilation, mouse/widescreen post-mortems, headless traces, and agentic workflows, see **[`docs/LESSONS_LEARNED.md`](../LESSONS_LEARNED.md)**.
+
 ## Adopting Features in Another SNES Port
 
 | Feature | Key Source Files | Portability Notes |
