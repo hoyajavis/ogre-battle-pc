@@ -24,6 +24,7 @@
 #include "engine/input.h"
 #include "engine/widescreen.h"
 #include "ob_recomp.h"
+#include "recomp_compat.h"
 #include "snes.h"
 
 #define OB_INI_PATH "ogre_battle.ini"
@@ -224,7 +225,12 @@ int main(int argc, char *argv[]) {
     apply_video_settings(window, &cfg, &ws);
 
     ObMouseState mouse;
-    ob_input_init(&mouse);
+    ob_input_init(
+        &mouse,
+        (ws.display_mode != OB_DISPLAY_4_3_CLASSIC) ? OB_VIEWPORT_WIDTH_16_9 : OB_VIEWPORT_WIDTH_4_3,
+        OB_VIEWPORT_HEIGHT
+    );
+    ob_input_set_wings_enabled(&mouse, ws.display_mode == OB_DISPLAY_16_9_TACTICIAN_WINGS);
 
     Snes *snes = NULL;
     bool running = true;
@@ -320,22 +326,16 @@ int main(int argc, char *argv[]) {
             const uint8_t *keys = SDL_GetKeyboardState(NULL);
             uint16_t joy = poll_keyboard_joypad(keys);
             if (cfg.mouse_enabled) {
-                int sx = 0, sy = 0;
-                ob_input_map_window_to_snes(
-                    win_x, win_y, win_w, win_h,
-                    (ws.display_mode != OB_DISPLAY_4_3_CLASSIC) ? OB_VIEWPORT_WIDTH_16_9 : OB_VIEWPORT_WIDTH_4_3,
-                    OB_VIEWPORT_HEIGHT, &sx, &sy
-                );
-                uint16_t mouse_joy = ob_input_process_frame(
-                    &mouse, snes->ram, snes->ppu->oam, sx, sy,
+                ob_input_set_wings_enabled(&mouse, ws.display_mode == OB_DISPLAY_16_9_TACTICIAN_WINGS);
+                ob_input_on_mouse_move(&mouse, win_x, win_y, win_w, win_h, (uint32_t)frame_count);
+                ob_input_on_mouse_button(
+                    &mouse,
                     (btn_mask & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0,
                     (btn_mask & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0,
                     (btn_mask & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0,
-                    joy,
-                    (ws.display_mode != OB_DISPLAY_4_3_CLASSIC) ? OB_VIEWPORT_WIDTH_16_9 : OB_VIEWPORT_WIDTH_4_3,
-                    OB_VIEWPORT_HEIGHT
+                    (uint32_t)frame_count
                 );
-                joy |= mouse_joy;
+                joy = ob_input_step_frame(&mouse, snes->ram, (const uint8_t *)snes->ppu->oam, joy, (uint32_t)frame_count);
             }
 
             for (int b = 0; b < 12; ++b) {
@@ -359,7 +359,7 @@ int main(int argc, char *argv[]) {
             }
 
             extract_core_256x224(snes, core_256x224);
-            ws.active_scene = ob_widescreen_detect_scene(snes->ram, snes->ppu->oam);
+            ws.active_scene = ob_widescreen_detect_scene(snes->ram, (const uint8_t *)snes->ppu->oam);
             ob_widescreen_extract_telemetry(&ws, snes->ram, &mouse);
             ob_widescreen_render_frame(&ws, snes->ram, core_256x224, canvas_800x448);
         }
