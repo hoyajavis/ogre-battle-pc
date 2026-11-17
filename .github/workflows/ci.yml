@@ -131,21 +131,23 @@ jobs:
       - name: Stage Release Package (Unix)
         if: runner.os != 'Windows'
         run: |
-          mkdir -p dist/${{ matrix.artifact_name }}
+          mkdir -p dist/${{ matrix.artifact_name }}/tools
           cp build/ogre_battle_pc dist/${{ matrix.artifact_name }}/
-          cp -r data dist/${{ matrix.artifact_name }}/
-          cp README.md dist/${{ matrix.artifact_name }}/
+          cp -r data mods dist/${{ matrix.artifact_name }}/
+          cp tools/*.py dist/${{ matrix.artifact_name }}/tools/
+          cp README.md LICENSE NOTICE CHANGELOG.md dist/${{ matrix.artifact_name }}/
           tar -czf ${{ matrix.artifact_name }}.tar.gz -C dist ${{ matrix.artifact_name }}
 
       - name: Stage Release Package (Windows)
         if: runner.os == 'Windows'
         shell: msys2 {0}
         run: |
-          mkdir -p dist/${{ matrix.artifact_name }}
+          mkdir -p dist/${{ matrix.artifact_name }}/tools
           cp build/ogre_battle_pc.exe dist/${{ matrix.artifact_name }}/
           cp /ucrt64/bin/SDL2.dll dist/${{ matrix.artifact_name }}/
-          cp -r data dist/${{ matrix.artifact_name }}/
-          cp README.md dist/${{ matrix.artifact_name }}/
+          cp -r data mods dist/${{ matrix.artifact_name }}/
+          cp tools/*.py dist/${{ matrix.artifact_name }}/tools/
+          cp README.md LICENSE NOTICE CHANGELOG.md dist/${{ matrix.artifact_name }}/
           (cd dist && cmake -E tar "cf" ../${{ matrix.artifact_name }}.zip --format=zip ${{ matrix.artifact_name }})
 
       - name: Upload Release Artifact
@@ -175,4 +177,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: release-files/*
+          prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-beta') || contains(github.ref, '-alpha') }}
           generate_release_notes: true
