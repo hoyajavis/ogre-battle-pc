@@ -212,8 +212,12 @@ ObMouseMode ob_input_detect_mode(
         return OB_MOUSE_MODE_PASSIVE;
     }
 
+    uint8_t cb = wram[0x00CBu];
+    uint8_t cc = wram[0x00CCu];
+    bool uninit_55 = (wram[0x07BAu] == 0x55u);
+
     /* Gate 3 Widescreen Wing Docks (Left Wing X: 0..71, Right Wing X: 328..399) */
-    if (state->wings_enabled && state->viewport_w >= OB_VIEWPORT_WIDTH_16_9 && !state->drag_active) {
+    if (!uninit_55 && state->wings_enabled && state->viewport_w >= OB_VIEWPORT_WIDTH_16_9 && !state->drag_active) {
         if (state->snes_x < 72) {
             return OB_MOUSE_MODE_LEFT_WING;
         }
@@ -235,14 +239,26 @@ ObMouseMode ob_input_detect_mode(
         return OB_MOUSE_MODE_FORMATION_GRID;
     }
 
-    /* 3. Pillar 3: Continental World Map (real WRAM state or OAM stage banners) */
+    /* 3. Pillar 1: Tactical Battlefield Map (checked BEFORE OAM World Map scan so battlefield sprites don't collide!)
+     * Real game: $00CB==0x01, $00CC==0x10, $07BA!=0x55.
+     * Mock/test compat: ($14E6 & 0xC0) != 0 and != 0x55 (LakeSnes uninit) with $00CE == 0. */
     uint8_t tac_flags = wram[OB_WRAM_CUR_SPRITE_FLAGS];
+    if (cb == 0x01u && cc == 0x10u &&
+        wram[OB_WRAM_CAM_STATE] == 0x00u && wram[0x07BAu] != 0x55u) {
+        return OB_MOUSE_MODE_TACTICAL_MAP;
+    }
+    if ((tac_flags & 0xC0u) != 0u && tac_flags != 0x55u && wram[OB_WRAM_CAM_STATE] == 0u) {
+        return OB_MOUSE_MODE_TACTICAL_MAP;
+    }
+
+    /* 4. Pillar 3: Continental World Map (real WRAM state or OAM stage banners) */
     uint16_t world_flag = (uint16_t)(wram[0x07A2u] | ((uint16_t)wram[0x07A3u] << 8u));
-    if (wram[0x00CBu] == 0x03u && wram[0x07BAu] == 0xFFu &&
+    if (((cb == 0x03u && cc >= 0x0Bu) || cb == 0x05u || cb == 0x06u || (cb == 0x00u && cc == 0x10u)) &&
         world_flag != 0x0000u && world_flag != 0x5555u && ppu_oam != NULL) {
         return OB_MOUSE_MODE_WORLD_MAP;
     }
-    if (oam1_y == OB_OAM_OFFSCREEN_Y && (tac_flags & 0xC0u) == 0u && ppu_oam != NULL) {
+    if ((cb == 0x05u || cb == 0x06u || (cb == 0u && cc == 0u)) &&
+        oam1_y == OB_OAM_OFFSCREEN_Y && (tac_flags & 0xC0u) == 0u && ppu_oam != NULL) {
         for (int i = 1; i < 36; ++i) {
             uint8_t spr_y    = ppu_oam[i * 4 + 1];
             uint8_t spr_attr = ppu_oam[i * 4 + 3];
@@ -250,17 +266,6 @@ ObMouseMode ob_input_detect_mode(
                 return OB_MOUSE_MODE_WORLD_MAP;
             }
         }
-    }
-
-    /* 4. Pillar 1: Tactical Battlefield Map
-     * Real game: $00CB==0x01, $00CC==0x10, $00CE==0x00 ($14E6 is 0x00/0x01 when cursor visible, 0x80 when hidden).
-     * Mock/test compat: ($14E6 & 0xC0) != 0 and != 0x55 (LakeSnes uninit) with $00CE == 0. */
-    if (wram[0x00CBu] == 0x01u && wram[0x00CCu] == 0x10u &&
-        wram[OB_WRAM_CAM_STATE] == 0x00u && wram[0x07BAu] != 0x55u) {
-        return OB_MOUSE_MODE_TACTICAL_MAP;
-    }
-    if ((tac_flags & 0xC0u) != 0u && tac_flags != 0x55u && wram[OB_WRAM_CAM_STATE] == 0u) {
-        return OB_MOUSE_MODE_TACTICAL_MAP;
     }
 
     return OB_MOUSE_MODE_PASSIVE;
@@ -346,26 +351,33 @@ void ob_input_apply_tactical_map(ObMouseState *state, uint8_t *wram) {
 
     int map_tiles_x = (int)wram_read_u16(wram, OB_WRAM_MAP_TILES_X);
     int map_tiles_y = (int)wram_read_u16(wram, OB_WRAM_MAP_TILES_Y);
-    int max_world_x = (map_tiles_x > 0) ? ((map_tiles_x << 3) - 1) : 2047;
-    int max_world_y = (map_tiles_y > 0) ? ((map_tiles_y << 3) - 1) : 2047;
+    int max_world_x = (map_tiles_x > 0 && map_tiles_x != 0x5555) ? ((map_tiles_x << 3) - 1) : 2047;
+    int max_world_y = (map_tiles_y > 0 && map_tiles_y != 0x5555) ? ((map_tiles_y << 3) - 1) : 2047;
 
-    int world_x = clamp_int(cam_x + screen_x, 0, max_world_x);
-    int world_y = clamp_int(cam_y + screen_y, 0, max_world_y);
+    int raw_world_x = clamp_int(cam_x + screen_x, 0, max_world_x);
+    int raw_world_y = clamp_int(cam_y + screen_y, 0, max_world_y);
+    int world_x     = raw_world_x;
+    int world_y     = raw_world_y;
 
-    /* Step 4: Magnetic Entity Snapping (+-8px radius) to Deployed Squads & Cities */
-    state->snapped_type  = OB_SNAP_NONE;
-    state->snapped_index = -1;
-    int best_dist_sq     = (OB_ENTITY_SNAP_RADIUS * OB_ENTITY_SNAP_RADIUS) + 1;
+    /* Step 4: Magnetic Entity Snapping (+-8px entry, +-12px keep hysteresis) to Deployed Squads & Cities */
+    ObSnapTargetType prev_type = state->snapped_type;
+    int prev_index             = state->snapped_index;
+    state->snapped_type        = OB_SNAP_NONE;
+    state->snapped_index       = -1;
+    int best_dist_sq           = (12 * 12) * 2 + 1;
 
     for (int i = 0; i < OB_MAX_DEPLOYED_SQUADS; ++i) {
         uint16_t sx_raw = wram_read_u16(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(i * 2));
         uint16_t sy_raw = wram_read_u16(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(i * 2));
-        if (sx_raw == 0xFFFFu || sy_raw == 0xFFFFu || (sx_raw == 0u && sy_raw == 0u)) {
+        if (sx_raw == 0xFFFFu || sy_raw == 0xFFFFu || sx_raw == 0x5555u || sy_raw == 0x5555u ||
+            sx_raw == 0x7FFFu || sy_raw == 0x7FFFu || sx_raw > 4096u || sy_raw > 4096u ||
+            (sx_raw == 0u && sy_raw == 0u)) {
             continue;
         }
-        int dx = (int)sx_raw - world_x;
-        int dy = (int)sy_raw - world_y;
-        if (abs(dx) <= OB_ENTITY_SNAP_RADIUS && abs(dy) <= OB_ENTITY_SNAP_RADIUS) {
+        int radius = (prev_type == OB_SNAP_SQUAD && prev_index == i) ? 12 : OB_ENTITY_SNAP_RADIUS;
+        int dx = (int)sx_raw - raw_world_x;
+        int dy = (int)sy_raw - raw_world_y;
+        if (abs(dx) <= radius && abs(dy) <= radius) {
             int d2 = dx * dx + dy * dy;
             if (d2 < best_dist_sq) {
                 best_dist_sq         = d2;
@@ -383,12 +395,15 @@ void ob_input_apply_tactical_map(ObMouseState *state, uint8_t *wram) {
         for (int j = 0; j < OB_MAX_STAGE_CITIES; ++j) {
             uint16_t cx_raw = wram_read_u16(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2));
             uint16_t cy_raw = wram_read_u16(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2));
-            if (cx_raw == 0xFFFFu || cy_raw == 0xFFFFu || (cx_raw == 0u && cy_raw == 0u)) {
+            if (cx_raw == 0xFFFFu || cy_raw == 0xFFFFu || cx_raw == 0x5555u || cy_raw == 0x5555u ||
+                cx_raw == 0x7FFFu || cy_raw == 0x7FFFu || cx_raw > 4096u || cy_raw > 4096u ||
+                (cx_raw == 0u && cy_raw == 0u)) {
                 continue;
             }
-            int dx = (int)cx_raw - world_x;
-            int dy = (int)cy_raw - world_y;
-            if (abs(dx) <= OB_ENTITY_SNAP_RADIUS && abs(dy) <= OB_ENTITY_SNAP_RADIUS) {
+            int radius = (prev_type == OB_SNAP_CITY && prev_index == j) ? 12 : OB_ENTITY_SNAP_RADIUS;
+            int dx = (int)cx_raw - raw_world_x;
+            int dy = (int)cy_raw - raw_world_y;
+            if (abs(dx) <= radius && abs(dy) <= radius) {
                 int d2 = dx * dx + dy * dy;
                 if (d2 < best_dist_sq) {
                     best_dist_sq         = d2;
@@ -540,7 +555,9 @@ int ob_input_apply_wing_dock(ObMouseState *state, uint8_t *wram) {
             if (state->left_pressed) {
                 uint16_t sx = wram_read_u16(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(sq_slot * 2));
                 uint16_t sy = wram_read_u16(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(sq_slot * 2));
-                if (sx != 0xFFFFu && sy != 0xFFFFu && (sx != 0u || sy != 0u)) {
+                if (sx != 0xFFFFu && sy != 0xFFFFu && sx != 0x5555u && sy != 0x5555u &&
+                    sx != 0x7FFFu && sy != 0x7FFFu && sx <= 4096u && sy <= 4096u &&
+                    (sx != 0u || sy != 0u)) {
                     int min_x = (int)wram_read_u16(wram, OB_WRAM_CAM_MIN_X);
                     int min_y = (int)wram_read_u16(wram, OB_WRAM_CAM_MIN_Y);
                     int max_x = (int)wram_read_u16(wram, OB_WRAM_CAM_MAX_X);

@@ -106,6 +106,18 @@ typedef struct ObWidescreenState {
     bool poi_radar_enabled;   /* [P] Hidden PoI Radar toggle */
     uint8_t selected_squad;   /* Active squad index (0..9) */
     ObWidescreenTelemetry telemetry;
+
+    /* Temporal hysteresis & sticky inspector latches (anti-flicker) */
+    ObSceneId candidate_scene;
+    uint8_t scene_stability_frames;
+    ObTacticalInspectorMode sticky_inspector_mode;
+    uint8_t sticky_city_id;
+    uint8_t sticky_enemy_slot;
+    uint16_t inspector_hold_frames;
+    bool sticky_threat_active;
+    uint8_t sticky_threat_enemy;
+    uint8_t sticky_threat_city;
+    uint8_t threat_clear_frames;
 } ObWidescreenState;
 
 /* Initialize widescreen compositor state (defaults to 16:9 Tactician Wings) */

@@ -255,6 +255,85 @@ int main(void) {
     assert(ob_widescreen_detect_scene(wram_live, ppu_oam) == OB_SCENE_WARREN_QUIZ);
     printf("[PASS] Gate 3E (LakeSnes 0x55 Uninitialized WRAM Guard): Verified\n");
 
+    /* ========================================================================
+     * GATE 3F: Scene Detection Immunity & Tactical Wing Hysteresis
+     * ======================================================================== */
+    memset(wram_live, 0, OB_WRAM_SIZE);
+    /* 1. Direct-Page scratch $0010 == 1 must never override live TITLE_BOOT, WORLD_MAP, or TACTICAL_MAP */
+    wram_live[0x0010u] = 1u;
+    wram_live[0x07BAu] = 0x55u;
+    assert(ob_widescreen_detect_scene(wram_live, ppu_oam) == OB_SCENE_TITLE_BOOT);
+
+    wram_live[0x07BAu] = 0x4Fu;
+    wram_live[0x00CBu] = 0x03u;
+    wram_live[0x00CCu] = 0x10u;
+    write_u32_le(wram_live, 0x1578u, 30000u);
+    write_u16_le(wram_live, OB_WRAM_SQUAD_X_BASE, 0x7FFFu);
+    assert(ob_widescreen_detect_scene(wram_live, ppu_oam) == OB_SCENE_WORLD_MAP);
+
+    /* 2. Tactical Map with $0010 == 1, camera pan ($00CE == 3), cursor hidden ($14E6 == 0),
+     *    and stale post-combat cumulative damage ($F942 == 240, $F944 == 180, $F92B == 0) */
+    wram_live[0x00CBu] = 0x01u;
+    wram_live[0x00CCu] = 0x10u;
+    wram_live[OB_WRAM_CAM_STATE] = 3u;
+    wram_live[OB_WRAM_CUR_SPRITE_FLAGS] = 0u;
+    write_u16_le(wram_live, OB_WRAM_SQUAD_X_BASE, 512u);
+    write_u16_le(wram_live, OB_WRAM_SQUAD_Y_BASE, 512u);
+    write_u16_le(wram_live, 0xF942u, 240u);
+    write_u16_le(wram_live, 0xF944u, 180u);
+    wram_live[0xF92Bu] = 0u;
+    wram_live[0xF941u] = 0u;
+    assert(ob_widescreen_detect_scene(wram_live, ppu_oam) == OB_SCENE_TACTICAL_MAP);
+
+    /* 3. Live calendar ($156D == 1) reads Hour from $1571 and Minute from $1572 */
+    wram_live[0x156Du] = 1u;
+    wram_live[0x1570u] = 14u; /* Day 14 */
+    wram_live[0x1571u] = 19u; /* 19:00 (Night) */
+    wram_live[0x1572u] = 45u; /* :45 */
+    ob_widescreen_init(&ws);
+    ob_widescreen_extract_telemetry(&ws, wram_live, &mouse);
+    assert(ws.telemetry.clock_hour == 19u);
+    assert(ws.telemetry.clock_minute == 45u);
+    assert(!ws.telemetry.is_daytime);
+
+    /* 4. 45-Frame Sticky Inspector Hold prevents rapid widget flickering when cursor leaves target */
+    mouse.snapped_type = OB_SNAP_CITY;
+    mouse.snapped_index = 2;
+    wram_live[0x1C75u + 2] = 64u;
+    wram_live[0x1C4Du + 2] = 0x01u;
+    ob_widescreen_extract_telemetry(&ws, wram_live, &mouse);
+    assert(ws.inspector_mode == OB_INSPECT_CITY_LIBERATION);
+
+    mouse.snapped_type = OB_SNAP_NONE;
+    mouse.snapped_index = -1;
+    for (int f = 0; f < 44; ++f) {
+        ob_widescreen_extract_telemetry(&ws, wram_live, &mouse);
+        assert(ws.inspector_mode == OB_INSPECT_CITY_LIBERATION);
+    }
+    ob_widescreen_extract_telemetry(&ws, wram_live, &mouse);
+    assert(ws.inspector_mode == OB_INSPECT_MOBILITY_NEUTRAL);
+
+    /* 5. Recapture Threat Schmitt-trigger hysteresis (180px entry + 15-frame debounce, 210px exit) */
+    write_u16_le(wram_live, OB_WRAM_CITY_X_BASE + 0, 400u);
+    write_u16_le(wram_live, OB_WRAM_CITY_Y_BASE + 0, 400u);
+    wram_live[0x1C4Du + 0] = 0x01u;
+    write_u16_le(wram_live, OB_WRAM_SQUAD_X_BASE + 10 * 2, 500u); /* dist = 100 < 180 */
+    write_u16_le(wram_live, OB_WRAM_SQUAD_Y_BASE + 10 * 2, 400u);
+    for (int f = 0; f < 14; ++f) {
+        ob_widescreen_extract_telemetry(&ws, wram_live, &mouse);
+        assert(!ws.telemetry.recapture_threat_active);
+    }
+    ob_widescreen_extract_telemetry(&ws, wram_live, &mouse);
+    assert(ws.telemetry.recapture_threat_active);
+
+    /* Moving enemy to dist = 195 (between 180 entry and 210 exit) keeps threat active without flicker */
+    write_u16_le(wram_live, OB_WRAM_SQUAD_X_BASE + 10 * 2, 595u);
+    for (int f = 0; f < 20; ++f) {
+        ob_widescreen_extract_telemetry(&ws, wram_live, &mouse);
+        assert(ws.telemetry.recapture_threat_active);
+    }
+    printf("[PASS] Gate 3F (Scene Detection Immunity & Tactical Wing Hysteresis): Verified\n");
+
     free(wram_live);
     free(wram_golden);
     free(ppu_oam);

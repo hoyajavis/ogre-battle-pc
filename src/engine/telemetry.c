@@ -22,12 +22,24 @@ static ObScreenCategory classify_screen_mode(const uint8_t *wram, const ObCombat
     uint8_t cc = wram[0x00CC];
     uint16_t m07a2 = read_u16_le(wram, 0x07A2);
     uint32_t goth = read_u32_le(wram, 0x1578);
+    uint8_t lord_tmpl = wram[0x07BA];
 
     if (combat->in_combat) {
         return OB_SCREEN_COMBAT_CLASH;
     }
-    /* Before campaign initialization, Goth == 0 and Lord template == 0 */
-    if (goth == 0 && wram[0x07BA] == 0) {
+    if (lord_tmpl == 0x55) {
+        return OB_SCREEN_TITLE_BOOT;
+    }
+    if (lord_tmpl == 0xFF) {
+        if (cb == 0x02 || (cb == 0x03 && cc < 0x0B)) {
+            return OB_SCREEN_WARREN_QUIZ;
+        }
+        if (cb == 0x03 && cc >= 0x0B) {
+            return OB_SCREEN_WORLD_MAP;
+        }
+    }
+    /* Before campaign initialization, Goth == 0 and Lord template == 0 or 0xFF */
+    if (goth == 0 && (lord_tmpl == 0 || lord_tmpl == 0xFF)) {
         if (cb >= 1 && cb <= 6 && wram[0x00D4] != 0) {
             return OB_SCREEN_WARREN_QUIZ;
         }
@@ -35,10 +47,10 @@ static ObScreenCategory classify_screen_mode(const uint8_t *wram, const ObCombat
     }
     /* Check if active deployed squad 0 has valid world coordinates */
     int16_t sq0_x = read_s16_le(wram, 0x18AF);
-    if (sq0_x != 0x7FFF && sq0_x != 0 && sq0_x != -1) {
+    if (cb == 0x01 || (sq0_x != 0x7FFF && sq0_x != 0x5555 && sq0_x != 0 && sq0_x != -1)) {
         return OB_SCREEN_TACTICAL_MAP;
     }
-    if (m07a2 != 0 || cc >= 2) {
+    if (cb == 0x03 || cb == 0x05 || cb == 0x06 || cb == 0x02 || (cb == 0x00 && cc == 0x10) || (m07a2 != 0 && m07a2 != 0x5555) || cc >= 2) {
         return OB_SCREEN_WORLD_MAP;
     }
     return OB_SCREEN_CAMP_ROSTER;
@@ -269,9 +281,12 @@ void ob_telemetry_poll_vblank(
             any_combatant_active = true;
         }
     }
-    cmb->in_combat = (wram[0xF92B] != 0) &&
+    bool live_combat_module = (wram[0x00CB] == 0x07 || wram[0x00CB] == 0x0C ||
+                               (wram[0x00CA] == 0 && wram[0x00CB] == 0));
+    cmb->in_combat = live_combat_module && (wram[0xF92B] != 0 && wram[0xF92B] != 0x55) &&
                      (cmb->total_actions_left > 0 || any_combatant_active ||
-                      cmb->player_clash_damage > 0 || cmb->enemy_clash_damage > 0);
+                      (cmb->player_clash_damage > 0 && cmb->player_clash_damage != 0x5555) ||
+                      (cmb->enemy_clash_damage > 0 && cmb->enemy_clash_damage != 0x5555));
 
     /* 9. Tarot Hand, Camp Inventory, Stage Flags & 2,344-Bit Story Bitmaps (Domain I) */
     uint8_t t_cnt = 0;

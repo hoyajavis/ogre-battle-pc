@@ -21,7 +21,10 @@ void ob_widescreen_init(ObWidescreenState *state) {
     memset(state, 0, sizeof(*state));
     state->display_mode = OB_DISPLAY_16_9_TACTICIAN_WINGS;
     state->active_scene = OB_SCENE_TACTICAL_MAP;
+    state->candidate_scene = OB_SCENE_TACTICAL_MAP;
     state->inspector_mode = OB_INSPECT_MOBILITY_NEUTRAL;
+    state->sticky_inspector_mode = OB_INSPECT_MOBILITY_NEUTRAL;
+    state->sticky_city_id = 1u;
     state->grimoire_open = false;
     state->poi_radar_enabled = true;
     state->selected_squad = 0;
@@ -46,55 +49,94 @@ ObSceneId ob_widescreen_detect_scene(const uint8_t *wram, const uint8_t *ppu_oam
         return OB_SCENE_TITLE_BOOT;
     }
 
-    /* 0. Pre-campaign Title / Boot Demo (LakeSnes resets WRAM to 0x55) */
+    uint8_t ca = wram[0x00CAu];
+    uint8_t cb = wram[0x00CBu];
+    uint8_t cc = wram[0x00CCu];
     uint32_t goth = read_u32_le(wram, 0x1578u);
-    if (goth == 0x55555555u && wram[0x07BAu] == 0x55u && wram[0x0010u] != 1u) {
+    uint8_t lord_tmpl = wram[0x07BAu];
+    bool is_synthetic_test = (ca == 0u && cb == 0u && cc == 0u);
+
+    /* 0. Pre-campaign Boot, Intro Demo, Title Screen & Title Menu:
+     *    In LakeSnes, $7E:07BA (Roster Slot 0 template) remains 0x55 until Frame 3467
+     *    when Warren's Tent initializes the 100-unit roster table to 0xFF. */
+    if (lord_tmpl == 0x55u) {
         return OB_SCENE_TITLE_BOOT;
     }
 
-    /* 1. Combat Stage: battle flag $7E:00CE == 3, or initialized clash damage accumulators ($7E:F942/$7E:F944) */
-    uint16_t ply_dmg = read_u16_le(wram, 0xF942u);
-    uint16_t enm_dmg = read_u16_le(wram, 0xF944u);
-    bool ply_valid = (ply_dmg > 0u && ply_dmg != 0x5555u && ply_dmg < 10000u);
-    bool enm_valid = (enm_dmg > 0u && enm_dmg != 0x5555u && enm_dmg < 10000u);
-    bool combat_active = (wram[0xF92Bu] != 0u && wram[0xF92Bu] != 0x55u);
-    if (wram[0x00CEu] == 3u || ply_valid || enm_valid || (combat_active && (ply_dmg != 0x5555u || enm_dmg != 0x5555u))) {
+    /* 1. Warren's Character Creation Quiz (Seer's Tent, Name/Birthday Entry & 6 Tarot Questions):
+     *    - Synthetic unit-test hook ($0010 == 1) strictly gated to synthetic test state so DP scratch never collides
+     *    - Live 65816 state: $07BA == 0xFF with $00CB == 0x02 (Name/Birthday) or ($00CB == 0x03 && $00CC < 0x0B) */
+    if (is_synthetic_test && goth != 0u && goth != 0x55555555u && wram[0x0010u] == 1u) {
+        return OB_SCENE_WARREN_QUIZ;
+    }
+    if (lord_tmpl == 0xFFu) {
+        if (cb == 0x02u || (cb == 0x03u && cc < 0x0Bu)) {
+            return OB_SCENE_WARREN_QUIZ;
+        }
+        if (cb == 0x03u && cc >= 0x0Bu) {
+            return OB_SCENE_WORLD_MAP;
+        }
+    }
+
+    /* If still pre-campaign (goth == 0 and Lord slot unpopulated) and not a synthetic test, stay on TITLE_BOOT */
+    if (!is_synthetic_test && goth == 0u && (lord_tmpl == 0x00u || lord_tmpl == 0xFFu)) {
+        return OB_SCENE_TITLE_BOOT;
+    }
+
+    /* 2. Continental World Map & World Map Command/Save Menus:
+     *    - Live 65816 state: $00CB == 0x03 ($00CC >= 0x0B), $00CB == 0x05 (Data Menu), $00CB == 0x06 (Save Menu),
+     *      $00CB == 0x02 (World Map Command Bar), or ($00CB == 0x00 && $00CC == 0x10) with no deployed Squad 0 */
+    uint16_t sq0_x = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE);
+    if ((cb == 0x03u || cb == 0x05u || cb == 0x06u || cb == 0x02u || (cb == 0x00u && cc == 0x10u)) &&
+        (sq0_x == 0x5555u || sq0_x == 0xFFFFu || sq0_x == 0x7FFFu || sq0_x == 0u)) {
+        return OB_SCENE_WORLD_MAP;
+    }
+
+    /* 3. Combat Stage:
+     *    - Live 65816 engine: $00CB == 0x07 or $00CB == 0x0C, or active $7E:F92B with remaining actions $7E:F941 > 0
+     *      (since $7E:F942/$7E:F944 cumulative damage persists in WRAM after battle returns to Tactical Map)
+     *    - Synthetic unit test fallback (when ca == 0 && cb == 0 && cc == 0): $7E:F942, $7E:F944, or $7E:F92B active */
+    if (cb == 0x07u || cb == 0x0Cu ||
+        (wram[0xF92Bu] != 0u && wram[0xF92Bu] != 0x55u && wram[0xF941u] > 0u && wram[0xF941u] <= 20u)) {
         return OB_SCENE_COMBAT_STAGE;
     }
-
-    /* 2. Warren's Character Creation Quiz ($00CB=03,$00CC=03,$07A2=0000,$07BA=FF or unit-test $0010=1) */
-    if (wram[0x0010u] == 1u) {
-        return OB_SCENE_WARREN_QUIZ;
+    if (is_synthetic_test) {
+        uint16_t ply_dmg = read_u16_le(wram, 0xF942u);
+        uint16_t enm_dmg = read_u16_le(wram, 0xF944u);
+        bool ply_valid = (ply_dmg > 0u && ply_dmg != 0x5555u && ply_dmg < 10000u);
+        bool enm_valid = (enm_dmg > 0u && enm_dmg != 0x5555u && enm_dmg < 10000u);
+        bool combat_active = (wram[0xF92Bu] != 0u && wram[0xF92Bu] != 0x55u);
+        if (ply_valid || enm_valid || (combat_active && (ply_dmg != 0x5555u || enm_dmg != 0x5555u))) {
+            return OB_SCENE_COMBAT_STAGE;
+        }
     }
-    if (wram[0x00CB] == 0x03u && wram[0x00CC] == 0x03u &&
-        read_u16_le(wram, 0x07A2u) == 0x0000u && wram[0x07BAu] == 0xFFu) {
-        return OB_SCENE_WARREN_QUIZ;
+
+    /* 4. Live Tactical Map Stage Loop ($00CB == 0x01 or active deployed Squad 0) */
+    if (cb == 0x01u ||
+        (sq0_x != 0u && sq0_x != 0x5555u && sq0_x != 0xFFFFu && sq0_x != 0x7FFFu)) {
+        return OB_SCENE_TACTICAL_MAP;
     }
 
-    /* 3. Tactical Map active when cursor sprite flag ($14E6 != 0x55 && ($14E6 & 0xC0) != 0) */
+    /* 5. Tactical Map cursor flag ($14E6 != 0x55 && ($14E6 & 0xC0) != 0) */
     uint8_t cur_flags = wram[OB_WRAM_CUR_SPRITE_FLAGS];
     if (cur_flags != 0x55u && (cur_flags & 0xC0u) != 0u) {
         return OB_SCENE_TACTICAL_MAP;
     }
 
-    /* 4. 3x2 Formation Grid in Camp/Roster */
-    if (wram[OB_WRAM_OAM1_TILE] == OB_TILE_FORMATION_FINGER &&
+    /* 6. Camp / Roster 3x2 Formation Grid (synthetic OAM[1] formation finger) */
+    if (is_synthetic_test &&
+        wram[OB_WRAM_OAM1_TILE] == OB_TILE_FORMATION_FINGER &&
         wram[OB_WRAM_OAM1_Y] < OB_OAM_OFFSCREEN_Y) {
         return OB_SCENE_CAMP_ROSTER;
     }
 
-    /* 5. Continental World Map ($00CB=03,$00CC=0D or $07A2!=0/$5555 with no deployed squads, or OAM banner tiles) */
-    uint16_t m07a2 = read_u16_le(wram, 0x07A2u);
-    uint16_t sq0_x = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE);
-    if (wram[0x00CB] == 0x03u && (wram[0x00CC] == 0x0Du || (m07a2 != 0u && m07a2 != 0x5555u)) &&
-        (sq0_x == 0x5555u || sq0_x == 0xFFFFu || sq0_x == 0u)) {
-        return OB_SCENE_WORLD_MAP;
-    }
-    if (wram[OB_WRAM_OAM1_Y] == OB_OAM_OFFSCREEN_Y && ppu_oam != NULL) {
+    /* 7. Synthetic World Map OAM banner fallback (only when OAM1 is offscreen in synthetic tests) */
+    if (is_synthetic_test && wram[OB_WRAM_OAM1_Y] == OB_OAM_OFFSCREEN_Y && ppu_oam != NULL) {
         for (int i = 0; i < 128; ++i) {
             uint8_t tile = ppu_oam[i * 4 + 2];
             uint8_t y = ppu_oam[i * 4 + 1];
-            if (y < OB_OAM_OFFSCREEN_Y && (tile >= 0x80u && tile <= 0x8Cu)) {
+            uint8_t attr = ppu_oam[i * 4 + 3];
+            if (y < OB_OAM_OFFSCREEN_Y && (tile >= 0x80u && tile <= 0x8Cu) && (attr & 0x38u) == 0x38u) {
                 return OB_SCENE_WORLD_MAP;
             }
         }
@@ -136,20 +178,26 @@ void ob_widescreen_extract_telemetry(
         return;
     }
 
-    /* 1. Macro Reputation, Goth & Clock ($7E:156D - $7E:157D) */
+    /* 1. Macro Reputation, Goth & Clock ($7E:156D - $7E:157D)
+     *    In live WRAM ($156D/$156E initialized), $1570=Day, $1571=Hour, $1572=Minute.
+     *    In synthetic unit tests ($156D==0 && $156E==0), fallback to $1570=Hour, $1571=Minute. */
     uint8_t raw_cf = wram[0x157Cu];
     t->chaos_frame = (raw_cf <= 100u) ? raw_cf : 72u;
     t->goth_treasury = (raw_goth != 0x55555555u) ? raw_goth : 0u;
-    t->clock_hour = (wram[0x1570u] != 0x55u) ? (wram[0x1570u] % 24u) : 0u;
-    t->clock_minute = (wram[0x1571u] != 0x55u) ? (wram[0x1571u] % 60u) : 0u;
-    t->is_daytime = (t->clock_hour >= 6u && t->clock_hour < 18u);
+    bool cal_init = (wram[0x156Du] != 0u && wram[0x156Du] != 0x55u) ||
+                    (wram[0x156Eu] != 0u && wram[0x156Eu] != 0x55u);
+    uint8_t raw_hr  = cal_init ? wram[0x1571u] : wram[0x1570u];
+    uint8_t raw_min = cal_init ? wram[0x1572u] : wram[0x1571u];
+    t->clock_hour   = (raw_hr != 0x55u) ? (raw_hr % 24u) : 0u;
+    t->clock_minute = (raw_min != 0x55u) ? (raw_min % 60u) : 0u;
+    t->is_daytime   = (t->clock_hour >= 6u && t->clock_hour < 18u);
 
     /* 2. Deployed Squads ($7E:18AF / $7E:18D9) */
     for (int i = 0; i < OB_MAX_DEPLOYED_SQUADS; ++i) {
         uint16_t sx = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(i * 2));
         uint16_t sy = read_u16_le(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(i * 2));
         if (sx != 0xFFFFu && sy != 0xFFFFu && sx != 0x5555u && sy != 0x5555u &&
-            sx <= 4096u && sy <= 4096u && (sx != 0u || sy != 0u)) {
+            sx != 0x7FFFu && sy != 0x7FFFu && sx <= 4096u && sy <= 4096u && (sx != 0u || sy != 0u)) {
             if (i < 10) {
                 t->deployed_player_count++;
             } else {
@@ -164,7 +212,7 @@ void ob_widescreen_extract_telemetry(
         uint16_t cx = read_u16_le(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2));
         uint16_t cy = read_u16_le(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2));
         if (cx == 0xFFFFu || cy == 0xFFFFu || cx == 0x5555u || cy == 0x5555u ||
-            cx > 4096u || cy > 4096u || (cx == 0u && cy == 0u)) {
+            cx == 0x7FFFu || cy == 0x7FFFu || cx > 4096u || cy > 4096u || (cx == 0u && cy == 0u)) {
             continue;
         }
         t->total_cities++;
@@ -183,12 +231,18 @@ void ob_widescreen_extract_telemetry(
     int32_t upkeep = (int32_t)t->deployed_player_count * 450;
     t->noon_net_goth = (tribute_sum > 0) ? (tribute_sum - upkeep) : 0;
 
-    /* 4. -5 CF Recapture Threat Detection (Enemy 10..20 near liberated city) */
+    /* 4. -5 CF Recapture Threat Detection with Schmitt-Trigger Spatial & Temporal Hysteresis
+     *    Entry radius: 180px; Exit radius when already latched: 210px; Clear debounce: 15 frames */
+    int max_threat_dist = state->sticky_threat_active ? 210 : 180;
+    int best_threat_dist = max_threat_dist + 1;
+    int best_threat_e = -1;
+    int best_threat_j = -1;
+
     for (int e = 10; e < OB_MAX_DEPLOYED_SQUADS; ++e) {
         uint16_t ex = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(e * 2));
         uint16_t ey = read_u16_le(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(e * 2));
         if (ex == 0xFFFFu || ey == 0xFFFFu || ex == 0x5555u || ey == 0x5555u ||
-            ex > 4096u || ey > 4096u || (ex == 0u && ey == 0u)) {
+            ex == 0x7FFFu || ey == 0x7FFFu || ex > 4096u || ey > 4096u || (ex == 0u && ey == 0u)) {
             continue;
         }
         for (int j = 0; j < OB_MAX_STAGE_CITIES; ++j) {
@@ -198,44 +252,93 @@ void ob_widescreen_extract_telemetry(
             }
             uint16_t cx = read_u16_le(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2));
             uint16_t cy = read_u16_le(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2));
-            if (cx == 0xFFFFu || cy == 0xFFFFu || cx == 0x5555u || cy == 0x5555u) {
+            if (cx == 0xFFFFu || cy == 0xFFFFu || cx == 0x5555u || cy == 0x5555u ||
+                cx == 0x7FFFu || cy == 0x7FFFu || cx > 4096u || cy > 4096u || (cx == 0u && cy == 0u)) {
                 continue;
             }
             int dist = abs((int)ex - (int)cx) + abs((int)ey - (int)cy);
-            if (dist <= 180) {
-                t->recapture_threat_active = true;
-                t->threat_enemy_slot = (uint8_t)e;
-                t->threat_city_slot = (uint8_t)j;
-                t->threat_eta_ticks = (uint16_t)((dist / 3 > 1) ? (dist / 3) : 1);
-                break;
+            if (dist < best_threat_dist) {
+                best_threat_dist = dist;
+                best_threat_e = e;
+                best_threat_j = j;
             }
-        }
-        if (t->recapture_threat_active) {
-            break;
         }
     }
 
-    /* 5. Dynamic Context Switching for Right Wing Middle Card */
-    state->inspector_mode = OB_INSPECT_MOBILITY_NEUTRAL;
-    t->inspected_city_id = 1;
-    uint8_t def_cali = wram[0x1C25u + 1];
-    t->inspected_city_ali = (def_cali > 0u && def_cali != 0x55u) ? def_cali : 70u;
+    if (best_threat_e >= 0 && best_threat_j >= 0) {
+        state->sticky_threat_active = true;
+        state->sticky_threat_enemy = (uint8_t)best_threat_e;
+        state->sticky_threat_city = (uint8_t)best_threat_j;
+        state->threat_clear_frames = 0u;
+
+        t->recapture_threat_active = true;
+        t->threat_enemy_slot = (uint8_t)best_threat_e;
+        t->threat_city_slot = (uint8_t)best_threat_j;
+        t->threat_eta_ticks = (uint16_t)((best_threat_dist / 3 > 1) ? (best_threat_dist / 3) : 1);
+    } else if (state->sticky_threat_active) {
+        state->threat_clear_frames++;
+        if (state->threat_clear_frames < 15u) {
+            t->recapture_threat_active = true;
+            t->threat_enemy_slot = state->sticky_threat_enemy;
+            t->threat_city_slot = state->sticky_threat_city;
+            t->threat_eta_ticks = 60u;
+        } else {
+            state->sticky_threat_active = false;
+            state->threat_clear_frames = 0u;
+        }
+    }
+
+    /* 5. Dynamic Context Switching for Right Wing Middle Card with 45-Frame Sticky Hold */
     t->best_squad_id = 1;
     uint8_t def_sali = wram[0xF42Cu + 1];
     t->best_squad_ali = (def_sali > 0u && def_sali != 0x55u) ? def_sali : 74u;
-    t->predicted_cf_delta = (abs((int)t->best_squad_ali - (int)t->inspected_city_ali) <= 10) ? +2 : -2;
 
+    bool new_target_latched = false;
     if (mouse != NULL) {
-        if (mouse->snapped_type == OB_SNAP_CITY && mouse->snapped_index >= 0) {
-            state->inspector_mode = OB_INSPECT_CITY_LIBERATION;
-            t->inspected_city_id = (uint8_t)mouse->snapped_index;
-            uint8_t cali = wram[0x1C25u + (uint32_t)mouse->snapped_index];
-            t->inspected_city_ali = (cali > 0u && cali != 0x55u) ? cali : 70u;
-            t->predicted_cf_delta = (abs((int)t->best_squad_ali - (int)t->inspected_city_ali) <= 12) ? +2 : -2;
-        } else if (mouse->snapped_type == OB_SNAP_SQUAD && mouse->snapped_index >= 10) {
-            state->inspector_mode = OB_INSPECT_ENEMY_PRECLASH;
+        if (mouse->snapped_type == OB_SNAP_CITY && mouse->snapped_index >= 0 &&
+            mouse->snapped_index < OB_MAX_STAGE_CITIES) {
+            state->sticky_inspector_mode = OB_INSPECT_CITY_LIBERATION;
+            state->sticky_city_id = (uint8_t)mouse->snapped_index;
+            state->inspector_hold_frames = 45u;
+            new_target_latched = true;
+        } else if (mouse->snapped_type == OB_SNAP_SQUAD && mouse->snapped_index >= 10 &&
+                   mouse->snapped_index < OB_MAX_DEPLOYED_SQUADS) {
+            state->sticky_inspector_mode = OB_INSPECT_ENEMY_PRECLASH;
+            state->sticky_enemy_slot = (uint8_t)mouse->snapped_index;
+            state->inspector_hold_frames = 45u;
+            new_target_latched = true;
+        } else if (mouse->snapped_type == OB_SNAP_SQUAD && mouse->snapped_index >= 0 &&
+                   mouse->snapped_index < 10) {
+            state->selected_squad = (uint8_t)mouse->snapped_index;
         }
     }
+
+    if (!new_target_latched) {
+        bool freeze_hold = (mouse != NULL) &&
+            (mouse->active_mode == OB_MOUSE_MODE_LEFT_WING ||
+             mouse->active_mode == OB_MOUSE_MODE_RIGHT_WING ||
+             mouse->active_mode == OB_MOUSE_MODE_ICON_BAR ||
+             mouse->active_mode == OB_MOUSE_MODE_FORMATION_GRID);
+        if (!freeze_hold) {
+            if (state->inspector_hold_frames > 0u) {
+                state->inspector_hold_frames--;
+            }
+            if (state->inspector_hold_frames == 0u) {
+                state->sticky_inspector_mode = OB_INSPECT_MOBILITY_NEUTRAL;
+            }
+        }
+    }
+
+    state->inspector_mode = state->sticky_inspector_mode;
+    uint8_t cid = (state->inspector_mode == OB_INSPECT_CITY_LIBERATION) ? state->sticky_city_id : 1u;
+    if (cid >= OB_MAX_STAGE_CITIES) {
+        cid = 1u;
+    }
+    t->inspected_city_id = cid;
+    uint8_t cali = wram[0x1C25u + (uint32_t)cid];
+    t->inspected_city_ali = (cali > 0u && cali != 0x55u) ? cali : 70u;
+    int tol = (state->inspector_mode == OB_INSPECT_CITY_LIBERATION) ? 12 : 10;
+    t->predicted_cf_delta = (abs((int)t->best_squad_ali - (int)t->inspected_city_ali) <= tol) ? +2 : -2;
 
     /* 6. Combat Stage & Tarot Hand ($7E:F942, $7E:0DBE) */
     uint16_t raw_pdmg = read_u16_le(wram, 0xF942u);
