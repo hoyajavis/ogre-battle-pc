@@ -56,11 +56,11 @@ The Left and Right wings automatically switch to match your current screen:
 - **Left Wing (`DEPLOYED SQUADS`):** Interactive squad plates (`1–6`) showing mobility type (`PLN`, `SKY`, `FOR`, `MTN`), HP bar, and flight upgrade hints. **Left-clicking a squad plate** jumps the tactical camera directly to that squad.
 - **Right Wing (3 Stacked Cards):**
   1. **Reputation & Clock:** `Chaos Frame` (`0–100`), `Goth` treasury, projected `Noon Net Goth` (`Tribute - Upkeep`), 24-hour clock (`DAY`/`NIGHT`), and projected Ending Path.
-  2. **Context-Switched Target Inspector:**
+  2. **Context-Switched Target Inspector (with `0.75s` Sticky Hold & Magnetic Snap):**
      - *Hovering a City:* **City Liberation Advisor** showing city morale, best-matching squad, and predicted `+CF` or `-CF` Ransack warning.
      - *Hovering an Enemy Squad:* **Pre-Clash Morality Drift** showing Alignment/Chaos impact per unit.
-     - *Open Terrain:* **Neutral & Mobility** info and PoI Radar status.
-  3. **Spatial Radar & `-5 CF` Recapture Alert:** 2D tactical radar with a red alert box whenever an enemy squad threatens a liberated town (`ENM# -> CITY#` and intercept `ETA`).
+     - *Open Terrain:* **Neutral & Mobility** info and PoI Radar status (inspector holds your last hovered city or enemy squad for `0.75s` / `45` frames when your cursor glides across open terrain so stats remain readable).
+  3. **Spatial Radar & `-5 CF` Recapture Alert:** 2D tactical radar with a debounced red alert box (`180 px` entry / `210 px` clear threshold) whenever an enemy squad threatens a liberated town (`ENM# -> CITY#` and intercept `ETA`).
 
 ### 3.5 Combat Stage
 - **Left Wing:** **Clash Tug-of-War** (`PLY vs ENM` damage gauge & margin), **Morality Drift** per unit, and **Turn Initiative** queue.

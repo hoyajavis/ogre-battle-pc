@@ -66,7 +66,7 @@ SNES WRAM is mapped across Banks `$7E` and `$7F` (`131,072` bytes total). Area 1
 
 | Domain | WRAM Range | Byte Size | Description | C Struct Representation |
 | :--- | :--- | :--- | :--- | :--- |
-| **Roster Class** | `$7E:07BA`–`$7E:081D` | 100 bytes | Class ID (`1..77`) for 100 roster units | `ObUnitTelemetry.class_id` |
+| **Roster Class** | `$7E:07BA`–`$7E:081D` | 100 bytes | Class ID (`1..77`) for 100 roster units (Slot 0 `$07BA`: `0x55` cold boot/title, `0xFF` Warren quiz, `1..77` active campaign) | `ObUnitTelemetry.class_id` |
 | **Roster Character** | `$7E:085A`–`$7E:08BD` | 100 bytes | Character ID (`1..18` unique heroes, generic) | `ObUnitTelemetry.character_id` |
 | **Current HP** | `$7E:099A`–`$7E:0A61` | 200 bytes | 16-bit LE current HP per unit | `ObUnitTelemetry.hp_cur` |
 | **Max HP** | `$7E:0ADA`–`$7E:0BA1` | 200 bytes | 16-bit LE max HP per unit | `ObUnitTelemetry.hp_max` |
@@ -74,7 +74,7 @@ SNES WRAM is mapped across Banks `$7E` and `$7F` (`131,072` bytes total). Area 1
 | **Tarot Hand** | `$7E:0DBE`–`$7E:0DCB` | 14 bytes | Active Tarot hand cards (`0..21`, empty sentinel `0xFF`) | `ObTelemetryFrame.tarot_hand` |
 | **Squad Leaders** | `$7E:0DCD`–`$7E:0DE5` | 25 bytes | Roster index of squad leader (`0..99`, `0xFF` empty) | `ObSquadTelemetry.leader_unit_id` |
 | **Squad Members** | `$7E:0E81`–`$7E:0EFD` | 125 bytes | 5 unit slots per squad across 25 squads | `ObSquadTelemetry.member_ids[5]` |
-| **Calendar Clock** | `$7E:156D`–`$7E:1575` | 7 bytes | Year, Month, Day, Hour, Minute, Second, Subtick | `ObCelestialTelemetry` |
+| **Calendar Clock** | `$7E:156D`–`$7E:1575` | 9 bytes | `$156D` Year, `$156E` Month, `$156F` Lunar Weekday, `$1570` Day, `$1571` Hour (`0..23`), `$1572` Minute (`0..59`), `$1573` Sub-tick, `$1575` Clock Speed | `ObCelestialTelemetry` |
 | **Goth Treasury** | `$7E:1578`–`$7E:157B` | 4 bytes | 32-bit LE gold treasury | `ObTelemetryFrame.goth_treasury` |
 | **Chaos Frame** | `$7E:157C`–`$7E:157D` | 2 bytes | CF value (`0..100`) + fractional accumulator | `ObTelemetryFrame.chaos_frame` |
 | **Camp Inventory** | `$7E:157E`–`$7E:15BD` | 64 bytes | Item IDs in camp storage | `ObTelemetryFrame.camp_inventory` |
@@ -90,21 +90,22 @@ SNES WRAM is mapped across Banks `$7E` and `$7F` (`131,072` bytes total). Area 1
 
 | Domain | WRAM Range | Byte Size | Description | Struct / Array |
 | :--- | :--- | :--- | :--- | :--- |
-| **Domain E: Deployed Entity X** | `$7E:18AF`–`$7E:18D7` | 42 bytes | 16-bit LE World X coordinate (`0..20` slots) | `ObMapEntityTelemetry.world_x` |
-| **Domain E: Deployed Entity Y** | `$7E:18D9`–`$7E:1901` | 42 bytes | 16-bit LE World Y coordinate (`0..20` slots) | `ObMapEntityTelemetry.world_y` |
+| **Domain E: Deployed Entity X** | `$7E:18AF`–`$7E:18D7` | 42 bytes | 16-bit LE World X coordinate (`0..20` slots; inactive sentinels `0x7FFF`, `0xFFFF`, `0x5555`, `0x0000`) | `ObMapEntityTelemetry.world_x` |
+| **Domain E: Deployed Entity Y** | `$7E:18D9`–`$7E:1901` | 42 bytes | 16-bit LE World Y coordinate (`0..20` slots; inactive sentinels `0x7FFF`, `0xFFFF`, `0x5555`, `0x0000`) | `ObMapEntityTelemetry.world_y` |
 | **Domain E: Target Coordinate X** | `$7E:1905`–`$7E:1929` | 40 bytes | 16-bit LE Target X waypoint | `ObMapEntityTelemetry.target_x` |
 | **Domain E: Target Coordinate Y** | `$7E:192D`–`$7E:1951` | 40 bytes | 16-bit LE Target Y waypoint | `ObMapEntityTelemetry.target_y` |
 | **Domain E: Sub-pixel Velocity X**| `$7E:1955`–`$7E:1979` | 40 bytes | Signed 16-bit sub-pixel velocity `dX` | `ObMapEntityTelemetry.vel_dx` |
 | **Domain E: Sub-pixel Velocity Y**| `$7E:197D`–`$7E:19A1` | 40 bytes | Signed 16-bit sub-pixel velocity `dY` | `ObMapEntityTelemetry.vel_dy` |
 | **Domain E: Tactical AI Order** | `$7E:19A5`–`$7E:19B9` | 21 bytes | AI order code (`$00` Roam, `$01` Seek Lord, `$02` March City) | `ObMapEntityTelemetry.ai_behavior_flags` |
 | **Domain E: Fatigue Stun Timer** | `$7E:19CD`–`$7E:19E1` | 21 bytes | Post-combat paralysis countdown | `ObMapEntityTelemetry.fatigue_ticks` |
-| **Domain F: City World X** | `$7E:1A95`–`$7E:1ABD` | 40 bytes | 16-bit LE City World X coordinate (`0..19`) | `ObCityTelemetry.world_x` |
-| **Domain F: City World Y** | `$7E:1B0D`–`$7E:1B35` | 40 bytes | 16-bit LE City World Y coordinate (`0..19`) | `ObCityTelemetry.world_y` |
+| **Domain F: City World X** | `$7E:1A95`–`$7E:1ABD` | 40 bytes | 16-bit LE City World X coordinate (`0..19`; inactive sentinels `0x7FFF`, `0xFFFF`, `0x5555`, `0x0000`) | `ObCityTelemetry.world_x` |
+| **Domain F: City World Y** | `$7E:1B0D`–`$7E:1B35` | 40 bytes | 16-bit LE City World Y coordinate (`0..19`; inactive sentinels `0x7FFF`, `0xFFFF`, `0x5555`, `0x0000`) | `ObCityTelemetry.world_y` |
 | **Domain F: City Tribute Goth** | `$7E:1B5D`–`$7E:1B85` | 40 bytes | 16-bit LE Daily Noon tribute payout | `ObCityTelemetry.noon_tribute_goth` |
 | **Domain F: City Compatibility** | `$7E:1C25`–`$7E:1C38` | 20 bytes | Target liberation alignment (`0..100`) | `ObCityTelemetry.compatibility` |
 | **Domain F: City Ownership Mask** | `$7E:1C4D`–`$7E:1C60` | 20 bytes | Bitmask: `0x01` Liberated, `0x02` Hidden, `0x04` Temple | `ObCityTelemetry.ownership_mask` |
-| **Domain G: Player Cumulative Dmg**| `$7E:F942`–`$7E:F943` | 2 bytes | 16-bit LE combat clash damage dealt by player | `ObCombatTelemetry.player_clash_damage` |
-| **Domain G: Enemy Cumulative Dmg** | `$7E:F944`–`$7E:F945` | 2 bytes | 16-bit LE combat clash damage dealt by enemy | `ObCombatTelemetry.enemy_clash_damage` |
+| **Domain G: Active Combat State** | `$7E:F92B`, `$7E:F941` | 2 bytes | `$F92B` active combat flag (`!= 0 && != 0x55`); `$F941` remaining clash actions (`1..20`) | `widescreen_detect_scene` |
+| **Domain G: Player Cumulative Dmg**| `$7E:F942`–`$7E:F943` | 2 bytes | 16-bit LE combat clash damage dealt by player (persists in WRAM after battle until next clash) | `ObCombatTelemetry.player_clash_damage` |
+| **Domain G: Enemy Cumulative Dmg** | `$7E:F944`–`$7E:F945` | 2 bytes | 16-bit LE combat clash damage dealt by enemy (persists in WRAM after battle until next clash) | `ObCombatTelemetry.enemy_clash_damage` |
 | **Domain J: 2,344-Bit Event Bitmap**| `$7E:8600`–`$7E:8F27` | 293 bytes | 2,344 continuous bitflags serialized by SRAM `$00:82C0` | `ObTelemetryFrame.event_bitflags` |
 
 ---
