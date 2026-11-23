@@ -332,6 +332,29 @@ int main(void) {
         ob_widescreen_extract_telemetry(&ws, wram_live, &mouse);
         assert(ws.telemetry.recapture_threat_active);
     }
+
+    /* 6. Live 12.4 Fixed-Point Subpixel Coordinates (Stage 1 Felnamia: Squad 0 at (3904, 5760) = world (244, 360),
+     *    Rebel Base at (3712, 5632) = world (232, 352), Enemy Squad 10 at (5120, 5632) = world (320, 352)) */
+    memset(wram_live, 0xFF, OB_WRAM_SIZE);
+    wram_live[0x07BAu] = 0x4Fu;
+    wram_live[0x00CBu] = 0x01u;
+    wram_live[0x00CCu] = 0x10u;
+    wram_live[0x00CEu] = 0x00u;
+    write_u16_le(wram_live, OB_WRAM_SQUAD_X_BASE + 0 * 2, 3904u);
+    write_u16_le(wram_live, OB_WRAM_SQUAD_Y_BASE + 0 * 2, 5760u);
+    write_u16_le(wram_live, OB_WRAM_SQUAD_X_BASE + 10 * 2, 5120u); /* world X = 320 -> dist to base (232) = 88 px < 180 */
+    write_u16_le(wram_live, OB_WRAM_SQUAD_Y_BASE + 10 * 2, 5632u); /* world Y = 352 */
+    write_u16_le(wram_live, OB_WRAM_CITY_X_BASE + 0 * 2, 3712u);
+    write_u16_le(wram_live, OB_WRAM_CITY_Y_BASE + 0 * 2, 5632u);
+    wram_live[0x1C4Du + 0] = 0x01u; /* Liberated Rebel Base */
+    ob_widescreen_init(&ws);
+    for (int f = 0; f < 15; ++f) {
+        ob_widescreen_extract_telemetry(&ws, wram_live, &mouse);
+    }
+    assert(ws.telemetry.deployed_squads == 2u);
+    assert(ws.telemetry.liberated_cities == 1u);
+    assert(ws.telemetry.total_stage_cities == 1u);
+    assert(ws.telemetry.recapture_threat_active);
     printf("[PASS] Gate 3F (Scene Detection Immunity & Tactical Wing Hysteresis): Verified\n");
 
     free(wram_live);

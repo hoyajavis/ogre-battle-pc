@@ -203,6 +203,145 @@ static inline int get_core_x(const ObMouseState *state) {
     return state->snes_x;
 }
 
+static inline bool is_uninit_or_sentinel_u16(uint16_t raw) {
+    return (raw == 0xFFFFu || raw == 0x5555u || raw == 0x7FFFu);
+}
+
+/* Decode a squad or city coordinate from $18AF/$18D9 or $1A95/$1B0D into world pixels.
+ * In live Bank $00 ($00:B7E8-$00:B7F4, $00:BA3D-$00:BB05), entity coordinates are stored
+ * as 12.4 fixed-point subpixels (world_px = raw >> 4) when map_tiles ($14D3/$14D5) matches
+ * the live stage dimensions (e.g., 32..64 tiles -> 256..512 world px, while raw subpixels
+ * are 2560..6144). In synthetic unit tests, coordinates are small 1:1 world pixels (<= 1024). */
+static inline bool decode_entity_world_xy(
+    const uint8_t *wram,
+    uint16_t raw_x,
+    uint16_t raw_y,
+    int max_world_x,
+    int max_world_y,
+    int *out_wx,
+    int *out_wy
+) {
+    if (is_uninit_or_sentinel_u16(raw_x) || is_uninit_or_sentinel_u16(raw_y) ||
+        (raw_x == 0u && raw_y == 0u)) {
+        return false;
+    }
+
+    /* Live Bank $00 populates $00CB == 0x01 and 12.4 subpixels (or raw values exceeding max_world) */
+    bool live_subpixel = (wram[0x00CBu] == 0x01u && (raw_x > 1024u || raw_y > 1024u)) ||
+                         ((int)raw_x > max_world_x || (int)raw_y > max_world_y);
+    if (live_subpixel) {
+        int wx = (int)(raw_x >> 4u);
+        int wy = (int)(raw_y >> 4u);
+        if (wx <= 0 && wy <= 0) {
+            return false;
+        }
+        if (wx > 4096 || wy > 4096) {
+            return false;
+        }
+        *out_wx = wx;
+        *out_wy = wy;
+        return true;
+    }
+
+    if (raw_x > 4096u || raw_y > 4096u) {
+        return false;
+    }
+    *out_wx = (int)raw_x;
+    *out_wy = (int)raw_y;
+    return true;
+}
+
+/* Hit-test the live Bank $02 menu slot table ($0424 count, $0426 X, $0446 Y, $04B2 type).
+ * Executed at $02:EC90-$02:F190 for all Battle Map & Camp command bars, 3x2 formation grids,
+ * and 2-button prompts. Returns the matched slot index (0..$0424-1) or -1 if outside all slots. */
+static int apply_live_bank02_menu_slots(ObMouseState *state, uint8_t *wram, int core_x) {
+    uint8_t count = wram[OB_WRAM_MENU_SLOT_COUNT];
+    if (count == 0u || count == 0x55u || count > OB_MAX_MENU_SLOTS) {
+        return -1;
+    }
+
+    int best_slot = -1;
+    int best_dist = 1000000;
+
+    for (uint8_t i = 0; i < count; ++i) {
+        uint8_t sx   = wram[OB_WRAM_MENU_SLOT_X_BASE + i];
+        uint8_t sy   = wram[OB_WRAM_MENU_SLOT_Y_BASE + i];
+        uint8_t type = wram[OB_WRAM_MENU_SLOT_TYPE_BASE + i];
+        if (sx == 0xFFu || sy == 0xFFu || sy >= OB_OAM_OFFSCREEN_Y) {
+            continue;
+        }
+
+        int x0, x1, y0, y1, cx, cy;
+        if (type < 0x80u) {
+            /* Command Strip / Popup Icon ($02:ECB0: finger at sx+4, sy+10; 16x24 hit-box) */
+            x0 = (int)sx - 2;
+            x1 = (int)sx + 16;
+            y0 = (int)sy - 2;
+            y1 = (int)sy + 22;
+            cx = (int)sx + 8;
+            cy = (int)sy + 10;
+        } else if (type == 0x80u) {
+            /* Squad Header Banner Slot ($02:803A: sx=88, sy=38) */
+            x0 = (int)sx - 12;
+            x1 = (int)sx + 64;
+            y0 = (int)sy - 8;
+            y1 = (int)sy + 12;
+            cx = (int)sx + 16;
+            cy = (int)sy;
+        } else {
+            /* 3x2 Unit Formation Grid Slot ($02:ED00: type >= 0x81 / 0xFF, finger at sx-10, sy) */
+            x0 = (int)sx - 14;
+            x1 = (int)sx + 22;
+            y0 = (int)sy - 8;
+            y1 = (int)sy + 10;
+            cx = (int)sx + 4;
+            cy = (int)sy;
+        }
+
+        if (core_x >= x0 && core_x < x1 && state->snes_y >= y0 && state->snes_y < y1) {
+            int d = abs(core_x - cx) + abs(state->snes_y - cy);
+            if (d < best_dist) {
+                best_dist = d;
+                best_slot = (int)i;
+            }
+        }
+    }
+
+    if (best_slot >= 0) {
+        uint8_t slot = (uint8_t)best_slot;
+        uint8_t sx   = wram[OB_WRAM_MENU_SLOT_X_BASE + slot];
+        uint8_t sy   = wram[OB_WRAM_MENU_SLOT_Y_BASE + slot];
+        uint8_t type = wram[OB_WRAM_MENU_SLOT_TYPE_BASE + slot];
+        bool is_camp = (wram[0x04E0u] == 0x03u);
+
+        wram[OB_WRAM_ICON_BAR_INDEX] = slot;
+        wram[OB_WRAM_ICON_BAR_X]     = sx;
+        wram[OB_WRAM_ICON_BAR_Y]     = sy;
+
+        if (type < 0x80u) {
+            wram[OB_WRAM_MENU_SAVED_ICON] = slot;
+            wram[OB_WRAM_OAM1_X]          = (uint8_t)(sx + OB_ICON_BAR_FINGER_OFFSET);
+            wram[OB_WRAM_OAM1_Y]          = (uint8_t)(sy + OB_ICON_BAR_FINGER_Y_OFF);
+            wram[OB_WRAM_OAM1_TILE]       = is_camp ? OB_TILE_ICON_BAR_FINGER : OB_TILE_LIVE_ICON_BAR_FINGER;
+        } else {
+            if (type >= 0x81u) {
+                wram[OB_WRAM_MENU_SAVED_GRID]  = slot;
+                wram[OB_WRAM_FORMATION_INDEX] = slot;
+            }
+            wram[OB_WRAM_OAM1_X]    = (sx >= (uint8_t)OB_GRID_FINGER_X_OFF)
+                                      ? (uint8_t)(sx - (uint8_t)OB_GRID_FINGER_X_OFF)
+                                      : 0u;
+            wram[OB_WRAM_OAM1_Y]    = sy;
+            wram[OB_WRAM_OAM1_TILE] = is_camp ? OB_TILE_FORMATION_FINGER : OB_TILE_LIVE_FORMATION_FINGER;
+        }
+
+        state->hovered_slot = best_slot;
+        return best_slot;
+    }
+
+    return -1;
+}
+
 ObMouseMode ob_input_detect_mode(
     const ObMouseState *state,
     const uint8_t *wram,
@@ -228,15 +367,32 @@ ObMouseMode ob_input_detect_mode(
 
     uint8_t oam1_y    = wram[OB_WRAM_OAM1_Y];
     uint8_t oam1_tile = wram[OB_WRAM_OAM1_TILE];
+    uint8_t slot_cnt  = wram[OB_WRAM_MENU_SLOT_COUNT];
+    bool has_live_menu_table = (!uninit_55 && slot_cnt > 0u && slot_cnt != 0x55u && slot_cnt <= OB_MAX_MENU_SLOTS);
 
-    /* 1. Pillar 2A: 7-Icon Horizontal Command Strip (tile 0xCE at Y=119) */
-    if (oam1_tile == OB_TILE_ICON_BAR_FINGER && oam1_y == OB_ICON_BAR_FINGER_Y) {
-        return OB_MOUSE_MODE_ICON_BAR;
+    /* 1. Pillar 2A: Horizontal Command Strip / Icon Bar
+     *    - Synthetic/Camp: tile 0xCE at Y=119
+     *    - Live Battle Map ($02:ECDE): tile 0x6A (or 0xCE) with active Bank $02 slot table ($0424 > 0) */
+    if (oam1_y < OB_OAM_OFFSCREEN_Y) {
+        if (oam1_tile == OB_TILE_ICON_BAR_FINGER && (oam1_y == OB_ICON_BAR_FINGER_Y || has_live_menu_table)) {
+            return OB_MOUSE_MODE_ICON_BAR;
+        }
+        if (oam1_tile == OB_TILE_LIVE_ICON_BAR_FINGER &&
+            (has_live_menu_table || oam1_y == OB_ICON_BAR_FINGER_Y || oam1_y == OB_ICON_BAR_POPUP_FINGER_Y)) {
+            return OB_MOUSE_MODE_ICON_BAR;
+        }
     }
 
-    /* 2. Pillar 2B: 3x2 Unit Formation Grid (tile 0xCC with active Y < 224) */
-    if (oam1_tile == OB_TILE_FORMATION_FINGER && oam1_y < OB_OAM_OFFSCREEN_Y) {
-        return OB_MOUSE_MODE_FORMATION_GRID;
+    /* 2. Pillar 2B: 3x2 Unit Formation Grid
+     *    - Synthetic/Camp: tile 0xCC with active Y < 224
+     *    - Live Battle Map ($02:ED25): tile 0x68 with active Bank $02 slot table ($0424 > 0) */
+    if (oam1_y < OB_OAM_OFFSCREEN_Y) {
+        if (oam1_tile == OB_TILE_FORMATION_FINGER) {
+            return OB_MOUSE_MODE_FORMATION_GRID;
+        }
+        if (oam1_tile == OB_TILE_LIVE_FORMATION_FINGER && has_live_menu_table) {
+            return OB_MOUSE_MODE_FORMATION_GRID;
+        }
     }
 
     /* 3. Pillar 1: Tactical Battlefield Map (checked BEFORE OAM World Map scan so battlefield sprites don't collide!)
@@ -332,6 +488,12 @@ void ob_input_apply_tactical_map(ObMouseState *state, uint8_t *wram) {
         return;
     }
 
+    /* When a modal tutorial/dialogue/deployment box has hidden the tactical cursor ($14E6 bit 7 set)
+     * in the live 65816 engine ($00CB == 0x01), do not mutate cursor or camera registers behind it. */
+    if (wram[0x00CBu] == 0x01u && (wram[OB_WRAM_CUR_SPRITE_FLAGS] & 0x80u) != 0u) {
+        return;
+    }
+
     /* Step 1: Update decoupled Mode-7 camera ONLY on Right/Middle-drag or 10px edge margin */
     apply_decoupled_camera_pan(state, wram);
 
@@ -359,7 +521,10 @@ void ob_input_apply_tactical_map(ObMouseState *state, uint8_t *wram) {
     int world_x     = raw_world_x;
     int world_y     = raw_world_y;
 
-    /* Step 4: Magnetic Entity Snapping (+-8px entry, +-12px keep hysteresis) to Deployed Squads & Cities */
+    /* Step 4: Magnetic Entity Snapping (+-8px entry, +-12px keep hysteresis) to Deployed Squads & Cities.
+     * In live Bank $00 ($00:B40C-$00:B453), squad hit-testing compares ($14DE, $14E0) against the
+     * Mode-7 projected screen coordinates ($14ED + 2*i, $1517 + 2*i) computed by $00:B7C0, while
+     * $18AF/$18D9 and $1A95/$1B0D store 12.4 fixed-point subpixels (world_px = raw >> 4). */
     ObSnapTargetType prev_type = state->snapped_type;
     int prev_index             = state->snapped_index;
     state->snapped_type        = OB_SNAP_NONE;
@@ -369,22 +534,36 @@ void ob_input_apply_tactical_map(ObMouseState *state, uint8_t *wram) {
     for (int i = 0; i < OB_MAX_DEPLOYED_SQUADS; ++i) {
         uint16_t sx_raw = wram_read_u16(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(i * 2));
         uint16_t sy_raw = wram_read_u16(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(i * 2));
-        if (sx_raw == 0xFFFFu || sy_raw == 0xFFFFu || sx_raw == 0x5555u || sy_raw == 0x5555u ||
-            sx_raw == 0x7FFFu || sy_raw == 0x7FFFu || sx_raw > 4096u || sy_raw > 4096u ||
-            (sx_raw == 0u && sy_raw == 0u)) {
+        int sq_wx = 0, sq_wy = 0;
+        if (!decode_entity_world_xy(wram, sx_raw, sy_raw, max_world_x, max_world_y, &sq_wx, &sq_wy)) {
             continue;
         }
         int radius = (prev_type == OB_SNAP_SQUAD && prev_index == i) ? 12 : OB_ENTITY_SNAP_RADIUS;
-        int dx = (int)sx_raw - raw_world_x;
-        int dy = (int)sy_raw - raw_world_y;
+
+        /* Check if live Bank $00 projected screen coordinates ($14ED, $1517) are valid on screen */
+        int16_t proj_sx = (int16_t)wram_read_u16(wram, OB_WRAM_SQUAD_SCREEN_X_BASE + (uint32_t)(i * 2));
+        int16_t proj_sy = (int16_t)wram_read_u16(wram, OB_WRAM_SQUAD_SCREEN_Y_BASE + (uint32_t)(i * 2));
+        bool has_proj = (wram[0x00CBu] == 0x01u &&
+                         proj_sx >= OB_TACTICAL_MIN_X && proj_sx <= max_screen_x &&
+                         proj_sy >= OB_TACTICAL_MIN_Y && proj_sy <= max_screen_y);
+
+        /* In $00:B376-$00:B445, hit-box is [$14DE-16..$14DE, $14E0-16..$14E0] around ($14ED, $1517),
+         * so centering the cursor at (proj_sx + 7, proj_sy + 11) aligns with both $00:B810 and $00:B410. */
+        int target_sx = has_proj ? clamp_int((int)proj_sx + 7, OB_TACTICAL_MIN_X, max_screen_x)
+                                 : clamp_int(sq_wx - cam_x, OB_TACTICAL_MIN_X, max_screen_x);
+        int target_sy = has_proj ? clamp_int((int)proj_sy + 11, OB_TACTICAL_MIN_Y, max_screen_y)
+                                 : clamp_int(sq_wy - cam_y, OB_TACTICAL_MIN_Y, max_screen_y);
+
+        int dx = has_proj ? (target_sx - screen_x) : (sq_wx - raw_world_x);
+        int dy = has_proj ? (target_sy - screen_y) : (sq_wy - raw_world_y);
         if (abs(dx) <= radius && abs(dy) <= radius) {
             int d2 = dx * dx + dy * dy;
             if (d2 < best_dist_sq) {
                 best_dist_sq         = d2;
-                world_x              = (int)sx_raw;
-                world_y              = (int)sy_raw;
-                screen_x             = clamp_int(world_x - cam_x, OB_TACTICAL_MIN_X, max_screen_x);
-                screen_y             = clamp_int(world_y - cam_y, OB_TACTICAL_MIN_Y, max_screen_y);
+                world_x              = sq_wx;
+                world_y              = sq_wy;
+                screen_x             = target_sx;
+                screen_y             = target_sy;
                 state->snapped_type  = OB_SNAP_SQUAD;
                 state->snapped_index = i;
             }
@@ -395,20 +574,19 @@ void ob_input_apply_tactical_map(ObMouseState *state, uint8_t *wram) {
         for (int j = 0; j < OB_MAX_STAGE_CITIES; ++j) {
             uint16_t cx_raw = wram_read_u16(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2));
             uint16_t cy_raw = wram_read_u16(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2));
-            if (cx_raw == 0xFFFFu || cy_raw == 0xFFFFu || cx_raw == 0x5555u || cy_raw == 0x5555u ||
-                cx_raw == 0x7FFFu || cy_raw == 0x7FFFu || cx_raw > 4096u || cy_raw > 4096u ||
-                (cx_raw == 0u && cy_raw == 0u)) {
+            int city_wx = 0, city_wy = 0;
+            if (!decode_entity_world_xy(wram, cx_raw, cy_raw, max_world_x, max_world_y, &city_wx, &city_wy)) {
                 continue;
             }
             int radius = (prev_type == OB_SNAP_CITY && prev_index == j) ? 12 : OB_ENTITY_SNAP_RADIUS;
-            int dx = (int)cx_raw - raw_world_x;
-            int dy = (int)cy_raw - raw_world_y;
+            int dx = city_wx - raw_world_x;
+            int dy = city_wy - raw_world_y;
             if (abs(dx) <= radius && abs(dy) <= radius) {
                 int d2 = dx * dx + dy * dy;
                 if (d2 < best_dist_sq) {
                     best_dist_sq         = d2;
-                    world_x              = (int)cx_raw;
-                    world_y              = (int)cy_raw;
+                    world_x              = city_wx;
+                    world_y              = city_wy;
                     screen_x             = clamp_int(world_x - cam_x, OB_TACTICAL_MIN_X, max_screen_x);
                     screen_y             = clamp_int(world_y - cam_y, OB_TACTICAL_MIN_Y, max_screen_y);
                     state->snapped_type  = OB_SNAP_CITY;
@@ -424,6 +602,16 @@ void ob_input_apply_tactical_map(ObMouseState *state, uint8_t *wram) {
     wram_write_u16(wram, OB_WRAM_CUR_WORLD_X, (uint16_t)world_x);
     wram_write_u16(wram, OB_WRAM_CUR_WORLD_Y, (uint16_t)world_y);
 
+    /* Keep OAM[1] shadow ($0104, $0105) synchronized on the same frame when the cursor sprite
+     * ($14E6 == 0x00 or 0x01) is visible, matching $00:B542 offsets (+0,-4 for 0x00; -4,-11 for 0x01). */
+    uint8_t cur_flags = wram[OB_WRAM_CUR_SPRITE_FLAGS];
+    if ((cur_flags & 0x80u) == 0u && cur_flags != 0x55u) {
+        int oam_dx = ((cur_flags & 0x3Fu) == 1u) ? -4 : 0;
+        int oam_dy = ((cur_flags & 0x3Fu) == 1u) ? -11 : -4;
+        wram[OB_WRAM_OAM1_X] = (uint8_t)clamp_int(screen_x + oam_dx, 0, 255);
+        wram[OB_WRAM_OAM1_Y] = (uint8_t)clamp_int(screen_y + oam_dy, 0, 223);
+    }
+
     /* Clear $14E7 so $00:B590 never fires runaway camera scrolling */
     wram_write_u16(wram, OB_WRAM_CUR_EDGE_MASK, 0x0000u);
     wram[OB_WRAM_CUR_DIR_X] = 0u;
@@ -437,6 +625,20 @@ int ob_input_apply_icon_bar(ObMouseState *state, uint8_t *wram) {
     }
 
     int core_x = get_core_x(state);
+
+    /* If the live Bank $02 menu slot table ($0424 > 0) is populated, hit-test actual active slots
+     * (supporting 2-icon yes/no prompts, 3-icon/7-icon command strips, and jumping into the 3x2 grid). */
+    uint8_t slot_cnt = wram[OB_WRAM_MENU_SLOT_COUNT];
+    if (wram[0x07BAu] != 0x55u && slot_cnt > 0u && slot_cnt != 0x55u && slot_cnt <= OB_MAX_MENU_SLOTS) {
+        int live_slot = apply_live_bank02_menu_slots(state, wram, core_x);
+        if (live_slot >= 0) {
+            return live_slot;
+        }
+        state->hovered_slot = -1;
+        return -1;
+    }
+
+    /* Synthetic / Canonical 7-Icon Bar Hit-Box (X: 71..183, Y: 107..131) */
     int x_max  = OB_ICON_BAR_X0 + (OB_ICON_BAR_COUNT * OB_ICON_BAR_STRIDE);
     if (core_x >= OB_ICON_BAR_X0 && core_x < x_max &&
         state->snes_y >= OB_ICON_BAR_Y_MIN && state->snes_y <= OB_ICON_BAR_Y_MAX) {
@@ -464,6 +666,19 @@ int ob_input_apply_formation_grid(ObMouseState *state, uint8_t *wram) {
     }
 
     int core_x = get_core_x(state);
+
+    /* If the live Bank $02 menu slot table ($0424 > 0) is populated, hit-test actual active slots
+     * (supporting both the 3x2 unit formation grid and jumping back to the command icon strip). */
+    uint8_t slot_cnt = wram[OB_WRAM_MENU_SLOT_COUNT];
+    if (wram[0x07BAu] != 0x55u && slot_cnt > 0u && slot_cnt != 0x55u && slot_cnt <= OB_MAX_MENU_SLOTS) {
+        int live_slot = apply_live_bank02_menu_slots(state, wram, core_x);
+        if (live_slot >= 0) {
+            return live_slot;
+        }
+        state->hovered_slot = -1;
+        return -1;
+    }
+
     if (core_x >= OB_FORMATION_X_MIN && core_x < OB_FORMATION_X_MAX &&
         state->snes_y >= OB_FORMATION_Y_ROW0_MIN && state->snes_y < OB_FORMATION_Y_ROW2_MAX) {
         int col = (core_x >= OB_FORMATION_X_MID) ? 1 : 0;
@@ -553,11 +768,14 @@ int ob_input_apply_wing_dock(ObMouseState *state, uint8_t *wram) {
 
             /* Left-clicking a squad plate jumps camera ($00BD/$00BF) to that squad's world pos */
             if (state->left_pressed) {
-                uint16_t sx = wram_read_u16(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(sq_slot * 2));
-                uint16_t sy = wram_read_u16(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(sq_slot * 2));
-                if (sx != 0xFFFFu && sy != 0xFFFFu && sx != 0x5555u && sy != 0x5555u &&
-                    sx != 0x7FFFu && sy != 0x7FFFu && sx <= 4096u && sy <= 4096u &&
-                    (sx != 0u || sy != 0u)) {
+                uint16_t sx_raw = wram_read_u16(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(sq_slot * 2));
+                uint16_t sy_raw = wram_read_u16(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(sq_slot * 2));
+                int map_tiles_x = (int)wram_read_u16(wram, OB_WRAM_MAP_TILES_X);
+                int map_tiles_y = (int)wram_read_u16(wram, OB_WRAM_MAP_TILES_Y);
+                int max_world_x = (map_tiles_x > 0 && map_tiles_x != 0x5555) ? ((map_tiles_x << 3) - 1) : 2047;
+                int max_world_y = (map_tiles_y > 0 && map_tiles_y != 0x5555) ? ((map_tiles_y << 3) - 1) : 2047;
+                int sx = 0, sy = 0;
+                if (decode_entity_world_xy(wram, sx_raw, sy_raw, max_world_x, max_world_y, &sx, &sy)) {
                     int min_x = (int)wram_read_u16(wram, OB_WRAM_CAM_MIN_X);
                     int min_y = (int)wram_read_u16(wram, OB_WRAM_CAM_MIN_Y);
                     int max_x = (int)wram_read_u16(wram, OB_WRAM_CAM_MAX_X);
@@ -565,16 +783,16 @@ int ob_input_apply_wing_dock(ObMouseState *state, uint8_t *wram) {
                     if (max_x <= min_x) { min_x = 0; max_x = 1024; }
                     if (max_y <= min_y) { min_y = 0; max_y = 1024; }
 
-                    int cam_x = clamp_int((int)sx - 128, min_x, max_x);
-                    int cam_y = clamp_int((int)sy - 112, min_y, max_y);
+                    int cam_x = clamp_int(sx - 128, min_x, max_x);
+                    int cam_y = clamp_int(sy - 112, min_y, max_y);
                     wram_write_u16(wram, OB_WRAM_CAM_X, (uint16_t)cam_x);
                     wram_write_u16(wram, OB_WRAM_CAM_Y, (uint16_t)cam_y);
                     wram_write_u16(wram, OB_WRAM_CAM_WORLD_X, (uint16_t)cam_x);
                     wram_write_u16(wram, OB_WRAM_CAM_WORLD_Y, (uint16_t)cam_y);
-                    wram_write_u16(wram, OB_WRAM_CUR_WORLD_X, sx);
-                    wram_write_u16(wram, OB_WRAM_CUR_WORLD_Y, sy);
-                    wram_write_u16(wram, OB_WRAM_CUR_SCREEN_X, (uint16_t)((int)sx - cam_x));
-                    wram_write_u16(wram, OB_WRAM_CUR_SCREEN_Y, (uint16_t)((int)sy - cam_y));
+                    wram_write_u16(wram, OB_WRAM_CUR_WORLD_X, (uint16_t)sx);
+                    wram_write_u16(wram, OB_WRAM_CUR_WORLD_Y, (uint16_t)sy);
+                    wram_write_u16(wram, OB_WRAM_CUR_SCREEN_X, (uint16_t)(sx - cam_x));
+                    wram_write_u16(wram, OB_WRAM_CUR_SCREEN_Y, (uint16_t)(sy - cam_y));
                     state->snapped_type  = OB_SNAP_SQUAD;
                     state->snapped_index = sq_slot;
                 }

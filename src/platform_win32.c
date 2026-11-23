@@ -21,6 +21,7 @@
 #include <snesrecomp/cpu.h>
 #include <snesrecomp/func_table.h>
 #include "snes.h"
+#include "engine/input.h"
 
 /* LakeSnes controller bitmasks (LakeSnes currentState format: bit k maps to auto-read bit 15-k) */
 #define PAD_BTN_B       0x0001  /* Bit 0 -> Auto-read bit 15 (B) */
@@ -35,6 +36,40 @@
 #define PAD_BTN_X       0x0200  /* Bit 9 -> Auto-read bit 6  (X) */
 #define PAD_BTN_L       0x0400  /* Bit 10 -> Auto-read bit 5 (L) */
 #define PAD_BTN_R       0x0800  /* Bit 11 -> Auto-read bit 4 (R) */
+
+static uint16_t pad_to_ob_mask(uint16_t pad) {
+    uint16_t m = 0;
+    if (pad & PAD_BTN_B)      m |= OB_BTN_B;
+    if (pad & PAD_BTN_Y)      m |= OB_BTN_Y;
+    if (pad & PAD_BTN_SELECT) m |= OB_BTN_SELECT;
+    if (pad & PAD_BTN_START)  m |= OB_BTN_START;
+    if (pad & PAD_BTN_UP)     m |= OB_BTN_UP;
+    if (pad & PAD_BTN_DOWN)   m |= OB_BTN_DOWN;
+    if (pad & PAD_BTN_LEFT)   m |= OB_BTN_LEFT;
+    if (pad & PAD_BTN_RIGHT)  m |= OB_BTN_RIGHT;
+    if (pad & PAD_BTN_A)      m |= OB_BTN_A;
+    if (pad & PAD_BTN_X)      m |= OB_BTN_X;
+    if (pad & PAD_BTN_L)      m |= OB_BTN_L;
+    if (pad & PAD_BTN_R)      m |= OB_BTN_R;
+    return m;
+}
+
+static uint16_t ob_mask_to_pad(uint16_t m) {
+    uint16_t pad = 0;
+    if (m & OB_BTN_B)      pad |= PAD_BTN_B;
+    if (m & OB_BTN_Y)      pad |= PAD_BTN_Y;
+    if (m & OB_BTN_SELECT) pad |= PAD_BTN_SELECT;
+    if (m & OB_BTN_START)  pad |= PAD_BTN_START;
+    if (m & OB_BTN_UP)     pad |= PAD_BTN_UP;
+    if (m & OB_BTN_DOWN)   pad |= PAD_BTN_DOWN;
+    if (m & OB_BTN_LEFT)   pad |= PAD_BTN_LEFT;
+    if (m & OB_BTN_RIGHT)  pad |= PAD_BTN_RIGHT;
+    if (m & OB_BTN_A)      pad |= PAD_BTN_A;
+    if (m & OB_BTN_X)      pad |= PAD_BTN_X;
+    if (m & OB_BTN_L)      pad |= PAD_BTN_L;
+    if (m & OB_BTN_R)      pad |= PAD_BTN_R;
+    return pad;
+}
 
 /* Embedded ROM linkage */
 extern const uint8_t g_embedded_rom[];
@@ -76,18 +111,16 @@ static int16_t g_frameAudio[SAMPLES_PER_FRAME * 2];
 static uint8_t g_pixelBuf[512 * 480 * 4];
 static BITMAPINFO g_bmi;
 
-/* Windowing state */
+/* Windowing & Three-Pillar Mouse State */
 static HWND g_hwnd = NULL;
 static bool g_running = true;
 static uint16_t g_keyState = 0;
-static uint16_t g_mouseState = 0;
-static int g_mouseSnesX = 128;
-static int g_mouseSnesY = 112;
-static bool g_mouseInWindow = false;
-static bool g_mouseMoved = false;
-static DWORD g_lastKeyTick = 0;
-static int g_lastMouseX = -1;
-static int g_lastMouseY = -1;
+static ObMouseState g_mouse;
+static int g_winMouseX = 512;
+static int g_winMouseY = 448;
+static bool g_leftDown = false;
+static bool g_rightDown = false;
+static bool g_middleDown = false;
 static char g_srmPath[MAX_PATH] = "ogre_battle.srm";
 static int g_last_client_w = 0;
 static int g_last_client_h = 0;
@@ -148,7 +181,6 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
              * Shoulders:    L='D', R='C'
              * Controls:     Start=Enter, Select=Space or Shift
              */
-            g_lastKeyTick = GetTickCount();
             switch (wParam) {
                 case VK_UP:    case VK_NUMPAD8: g_keyState |= PAD_BTN_UP; break;
                 case VK_DOWN:  case VK_NUMPAD2: g_keyState |= PAD_BTN_DOWN; break;
@@ -184,49 +216,16 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
             return 0;
         }
         case WM_MOUSEMOVE: {
-            int mx = (short)LOWORD(lParam);
-            int my = (short)HIWORD(lParam);
-            RECT cr;
-            GetClientRect(hwnd, &cr);
-            int client_w = cr.right - cr.left;
-            int client_h = cr.bottom - cr.top;
-            if (client_w > 0 && client_h > 0) {
-                int draw_w = client_w;
-                int draw_h = (draw_w * 3) / 4;
-                if (draw_h > client_h) {
-                    draw_h = client_h;
-                    draw_w = (draw_h * 4) / 3;
-                }
-                int draw_x = (client_w - draw_w) / 2;
-                int draw_y = (client_h - draw_h) / 2;
-                if (mx >= draw_x && mx < draw_x + draw_w &&
-                    my >= draw_y && my < draw_y + draw_h) {
-                    g_mouseSnesX = ((mx - draw_x) * 256) / draw_w;
-                    g_mouseSnesY = ((my - draw_y) * 224) / draw_h;
-                    if (g_mouseSnesX < 0) g_mouseSnesX = 0;
-                    if (g_mouseSnesX > 255) g_mouseSnesX = 255;
-                    if (g_mouseSnesY < 0) g_mouseSnesY = 0;
-                    if (g_mouseSnesY > 223) g_mouseSnesY = 223;
-                    g_mouseInWindow = true;
-
-                    int dx = abs(mx - g_lastMouseX);
-                    int dy = abs(my - g_lastMouseY);
-                    if (dx > 2 || dy > 2) {
-                        g_lastKeyTick = 0; /* Clear keyboard priority lock */
-                        g_lastMouseX = mx;
-                        g_lastMouseY = my;
-                        g_mouseMoved = true;
-                    }
-                } else {
-                    g_mouseInWindow = false;
-                }
-            }
+            g_winMouseX = (short)LOWORD(lParam);
+            g_winMouseY = (short)HIWORD(lParam);
             return 0;
         }
-        case WM_LBUTTONDOWN: g_mouseState |= PAD_BTN_A; return 0;
-        case WM_LBUTTONUP:   g_mouseState &= ~PAD_BTN_A; return 0;
-        case WM_RBUTTONDOWN: g_mouseState |= PAD_BTN_B; return 0;
-        case WM_RBUTTONUP:   g_mouseState &= ~PAD_BTN_B; return 0;
+        case WM_LBUTTONDOWN: g_leftDown = true; return 0;
+        case WM_LBUTTONUP:   g_leftDown = false; return 0;
+        case WM_RBUTTONDOWN: g_rightDown = true; return 0;
+        case WM_RBUTTONUP:   g_rightDown = false; return 0;
+        case WM_MBUTTONDOWN: g_middleDown = true; return 0;
+        case WM_MBUTTONUP:   g_middleDown = false; return 0;
         case WM_ERASEBKGND:
             return 1; /* Suppress background flicker */
         case WM_SIZE:
@@ -278,7 +277,7 @@ static void save_srm(void) {
 
 /* WinMain Entry Point */
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-    (void)hPrevInstance; (void)lpCmdLine;
+    (void)hPrevInstance; (void)lpCmdLine; (void)nCmdShow;
 
     /* High precision timer */
     timeBeginPeriod(1);
@@ -377,6 +376,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     recomp_timed_add_intercept(0x058299, false); /* Bank 05 character creation personality table setup */
     recomp_timed_recomp_enable();
 
+    /* Initialize Gate 2 Three-Pillar Mouse State Machine (Rev 9+) */
+    ob_input_init(&g_mouse, OB_VIEWPORT_WIDTH_4_3, OB_VIEWPORT_HEIGHT);
+
     /* Timing initialization */
     LARGE_INTEGER qpcFreq, qpcLast, qpcNow;
     QueryPerformanceFrequency(&qpcFreq);
@@ -398,44 +400,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         }
         if (!g_running) break;
 
-        /* Direct-State Mouse Navigation & Hybrid Input Layer (Gate 2) */
-        uint16_t auto_mouse_nav = 0;
-        bool keyboard_active = (g_keyState != 0) || ((GetTickCount() - g_lastKeyTick) < 300);
+        /* Gate 2 (Rev 9+): Three-Pillar Direct-State & Hit-Box Mouse Architecture */
+        RECT cr;
+        GetClientRect(g_hwnd, &cr);
+        int client_w = (cr.right - cr.left) > 0 ? (cr.right - cr.left) : 1024;
+        int client_h = (cr.bottom - cr.top) > 0 ? (cr.bottom - cr.top) : 896;
 
-        if (!keyboard_active && g_mouseMoved && g_mouseInWindow && g_snes) {
-            /* Tactical map sword cursor tracking (search active sword sprite tile 0xCE/0xCC in OAM mirror) */
-            int cur_x = -1, cur_y = -1;
-            for (int i = 0; i < 16; i++) {
-                uint8_t t = g_snes->ram[0x0100 + i * 4 + 2];
-                uint8_t y = g_snes->ram[0x0100 + i * 4 + 1];
-                if ((t == 0xCE || t == 0xCC) && y < 224) {
-                    cur_x = g_snes->ram[0x0100 + i * 4 + 0];
-                    cur_y = y;
-                    break;
-                }
-            }
+        ob_input_on_mouse_move(&g_mouse, g_winMouseX, g_winMouseY, client_w, client_h, frame_count);
+        ob_input_on_mouse_button(&g_mouse, g_leftDown, g_rightDown, g_middleDown, frame_count);
 
-            if (cur_x >= 0) {
-                int target_x = g_mouseSnesX;
-                int target_y = g_mouseSnesY;
-                if (target_x < 8) target_x = 8;
-                if (target_x > 232) target_x = 232;
-                if (target_y < 8) target_y = 8;
-                if (target_y > 200) target_y = 200;
-
-                /* Half-tile deadband (8px) for clean 16px tactical grid tile snapping */
-                if (target_x > cur_x + 8) auto_mouse_nav |= PAD_BTN_RIGHT;
-                else if (target_x < cur_x - 8) auto_mouse_nav |= PAD_BTN_LEFT;
-
-                if (target_y > cur_y + 8) auto_mouse_nav |= PAD_BTN_DOWN;
-                else if (target_y < cur_y - 8) auto_mouse_nav |= PAD_BTN_UP;
-
-                if (!auto_mouse_nav) g_mouseMoved = false; /* Reached cursor destination */
-            }
-        }
-
-        /* Combine Keyboard, Direct Mouse Clicks, and Auto-Mouse Navigation */
-        g_snes->input1->currentState = g_keyState | g_mouseState | auto_mouse_nav;
+        uint16_t ob_joy = pad_to_ob_mask(g_keyState);
+        ob_joy = ob_input_step_frame(
+            &g_mouse,
+            g_snes->ram,
+            (const uint8_t *)g_snes->ppu->oam,
+            ob_joy,
+            frame_count
+        );
+        g_snes->input1->currentState = ob_mask_to_pad(ob_joy);
 
         /* Run 1 Lockstep Emulation Frame */
         snes_runFrame(g_snes);
