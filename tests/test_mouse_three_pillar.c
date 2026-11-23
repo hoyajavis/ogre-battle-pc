@@ -311,6 +311,138 @@ static void test_gate_2e_uninit_wram_and_live_maps(void) {
     free(wram);
 }
 
+/* =========================================================================
+ * Gate 2F: Live Bank $00 12.4 Subpixels, $14ED/$1517 Projection & Bank $02 Menus
+ * (Regression test for GitHub Issue #7)
+ * ========================================================================= */
+static void test_gate_2f_live_subpixels_and_bank02_menus(void) {
+    uint8_t *wram = (uint8_t *)malloc(OB_WRAM_SIZE);
+    uint8_t  ppu_oam[OB_PPU_OAM_SIZE];
+    assert(wram != NULL);
+    memset(wram, 0x55, OB_WRAM_SIZE);
+    memset(ppu_oam, 0xE0, sizeof(ppu_oam));
+
+    ObMouseState mouse;
+    ob_input_init(&mouse, OB_VIEWPORT_WIDTH_16_9, OB_VIEWPORT_HEIGHT);
+    ob_input_set_wings_enabled(&mouse, true);
+
+    /* 1. Configure live Tutorial Stage 1 (Felnamia) tactical state at Frame 9525:
+     *    - $00CB = 0x01, $00CC = 0x10, $00CE = 0x00, $07BA = 0x4F, $14E6 = 0x00
+     *    - Camera ($00BD = 116, $00BF = 339), Map tiles ($14D3 = 48, $14D5 = 48 -> 383x383 px)
+     *    - Squad 0 in 12.4 subpixels: $18AF = 3904 (244 px), $18D9 = 5760 (360 px)
+     *    - Mode-7 projected screen coords ($00:B7C0): $14ED = 121, $1517 = 101
+     *    - City 0 in 12.4 subpixels: $1A95 = 3712 (232 px), $1B0D = 5632 (352 px) */
+    wram[0x00CBu]                  = 0x01u;
+    wram[0x00CCu]                  = 0x10u;
+    wram[OB_WRAM_CAM_STATE]        = 0x00u;
+    wram[0x07BAu]                  = 0x4Fu;
+    wram[OB_WRAM_CUR_SPRITE_FLAGS] = 0x00u;
+    wram[OB_WRAM_MENU_SLOT_COUNT]  = 0x00u;
+    wram[OB_WRAM_OAM1_Y]           = 112u;
+    wram[OB_WRAM_OAM1_TILE]        = 0x64u;
+    write_u16(wram, OB_WRAM_CAM_X, 116u);
+    write_u16(wram, OB_WRAM_CAM_Y, 339u);
+    write_u16(wram, OB_WRAM_MAP_TILES_X, 48u);
+    write_u16(wram, OB_WRAM_MAP_TILES_Y, 48u);
+
+    for (int i = 0; i < OB_MAX_DEPLOYED_SQUADS; ++i) {
+        write_u16(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(i * 2), 0x7FFFu);
+        write_u16(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(i * 2), 0x7FFFu);
+        write_u16(wram, OB_WRAM_SQUAD_SCREEN_X_BASE + (uint32_t)(i * 2), 0xFE89u);
+        write_u16(wram, OB_WRAM_SQUAD_SCREEN_Y_BASE + (uint32_t)(i * 2), 0xFF2Bu);
+    }
+    for (int j = 0; j < OB_MAX_STAGE_CITIES; ++j) {
+        write_u16(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2), 0x7FFFu);
+        write_u16(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2), 0x7FFFu);
+    }
+
+    write_u16(wram, OB_WRAM_SQUAD_X_BASE + 0u, 3904u); /* 244 << 4 */
+    write_u16(wram, OB_WRAM_SQUAD_Y_BASE + 0u, 5760u); /* 360 << 4 */
+    write_u16(wram, OB_WRAM_SQUAD_SCREEN_X_BASE + 0u, 121u);
+    write_u16(wram, OB_WRAM_SQUAD_SCREEN_Y_BASE + 0u, 101u);
+
+    write_u16(wram, OB_WRAM_CITY_X_BASE + 0u, 3712u);  /* 232 << 4 */
+    write_u16(wram, OB_WRAM_CITY_Y_BASE + 0u, 5632u);  /* 352 << 4 */
+
+    /* Hover near Squad 0's projected screen center (121+7=128, 101+11=112 -> snes_x = 72+125=197, y = 110) */
+    ob_input_on_mouse_move(&mouse, 197, 110, 400, 224, 20u);
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 20u);
+    assert(mouse.active_mode == OB_MOUSE_MODE_TACTICAL_MAP);
+    assert(mouse.snapped_type == OB_SNAP_SQUAD);
+    assert(mouse.snapped_index == 0);
+    assert(read_u16(wram, OB_WRAM_CUR_WORLD_X) == 244u);
+    assert(read_u16(wram, OB_WRAM_CUR_WORLD_Y) == 360u);
+    assert(read_u16(wram, OB_WRAM_CUR_SCREEN_X) == 128u);
+    assert(read_u16(wram, OB_WRAM_CUR_SCREEN_Y) == 112u);
+
+    /* Left Wing click on Squad 0 with 12.4 subpixel coordinates must center camera on (244, 360) */
+    ob_input_on_mouse_move(&mouse, 30, 25, 400, 224, 21u);
+    ob_input_on_mouse_button(&mouse, true, false, false, 21u);
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 21u);
+    assert(mouse.active_mode == OB_MOUSE_MODE_LEFT_WING);
+    assert(read_u16(wram, OB_WRAM_CAM_X) == 244u - 128u);
+    assert(read_u16(wram, OB_WRAM_CAM_Y) == 360u - 112u);
+    assert(read_u16(wram, OB_WRAM_CUR_WORLD_X) == 244u);
+    assert(read_u16(wram, OB_WRAM_CUR_WORLD_Y) == 360u);
+    ob_input_on_mouse_button(&mouse, false, false, false, 22u);
+
+    /* 2. Live Bank $02 Squad Command Strip & 3x2 Formation Grid ($02:EC90-$02:F190, Frame 9613):
+     *    - $14E6 = 0x80 (battlefield cursor hidden while menu open)
+     *    - OAM[1] uses live tile 0x6A at Y=119 (or 0x68 in formation grid)
+     *    - $0424 = 9 active slots:
+     *        Slots 0..4: Formation grid units ($04B2 = 0xFF)
+     *        Slots 5..7: 3-icon command strip at X = {103, 119, 135}, Y = 109 ($04B2 = {0, 2, 5})
+     *        Slot 8:     Squad header at X = 88, Y = 38 ($04B2 = 0x80) */
+    wram[OB_WRAM_CUR_SPRITE_FLAGS] = 0x80u;
+    wram[0x04E0u]                  = 0x01u;
+    wram[OB_WRAM_MENU_SLOT_COUNT]  = 9u;
+    wram[OB_WRAM_ICON_BAR_INDEX]   = 5u;
+    wram[OB_WRAM_OAM1_X]           = 107u;
+    wram[OB_WRAM_OAM1_Y]           = 119u;
+    wram[OB_WRAM_OAM1_TILE]        = OB_TILE_LIVE_ICON_BAR_FINGER; /* 0x6A */
+
+    const uint8_t slot_x[9] = { 128, 96, 96, 96, 128, 103, 119, 135, 88 };
+    const uint8_t slot_y[9] = {  76, 52, 68, 84,  60, 109, 109, 109, 38 };
+    const uint8_t slot_t[9] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x02, 0x05, 0x80 };
+    for (int i = 0; i < 9; ++i) {
+        wram[OB_WRAM_MENU_SLOT_X_BASE + i]    = slot_x[i];
+        wram[OB_WRAM_MENU_SLOT_Y_BASE + i]    = slot_y[i];
+        wram[OB_WRAM_MENU_SLOT_TYPE_BASE + i] = slot_t[i];
+    }
+
+    /* Hover over Command Icon slot 7 (core_x = 138 -> snes_x = 72 + 138 = 210, snes_y = 118) */
+    ob_input_on_mouse_move(&mouse, 210, 118, 400, 224, 25u);
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 25u);
+    assert(mouse.active_mode == OB_MOUSE_MODE_ICON_BAR);
+    assert(wram[OB_WRAM_ICON_BAR_INDEX] == 7u);
+    assert(wram[OB_WRAM_ICON_BAR_X] == 135u);
+    assert(wram[OB_WRAM_ICON_BAR_Y] == 109u);
+    assert(wram[OB_WRAM_OAM1_X] == 139u);
+    assert(wram[OB_WRAM_OAM1_Y] == 119u);
+    assert(wram[OB_WRAM_OAM1_TILE] == OB_TILE_LIVE_ICON_BAR_FINGER);
+
+    /* Hover directly up into Formation Grid slot 1 (core_x = 98 -> snes_x = 72 + 98 = 170, snes_y = 52) */
+    ob_input_on_mouse_move(&mouse, 170, 52, 400, 224, 26u);
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 26u);
+    assert(wram[OB_WRAM_ICON_BAR_INDEX] == 1u);
+    assert(wram[OB_WRAM_FORMATION_INDEX] == 1u);
+    assert(wram[OB_WRAM_OAM1_X] == 86u);
+    assert(wram[OB_WRAM_OAM1_Y] == 52u);
+    assert(wram[OB_WRAM_OAM1_TILE] == OB_TILE_LIVE_FORMATION_FINGER); /* Switched to 0x68 */
+
+    /* Next frame in formation grid detects OB_MOUSE_MODE_FORMATION_GRID and allows hovering back to icon bar */
+    ob_input_on_mouse_move(&mouse, 195, 118, 400, 224, 27u); /* core_x = 123 -> slot 6 (X=119) */
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 27u);
+    assert(mouse.active_mode == OB_MOUSE_MODE_FORMATION_GRID);
+    assert(wram[OB_WRAM_ICON_BAR_INDEX] == 6u);
+    assert(wram[OB_WRAM_OAM1_X] == 123u);
+    assert(wram[OB_WRAM_OAM1_Y] == 119u);
+    assert(wram[OB_WRAM_OAM1_TILE] == OB_TILE_LIVE_ICON_BAR_FINGER);
+
+    printf("[PASS] Gate 2F: Live Bank $00 12.4 Subpixels, $14ED/$1517 Projection & Bank $02 Menu Slots\n");
+    free(wram);
+}
+
 int main(void) {
     printf("====================================================================\n");
     printf(" Ogre Battle PC: Gate 2 Three-Pillar Mouse Architecture Verification\n");
@@ -321,6 +453,7 @@ int main(void) {
     test_gate_2c_pillar2_menu_hitboxes();
     test_gate_2d_pillar3_world_map_and_hybrid();
     test_gate_2e_uninit_wram_and_live_maps();
+    test_gate_2f_live_subpixels_and_bank02_menus();
 
     printf("====================================================================\n");
     printf(" ALL GATE 2 THREE-PILLAR MOUSE ARCHITECTURE TESTS PASSED (100%%)\n");

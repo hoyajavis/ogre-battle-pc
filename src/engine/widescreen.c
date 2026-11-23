@@ -192,12 +192,13 @@ void ob_widescreen_extract_telemetry(
     t->clock_minute = (raw_min != 0x55u) ? (raw_min % 60u) : 0u;
     t->is_daytime   = (t->clock_hour >= 6u && t->clock_hour < 18u);
 
-    /* 2. Deployed Squads ($7E:18AF / $7E:18D9) */
+    /* 2. Deployed Squads ($7E:18AF / $7E:18D9)
+     *    Note: Live Bank $00 stores 12.4 subpixels (up to 64*8*16 = 8192); 0x5555/0x7FFF/0xFFFF are inactive sentinels */
     for (int i = 0; i < OB_MAX_DEPLOYED_SQUADS; ++i) {
         uint16_t sx = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(i * 2));
         uint16_t sy = read_u16_le(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(i * 2));
         if (sx != 0xFFFFu && sy != 0xFFFFu && sx != 0x5555u && sy != 0x5555u &&
-            sx != 0x7FFFu && sy != 0x7FFFu && sx <= 4096u && sy <= 4096u && (sx != 0u || sy != 0u)) {
+            sx != 0x7FFFu && sy != 0x7FFFu && sx < 0x4000u && sy < 0x4000u && (sx != 0u || sy != 0u)) {
             if (i < 10) {
                 t->deployed_player_count++;
             } else {
@@ -212,7 +213,7 @@ void ob_widescreen_extract_telemetry(
         uint16_t cx = read_u16_le(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2));
         uint16_t cy = read_u16_le(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2));
         if (cx == 0xFFFFu || cy == 0xFFFFu || cx == 0x5555u || cy == 0x5555u ||
-            cx == 0x7FFFu || cy == 0x7FFFu || cx > 4096u || cy > 4096u || (cx == 0u && cy == 0u)) {
+            cx == 0x7FFFu || cy == 0x7FFFu || cx >= 0x4000u || cy >= 0x4000u || (cx == 0u && cy == 0u)) {
             continue;
         }
         t->total_cities++;
@@ -237,26 +238,33 @@ void ob_widescreen_extract_telemetry(
     int best_threat_dist = max_threat_dist + 1;
     int best_threat_e = -1;
     int best_threat_j = -1;
+    bool live_subpixel = (wram[0x00CBu] == 0x01u);
 
     for (int e = 10; e < OB_MAX_DEPLOYED_SQUADS; ++e) {
-        uint16_t ex = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(e * 2));
-        uint16_t ey = read_u16_le(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(e * 2));
-        if (ex == 0xFFFFu || ey == 0xFFFFu || ex == 0x5555u || ey == 0x5555u ||
-            ex == 0x7FFFu || ey == 0x7FFFu || ex > 4096u || ey > 4096u || (ex == 0u && ey == 0u)) {
+        uint16_t ex_raw = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE + (uint32_t)(e * 2));
+        uint16_t ey_raw = read_u16_le(wram, OB_WRAM_SQUAD_Y_BASE + (uint32_t)(e * 2));
+        if (ex_raw == 0xFFFFu || ey_raw == 0xFFFFu || ex_raw == 0x5555u || ey_raw == 0x5555u ||
+            ex_raw == 0x7FFFu || ey_raw == 0x7FFFu || ex_raw >= 0x4000u || ey_raw >= 0x4000u ||
+            (ex_raw == 0u && ey_raw == 0u)) {
             continue;
         }
+        int ex = (live_subpixel && (ex_raw > 1024u || ey_raw > 1024u)) ? (int)(ex_raw >> 4u) : (int)ex_raw;
+        int ey = (live_subpixel && (ex_raw > 1024u || ey_raw > 1024u)) ? (int)(ey_raw >> 4u) : (int)ey_raw;
         for (int j = 0; j < OB_MAX_STAGE_CITIES; ++j) {
             uint8_t mask = wram[0x1C4Du + (uint32_t)j];
             if (mask == 0x55u || (mask & 0x01u) == 0u) {
                 continue;
             }
-            uint16_t cx = read_u16_le(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2));
-            uint16_t cy = read_u16_le(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2));
-            if (cx == 0xFFFFu || cy == 0xFFFFu || cx == 0x5555u || cy == 0x5555u ||
-                cx == 0x7FFFu || cy == 0x7FFFu || cx > 4096u || cy > 4096u || (cx == 0u && cy == 0u)) {
+            uint16_t cx_raw = read_u16_le(wram, OB_WRAM_CITY_X_BASE + (uint32_t)(j * 2));
+            uint16_t cy_raw = read_u16_le(wram, OB_WRAM_CITY_Y_BASE + (uint32_t)(j * 2));
+            if (cx_raw == 0xFFFFu || cy_raw == 0xFFFFu || cx_raw == 0x5555u || cy_raw == 0x5555u ||
+                cx_raw == 0x7FFFu || cy_raw == 0x7FFFu || cx_raw >= 0x4000u || cy_raw >= 0x4000u ||
+                (cx_raw == 0u && cy_raw == 0u)) {
                 continue;
             }
-            int dist = abs((int)ex - (int)cx) + abs((int)ey - (int)cy);
+            int cx = (live_subpixel && (cx_raw > 1024u || cy_raw > 1024u)) ? (int)(cx_raw >> 4u) : (int)cx_raw;
+            int cy = (live_subpixel && (cx_raw > 1024u || cy_raw > 1024u)) ? (int)(cy_raw >> 4u) : (int)cy_raw;
+            int dist = abs(ex - cx) + abs(ey - cy);
             if (dist < best_threat_dist) {
                 best_threat_dist = dist;
                 best_threat_e = e;

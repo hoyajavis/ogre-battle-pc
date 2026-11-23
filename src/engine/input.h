@@ -79,28 +79,45 @@ extern "C" {
 #define OB_WRAM_CUR_SPRITE_FLAGS   0x14E6u /* 8-bit cursor active & animation flags */
 #define OB_WRAM_CUR_EDGE_MASK      0x14E7u /* 16-bit edge-scroll trigger mask (bit0=X, bit1=Y) */
 
-/* Deployed Squads & Cities Coordinate Tables (for +-8px Magnetic Snap) */
-#define OB_WRAM_SQUAD_X_BASE       0x18AFu /* 21 x uint16_t deployed squad world X */
-#define OB_WRAM_SQUAD_Y_BASE       0x18D9u /* 21 x uint16_t deployed squad world Y */
+/* Deployed Squads & Cities Coordinate Tables (for +-8px Magnetic Snap)
+ * Note: In live Bank $00 ($00:B7E8-$00:B7F4, $00:BA3D-$00:BB05), $18AF/$18D9 and
+ * $1A95/$1B0D store 12.4 fixed-point subpixels (world_px = raw >> 4), while
+ * $14ED/$1517 store projected 16-bit screen coordinates for deployed squads.
+ * Synthetic unit tests may also store 1:1 world pixel values (< 2048). */
+#define OB_WRAM_SQUAD_SCREEN_X_BASE 0x14EDu /* 21 x int16_t deployed squad screen X ($00:B810) */
+#define OB_WRAM_SQUAD_SCREEN_Y_BASE 0x1517u /* 21 x int16_t deployed squad screen Y ($00:B821) */
+#define OB_WRAM_SQUAD_X_BASE       0x18AFu /* 21 x uint16_t deployed squad world X (12.4 subpixel or 1:1 test) */
+#define OB_WRAM_SQUAD_Y_BASE       0x18D9u /* 21 x uint16_t deployed squad world Y (12.4 subpixel or 1:1 test) */
 #define OB_MAX_DEPLOYED_SQUADS     21
 
-#define OB_WRAM_CITY_X_BASE        0x1A95u /* 20 x uint16_t stage city/temple world X */
-#define OB_WRAM_CITY_Y_BASE        0x1B0Du /* 20 x uint16_t stage city/temple world Y */
+#define OB_WRAM_CITY_X_BASE        0x1A95u /* 20 x uint16_t stage city/temple world X (12.4 subpixel or 1:1 test) */
+#define OB_WRAM_CITY_Y_BASE        0x1B0Du /* 20 x uint16_t stage city/temple world Y (12.4 subpixel or 1:1 test) */
 #define OB_MAX_STAGE_CITIES        20
 
-/* OAM Shadow & Menu Slot Registers */
+/* OAM Shadow & Menu Slot Registers ($02:EC90 - $02:F190) */
 #define OB_WRAM_OAM_SHADOW         0x0100u /* Low OAM shadow ($0100..$013F) */
 #define OB_WRAM_OAM1_X             0x0104u /* OAM[1] X coordinate */
 #define OB_WRAM_OAM1_Y             0x0105u /* OAM[1] Y coordinate */
-#define OB_WRAM_OAM1_TILE          0x0106u /* OAM[1] tile ID (0xCE=icon bar, 0xCC=grid) */
+#define OB_WRAM_OAM1_TILE          0x0106u /* OAM[1] tile ID (0x6A/0xCE=icon bar, 0x68/0xCC=grid) */
 #define OB_WRAM_OAM1_ATTR          0x0107u /* OAM[1] attribute byte */
 
-#define OB_TILE_FORMATION_FINGER   0xCCu
-#define OB_TILE_ICON_BAR_FINGER    0xCEu
-#define OB_OAM_OFFSCREEN_Y         0xE0u   /* 224 = off-screen Y sentinel */
+#define OB_TILE_FORMATION_FINGER      0xCCu /* Camp / World Map ($04E0 == 3) formation finger */
+#define OB_TILE_ICON_BAR_FINGER       0xCEu /* Camp / World Map ($04E0 == 3) icon bar finger */
+#define OB_TILE_LIVE_FORMATION_FINGER 0x68u /* Battle Map ($04E0 != 3) formation finger ($02:ED25) */
+#define OB_TILE_LIVE_ICON_BAR_FINGER  0x6Au /* Battle Map ($04E0 != 3) icon bar finger ($02:ECDE) */
+#define OB_OAM_OFFSCREEN_Y            0xE0u /* 224 = off-screen Y sentinel */
 
-#define OB_WRAM_ICON_BAR_INDEX     0x0474u /* 8-bit 7-icon command strip index (0..6) */
-#define OB_WRAM_ICON_BAR_X         0x0476u /* 16-bit 7-icon command strip X (71 + 16*i) */
+#define OB_WRAM_MENU_SLOT_COUNT    0x0424u /* 8-bit active slot count in Bank $02 menu table ($02:800C) */
+#define OB_WRAM_MENU_SLOT_X_BASE   0x0426u /* 30 x uint8_t slot X table ($02:ECB7 / $02:ED0B) */
+#define OB_WRAM_MENU_SLOT_Y_BASE   0x0446u /* 30 x uint8_t slot Y table ($02:ECC1 / $02:ED14) */
+#define OB_WRAM_MENU_SLOT_TYPE_BASE 0x04B2u /* 30 x uint8_t slot type (<0x80=icon, 0x80=header, 0xFF=grid) */
+#define OB_WRAM_MENU_SAVED_ICON    0x04F0u /* 8-bit last selected icon slot ($02:ECB3) */
+#define OB_WRAM_MENU_SAVED_GRID    0x04F1u /* 8-bit last selected formation grid slot ($02:ED05) */
+#define OB_MAX_MENU_SLOTS          30
+
+#define OB_WRAM_ICON_BAR_INDEX     0x0474u /* 8-bit active menu/command strip slot index */
+#define OB_WRAM_ICON_BAR_X         0x0476u /* 8-bit slot X ($0476) + 8-bit slot Y ($0477) or 16-bit synthetic X */
+#define OB_WRAM_ICON_BAR_Y         0x0477u /* 8-bit slot Y ($02:ECC4) */
 #define OB_WRAM_FORMATION_INDEX    0x0478u /* 8-bit 3x2 formation grid slot index (0..5) */
 #define OB_WRAM_WORLD_NODE_INDEX   0x047Au /* 8-bit Continental World Map stage node index */
 
@@ -108,10 +125,13 @@ extern "C" {
 #define OB_ICON_BAR_COUNT          7
 #define OB_ICON_BAR_X0             71
 #define OB_ICON_BAR_STRIDE         16
-#define OB_ICON_BAR_FINGER_OFFSET  4       /* Finger OAM[1].x = 75 + 16*slot */
+#define OB_ICON_BAR_FINGER_OFFSET  4       /* Finger OAM[1].x = slot_x + 4 */
+#define OB_ICON_BAR_FINGER_Y_OFF   10      /* Finger OAM[1].y = slot_y + 10 ($02:ECC8) */
+#define OB_GRID_FINGER_X_OFF       10      /* Finger OAM[1].x = slot_x - 10 ($02:ED11) */
 #define OB_ICON_BAR_Y_MIN          107
 #define OB_ICON_BAR_Y_MAX          131
 #define OB_ICON_BAR_FINGER_Y       119
+#define OB_ICON_BAR_POPUP_FINGER_Y 122
 
 #define OB_FORMATION_COLS          2
 #define OB_FORMATION_ROWS          3
