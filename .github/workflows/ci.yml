@@ -158,10 +158,14 @@ jobs:
 
   publish-release:
     name: Publish GitHub Release
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     needs: build-and-package
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository (Rolling Preview Tag Sync)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/checkout@v4
+
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
         with:
@@ -173,9 +177,29 @@ jobs:
           find release-artifacts -type f \( -name "*.tar.gz" -o -name "*.zip" \) -exec cp {} release-files/ \;
           ls -lh release-files/
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release (Tagged)
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: release-files/*
           prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-beta') || contains(github.ref, '-alpha') }}
           generate_release_notes: true
+
+      - name: Sync Rolling Preview Tag
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git tag -f preview "${{ github.sha }}"
+          git push -f origin refs/tags/preview
+
+      - name: Update Rolling Preview Release (main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: preview
+          name: Latest Preview (main)
+          body: |
+            Automated rolling pre-release built from `main` (${{ github.sha }}).
+            Includes the latest merged bugfixes ahead of the next tagged release.
+          files: release-files/*
+          prerelease: true
+          make_latest: false
