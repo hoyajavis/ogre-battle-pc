@@ -85,10 +85,14 @@ ObSceneId ob_widescreen_detect_scene(const uint8_t *wram, const uint8_t *ppu_oam
 
     /* 2. Continental World Map & World Map Command/Save Menus:
      *    - Live 65816 state: $00CB == 0x03 ($00CC >= 0x0B), $00CB == 0x05 (Data Menu), $00CB == 0x06 (Save Menu),
-     *      $00CB == 0x02 (World Map Command Bar), or ($00CB == 0x00 && $00CC == 0x10) with no deployed Squad 0 */
+     *      $00CB == 0x02 (World Map Command Bar), ($00CB == 0x00 && $00CC == 0x10), or live World Map sword cursor
+     *      in OAM[0] (tile 0x6E, Y < 224) while $00CB == 0x01 with no deployed Squad 0 */
     uint16_t sq0_x = read_u16_le(wram, OB_WRAM_SQUAD_X_BASE);
-    if ((cb == 0x03u || cb == 0x05u || cb == 0x06u || cb == 0x02u || (cb == 0x00u && cc == 0x10u)) &&
-        (sq0_x == 0x5555u || sq0_x == 0xFFFFu || sq0_x == 0x7FFFu || sq0_x == 0u)) {
+    bool no_deployed_sq0 = (sq0_x == 0x5555u || sq0_x == 0xFFFFu || sq0_x == 0x7FFFu || sq0_x == 0u);
+    bool world_map_sword = (wram[OB_WRAM_OAM0_Y] < OB_OAM_OFFSCREEN_Y &&
+                            wram[OB_WRAM_OAM0_TILE] == OB_TILE_WORLD_MAP_SWORD);
+    if ((cb == 0x03u || cb == 0x05u || cb == 0x06u || cb == 0x02u || (cb == 0x00u && cc == 0x10u) || world_map_sword) &&
+        no_deployed_sq0) {
         return OB_SCENE_WORLD_MAP;
     }
 

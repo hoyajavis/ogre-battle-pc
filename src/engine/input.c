@@ -9,6 +9,10 @@ static inline uint16_t wram_read_u16(const uint8_t *wram, uint32_t addr) {
     return (uint16_t)((uint16_t)wram[addr] | ((uint16_t)wram[addr + 1u] << 8u));
 }
 
+static inline int16_t wram_read_i16(const uint8_t *wram, uint32_t addr) {
+    return (int16_t)wram_read_u16(wram, addr);
+}
+
 static inline void wram_write_u16(uint8_t *wram, uint32_t addr, uint16_t val) {
     wram[addr]      = (uint8_t)(val & 0xFFu);
     wram[addr + 1u] = (uint8_t)((val >> 8u) & 0xFFu);
@@ -25,18 +29,20 @@ void ob_input_init(ObMouseState *state, int viewport_width, int viewport_height)
         return;
     }
     memset(state, 0, sizeof(*state));
-    state->viewport_w   = (viewport_width > 0) ? viewport_width : OB_VIEWPORT_WIDTH_4_3;
-    state->viewport_h   = (viewport_height > 0) ? viewport_height : OB_VIEWPORT_HEIGHT;
-    state->snes_x       = state->viewport_w / 2;
-    state->snes_y       = state->viewport_h / 2;
-    state->prev_snes_x  = state->snes_x;
-    state->prev_snes_y  = state->snes_y;
-    state->mouse_active = false;
-    state->has_prev_pos = true;
-    state->active_mode  = OB_MOUSE_MODE_PASSIVE;
-    state->snapped_type = OB_SNAP_NONE;
-    state->snapped_index = -1;
-    state->hovered_slot  = -1;
+    state->viewport_w       = (viewport_width > 0) ? viewport_width : OB_VIEWPORT_WIDTH_4_3;
+    state->viewport_h       = (viewport_height > 0) ? viewport_height : OB_VIEWPORT_HEIGHT;
+    state->edge_pan_enabled = true;
+    state->edge_pan_speed   = OB_EDGE_SCROLL_SPEED;
+    state->snes_x           = state->viewport_w / 2;
+    state->snes_y           = state->viewport_h / 2;
+    state->prev_snes_x      = state->snes_x;
+    state->prev_snes_y      = state->snes_y;
+    state->mouse_active     = false;
+    state->has_prev_pos     = true;
+    state->active_mode      = OB_MOUSE_MODE_PASSIVE;
+    state->snapped_type     = OB_SNAP_NONE;
+    state->snapped_index    = -1;
+    state->hovered_slot     = -1;
 }
 
 bool ob_input_map_window_to_snes(
@@ -98,6 +104,8 @@ void ob_input_on_keyboard_activity(ObMouseState *state, uint32_t current_frame) 
     state->mouse_active        = false;
     state->drag_active         = false;
     state->drag_moved          = false;
+    state->left_pulse_frames   = 0u;
+    state->right_pulse_frames  = 0u;
     state->last_keyboard_frame = current_frame;
     state->active_mode         = OB_MOUSE_MODE_PASSIVE;
 }
@@ -194,6 +202,14 @@ void ob_input_set_wings_enabled(ObMouseState *state, bool wings_enabled) {
         return;
     }
     state->wings_enabled = wings_enabled;
+}
+
+void ob_input_set_edge_pan(ObMouseState *state, bool enabled, int speed) {
+    if (state == NULL) {
+        return;
+    }
+    state->edge_pan_enabled = enabled;
+    state->edge_pan_speed   = (speed > 0) ? clamp_int(speed, 1, 16) : OB_EDGE_SCROLL_SPEED;
 }
 
 static inline int get_core_x(const ObMouseState *state) {
@@ -395,10 +411,21 @@ ObMouseMode ob_input_detect_mode(
         }
     }
 
+    /* 2.5. Pillar 3 (Live): Continental World Map Sword Cursor in OAM[0]
+     *      Verified live: OAM[0] ($0100..$0103) draws sword tile 0x6E at Y < 224
+     *      while $00CB == 0x01, $00CC == 0x10, and battlefield cursor is inactive ($14E6 & 0x80).
+     *      Must be checked BEFORE Tactical Map so $00CB == 0x01 does not misclassify it. */
+    uint8_t oam0_y    = wram[OB_WRAM_OAM0_Y];
+    uint8_t oam0_tile = wram[OB_WRAM_OAM0_TILE];
+    uint8_t tac_flags = wram[OB_WRAM_CUR_SPRITE_FLAGS];
+    if (!uninit_55 && oam0_y < OB_OAM_OFFSCREEN_Y && oam0_tile == OB_TILE_WORLD_MAP_SWORD &&
+        ((tac_flags & 0x80u) != 0u || tac_flags == 0x55u)) {
+        return OB_MOUSE_MODE_WORLD_MAP;
+    }
+
     /* 3. Pillar 1: Tactical Battlefield Map (checked BEFORE OAM World Map scan so battlefield sprites don't collide!)
      * Real game: $00CB==0x01, $00CC==0x10, $07BA!=0x55.
      * Mock/test compat: ($14E6 & 0xC0) != 0 and != 0x55 (LakeSnes uninit) with $00CE == 0. */
-    uint8_t tac_flags = wram[OB_WRAM_CUR_SPRITE_FLAGS];
     if (cb == 0x01u && cc == 0x10u &&
         wram[OB_WRAM_CAM_STATE] == 0x00u && wram[0x07BAu] != 0x55u) {
         return OB_MOUSE_MODE_TACTICAL_MAP;
@@ -428,19 +455,30 @@ ObMouseMode ob_input_detect_mode(
 }
 
 static void apply_decoupled_camera_pan(ObMouseState *state, uint8_t *wram) {
-    int cam_x = (int)wram_read_u16(wram, OB_WRAM_CAM_X);
-    int cam_y = (int)wram_read_u16(wram, OB_WRAM_CAM_Y);
+    uint16_t cam_x_raw = wram_read_u16(wram, OB_WRAM_CAM_X);
+    uint16_t cam_y_raw = wram_read_u16(wram, OB_WRAM_CAM_Y);
+    if (cam_x_raw == 0x5555u && cam_y_raw == 0x5555u) {
+        return;
+    }
 
-    int min_x = (int)wram_read_u16(wram, OB_WRAM_CAM_MIN_X);
-    int min_y = (int)wram_read_u16(wram, OB_WRAM_CAM_MIN_Y);
-    int max_x = (int)wram_read_u16(wram, OB_WRAM_CAM_MAX_X);
-    int max_y = (int)wram_read_u16(wram, OB_WRAM_CAM_MAX_Y);
+    int cam_x = (int)(int16_t)cam_x_raw;
+    int cam_y = (int)(int16_t)cam_y_raw;
 
-    if (max_x <= min_x) {
+    uint16_t min_x_raw = wram_read_u16(wram, OB_WRAM_CAM_MIN_X);
+    uint16_t min_y_raw = wram_read_u16(wram, OB_WRAM_CAM_MIN_Y);
+    uint16_t max_x_raw = wram_read_u16(wram, OB_WRAM_CAM_MAX_X);
+    uint16_t max_y_raw = wram_read_u16(wram, OB_WRAM_CAM_MAX_Y);
+
+    int min_x = (int)(int16_t)min_x_raw;
+    int min_y = (int)(int16_t)min_y_raw;
+    int max_x = (int)(int16_t)max_x_raw;
+    int max_y = (int)(int16_t)max_y_raw;
+
+    if (min_x_raw == 0x5555u || max_x_raw == 0x5555u || max_x <= min_x) {
         min_x = 0;
         max_x = 1024;
     }
-    if (max_y <= min_y) {
+    if (min_y_raw == 0x5555u || max_y_raw == 0x5555u || max_y <= min_y) {
         min_y = 0;
         max_y = 1024;
     }
@@ -458,28 +496,29 @@ static void apply_decoupled_camera_pan(ObMouseState *state, uint8_t *wram) {
             state->drag_last_x = state->snes_x;
             state->drag_last_y = state->snes_y;
         }
-    } else {
+    } else if (state->edge_pan_enabled) {
+        int edge_speed = (state->edge_pan_speed > 0) ? state->edge_pan_speed : OB_EDGE_SCROLL_SPEED;
         /* Narrow 10px viewport edge-scroll margins */
         if (state->snes_x < OB_EDGE_SCROLL_MARGIN) {
-            pan_dx = -OB_EDGE_SCROLL_SPEED;
+            pan_dx = -edge_speed;
         } else if (state->snes_x >= state->viewport_w - OB_EDGE_SCROLL_MARGIN) {
-            pan_dx = OB_EDGE_SCROLL_SPEED;
+            pan_dx = edge_speed;
         }
 
         if (state->snes_y < OB_EDGE_SCROLL_MARGIN) {
-            pan_dy = -OB_EDGE_SCROLL_SPEED;
+            pan_dy = -edge_speed;
         } else if (state->snes_y >= state->viewport_h - OB_EDGE_SCROLL_MARGIN) {
-            pan_dy = OB_EDGE_SCROLL_SPEED;
+            pan_dy = edge_speed;
         }
     }
 
     if (pan_dx != 0 || pan_dy != 0) {
         int new_cam_x = clamp_int(cam_x + pan_dx, min_x, max_x);
         int new_cam_y = clamp_int(cam_y + pan_dy, min_y, max_y);
-        wram_write_u16(wram, OB_WRAM_CAM_X, (uint16_t)new_cam_x);
-        wram_write_u16(wram, OB_WRAM_CAM_Y, (uint16_t)new_cam_y);
-        wram_write_u16(wram, OB_WRAM_CAM_WORLD_X, (uint16_t)new_cam_x);
-        wram_write_u16(wram, OB_WRAM_CAM_WORLD_Y, (uint16_t)new_cam_y);
+        wram_write_u16(wram, OB_WRAM_CAM_X, (uint16_t)(int16_t)new_cam_x);
+        wram_write_u16(wram, OB_WRAM_CAM_Y, (uint16_t)(int16_t)new_cam_y);
+        wram_write_u16(wram, OB_WRAM_CAM_WORLD_X, (uint16_t)(int16_t)new_cam_x);
+        wram_write_u16(wram, OB_WRAM_CAM_WORLD_Y, (uint16_t)(int16_t)new_cam_y);
     }
 }
 
@@ -507,9 +546,9 @@ void ob_input_apply_tactical_map(ObMouseState *state, uint8_t *wram) {
     int screen_x      = clamp_int(core_x, OB_TACTICAL_MIN_X, max_screen_x);
     int screen_y      = clamp_int(state->snes_y, OB_TACTICAL_MIN_Y, max_screen_y);
 
-    /* Step 3: Synchronize cursor world coordinates ($14E2, $14E4) from camera + screen offset */
-    int cam_x = (int)wram_read_u16(wram, OB_WRAM_CAM_X);
-    int cam_y = (int)wram_read_u16(wram, OB_WRAM_CAM_Y);
+    /* Step 3: Synchronize cursor world coordinates ($14E2, $14E4) from signed camera + screen offset */
+    int cam_x = (int)wram_read_i16(wram, OB_WRAM_CAM_X);
+    int cam_y = (int)wram_read_i16(wram, OB_WRAM_CAM_Y);
 
     int map_tiles_x = (int)wram_read_u16(wram, OB_WRAM_MAP_TILES_X);
     int map_tiles_y = (int)wram_read_u16(wram, OB_WRAM_MAP_TILES_Y);
@@ -710,15 +749,31 @@ int ob_input_apply_world_map(ObMouseState *state, uint8_t *wram, const uint8_t *
         return -1;
     }
 
-    /* Support Right/Middle-click drag and 10px edge camera panning on the continent map */
+    int core_x = get_core_x(state);
+    bool live_world_sword = (wram[OB_WRAM_OAM0_Y] < OB_OAM_OFFSCREEN_Y &&
+                             wram[OB_WRAM_OAM0_TILE] == OB_TILE_WORLD_MAP_SWORD);
+
+    if (live_world_sword) {
+        /* Live Continental World Map sword cursor: 8-bit WRAM $0441 (X), $04A1 (Y),
+         * rendered via OAM[0] ($0100/$0101, tile 0x6E) clamped to [50..204, 32..184]. */
+        int wx = clamp_int(core_x, OB_WORLD_MAP_MIN_X, OB_WORLD_MAP_MAX_X);
+        int wy = clamp_int(state->snes_y, OB_WORLD_MAP_MIN_Y, OB_WORLD_MAP_MAX_Y);
+        wram[OB_WRAM_WORLD_CUR_X] = (uint8_t)wx;
+        wram[OB_WRAM_WORLD_CUR_Y] = (uint8_t)wy;
+        wram[OB_WRAM_OAM0_X]      = (uint8_t)wx;
+        wram[OB_WRAM_OAM0_Y]      = (uint8_t)wy;
+        wram[OB_WRAM_CUR_ACCEL]   = 1u;
+        state->hovered_slot       = -1;
+        return -1;
+    }
+
+    /* Synthetic / Legacy World Map fallback: camera pan + OAM stage banner hit-testing */
     apply_decoupled_camera_pan(state, wram);
 
     if (ppu_oam == NULL) {
         state->hovered_slot = -1;
         return -1;
     }
-
-    int core_x = get_core_x(state);
 
     /* Hit-test active stage banner sprites (16x16 bounding boxes in OAM[24..35], then OAM[1..23]) */
     for (int pass = 0; pass < 2; ++pass) {
@@ -776,19 +831,23 @@ int ob_input_apply_wing_dock(ObMouseState *state, uint8_t *wram) {
                 int max_world_y = (map_tiles_y > 0 && map_tiles_y != 0x5555) ? ((map_tiles_y << 3) - 1) : 2047;
                 int sx = 0, sy = 0;
                 if (decode_entity_world_xy(wram, sx_raw, sy_raw, max_world_x, max_world_y, &sx, &sy)) {
-                    int min_x = (int)wram_read_u16(wram, OB_WRAM_CAM_MIN_X);
-                    int min_y = (int)wram_read_u16(wram, OB_WRAM_CAM_MIN_Y);
-                    int max_x = (int)wram_read_u16(wram, OB_WRAM_CAM_MAX_X);
-                    int max_y = (int)wram_read_u16(wram, OB_WRAM_CAM_MAX_Y);
-                    if (max_x <= min_x) { min_x = 0; max_x = 1024; }
-                    if (max_y <= min_y) { min_y = 0; max_y = 1024; }
+                    uint16_t min_x_raw = wram_read_u16(wram, OB_WRAM_CAM_MIN_X);
+                    uint16_t min_y_raw = wram_read_u16(wram, OB_WRAM_CAM_MIN_Y);
+                    uint16_t max_x_raw = wram_read_u16(wram, OB_WRAM_CAM_MAX_X);
+                    uint16_t max_y_raw = wram_read_u16(wram, OB_WRAM_CAM_MAX_Y);
+                    int min_x = (int)(int16_t)min_x_raw;
+                    int min_y = (int)(int16_t)min_y_raw;
+                    int max_x = (int)(int16_t)max_x_raw;
+                    int max_y = (int)(int16_t)max_y_raw;
+                    if (min_x_raw == 0x5555u || max_x_raw == 0x5555u || max_x <= min_x) { min_x = 0; max_x = 1024; }
+                    if (min_y_raw == 0x5555u || max_y_raw == 0x5555u || max_y <= min_y) { min_y = 0; max_y = 1024; }
 
                     int cam_x = clamp_int(sx - 128, min_x, max_x);
                     int cam_y = clamp_int(sy - 112, min_y, max_y);
-                    wram_write_u16(wram, OB_WRAM_CAM_X, (uint16_t)cam_x);
-                    wram_write_u16(wram, OB_WRAM_CAM_Y, (uint16_t)cam_y);
-                    wram_write_u16(wram, OB_WRAM_CAM_WORLD_X, (uint16_t)cam_x);
-                    wram_write_u16(wram, OB_WRAM_CAM_WORLD_Y, (uint16_t)cam_y);
+                    wram_write_u16(wram, OB_WRAM_CAM_X, (uint16_t)(int16_t)cam_x);
+                    wram_write_u16(wram, OB_WRAM_CAM_Y, (uint16_t)(int16_t)cam_y);
+                    wram_write_u16(wram, OB_WRAM_CAM_WORLD_X, (uint16_t)(int16_t)cam_x);
+                    wram_write_u16(wram, OB_WRAM_CAM_WORLD_Y, (uint16_t)(int16_t)cam_y);
                     wram_write_u16(wram, OB_WRAM_CUR_WORLD_X, (uint16_t)sx);
                     wram_write_u16(wram, OB_WRAM_CUR_WORLD_Y, (uint16_t)sy);
                     wram_write_u16(wram, OB_WRAM_CUR_SCREEN_X, (uint16_t)(sx - cam_x));
@@ -871,19 +930,27 @@ uint16_t ob_input_step_frame(
 
     uint16_t out_mask = base_joypad_mask;
 
-    /* Left Click -> Confirm (Joypad A) */
+    /* Left Click -> Confirm (Joypad A), pulsed for 3 frames so 30Hz SNES loops never drop clicks */
     if (state->left_pressed) {
+        state->left_pulse_frames = OB_CLICK_PULSE_FRAMES;
+        state->left_pressed      = false;
+    }
+    if (state->left_pulse_frames > 0u) {
         out_mask |= OB_BTN_A;
-        state->left_pressed = false;
+        state->left_pulse_frames--;
     }
 
     /* Right Click release without drag -> Cancel / Menu (Joypad B) */
     if (state->right_released) {
         if (!state->drag_moved) {
-            out_mask |= OB_BTN_B;
+            state->right_pulse_frames = OB_CLICK_PULSE_FRAMES;
         }
         state->right_released = false;
         state->drag_moved     = false;
+    }
+    if (state->right_pulse_frames > 0u) {
+        out_mask |= OB_BTN_B;
+        state->right_pulse_frames--;
     }
 
     /* Guarantee: NEVER inject synthetic directional D-Pad bits (OB_BTN_DPAD_MASK) */

@@ -49,6 +49,7 @@ extern "C" {
 #define OB_MOUSE_WAKE_DELTA_PX  2
 #define OB_DRAG_THRESHOLD_PX    3
 #define OB_KEYBOARD_COOLDOWN_FRAMES 18 /* 300ms at 60Hz */
+#define OB_CLICK_PULSE_FRAMES   5u     /* ~83ms pulse (World Map requires >=4 frames of A to enter a stage) */
 
 /* --- Verified Bank $00 / $7E WRAM Addresses ($00:B1E0 - $00:B6A6) --- */
 #define OB_WRAM_SIZE               0x20000u
@@ -96,11 +97,16 @@ extern "C" {
 
 /* OAM Shadow & Menu Slot Registers ($02:EC90 - $02:F190) */
 #define OB_WRAM_OAM_SHADOW         0x0100u /* Low OAM shadow ($0100..$013F) */
+#define OB_WRAM_OAM0_X             0x0100u /* OAM[0] X coordinate (World Map sword cursor) */
+#define OB_WRAM_OAM0_Y             0x0101u /* OAM[0] Y coordinate */
+#define OB_WRAM_OAM0_TILE          0x0102u /* OAM[0] tile ID (0x6E = World Map sword cursor) */
+#define OB_WRAM_OAM0_ATTR          0x0103u /* OAM[0] attribute byte */
 #define OB_WRAM_OAM1_X             0x0104u /* OAM[1] X coordinate */
 #define OB_WRAM_OAM1_Y             0x0105u /* OAM[1] Y coordinate */
 #define OB_WRAM_OAM1_TILE          0x0106u /* OAM[1] tile ID (0x6A/0xCE=icon bar, 0x68/0xCC=grid) */
 #define OB_WRAM_OAM1_ATTR          0x0107u /* OAM[1] attribute byte */
 
+#define OB_TILE_WORLD_MAP_SWORD       0x6Eu /* Continental World Map sword cursor in OAM[0] */
 #define OB_TILE_FORMATION_FINGER      0xCCu /* Camp / World Map ($04E0 == 3) formation finger */
 #define OB_TILE_ICON_BAR_FINGER       0xCEu /* Camp / World Map ($04E0 == 3) icon bar finger */
 #define OB_TILE_LIVE_FORMATION_FINGER 0x68u /* Battle Map ($04E0 != 3) formation finger ($02:ED25) */
@@ -109,7 +115,9 @@ extern "C" {
 
 #define OB_WRAM_MENU_SLOT_COUNT    0x0424u /* 8-bit active slot count in Bank $02 menu table ($02:800C) */
 #define OB_WRAM_MENU_SLOT_X_BASE   0x0426u /* 30 x uint8_t slot X table ($02:ECB7 / $02:ED0B) */
+#define OB_WRAM_WORLD_CUR_X        0x0441u /* 8-bit Continental World Map sword cursor X */
 #define OB_WRAM_MENU_SLOT_Y_BASE   0x0446u /* 30 x uint8_t slot Y table ($02:ECC1 / $02:ED14) */
+#define OB_WRAM_WORLD_CUR_Y        0x04A1u /* 8-bit Continental World Map sword cursor Y */
 #define OB_WRAM_MENU_SLOT_TYPE_BASE 0x04B2u /* 30 x uint8_t slot type (<0x80=icon, 0x80=header, 0xFF=grid) */
 #define OB_WRAM_MENU_SAVED_ICON    0x04F0u /* 8-bit last selected icon slot ($02:ECB3) */
 #define OB_WRAM_MENU_SAVED_GRID    0x04F1u /* 8-bit last selected formation grid slot ($02:ED05) */
@@ -120,6 +128,12 @@ extern "C" {
 #define OB_WRAM_ICON_BAR_Y         0x0477u /* 8-bit slot Y ($02:ECC4) */
 #define OB_WRAM_FORMATION_INDEX    0x0478u /* 8-bit 3x2 formation grid slot index (0..5) */
 #define OB_WRAM_WORLD_NODE_INDEX   0x047Au /* 8-bit Continental World Map stage node index */
+
+/* Continental World Map Scroll Clamp Bounds (verified live on Ogre Battle USA) */
+#define OB_WORLD_MAP_MIN_X         50
+#define OB_WORLD_MAP_MAX_X         204
+#define OB_WORLD_MAP_MIN_Y         32
+#define OB_WORLD_MAP_MAX_Y         184
 
 /* Pillar 2 Hit-Box Geometry Constants */
 #define OB_ICON_BAR_COUNT          7
@@ -167,6 +181,8 @@ typedef struct ObMouseState {
     int viewport_w;                   /* 256 (Gate 2 4:3) or 400 (Gate 3 16:9) */
     int viewport_h;                   /* 224 */
     bool wings_enabled;               /* True in 16:9 Tactician Wing mode (+72px core offset) */
+    bool edge_pan_enabled;            /* True to pan camera within 10px edge margin */
+    int edge_pan_speed;               /* Camera edge-pan speed in px/frame (default 4) */
 
     int snes_x;                       /* Mapped SNES X in [0, viewport_w - 1] */
     int snes_y;                       /* Mapped SNES Y in [0, viewport_h - 1] */
@@ -184,6 +200,8 @@ typedef struct ObMouseState {
     bool right_pressed;
     bool right_released;
     bool middle_down;
+    uint8_t left_pulse_frames;        /* Multi-frame A-button hold for 30Hz SNES loops (World Map) */
+    uint8_t right_pulse_frames;       /* Multi-frame B-button hold for 30Hz SNES loops */
 
     bool drag_active;
     bool drag_moved;
@@ -202,6 +220,9 @@ void ob_input_init(ObMouseState *state, int viewport_width, int viewport_height)
 
 /* Enable or disable 16:9 Left/Right Wing Docks (shifts 256px core to X = 72..327 when true) */
 void ob_input_set_wings_enabled(ObMouseState *state, bool wings_enabled);
+
+/* Configure viewport edge-panning enable flag and scroll speed (px/frame) */
+void ob_input_set_edge_pan(ObMouseState *state, bool enabled, int speed);
 
 /* Convert host window (win_x, win_y) into aspect-correct SNES viewport coordinates */
 bool ob_input_map_window_to_snes(

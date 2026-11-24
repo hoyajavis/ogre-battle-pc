@@ -271,6 +271,14 @@ int main(void) {
     write_u16_le(wram_live, OB_WRAM_SQUAD_X_BASE, 0x7FFFu);
     assert(ob_widescreen_detect_scene(wram_live, ppu_oam) == OB_SCENE_WORLD_MAP);
 
+    /* World Map with live OAM[0] sword cursor (tile 0x6E) while $00CB == 0x01 and no Squad 0 */
+    wram_live[0x00CBu] = 0x01u;
+    wram_live[OB_WRAM_OAM0_Y] = 108u;
+    wram_live[OB_WRAM_OAM0_TILE] = OB_TILE_WORLD_MAP_SWORD;
+    assert(ob_widescreen_detect_scene(wram_live, ppu_oam) == OB_SCENE_WORLD_MAP);
+    wram_live[OB_WRAM_OAM0_Y] = OB_OAM_OFFSCREEN_Y;
+    wram_live[OB_WRAM_OAM0_TILE] = 0x01u;
+
     /* 2. Tactical Map with $0010 == 1, camera pan ($00CE == 3), cursor hidden ($14E6 == 0),
      *    and stale post-combat cumulative damage ($F942 == 240, $F944 == 180, $F92B == 0) */
     wram_live[0x00CBu] = 0x01u;

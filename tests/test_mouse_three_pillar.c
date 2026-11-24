@@ -443,6 +443,98 @@ static void test_gate_2f_live_subpixels_and_bank02_menus(void) {
     free(wram);
 }
 
+/* =========================================================================
+ * Gate 2G: Live World Map Sword ($0441/$04A1 + OAM[0]=0x6E), Signed Camera
+ *          Bounds ($14CB/$14CD < 0), Edge-Pan Config & 3-Frame Click Pulses
+ * ========================================================================= */
+static void test_gate_2g_world_map_sword_signed_cam_and_pulses(void) {
+    uint8_t *wram = (uint8_t *)malloc(OB_WRAM_SIZE);
+    uint8_t  ppu_oam[OB_PPU_OAM_SIZE];
+    assert(wram != NULL);
+    memset(wram, 0x55, OB_WRAM_SIZE);
+    memset(ppu_oam, 0xE0, sizeof(ppu_oam));
+
+    ObMouseState mouse;
+    ob_input_init(&mouse, OB_VIEWPORT_WIDTH_16_9, OB_VIEWPORT_HEIGHT);
+    ob_input_set_wings_enabled(&mouse, true);
+
+    /* 1. Live World Map right after Warren's Quiz (Frame 8680):
+     *    $00CB=0x01, $00CC=0x10, $00CE=0x55 (uninit), $07BA=0x4F, $14E6=0xC0,
+     *    OAM[0]=(200,108,tile=0x6E), OAM[1]=(18,185,tile=0x68 scroll border), $0424=0 */
+    wram[0x00CBu]                  = 0x01u;
+    wram[0x00CCu]                  = 0x10u;
+    wram[OB_WRAM_CAM_STATE]        = 0x55u;
+    wram[0x07BAu]                  = 0x4Fu;
+    wram[OB_WRAM_CUR_SPRITE_FLAGS] = 0xC0u;
+    wram[OB_WRAM_MENU_SLOT_COUNT]  = 0x00u;
+    wram[OB_WRAM_OAM0_X]           = 200u;
+    wram[OB_WRAM_OAM0_Y]           = 108u;
+    wram[OB_WRAM_OAM0_TILE]        = OB_TILE_WORLD_MAP_SWORD; /* 0x6E */
+    wram[OB_WRAM_OAM1_X]           = 18u;
+    wram[OB_WRAM_OAM1_Y]           = 185u;
+    wram[OB_WRAM_OAM1_TILE]        = 0x68u;
+    wram[OB_WRAM_WORLD_CUR_X]      = 200u;
+    wram[OB_WRAM_WORLD_CUR_Y]      = 108u;
+
+    /* Hover core (100, 80) -> snes_x = 172, snes_y = 80 */
+    ob_input_on_mouse_move(&mouse, 172, 80, 400, 224, 10u);
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 10u);
+    assert(mouse.active_mode == OB_MOUSE_MODE_WORLD_MAP);
+    assert(wram[OB_WRAM_WORLD_CUR_X] == 100u);
+    assert(wram[OB_WRAM_WORLD_CUR_Y] == 80u);
+    assert(wram[OB_WRAM_OAM0_X] == 100u);
+    assert(wram[OB_WRAM_OAM0_Y] == 80u);
+    /* Must not corrupt uninitialized $00BD/$00BF (0x5555) */
+    assert(read_u16(wram, OB_WRAM_CAM_X) == 0x5555u);
+    assert(read_u16(wram, OB_WRAM_CAM_Y) == 0x5555u);
+
+    /* Returning to World Map after a stage ($00CE=0x00) must still detect WORLD_MAP and clamp to scroll */
+    wram[OB_WRAM_CAM_STATE] = 0x00u;
+    ob_input_on_mouse_move(&mouse, 80, 10, 400, 224, 11u); /* core_x=8 -> clamp 50, y=10 -> clamp 32 */
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 11u);
+    assert(mouse.active_mode == OB_MOUSE_MODE_WORLD_MAP);
+    assert(wram[OB_WRAM_WORLD_CUR_X] == OB_WORLD_MAP_MIN_X);
+    assert(wram[OB_WRAM_WORLD_CUR_Y] == OB_WORLD_MAP_MIN_Y);
+
+    /* 2. Signed int16_t Tactical Map Camera Bounds ($14CB=-128, $14CD=-21) & Edge-Pan Config */
+    wram[OB_WRAM_OAM0_Y]           = OB_OAM_OFFSCREEN_Y;
+    wram[OB_WRAM_OAM0_TILE]        = 0x01u;
+    wram[OB_WRAM_CUR_SPRITE_FLAGS] = 0x00u;
+    write_u16(wram, OB_WRAM_CAM_X, (uint16_t)(int16_t)(-10));
+    write_u16(wram, OB_WRAM_CAM_Y, (uint16_t)(int16_t)(-5));
+    write_u16(wram, OB_WRAM_CAM_MIN_X, (uint16_t)(int16_t)(-128));
+    write_u16(wram, OB_WRAM_CAM_MIN_Y, (uint16_t)(int16_t)(-21));
+    write_u16(wram, OB_WRAM_CAM_MAX_X, 384u);
+    write_u16(wram, OB_WRAM_CAM_MAX_Y, 491u);
+    write_u16(wram, OB_WRAM_MAP_TILES_X, 64u);
+    write_u16(wram, OB_WRAM_MAP_TILES_Y, 64u);
+
+    /* Disable edge pan: hovering top edge (y=2) must NOT move camera */
+    ob_input_set_edge_pan(&mouse, false, 6);
+    ob_input_on_mouse_move(&mouse, 200, 2, 400, 224, 12u);
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 12u);
+    assert(mouse.active_mode == OB_MOUSE_MODE_TACTICAL_MAP);
+    assert((int16_t)read_u16(wram, OB_WRAM_CAM_Y) == -5);
+
+    /* Enable edge pan at speed 6: hovering top edge must pan -5 -> -11 (preserving negative signed bounds!) */
+    ob_input_set_edge_pan(&mouse, true, 6);
+    ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 13u);
+    assert((int16_t)read_u16(wram, OB_WRAM_CAM_Y) == -11);
+
+    /* 3. Multi-Frame Click Pulse (OB_CLICK_PULSE_FRAMES = 5f) for World Map stage entry */
+    ob_input_on_mouse_move(&mouse, 200, 100, 400, 224, 20u);
+    ob_input_on_mouse_button(&mouse, true, false, false, 20u);
+    assert((ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 20u) & OB_BTN_A) == OB_BTN_A);
+    ob_input_on_mouse_button(&mouse, false, false, false, 21u);
+    for (uint32_t k = 1u; k < OB_CLICK_PULSE_FRAMES; ++k) {
+        assert((ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 20u + k) & OB_BTN_A) == OB_BTN_A);
+    }
+    assert((ob_input_step_frame(&mouse, wram, ppu_oam, 0u, 20u + OB_CLICK_PULSE_FRAMES) & OB_BTN_A) == 0u);
+
+    printf("[PASS] Gate 2G: World Map Sword ($0441/$04A1), Signed Camera Bounds, Edge-Pan & Click Pulses\n");
+    free(wram);
+}
+
 int main(void) {
     printf("====================================================================\n");
     printf(" Ogre Battle PC: Gate 2 Three-Pillar Mouse Architecture Verification\n");
@@ -454,6 +546,7 @@ int main(void) {
     test_gate_2d_pillar3_world_map_and_hybrid();
     test_gate_2e_uninit_wram_and_live_maps();
     test_gate_2f_live_subpixels_and_bank02_menus();
+    test_gate_2g_world_map_sword_signed_cam_and_pulses();
 
     printf("====================================================================\n");
     printf(" ALL GATE 2 THREE-PILLAR MOUSE ARCHITECTURE TESTS PASSED (100%%)\n");
