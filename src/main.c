@@ -230,6 +230,7 @@ int main(int argc, char *argv[]) {
 
     Snes *snes = NULL;
     bool running = true;
+    bool swallow_focus_click = false;
     int frame_count = 0;
 
     while (running && (max_frames == 0 || frame_count < max_frames)) {
@@ -252,19 +253,20 @@ int main(int argc, char *argv[]) {
         }
 
         bool left_clicked = false;
-        int win_x = 0, win_y = 0, win_w = OB_WIDE_2X_W, win_h = OB_WIDE_2X_H;
-        uint32_t btn_mask = SDL_GetMouseState(&win_x, &win_y);
-        SDL_GetWindowSize(window, &win_w, &win_h);
-        int canvas_x = 0;
-        int canvas_y = 0;
-        ob_input_map_window_to_snes(win_x, win_y, win_w, win_h, OB_WIDE_2X_W, OB_WIDE_2X_H, &canvas_x, &canvas_y);
-
         SDL_Event ev;
         while (SDL_PollEvent(&ev)) {
             if (ev.type == SDL_QUIT) {
                 running = false;
+            } else if (ev.type == SDL_WINDOWEVENT) {
+                if (ev.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
+                    swallow_focus_click = true;
+                } else if (ev.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
+                    swallow_focus_click = false;
+                }
             } else if (ev.type == SDL_MOUSEBUTTONDOWN && ev.button.button == SDL_BUTTON_LEFT) {
-                left_clicked = true;
+                if (!swallow_focus_click) {
+                    left_clicked = true;
+                }
             } else if (ev.type == SDL_KEYDOWN && !ev.key.repeat) {
                 if (gui.screen != OB_GUI_SCREEN_NONE) {
                     ObGuiKey gk = sdl_key_to_gui_key(ev.key.keysym.sym);
@@ -300,8 +302,40 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        int win_x = 0, win_y = 0, win_w = OB_WIDE_2X_W, win_h = OB_WIDE_2X_H;
+        uint32_t win_flags = SDL_GetWindowFlags(window);
+        bool has_input_focus = (win_flags & SDL_WINDOW_INPUT_FOCUS) != 0;
+        bool has_mouse_focus = (win_flags & SDL_WINDOW_MOUSE_FOCUS) != 0;
+        uint32_t btn_mask = SDL_GetMouseState(&win_x, &win_y);
+        SDL_GetWindowSize(window, &win_w, &win_h);
+
+        /* Allow smooth pointer hover tracking in windowed mode even before click-to-focus */
+        if (!has_input_focus && has_mouse_focus) {
+            int gx = 0, gy = 0, wx = 0, wy = 0;
+            SDL_GetGlobalMouseState(&gx, &gy);
+            SDL_GetWindowPosition(window, &wx, &wy);
+            int rel_x = gx - wx;
+            int rel_y = gy - wy;
+            if (rel_x >= 0 && rel_x < win_w && rel_y >= 0 && rel_y < win_h) {
+                win_x = rel_x;
+                win_y = rel_y;
+            }
+        }
+
+        bool any_btn_down = (btn_mask & (SDL_BUTTON(SDL_BUTTON_LEFT) |
+                                         SDL_BUTTON(SDL_BUTTON_RIGHT) |
+                                         SDL_BUTTON(SDL_BUTTON_MIDDLE))) != 0;
+        if (swallow_focus_click && !any_btn_down) {
+            swallow_focus_click = false;
+        }
+        bool allow_buttons = has_input_focus && !swallow_focus_click;
+
+        int canvas_x = 0;
+        int canvas_y = 0;
+        ob_input_map_window_to_snes(win_x, win_y, win_w, win_h, OB_WIDE_2X_W, OB_WIDE_2X_H, &canvas_x, &canvas_y);
+
         if (gui.screen != OB_GUI_SCREEN_NONE) {
-            ObGuiAction act = ob_gui_menu_handle_mouse(&gui, &cfg, canvas_x, canvas_y, left_clicked);
+            ObGuiAction act = ob_gui_menu_handle_mouse(&gui, &cfg, canvas_x, canvas_y, allow_buttons && left_clicked);
             if (act == OB_GUI_ACTION_LAUNCH_GAME && gui.rom_verified) {
                 gui.screen = OB_GUI_SCREEN_NONE;
                 ob_config_save(&cfg, OB_INI_PATH);
@@ -324,12 +358,15 @@ int main(int argc, char *argv[]) {
             uint16_t joy = poll_keyboard_joypad(keys);
             if (cfg.mouse_enabled) {
                 ob_input_set_wings_enabled(&mouse, ws.display_mode == OB_DISPLAY_16_9_TACTICIAN_WINGS);
-                ob_input_on_mouse_move(&mouse, win_x, win_y, win_w, win_h, (uint32_t)frame_count);
+                ob_input_set_edge_pan(&mouse, cfg.edge_pan_enabled, (int)cfg.edge_pan_speed);
+                if (has_mouse_focus || mouse.drag_active) {
+                    ob_input_on_mouse_move(&mouse, win_x, win_y, win_w, win_h, (uint32_t)frame_count);
+                }
                 ob_input_on_mouse_button(
                     &mouse,
-                    (btn_mask & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0,
-                    (btn_mask & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0,
-                    (btn_mask & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0,
+                    allow_buttons && ((btn_mask & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0),
+                    allow_buttons && ((btn_mask & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0),
+                    allow_buttons && ((btn_mask & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0),
                     (uint32_t)frame_count
                 );
                 joy = ob_input_step_frame(&mouse, snes->ram, (const uint8_t *)snes->ppu->oam, joy, (uint32_t)frame_count);
